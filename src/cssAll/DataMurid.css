@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.header-murid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-add-murid {
+    display: flex;
+    background: var(--color-aksen);
+    color: var(--color-primer);
+    border: none;
+    padding: 13px 35px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 10px;
+    gap: 5px;
+}
+
+.btn-add-murid:hover{
+    background: #1D77AF;
+}
+
+.header-murid-left {
+    display: flex;
+    gap: 15px;
+}
+
+.header-murid .header-murid-left .btn-add-murid p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #FFFFFF;
+}
+
+.detail-jumlah-murid {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #2A93D5;
+}
+
+/* Styling untuk dropdown */
+select {
+    width: 250px;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #C4C4C4;
+    appearance: none;
+    padding: 10px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url('https://api.iconify.design/ic/round-navigate-next.svg?color=%232a93d5&width=30');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+}
+
+/* Styling untuk opsi yang dipilih */
+option {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #4B4B4B;
+    background-color: var(--color-primer);
+
+}
+
+option[selected] {
+    /* outline: none; */
+    /* font-weight: bold; */
+}
+
+/*  */
+
+.search-box {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.search-box input[type="text"] {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.search-box button[type="submit"] {
+    background-color: #008CBA;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+/*  */
+
+.container-murid {
+    margin-top: 30px;
+}
+
+.card-content-murid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 15px 30px 15px 15px;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+}
+
+.card-content-murid-left {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.image-profile-murid {
+    width: 120px;
+    height: 120px;
+}
+
+.detail-card-murid .nama-murid {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #2A93D5;
+}
+
+.detail-card-murid .email-murid {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #797979;
+}
+
+.detail-card-murid .jurusan-murid {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: #2A93D5;
+    background: #D8F0FF;
+    border-radius: 5px;
+    padding: 4px 17px;
+    width: max-content;
+    margin-top: 10px;
+}
+
+.card-content-murid-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card-content-murid-right button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.popup-menu {
+    display: none;
+    /* bottom: px; */
+    position: absolute;
+    right: 30px;
+    background-color: #fff;
+    width: 148px;
+    z-index: 1;
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+}
+
+.popup-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* .popup-menu ul li {
+    border-bottom: 1px solid #ccc;
+}
+
+.popup-menu ul li:last-child {
+    border-bottom: none;
+} */
+
+.popup-menu ul li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+/* .popup-menu ul li a:hover {
+    background-color: transparent;
+} */
+
+#popup-menu li:nth-child(1):hover {
+    background-color: #D8F0FF;
+    border-radius: 9px 9px 0px 0px;
+}
+
+#popup-menu li:nth-child(2):hover {
+    background-color: #D8F0FF;
+}
+
+#popup-menu li:nth-child(3):hover {
+    background-color: #FFD8D8;
+}
+
+#popup-menu li:nth-child(4):hover {
+    background-color: #D8F0FF;
+    border-radius: 0px 0px 9px 9px;
+}

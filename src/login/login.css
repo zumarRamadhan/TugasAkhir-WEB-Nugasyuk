@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto 130px;
+    height: 100vh;
+}
+
+.btn-mata {
+    background: transparent;
+    border: none;
+    color: var(--color-primer);
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.con-form-login {
+    max-width: 540px;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    text-align: center;
+    padding: 60px 55px 90px 55px;
+}
+
+.form-login {
+    margin-top: 85px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.title-form-login {
+    font-family: 'Fredoka';
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--color-aksen);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.desc-form-login {
+    margin-top: 30px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    text-align: center;
+    color: #797979;
+}
+
+.con-desc {
+    max-width: 301px;
+    margin: 0 auto;
+}
+
+.con-form-username, .con-form-password {
+    display: flex;
+    align-items: center;
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    padding: 0 20px;
+}
+
+.con-form-username input, .con-form-password input {
+    border: none;
+}
+
+.input-username, .input-password {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #797979;
+}
+
+.img-login{
+    max-width: 500px;
+}
+
+.input-username:focus, .input-password:focus {
+    outline: none;
+}
+
+.btn-login {
+    margin-top: 60px;
+    background: var(--color-aksen);
+    border-radius: 10px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--color-primer);
+    border: none;
+    padding: 20px 0;
+    cursor: pointer;
+}
