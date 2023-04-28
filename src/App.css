@@ -435,10 +435,31 @@ nav .navbar img {
 
 /* notfound */
 .notfound{
-    color: #ff0000;
-    font-size: 40px;
     align-items: center;
     text-align: center;
-    margin-top: 300px;
+    padding-top: 280px;
+    background-color: #1a253c;
+    height: 100vh;
 }
+
+.notfound h1{
+    color: #ee3a3a;
+    font-size: 56px;
+    text-shadow: 0px 0px 20px #ee3a3a;
+}
+
+.notfound marquee{
+    font-size: 18px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0px 0px 10px white;
+}
+
+/* footer notfound page*/
+.footer{
+    color: #fff;
+    padding-top: 230px;
+}
+/* end footer notfound page */
 /* end notfound */
+

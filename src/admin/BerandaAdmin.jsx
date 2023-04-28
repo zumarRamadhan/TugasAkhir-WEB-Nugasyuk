@@ -8,11 +8,14 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import ImgProfil from '../assets/img-profil.svg';
+import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import { useState } from "react";
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function BerandaAdmin (){
     const navText = "Beranda Admin";
+    const navigate = useNavigate();
 
 function showDetail() {
  
@@ -20,7 +23,43 @@ function showDetail() {
 
   return(
       <div>
-          <Sidebar />
+          {/* <Sidebar /> */}
+          <aside>
+            <h1 className="title-form-login" onClick={() => navigate('/berandaadmin')}>
+                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                nugasyuk
+            </h1>
+            <ul>
+                <li className='active' onClick={() => navigate('/berandaadmin')}>
+                    <Icon icon="iconoir:home-simple" width="20" />
+                    Beranda
+                </li>
+                <li onClick={() => navigate('/dataguru')} >
+                    <Icon icon="la:chalkboard-teacher" width="20" />
+                    Guru
+                </li>
+                <li onClick={() => navigate('/datamurid')}>
+                    <Icon icon="ph:student" width="20" />
+                    Murid
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="fluent:class-24-regular" width="20" />
+                    Kelas
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="fluent-mdl2:education" width="20" />
+                    Mata Pelajaran
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="uiw:date" width="20" />
+                    Jadwal KBM
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="ic:outline-file-copy" width="20" />
+                    Assets
+                </li>
+            </ul>
+            </aside>
           <div className="container-content">
               <Navigation text={navText}/>
               <main className='main'>

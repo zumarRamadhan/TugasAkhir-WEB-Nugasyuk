@@ -5,9 +5,13 @@ import Sidebar from "../component/Sidebar";
 import Navigation from "../component/NavigationBar";
 import Kalam from "../assets/murid-kalam.png";
 import Wira from "../assets/murid-wira.svg";
+import IconNugasyuk from '../assets/IconNugasyuk.svg';
+import { useNavigate, Link } from 'react-router-dom';
 
 function DataMurid(){
     const navText = "Data Murid";
+
+    const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
 
@@ -16,7 +20,43 @@ function DataMurid(){
 
     return(
         <div>
-            <Sidebar/>
+            {/* <Sidebar/> */}
+            <aside>
+            <h1 className="title-form-login" onClick={() => navigate('/berandaadmin')}>
+                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                nugasyuk
+            </h1>
+            <ul>
+                <li onClick={() => navigate('/berandaadmin')}>
+                    <Icon icon="iconoir:home-simple" width="20" />
+                    Beranda
+                </li>
+                <li onClick={() => navigate('/dataguru')} >
+                    <Icon icon="la:chalkboard-teacher" width="20" />
+                    Guru
+                </li>
+                <li className='active' onClick={() => navigate('/datamurid')}>
+                    <Icon icon="ph:student" width="20" />
+                    Murid
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="fluent:class-24-regular" width="20" />
+                    Kelas
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="fluent-mdl2:education" width="20" />
+                    Mata Pelajaran
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="uiw:date" width="20" />
+                    Jadwal KBM
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="ic:outline-file-copy" width="20" />
+                    Assets
+                </li>
+            </ul>
+            </aside>
             <div className='container-content'>
                 <Navigation text={navText}/>
                 <main className='main'>
@@ -28,7 +68,7 @@ function DataMurid(){
                             </button>
 
                             <select id='murid' name='murid'>
-                                <option value="semua" selected>Semua Jurusan</option>
+                                <option value="semua" selected>-- Semua Jurusan --</option>
                                 <option value="jurusan">DKV</option>
                                 <option value="jurusan">Animasi</option>
                                 <option value="jurusan">PPLG</option>

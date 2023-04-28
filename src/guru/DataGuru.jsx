@@ -1,7 +1,9 @@
 import '../cssAll/DataGuru.css';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import Sidebar from "../component/Sidebar";
+import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import Navigation from "../component/NavigationBar";
 import Karman from '../assets/guru-karman.svg';
 import Sapari from '../assets/guru-sapari.svg';
@@ -9,6 +11,8 @@ import Sapari from '../assets/guru-sapari.svg';
 
 function BerandaGuru() {
     const navText = "Data Guru";
+
+    const navigate = useNavigate();
 
     // const PopupMenu =() => {
     //     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +24,43 @@ function BerandaGuru() {
 
     return(
         <div>
-            <Sidebar/>
+            {/* <Sidebar/> */}
+            <aside>
+            <h1 className="title-form-login" onClick={() => navigate('/berandaadmin')}>
+                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                nugasyuk
+            </h1>
+            <ul>
+                <li onClick={() => navigate('/berandaadmin')}>
+                    <Icon icon="iconoir:home-simple" width="20" />
+                    Beranda
+                </li>
+                <li className='active' onClick={() => navigate('/dataguru')} >
+                    <Icon icon="la:chalkboard-teacher" width="20" />
+                    Guru
+                </li>
+                <li onClick={() => navigate('/datamurid')}>
+                    <Icon icon="ph:student" width="20" />
+                    Murid
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="fluent:class-24-regular" width="20" />
+                    Kelas
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="fluent-mdl2:education" width="20" />
+                    Mata Pelajaran
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="uiw:date" width="20" />
+                    Jadwal KBM
+                </li>
+                <li onClick={() => navigate('/')}>
+                    <Icon icon="ic:outline-file-copy" width="20" />
+                    Assets
+                </li>
+            </ul>
+            </aside>
             <div className='container-content'>
                 <Navigation text={navText}/>
                 <main className='main'>
@@ -32,9 +72,9 @@ function BerandaGuru() {
                             </button>
 
                             <select id='guru' name='guru'>
-                                <option value="semua" selected>Semua guru</option>
-                                <option value="produktif">Guru produktif</option>
-                                <option value="nonproduktif">Guru nonproduktif</option>
+                                <option value="semua" selected>-- Semua Guru --</option>
+                                <option value="produktif">Guru Produktif</option>
+                                <option value="nonproduktif">Guru Nonproduktif</option>
                                 <option value="bk">Guru BK</option>
                             </select>
 
