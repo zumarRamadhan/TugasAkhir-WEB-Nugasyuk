@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/react';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import '../component/Component.css';
-import BerandaGuru from '../guru/DataGuru';
+import BerandaGuru from '../admin/DataGuru';
 import BerandaAdmin from '../admin/BerandaAdmin';
 import React, { useState } from "react";
 // import * as React from 'react';

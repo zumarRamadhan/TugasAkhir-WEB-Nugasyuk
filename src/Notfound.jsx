@@ -5,7 +5,7 @@ function Notfound() {
         <div className='notfound'>
             <h1 classname="text-notfound">NOTFOUND BROOO!</h1>
             <br/>
-            <marquee direction="down"  width="300" scrolldelay="200">Halaman Tidak Ada</marquee>
+            <marquee direction="down"  width="300" scrolldelay="250">Halaman Tidak Ada</marquee>
             <div className='footer'>
                 <p>@copyright2023 | Mata Panda Group 🐼</p>
             </div>

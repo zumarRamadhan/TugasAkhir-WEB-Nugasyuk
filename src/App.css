@@ -458,7 +458,8 @@ nav .navbar img {
 /* footer notfound page*/
 .footer{
     color: #fff;
-    padding-top: 230px;
+    padding-top: 280px;
+    opacity: 50%;
 }
 /* end footer notfound page */
 /* end notfound */

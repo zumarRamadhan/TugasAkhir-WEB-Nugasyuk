@@ -75,7 +75,7 @@ function BerandaGuru() {
                                 <option value="semua" selected>-- Semua Guru --</option>
                                 <option value="produktif">Guru Produktif</option>
                                 <option value="nonproduktif">Guru Nonproduktif</option>
-                                <option value="bk">Guru BK</option>
+                                <option value="bk">Guru BK</option>f
                             </select>
 
                             <form className='search-box'>

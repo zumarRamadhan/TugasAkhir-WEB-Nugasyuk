@@ -3,8 +3,8 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import React, { useState } from 'react';
 import Login from "../src/login/login";
 import BerandaAdmin from './admin/BerandaAdmin';
-import DataGuru from './guru/DataGuru';
-import DataMurid from './murid/DataMurid';
+import DataGuru from './admin/DataGuru';
+import DataMurid from './admin/DataMurid';
 import Notfound from './Notfound';
 
 
