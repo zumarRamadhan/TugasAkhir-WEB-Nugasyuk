@@ -48,7 +48,7 @@ function Login (){
               <img src={mataIcon} className="icon-mata" />
             </button>
           </div>
-          <button type="submit" className="btn-login" href="" onClick={() => navigate('/berandaadmin')}>
+          <button type="submit" className="btn-login" href="" onClick={() => navigate('/admin/berandaadmin')}>
             MASUK
           </button>
         </form>

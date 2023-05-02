@@ -3,8 +3,12 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import React, { useState } from 'react';
 import Login from "../src/login/login";
 import BerandaAdmin from './admin/BerandaAdmin';
-import DataGuru from './admin/DataGuru';
-import DataMurid from './admin/DataMurid';
+import PageGuru from './admin/PageGuru';
+import PageMurid from './admin/PageMurid';
+import PageKelas from './admin/PageKelas';
+import MataPelajaran from './admin/MataPelajaran';
+import JadwalKBM from './admin/JadwalKBM';
+import PageAssets from './admin/PageAssets';
 import Notfound from './Notfound';
 
 
@@ -13,9 +17,14 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login/>} />  
-        <Route path="/berandaadmin" element={<BerandaAdmin/>} />  
-        <Route path="/dataguru" element={<DataGuru/>} />  
-        <Route path="/datamurid" element={<DataMurid/>} />  
+        <Route path="/admin/berandaadmin" element={<BerandaAdmin/>} />  
+        <Route path="/admin/pageguru" element={<PageGuru/>} />  
+        <Route path="/admin/pagemurid" element={<PageMurid/>} />
+        <Route path="/admin/pagekelas" element={<PageKelas/>} />
+        <Route path="/admin/matapelajaran" element={<MataPelajaran/>} />
+        <Route path="/admin/jadwalkbm" element={<JadwalKBM/>} />
+        <Route path="/admin/pageassets" element={<PageAssets/>} />
+
         <Route path="/*" element={<Notfound/>} />  
       </Routes>
     </Router>
