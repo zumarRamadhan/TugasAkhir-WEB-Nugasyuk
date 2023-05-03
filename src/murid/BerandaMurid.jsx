@@ -49,109 +49,104 @@ function BerandaMurid(){
               <main className='main'>
                 <div className="header-dashboard">
                     <div className="head-left">
-                    <h1 className="intro-head">
-                        Halo <span className="name-admin">Wira</span>
-                    </h1>
-                    <p className="desc-head">
-                        Selamat datang di admin nugasyuk, anda bisa memonitoring data guru, siswa dan lain lain.
-                    </p>
+                        <h1 className="intro-head">Halo <span className="name-admin">Wira</span></h1>
+                        <p className="desc-head">Selamat datang di admin nugasyuk, anda bisa memonitoring data guru, siswa dan lain lain.</p>
                     </div>
                     <div className="head-right">
-                    <div className="kotak1"></div>
+                        <div className="kotak1"></div>
                     </div>
                 </div>
 
                 <div className="con-content">
                     <div className="content-indiecator" style={{ background: "#2AB6D5" }}>
-                    <div className="icon-indie" style={{ color: "#2AB6D5" }}>
-                        <Icon icon="mdi:account-group-outline" width="40" />
+                        <div className="icon-indie" style={{ color: "#2AB6D5" }}>
+                            <Icon icon="mdi:account-group-outline" width="40" />
+                        </div>
+                        <div className="desc-indie">
+                            <p className="title-indie">Jumlah Siswa</p>
+                            <p className="value-indie"><span>35</span> Siswa</p>
+                        </div>
                     </div>
-                    <div className="desc-indie">
-                        <p className="title-indie">Jumlah Siswa</p>
-                        <p className="value-indie">
-                        <span>35</span> Siswa
-                        </p>
-                    </div>
-                    </div>
+
                     <div className="content-indiecator" style={{ background: "#585CC4" }}>
-                    <div className="icon-indie" style={{ color: "#585CC4" }}>
-                        <Icon icon="fluent-mdl2:education" width="40"/>
+                        <div className="icon-indie" style={{ color: "#585CC4" }}>
+                            <Icon icon="fluent-mdl2:education" width="40"/>
+                        </div>
+                        <div className="desc-indie">
+                            <p className="title-indie">Jumlah Mapel</p>
+                            <p className="value-indie"><span>14</span> Mata Pelajaran</p>
+                        </div>
                     </div>
-                    <div className="desc-indie">
-                        <p className="title-indie">Jumlah Mapel</p>
-                        <p className="value-indie">
-                        <span>14</span> Mata Pelajaran
-                        </p>
-                    </div>
-                    </div>
+
                     <div className="content-indiecator" style={{ background: "#B462D0" }}>
-                    <div className="icon-indie" style={{ color: "#B462D0" }}>
-                        <Icon icon="material-symbols:person-outline-rounded" width="40"/>
-                    </div>
-                    <div className="desc-indie">
-                        <p className="title-indie">Wali Kelas</p>
-                        <p className="value-indie">
-                        <span>Slamet Jos, S.Kom</span>
-                        </p>
-                    </div>
+                        <div className="icon-indie" style={{ color: "#B462D0" }}>
+                            <Icon icon="material-symbols:person-outline-rounded" width="40"/>
+                        </div>
+                        <div className="desc-indie">
+                            <p className="title-indie">Wali Kelas</p>
+                            <p className="value-indie"><span>Slamet Jos, S.Kom</span></p>
+                        </div>
                     </div>
                 </div>
                 
                 {/* content information */}
                 <div className="con-content-information">
                     <div className="content-indiecator-information" style={{ background: "#fff"}}>
-                    <div className="icon-indie-information" style={{ color: "#797979" }}>
-                        <Icon icon="uiw:time-o" width="30"/>
-                    </div>
-                    <div className="desc-indie">
-                        <p className="title-indie-information"> <span>3</span> Tugas</p>
-                        <p className="value-indie-information">
-                        Dari <span>10</span> Tugas
-                        </p>
-                    </div>
+                        <div className="indiecator-left">
+                            <div className="icon-indie-information" style={{ color: "#797979" }}>
+                                <Icon icon="uiw:time-o" width="30"/>
+                            </div>
+                            <div className="desc-indie">
+                                <p className="title-indie-information"> <span>3</span> Tugas</p>
+                                <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                            </div>
+                        </div>
                         <div className="icon-navigate">
                             <Icon icon="ic:round-navigate-next" width="30"/>
                         </div>
                     </div>
-                    <div className="content-indiecator-information" style={{ background: "#fff" }}>
-                    <div className="icon-indie-information" style={{ color: "#84E063", background:"#D5FFC6" }}>
-                        <Icon icon="uiw:time-o" width="30"/>
-                    </div>
-                    <div className="desc-indie">
-                        <p className="title-indie-information"> <span>4</span> Tugas</p>
-                        <p className="value-indie-information">
-                        Dari <span>10</span> Tugas
-                        </p>
-                    </div>
-                    <div className="icon-navigate">
+
+                    <div className="content-indiecator-information" style={{ background: "#fff"}}>
+                        <div className="indiecator-left">
+                            <div className="icon-indie-information" style={{ color: "#84E063", background:"#D5FFC6" }}>
+                                <Icon icon="ph:check-bold" width="30" />
+                            </div>
+                            <div className="desc-indie">
+                                <p className="title-indie-information"> <span>4</span> Tugas</p>
+                                <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                            </div>
+                        </div>
+                        <div className="icon-navigate">
                             <Icon icon="ic:round-navigate-next" width="30"/>
                         </div>
                     </div>
-                    <div className="content-indiecator-information" style={{ background: "#fff" }}>
-                    <div className="icon-indie-information" style={{ color: "#FF3F3F", background: "#FFC6C6" }}>
-                        <Icon icon="uiw:time-o" width="30"/>
-                    </div>
-                    <div className="desc-indie">
-                        <p className="title-indie-information"> <span>2</span> Tugas</p>
-                        <p className="value-indie-information">
-                        Dari <span>10</span> Tugas
-                        </p>
-                    </div>
-                    <div className="icon-navigate">
+
+                    <div className="content-indiecator-information" style={{ background: "#fff"}}>
+                        <div className="indiecator-left">
+                            <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
+                                <Icon icon="uiw:time-o" width="30"/>
+                            </div>
+                            <div className="desc-indie">
+                                <p className="title-indie-information"> <span>3</span> Tugas</p>
+                                <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                            </div>
+                        </div>
+                        <div className="icon-navigate">
                             <Icon icon="ic:round-navigate-next" width="30"/>
                         </div>
                     </div>
-                    <div className="content-indiecator-information" style={{ background: "#fff" }}>
-                    <div className="icon-indie-information" style={{ color: "#FF3F3F", background: "#FFC6C6" }}>
-                        <Icon icon="uiw:time-o" width="30"/>
-                    </div>
-                    <div className="desc-indie">
-                        <p className="title-indie-information"> <span>1</span> Tugas</p>
-                        <p className="value-indie-information">
-                        Dari <span>10</span> Tugas
-                        </p>
-                    </div>
-                    <div className="icon-navigate">
+
+                    <div className="content-indiecator-information" style={{ background: "#fff"}}>
+                        <div className="indiecator-left">
+                            <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
+                                <Icon icon="ph:check-bold" width="30" />
+                            </div>
+                            <div className="desc-indie">
+                                <p className="title-indie-information"> <span>4</span> Tugas</p>
+                                <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                            </div>
+                        </div>
+                        <div className="icon-navigate">
                             <Icon icon="ic:round-navigate-next" width="30"/>
                         </div>
                     </div>
