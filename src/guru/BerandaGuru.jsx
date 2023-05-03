@@ -7,7 +7,7 @@ import NavbarGuru from '../component/NavbarGuru';
 
 function BerandaGuru(){
     const navText = "Beranda";
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     return(
         <div>

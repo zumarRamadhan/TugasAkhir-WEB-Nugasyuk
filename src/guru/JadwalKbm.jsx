@@ -7,7 +7,7 @@ import NavbarGuru from '../component/NavbarGuru';
 
 function PageJadwalKbm(){
     const navText = "Jadwal KBM";
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     return(
         <div>

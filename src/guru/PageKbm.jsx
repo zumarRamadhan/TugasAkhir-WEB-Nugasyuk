@@ -7,7 +7,7 @@ import NavbarGuru from '../component/NavbarGuru';
 
 function PageKbm(){
     const navText = "KBM";
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     return(
         <div>

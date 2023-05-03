@@ -5,7 +5,7 @@ import NavbarMurid from '../component/NavbarMurid';
 
 function PageKonseling(){
     const navText = "Bimbingan Konseling";
-    const navigate = useNavigate
+    const navigate = useNavigate();
 
     return(
         <div>

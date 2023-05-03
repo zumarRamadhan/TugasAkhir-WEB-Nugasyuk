@@ -7,7 +7,7 @@ import NavbarGuru from '../component/NavbarGuru';
 
 function PagePengumpulan(){
     const navText = "Pengumpulan";
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     return(
         <div>
