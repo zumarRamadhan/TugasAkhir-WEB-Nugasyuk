@@ -74,7 +74,7 @@ function BerandaAdmin (){
                     </div>
                 </div>
 
-                <div className="con-content">   
+                <div className="con-content-admin">   
                     <div className="content-indiecator" style={{ background: "#EB55A3" }}>
                         <div className="icon-indie" style={{ color: "#EB55A3" }}>
                             <Icon icon="mdi:account-group-outline" width="40" />
