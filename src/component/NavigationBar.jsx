@@ -6,13 +6,21 @@ import React, { useState } from 'react';
 
 function Navigation(props) {
 
+  const [isDetailShown, setIsDetailShown] = useState(false);
+
+  const showDetail = () => {
+    const detailProfile = document.querySelector('.detail-profile');
+    detailProfile.style.transform = 'translateX(0px)';
+    setIsDetailShown(true);
+  }
+
   return (
     <div>
       <nav>
         <div className="navbar">
           <h1>{props.text}</h1>
           <div className="img-profile" style={{ cursor: "pointer" }}>
-            <img src={ImgProfil} alt="img-profile"/>
+            <img src={ImgProfil} alt="img-profile" onClick={showDetail}/>
           </div>
         </div>
       </nav>

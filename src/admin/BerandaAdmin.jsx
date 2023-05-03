@@ -1,6 +1,5 @@
 import '../cssAll/BerandaAdmin.css';
-import '../App.css';
-// import '../admin/main.js';
+// import '../App.css';
 import { Icon } from '@iconify/react';
 import Sidebar from "../component/Sidebar";
 import Navigation from "../component/NavigationBar";
@@ -17,10 +16,11 @@ function BerandaAdmin (){
     const navText = "Beranda Admin";
     const navigate = useNavigate();
 
-function showDetail() {
- 
-  }
-
+    const closeDetail = () => {
+        const detailProfile = document.querySelector('.detail-profile');
+        detailProfile.style.transform = 'translateX(350px)';
+    }
+    
   return(
       <div className='body'>
           {/* <Sidebar /> */}
@@ -123,7 +123,7 @@ function showDetail() {
         <div className="detail-profile">
             <div>
                 <div className="navbar-detail">
-                <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} />
+                <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
                 <h2>Profil</h2>
                 </div>
                 <div className="detail-image-profile">

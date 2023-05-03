@@ -7,16 +7,16 @@ import Kalam from "../assets/murid-kalam.png";
 import Wira from "../assets/murid-wira.svg";
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import { useNavigate, Link } from 'react-router-dom';
+import ImgProfil from '../assets/img-profil.svg';
 
 function DataMurid(){
     const navText = "Data Murid";
-
     const navigate = useNavigate();
 
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const closeDetail = () => {
+        const detailProfile = document.querySelector('.detail-profile');
+        detailProfile.style.transform = 'translateX(350px)';
+    }
 
     return(
         <div>
@@ -102,9 +102,9 @@ function DataMurid(){
                             </div>
                             <div className='btn-action'>
                                 <div className='card-content-guru-right'>
-                                    <button id='popup-button' type='submit' onClick={handleShow}><Icon icon="mi:options-vertical" width="40" color="#2A93D5"/></button>
+                                    <button id='popup-button' type='submit'><Icon icon="mi:options-vertical" width="40" color="#2A93D5"/></button>
                                 </div>
-                                <div id='popup-menu' className='popup-menu' show={show} onHide={handleClose}>
+                                <div id='popup-menu' className='popup-menu'>
                                     <ul>
                                         <li><a href="#" id="detail-murid">Detail</a></li>
                                         <li><a href="#" id="edit-murid">Edit</a></li>
@@ -144,6 +144,34 @@ function DataMurid(){
                         </div>
                     </div>
                 </main>
+            </div>
+
+            <div className="detail-profile">
+                <div>
+                    <div className="navbar-detail">
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
+                    <h2>Profil</h2>
+                    </div>
+                    <div className="detail-image-profile">
+                        <img src={ImgProfil} alt="" className="detail-img-profile" />
+                    </div>
+                    <p className="judul-detail">Email</p>
+                    <p className="value-detail">erikayanti@smkrus.sch.id</p>
+                    <p className="judul-detail">Nama</p>
+                    <p className="value-detail">Erika Yanti, S.Pd</p>
+                    <p className="judul-detail">Devisi</p>
+                    <p className="value-detail">Admin</p>
+                </div>
+                <div className="con-btn-detail-profile">
+                    <button className="forget-password" id="btn-forget-pass">
+                    <Icon icon="material-symbols:key-outline-rounded" width="30" />
+                    <p>Ganti Password</p>
+                    </button>
+                    <button className="logout" id="btn-logout">
+                    <Icon icon="material-symbols:logout-rounded" width="30" />
+                    <p>Logout</p>
+                    </button>
+                </div>
             </div>
         </div>
     );

@@ -12,10 +12,10 @@
     box-sizing: border-box;
 }
 
+/* sidebar */
 aside {
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     width: 250px;
     box-shadow: 3px 0px 20px rgba(0, 0, 0, 0.1);
@@ -52,7 +52,6 @@ aside ul {
 }
 
 aside ul li {
-    /* background: #2A93D5; */
     border-radius: 10px;
     padding: 10px 0 10px 13px;
     font-family: 'Poppins';
@@ -62,14 +61,13 @@ aside ul li {
     align-items: center;
     font-size: 15px;
     gap: 15px;
-    /* line-height: 22px; */
     color: #4B4B4B;
     cursor: pointer;
 }
 
 aside ul li:hover {
-    background: #2A93D5;
-    color: #FFFFFF;
+    background: #fff;
+    color: var(--color-aksen);
 }
 
 aside ul li.active {
