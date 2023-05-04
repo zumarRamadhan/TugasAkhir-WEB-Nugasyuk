@@ -24,6 +24,17 @@ import KBM from './guru/PageKbm';
 import PagePengumpulan from './guru/PagePengumpulan';
 import Jadwal from './guru/JadwalKbm';
 // end role guru
+// role wali murid
+import BerandaWaliMurid from './waliMurid/BerandaWaliMurid';
+import PageTugasWaliMurid from './waliMurid/PageTugas';
+import PageMapelWaliMurid from './waliMurid/PageMapel';
+import PageJadwalWaliMurid from './waliMurid/JadwalKbm';
+// end role wali murid
+// role bk
+import BerandaBk from './guruBk/BerandaBk';
+import JanjiKonseling from './guruBk/JanjiKonseling';
+import PageChat from './guruBk/PageChat';
+// end role bk
 import Notfound from './Notfound';
 
 
@@ -54,6 +65,17 @@ function App() {
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>
         {/* end role guru */}
+        {/* role wali murid */}
+        <Route path='/walimurid/berandawalimurid' element={<BerandaWaliMurid/>}/>
+        <Route path='/walimurid/pagetugas' element={<PageTugasWaliMurid/>}/>
+        <Route path='/walimurid/pagemapel' element={<PageMapelWaliMurid/>}/>
+        <Route path='/walimurid/pagekbm' element={<PageJadwalWaliMurid/>}/>
+        {/* end role wali murid */}
+        {/* role bk */}
+        <Route path='/bk/berandabk' element={<BerandaBk/>}/>
+        <Route path='/bk/janjikonseling' element={<JanjiKonseling/>}/>
+        <Route path='/bk/chat' element={<PageChat/>}/>
+        {/* end role bk */}
 
         <Route path="/*" element={<Notfound/>} />  
       </Routes>

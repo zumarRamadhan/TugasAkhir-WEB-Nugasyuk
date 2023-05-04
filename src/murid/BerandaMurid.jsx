@@ -50,7 +50,9 @@ function BerandaMurid(){
                 <div className="header-dashboard">
                     <div className="head-left">
                         <h1 className="intro-head">Halo <span className="name-admin">Wira</span></h1>
-                        <p className="desc-head">Selamat datang di admin nugasyuk, anda bisa memonitoring data guru, siswa dan lain lain.</p>
+                        <p className="desc-head" style={{width:"550px"}}>
+                            Selamat datang di nugasyuk, anda bisa memonitoring tugas dan materi yang diberikan oleh guru.
+                        </p>
                     </div>
                     <div className="head-right">
                         <div className="kotak1"></div>
