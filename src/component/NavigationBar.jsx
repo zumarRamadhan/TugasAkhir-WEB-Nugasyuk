@@ -6,12 +6,9 @@ import React, { useState } from 'react';
 
 function Navigation(props) {
 
-  const [isDetailShown, setIsDetailShown] = useState(false);
-
   const showDetail = () => {
     const detailProfile = document.querySelector('.detail-profile');
     detailProfile.style.transform = 'translateX(0px)';
-    setIsDetailShown(true);
   }
 
   return (

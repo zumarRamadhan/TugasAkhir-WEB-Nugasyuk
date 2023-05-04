@@ -1,13 +1,14 @@
-import '../cssAll/BerandaMurid.css';
+// import '../cssAll/BerandaMurid.css';
 import ImgProfil from '../assets/profil-guru.svg';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
 
 function NavbarGuru(props){
-    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const showDetail = () => {
+        const detailProfile = document.querySelector('.detail-profile');
+        detailProfile.style.transform = 'translateX(0px)';
+    }
 
     return(
         <div>
@@ -15,7 +16,7 @@ function NavbarGuru(props){
                 <div className="navbar">
                     <h1>{props.text}</h1>
                     <div className="img-profile" style={{ cursor: "pointer" }}>
-                        <img src={ImgProfil} alt="img-profile" onClick={handleShow} />
+                        <img src={ImgProfil} alt="img-profile" onClick={showDetail}/>
                     </div>
                 </div>
             </nav>

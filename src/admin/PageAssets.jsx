@@ -153,7 +153,7 @@ function PageAssets(){
             </div>
 
             <div className="detail-profile">
-                <div>
+                <div className='content-detail'>
                     <div className="navbar-detail">
                     <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
                     <h2>Profil</h2>

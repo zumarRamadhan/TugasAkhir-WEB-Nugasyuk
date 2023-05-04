@@ -6,9 +6,10 @@ import Navigation from "../component/NavigationBar";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
+import { useState } from "react";
 import ImgProfil from '../assets/img-profil.svg';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import { useState } from "react";
+
 import { useNavigate, Link } from 'react-router-dom';
 
 
@@ -211,10 +212,10 @@ function BerandaAdmin (){
         </div>
 
         <div className="detail-profile">
-            <div>
+            <div className='content-detail'>
                 <div className="navbar-detail">
-                <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
-                <h2>Profil</h2>
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
+                    <h2>Profil</h2>
                 </div>
                 <div className="detail-image-profile">
                     <img src={ImgProfil} alt="" className="detail-img-profile" />
@@ -237,6 +238,7 @@ function BerandaAdmin (){
                 </button>
             </div>
         </div>
+        
     </div> /*body*/
   );
 }
