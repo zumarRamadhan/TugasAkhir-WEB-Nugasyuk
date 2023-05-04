@@ -236,7 +236,6 @@ nav .navbar img {
     display: none;
     justify-content: center;
     align-items: center;
-    background: #00000057;
 }
 
 .detail-forget-password {
@@ -355,6 +354,11 @@ nav .navbar img {
     justify-content: center;
     align-items: center;
     animation-fill-mode: forwards;
+}
+
+.img-logout{
+    max-width: 230px;
+    height: auto;
 }
 
 .detail-logout {
