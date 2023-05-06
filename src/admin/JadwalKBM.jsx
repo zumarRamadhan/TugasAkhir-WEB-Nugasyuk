@@ -1,4 +1,4 @@
-import '../cssAll/JadwalKBM.css';
+import '../cssAll/admin/JadwalKBM.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';

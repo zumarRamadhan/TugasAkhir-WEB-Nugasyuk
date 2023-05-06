@@ -1,0 +1,13 @@
+.header-guru-left {
+    display: flex;
+    gap: 15px;
+}
+
+.header-guru .header-guru-left .btn-add-guru p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #FFFFFF;
+}

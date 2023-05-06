@@ -94,7 +94,7 @@ option[selected] {
     display: flex;
     align-items: center;
     width: 300px;
-    background-color: #f5f5f5;
+    background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 8px;
@@ -113,7 +113,9 @@ option[selected] {
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 8px;
+    /* padding: 8px; */
+    width: 40px;
+    height: 40px;
     margin-left: 8px;
     cursor: pointer;
 }

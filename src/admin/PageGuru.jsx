@@ -1,4 +1,4 @@
-import '../cssAll/DataGuru.css';
+import '../cssAll/admin/DataGuru.css';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';

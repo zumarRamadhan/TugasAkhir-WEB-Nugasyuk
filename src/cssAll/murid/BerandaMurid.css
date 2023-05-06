@@ -127,3 +127,91 @@
     color: var(--color-aksen);
 }
 /* end content informaton */
+
+
+/* page konseling */
+.content-konseling{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.header-konseling {
+    background: var(--color-primer);
+    width: 720px;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 87px 0 87px 70px;
+    display: flex;
+}
+
+.intro-head-konseling {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    /* line-height: 45px; */
+    color: var(--color-aksen);
+}
+
+.name-murid {
+    background: var(--color-aksen);
+    padding: 3px 14px;
+    color: var(--color-primer);
+    border-radius: 10px;
+}
+
+.desc-head-konseling {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    /* line-height: 150%; */
+    color: #4b4b4b;
+    margin-top: 15px;
+}
+
+.card-hubungi-bk{
+    background: #C762F7;
+    width: 100%;
+    border-radius: 20px;
+    padding: 30px 0 25px 25px;
+    display: flex; 
+}
+
+.desc-head-hubungi-bk{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    /* line-height: 150%; */
+    color: #fff;
+    margin-top: 15px;
+}
+
+.img-hubungi-bk img{
+    width: 250px;
+    z-index: 1;
+}
+
+.btn-hub-bk{
+    display: flex;
+    background: var(--color-primer);
+    color: #C762F7;
+    border: none;
+    padding: 13px 35px;
+    width: 200px;
+    font-weight: 600;
+    height: 50px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 10px;
+    gap: 10px;
+    z-index: 5;
+}
+
+.kotak1 {
+    background-color: #58AFE5;
+}
+/* end page konseling */

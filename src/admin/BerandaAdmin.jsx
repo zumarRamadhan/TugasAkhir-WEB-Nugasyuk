@@ -1,4 +1,4 @@
-import '../cssAll/BerandaAdmin.css';
+import '../cssAll/admin/BerandaAdmin.css';
 // import '../App.css';
 import { Icon } from '@iconify/react';
 import Sidebar from "../component/Sidebar";

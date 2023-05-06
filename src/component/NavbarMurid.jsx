@@ -1,4 +1,4 @@
-import '../cssAll/BerandaMurid.css';
+import '../cssAll/murid/BerandaMurid.css';
 import ImgProfil from '../assets/profil-murid.svg';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';

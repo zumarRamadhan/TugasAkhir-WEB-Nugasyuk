@@ -1,4 +1,4 @@
-import '../cssAll/BerandaGuru.css';
+import '../cssAll/guru/BerandaGuru.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';

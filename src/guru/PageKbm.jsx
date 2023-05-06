@@ -1,4 +1,4 @@
-import '../cssAll/BerandaGuru.css';
+import '../cssAll/guru/PageKbmGuru.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -37,8 +37,30 @@ function PageKbm(){
             </aside>
             <div className="container-content">
                 <NavbarGuru text={navText}/>
-          </div>
-        </div>
+                    <div className="main">
+                        <div className='header-guru'>
+                            <div className='header-guru-left'>
+                                <select id='kelas' name='kelas'>
+                                    <option value="semua" selected>-- Semua Kelas --</option>
+                                    <option value="jurusan">11 PPLG 1</option>
+                                    <option value="jurusan">11 PPLG 2</option>
+                                    <option value="jurusan">11 ANIM 1</option>
+                                    <option value="jurusan">11 ANIM 2</option>
+                                    <option value="jurusan">11 DKV 1</option>
+                                    <option value="jurusan">11 DKV 2</option>
+                                </select>
+
+                                <form className='search-box'>
+                                    <input type='text' placeholder='Cari...'/>
+                                    <button type='submit'>
+                                        <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     );
 }
 

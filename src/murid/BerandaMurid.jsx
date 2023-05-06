@@ -1,4 +1,4 @@
-import '../cssAll/BerandaMurid.css';
+import '../cssAll/murid/BerandaMurid.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
