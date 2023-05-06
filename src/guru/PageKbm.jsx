@@ -3,12 +3,66 @@ import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import NavbarGuru from '../component/NavbarGuru';
-
+import ImgLogout from "../assets/68582-log-out.gif";
+import passIcon from '../assets/pass-icon.svg';
+import mataIcon from '../assets/icon-mata.svg';
+import { useState } from "react";
+import ImgProfil from '../assets/profil-guru.svg';
 
 function PageKbm(){
     const navText = "KBM";
     const navigate = useNavigate();
 
+    const closeDetail = () => {
+        const detailProfile = document.querySelector('.detail-profile');
+        detailProfile.style.transform = 'translateX(350px)';
+    }
+    
+    const showLogoutPopup = () => {
+        const popupLogout = document.querySelector('#popup-logout');
+        popupLogout.style.display = 'flex';
+        popupLogout.style.animation = 'slide-down 0.3s ease-in-out';
+    }
+    
+    const closeLogoutPopup = () => {
+        const popupLogout = document.querySelector('#popup-logout');
+        setTimeout(() => popupLogout.style.display = "none", 250);
+        popupLogout.style.animation = 'slide-up 0.3s ease-in-out';
+    }
+    
+    const showForgetPopup = () => {
+        const popupForget = document.querySelector('#popup-forget');
+        popupForget.style.display = 'flex';
+        popupForget.style.animation = 'slide-down 0.3s ease-in-out';
+    }
+
+    const closeForgetPopupAndClearInput = () => {
+        const popupForget = document.querySelector('#popup-forget');
+        setTimeout(() => popupForget.style.display = "none", 250);
+        popupForget.style.animation = 'slide-up 0.3s ease-in-out';
+        const clearpassword = document.querySelector('#password', '#newPassword', '#confirmPassword');
+        clearpassword.value = "";
+        const clearpasswordNew = document.querySelector('#newPassword');
+        clearpasswordNew.value = "";
+        const clearpasswordConfirm = document.querySelector('#confirmPassword');
+        clearpasswordConfirm.value = "";
+    }
+
+    const [passwordType, setPasswordType] = useState("password");
+    const [passwordTypeNew, setPasswordTypeNew] = useState("password");
+    const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
+
+    function togglePasswordVisibility() {
+        setPasswordType(passwordType === "password" ? "text" : "password");
+    }
+
+    function togglePasswordVisibilityNew() {
+        setPasswordTypeNew(passwordTypeNew === "password" ? "text" : "password");
+    }
+
+    function togglePasswordVisibilityConfirm() {
+        setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
+    }
     return(
         <div>
             <aside>
