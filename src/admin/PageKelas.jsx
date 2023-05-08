@@ -95,54 +95,6 @@ function Pagekelas() {
     },
   ];
 
-  const cardDataKelas = valueDataKelas.map((kelas) => {
-    return (
-      <div className="card-kelas" id="dkv" key={kelas.id}>
-        <div className="icon-card-kelas">
-          <Icon icon="fluent:class-24-regular" width="40" />
-        </div>
-
-        <div className="con-card-right-kelas">
-          <div className="con-card-left-kelas">
-            <p className="title-card-kelas">Kelas</p>
-            <p className="value-card-kelas">{kelas.namaKelas}</p>
-          </div>
-          <div className="detail-kelas">
-            <div className="card-content-kelas-right">
-              <button id="popup-button-kelas" onClick={clickDetail}>
-                <Icon icon="mi:options-vertical" width="40" color="#2A93D5" />
-              </button>
-            </div>
-            <div id="popup-menu-kelas" className="popup-menu-kelas">
-              <ul>
-                <li>
-                  <a href="#" id="detail-guru">
-                    Detail
-                  </a>
-                </li>
-                <li>
-                  <a href="#" id="edit-guru">
-                    Edit
-                  </a>
-                </li>
-                <li>
-                  <a href="#" id="hapus-guru">
-                    Hapus
-                  </a>
-                </li>
-                <li>
-                  <a href="#" id="tambah-guru">
-                    Tambah Code
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }, this);
-
   function handleToggle(e) {
     console.log(e);
     setActive(!active);

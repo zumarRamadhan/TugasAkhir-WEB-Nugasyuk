@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.header-mapel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-add-mapel {
+    display: flex;
+    background: var(--color-aksen);
+    color: var(--color-primer);
+    border: none;
+    padding: 13px 35px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 10px;
+    gap: 5px;
+}
+
+.btn-add-mapel:hover {
+    background: #1D77AF;
+}
+
+.header-mapel-left {
+    display: flex;
+    gap: 15px;
+}
+
+.header-mapel .header-mapel-left .btn-add-mapel p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #FFFFFF;
+}
+
+.detail-jumlah-mapel {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #2A93D5;
+}
+
+/* Styling untuk dropdown */
+select {
+    width: 250px;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #C4C4C4;
+    appearance: none;
+    padding: 10px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /* background: url('https://api.iconify.design/ic/round-navigate-next.svg?color=%232a93d5&width=30');
+    background-repeat: no-repeat; */
+    /* background-position: calc(100% - 10px) center; */
+}
+
+/* Styling untuk opsi yang dipilih */
+option {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #4B4B4B;
+    background-color: var(--color-primer);
+}
+
+
+/*  */
+
+.search-box {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.search-box input[type="text"] {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.search-box button {
+    background-color: #008CBA;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    /* padding: 8px; */
+    width: 40px;
+    height: 40px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+/*  */
+
+.content-mapel {
+    margin-top: 30px;
+}
+
+.con-card-mapel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media only screen and (max-width: 1240px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (min-width: 1640px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (min-width: 2030px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.card-mapel {
+    border-radius: 20px;
+    max-width: 405px;
+    position: relative;
+}
+
+.image-card-mapel {
+    width: 100%;
+    height: auto;
+}
+
+.content-card-mapel {
+    display: flex;
+    /* justify-content: space-between; */
+    /* transform: translateY(-300%); */
+    position: absolute;
+    top: 0;
+    padding-left: 30px;
+    width: 100%;
+}
+
+.card-mapel-left {
+    margin-top: 30px;
+}
+
+.mata-pelajaran {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--color-primer);
+}
+
+.nama-guru-mapel {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: px;
+    color: var(--color-primer);
+}
+
+.kelas-mapel {
+    right: 0;
+    position: absolute;
+    padding: 4px 18px;
+    background: #4B4B4B;
+    height: max-content;
+    border-radius: 0px 7px 0px 10px;
+    color: var(--color-primer);
+}
