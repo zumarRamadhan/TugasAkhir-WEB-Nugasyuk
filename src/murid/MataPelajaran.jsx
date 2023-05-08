@@ -1,3 +1,4 @@
+import '../cssAll/murid/Mapel.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -6,6 +7,13 @@ import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
+import ImgJanji from '../assets/img-janjikonseling.svg';
+import ImgBinggris from '../assets/img-binggris.svg';
+import ImgOlahraga from '../assets/img-olahraga.svg';
+import ImgMtk from '../assets/img-mtk.svg';
+import ImgPai from '../assets/img-pai.svg';
+import ImgBk from '../assets/img-bk.svg';
+import ImgSejarah from '../assets/img-sejarah.svg';
 import { useState } from "react";
 
 function Mapel(){
@@ -95,6 +103,166 @@ function Mapel(){
             </aside>
             <div className="container-content">
                 <NavbarMurid text={navText}/>
+                <div className="main">
+                    <div className="content-mapel">
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #8287F8, #555AD3)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    B. Inggris
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Budiono, S.Pd</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgBinggris} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #CD76EA, #8930A7)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    Olahraga
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Asep, S.Pd</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgOlahraga} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #86A6C3, #5B8AB6)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    Matematika
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Rini, S.Pd</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgMtk} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #30B7AF, #30BCB4)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    PAI
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Edi, S.Pd.I</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgPai} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #DB63B2, #B93B8F)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    BK
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Sumijah, S.Pd</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgBk} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #8B8ECF, #6A6EC7)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    Sejarah
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Rini, S.Pd</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgSejarah} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #F67575, #C04646)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    Game
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Suep, S.kom</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgPai} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #FFAF64, #EB9546)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    Web
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Sugeng, S.Kom</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgBk} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #FFEC3D, #F0C93A)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    Desktop
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Paimin, S.Kom</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgSejarah} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #40E45E, #28C044)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    DBMS
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Psijan, S.kom</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgPai} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #3DA2B9, #2A8AA0)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    Mobile
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Kurniawan, S.Kom</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgBk} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-mapel" style={{background: "linear-gradient(to bottom right, #ED7BA4, #D7487B)"}}>
+                            <div className="head-left">
+                                <p className="nama-mapel" style={{width:"350px"}}>
+                                    IoT
+                                </p>
+                                <div className="nama-guru">
+                                    <p>Paimin, S.Kom</p>
+                                </div>
+                                <div className="img-mapel">
+                                    <img src={ImgSejarah} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div className="popup-logout" id="popup-logout">

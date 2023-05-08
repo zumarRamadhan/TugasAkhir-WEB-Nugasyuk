@@ -8,6 +8,7 @@ import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import { useState } from "react";
 import ImgHubBk from '../assets/img-chatbk.svg';
+import ImgJanji from '../assets/img-janjikonseling.svg';
 
 function PageKonseling(){
     const navText = "Bimbingan Konseling";
@@ -117,6 +118,28 @@ function PageKonseling(){
                                 <button className='btn-hub-bk'>
                                     <Icon icon="ph:chat-circle-dots" width="20"/>
                                 <p>Hubungi BK</p>
+                            </button>
+                            </div>
+                        </div>
+                        <div className="history-janji-bk">
+                            <div className="head-left">
+                                {/* <h1 className="intro-head-konseling">Halo <span className="name-murid">Wira</span></h1>
+                                <p className="desc-head-konseling" style={{width:"550px"}}>
+                                    Apakah anda ingin bimbingan konseling atau ada hal yang ingin ditanyakan kepada guru BK?
+                                </p> */}
+                            </div>
+                        </div>
+                        <div className="card-janji-bk">
+                            <div className="head-left">
+                                <p className="desc-head-hubungi-bk" style={{width:"350px"}}>
+                                    Jika ada yang ingin ditanyakan kepada guru BK melalui chat
+                                </p>
+                                <div className="img-janji-bk">
+                                    <img src={ImgJanji} alt="" />
+                                </div>
+                                <button className='btn-janji-bk'>
+                                    <Icon icon="uiw:date" width="20"/>
+                                <p>Buat Janji</p>
                             </button>
                             </div>
                         </div>
