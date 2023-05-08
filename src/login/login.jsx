@@ -1,7 +1,8 @@
 import '../login/login.css'
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
-import greenLoginIcon from '../assets/login-animation.gif';
+import greenLoginIcon from '../assets/73782-education.gif';
+// import greenLoginIcon from '../assets/login-animation.gif';
 import userIcon from '../assets/user-icon.svg';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import passIcon from '../assets/pass-icon.svg';

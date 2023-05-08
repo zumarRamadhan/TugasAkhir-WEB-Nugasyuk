@@ -96,6 +96,137 @@ function PageTugas(){
             </aside>
             <div className="container-content">
                 <NavbarMurid text={navText}/>
+                <div className="main">
+                    <div className='header-guru'>
+                        <div className='header-guru-left'>
+                            <select id='guru' name='guru'>
+                                <option value="semua" selected>-- Semua Tugas --</option>
+                                <option value="produktif">Guru Produktif</option>
+                                <option value="nonproduktif">Guru Nonproduktif</option>
+                                <option value="bk">Guru BK</option>f
+                            </select>
+
+                            <select id='guru' name='guru'>
+                                <option value="semua" selected>-- Semua Mapel --</option>
+                                <option value="produktif">Guru Produktif</option>
+                                <option value="nonproduktif">Guru Nonproduktif</option>
+                                <option value="bk">Guru BK</option>f
+                            </select>
+
+                            <form className='search-box'>
+                                <input type='text' placeholder='Cari...'/>
+                                <button type='submit'>
+                                    <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div className="content-task">
+                        <div className="card-task" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie-information" style={{ background: "#DDDDDD" }}>
+                                    <Icon icon="uiw:time-o" width="30" style={{ color: "#797979" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="title-indie-information">Sejarah Gojek</p>
+                                    <p className="value-indie-information">Rini, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">6 Mar 2023</p>
+                                <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>7 Mar 2023</span></p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-task" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie-information" style={{ background: "#FFFA87" }}>
+                                    <Icon icon="uiw:time-o" width="30" style={{ color: "#CBC41A" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="title-indie-information">Application Letter</p>
+                                    <p className="value-indie-information">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">6 Mar 2023</p>
+                                <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>7 Mar 2023</span></p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-task" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie-information" style={{ background: "#FFC6C6" }}>
+                                    <Icon icon="uiw:time-o" width="30" style={{ color: "#FF3F3F" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="title-indie-information">Jump</p>
+                                    <p className="value-indie-information">Suep, S.Kom</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">5 Mar 2023</p>
+                                <p className="deadline-time" style={{color: "#FF3F3F"}}>Deadline : <span>5 Mar 2023</span></p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-task" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie-information" style={{ background: "#FFC6C6" }}>
+                                    <Icon icon="material-symbols:check-small-rounded" width="50" style={{ color: "#FF3F3F" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="title-indie-information">Project Monitoring Suhu</p>
+                                    <p className="value-indie-information">Bagoes, S.Kom</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">5 Mar 2023</p>
+                                <p className="deadline-time" style={{color: "#FF3F3F"}}>Deadline : <span>5 Mar 2023</span></p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-task" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie-information" style={{ background: "#D5FFC6" }}>
+                                    <Icon icon="material-symbols:check-small-rounded" width="50" style={{ color: "#84E063" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="title-indie-information">Aksara Jawa</p>
+                                    <p className="value-indie-information">Sumiyati, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">5 Mar 2023</p>
+                                <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>5 Mar 2023</span></p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+                        
+                        <div className="card-task" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie-information" style={{ background: "#D5FFC6" }}>
+                                    <Icon icon="material-symbols:check-small-rounded" width="50" style={{ color: "#84E063" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="title-indie-information">Aksara Jawa</p>
+                                    <p className="value-indie-information">Sumiyati, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">5 Mar 2023</p>
+                                <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>5 Mar 2023</span></p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
             <div className="popup-logout" id="popup-logout">

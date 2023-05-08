@@ -27,6 +27,7 @@
 .img-mapel img{
     width: 100px;
     z-index: 1;
+    margin-top: 20px;
     /* display: flex; */
     /* justify-content: flex-end; */
 }
@@ -34,7 +35,6 @@
 .img-mapel{
     display: flex;
     justify-content: flex-end;
-    width: 100%;
 }
 
 .nama-mapel{

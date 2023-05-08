@@ -1,7 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap");
 
 :root {
-    --color-primer: #FFFFFF;
-    --color-aksen: #2A93D5;
+  --color-primer: #ffffff;
+  --color-aksen: #2a93d5;
+}
+
+.content-task {
+  margin-top: 30px;
+}
+
+.card-task {
+  padding: 15px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+  border-radius: 20px;
+  border: 1px solid #e3e3e3;
+  background: var(--color-primer);
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.indiecator-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon-indie-information {
+  background: rgba(221, 221, 221, 1);
+  /* padding: 20px; */
+  width: 70px;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 10px;
+}
+
+.title-indie-information {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  /* line-height: 22px; */
+  color: #4b4b4b;
+}
+
+.value-indie-information {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  /* line-height: 30px; */
+  color: #797979;
+}
+
+.indiecator-right {
+  display: flex;
+  gap: 50px;
+}
+
+.icon-navigate {
+  color: var(--color-aksen);
+}
+
+.time-upload {
+  margin-right: 80px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: #797979;
+}
+
+.deadline-time {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  margin-right: 50px;
 }
