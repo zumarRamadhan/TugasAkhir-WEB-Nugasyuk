@@ -62,8 +62,8 @@ function Login (){
 
           else
           return[
-            window.location.href('admin/berandaadmin'),
-            sessionStorage.setItem('token',loginapi.token)
+            window.location.replace('admin/berandaadmin'),
+            sessionStorage.setItem('token',JSON.stringify(loginapi.token))
           ]
     }
   return ( 

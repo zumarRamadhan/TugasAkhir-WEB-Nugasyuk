@@ -6,7 +6,7 @@ import Navigation from "../component/NavigationBar";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImgProfil from '../assets/img-profil.svg';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 
@@ -67,6 +67,45 @@ function BerandaAdmin (){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const savedItem = sessionStorage.getItem("token");
+    
+    const token = JSON.parse(savedItem)
+
+    const [admin, setUsers] = useState([])
+
+    const fetchAdminData = () => {
+        fetch("http://127.0.0.1:8000/api/dataadmin", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            },
+        })
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            setUsers(data)
+          })
+      }
+
+      useEffect(() => {
+        fetchAdminData()
+      }, [])
+
+    const logoutClick = () =>{
+        fetch("http://127.0.0.1:8000/api/logout", {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+                },
+            })
+
+            sessionStorage.removeItem('token');
+            window.location.replace('/login')
+    }
     
 
   return(
@@ -114,7 +153,7 @@ function BerandaAdmin (){
             <main className='main'>
                 <div className="header-dashboard">
                     <div className="head-left">
-                        <h1 className="intro-head">Halo <span className="name-admin">Erika Yanti, S.pd</span></h1>
+                        <h1 className="intro-head">Halo <span className="name-admin">{admin.nama}</span></h1>
                         <p className="desc-head">Selamat datang di admin nugasyuk, anda bisa memonitoring data guru, siswa dan lain lain.</p>
                     </div>
                     <div className="head-right">
@@ -129,7 +168,7 @@ function BerandaAdmin (){
                         </div>
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Siswa Keseluruhan</p>
-                            <p className="value-indie"><span>1000</span> Siswa</p>
+                            <p className="value-indie"><span>{admin.jumlah_siswa}</span> Siswa</p>
                         </div>
                     </div>
 
@@ -140,7 +179,7 @@ function BerandaAdmin (){
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Kelas Keseluruhan</p>
                             <p className="value-indie">
-                            <span>25</span> Kelas</p>
+                            <span>{admin.jumlah_kelas}</span> Kelas</p>
                         </div>
                     </div>
 
@@ -150,7 +189,7 @@ function BerandaAdmin (){
                         </div>
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Guru Keseluruhan</p>
-                            <p className="value-indie"><span>30</span> Guru</p>
+                            <p className="value-indie"><span>{admin.jumlah_guru}</span> Guru</p>
                         </div>
                     </div>
 
@@ -161,7 +200,7 @@ function BerandaAdmin (){
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Jurusan</p>
                             <p className="value-indie">
-                            <span>5</span> Jurusan</p>
+                            <span>{admin.jumlah_jurusan}</span> Jurusan</p>
                         </div>
                     </div>
                 </div>
@@ -177,7 +216,7 @@ function BerandaAdmin (){
                 <p className="desc-logout">Anda yakin ingin keluar?</p>
                 <div className="con-btn-logout">
                     <button type="button" className="btn-batal">Batal</button>
-                    <button type="button" className="btn-keluar">Keluar</button>
+                    <button type="button" onClick={logoutClick} className="btn-keluar">Keluar</button>
                 </div>
             </div>
         </div>
