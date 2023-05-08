@@ -71,10 +71,11 @@ function BerandaGuru(){
     const [guru, setUsers] = useState([])
 
     const fetchGuruData = () => {
-        fetch("http://127.0.0.1:8000/api/dataguru", {
+        fetch("https://amanah-furniture.site/api/dataguru", {
             method: "GET",
             headers: {
             "Content-Type": "application/json",
+            'Origin': 'https://amanah-furniture.site/api/dataguru',
             Authorization: `Bearer ${token}`,
             },
         })

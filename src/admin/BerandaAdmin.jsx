@@ -74,11 +74,17 @@ function BerandaAdmin (){
 
     const [admin, setUsers] = useState([])
 
+    // const headers = new Headers();
+    // headers.set("Content-type", "application/json");
+    // headers.set("Access-Control-Allow-Origin", "*");
+    // headers.set()
+
     const fetchAdminData = () => {
-        fetch("http://127.0.0.1:8000/api/dataadmin", {
+        fetch("https://amanah-furniture.site/api/dataadmin",{
             method: "GET",
             headers: {
             "Content-Type": "application/json",
+            'Origin': 'https://amanah-furniture.site/api/dataadmin',
             Authorization: `Bearer ${token}`,
             },
         })
@@ -95,11 +101,11 @@ function BerandaAdmin (){
       }, [])
 
     const logoutClick = () =>{
-        fetch("https://amanah-furniture.site/api/logout", {
+        fetch('https://amanah-furniture.site/api/dataadmin',{
                 method: "GET",
                 headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
+                "Access-Control-Allow-Headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control",
                 },
             })
 

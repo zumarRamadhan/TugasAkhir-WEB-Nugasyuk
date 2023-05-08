@@ -27,9 +27,16 @@ function Login (){
     let email = e.target.email.value;
     let password = e.target.password.value;
 
-    let loginapi = await fetch('https://amanah-furniture.site/api/login', {
+    let loginapi = await fetch("https://amanah-furniture.site/api/login",{
+        // url: "https://amanah-furniture.site/api/login",
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          // 'application/x-www-form-urlencoded'
+          // 'Origin': 'https://amanah-furniture.site/api/login',
+          // accept: 'application/json',
+          // 'Access-Control-Allow-Credentials: true'
+        },
         body: JSON.stringify({
           email: email,
           password: password
