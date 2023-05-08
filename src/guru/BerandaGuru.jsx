@@ -6,7 +6,7 @@ import NavbarGuru from '../component/NavbarGuru';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImgProfil from '../assets/profil-guru.svg';
 
 function BerandaGuru(){
@@ -63,6 +63,46 @@ function BerandaGuru(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const savedItem = sessionStorage.getItem("token");
+    
+    const token = JSON.parse(savedItem)
+
+    const [guru, setUsers] = useState([])
+
+    const fetchGuruData = () => {
+        fetch("http://127.0.0.1:8000/api/dataguru", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            },
+        })
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            setUsers(data)
+          })
+      }
+
+      useEffect(() => {
+        fetchGuruData()
+      }, [])
+
+    const logoutClick = () =>{
+        fetch("http://127.0.0.1:8000/api/dataguru", {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+                },
+            })
+
+            sessionStorage.removeItem('token');
+            window.location.replace('/login')
+    }
+
     return(
         <div>
             <aside>
@@ -94,7 +134,7 @@ function BerandaGuru(){
                 <main className='main'>
                     <div className="header-dashboard">
                         <div className="head-left">
-                            <h1 className="intro-head">Halo <span className="name-admin">Budiono, S.Pd</span></h1>
+                            <h1 className="intro-head">Halo <span className="name-admin">{guru.nama_guru}</span></h1>
                             <p className="desc-head" style={{width:"550px"}}> Selamat datang di nugasyuk, anda bisa memonitoring siswa, memberikan materi dan tugas.</p>
                         </div>
                         <div className="head-right">
@@ -110,7 +150,7 @@ function BerandaGuru(){
                             <div className="desc-indie">
                                 <p className="title-indie">Jumlah Kelas Yang Diajar</p>
                                 <p className="value-indie">
-                                <span>6</span> Kelas
+                                <span>{guru.jumlah_kelas}</span> Kelas
                                 </p>
                             </div>
                         </div>
@@ -122,7 +162,7 @@ function BerandaGuru(){
                             <div className="desc-indie">
                                 <p className="title-indie">Jumlah Materi Yang Diberikan</p>
                                 <p className="value-indie">
-                                <span>3</span> Materi
+                                <span>{guru.jumlah_materi}</span> Materi
                                 </p>
                             </div>
                         </div>
@@ -134,7 +174,7 @@ function BerandaGuru(){
                             <div className="desc-indie">
                                 <p className="title-indie">Jumlah Tugas Yang Diberikan</p>
                                 <p className="value-indie">
-                                <span>3</span> Tugas
+                                <span>{guru.jumlah_tugas}</span> Tugas
                                 </p>
                             </div>
                         </div>
@@ -151,7 +191,7 @@ function BerandaGuru(){
                     <p className="desc-logout">Anda yakin ingin keluar?</p>
                     <div className="con-btn-logout">
                         <button type="button" className="btn-batal">Batal</button>
-                        <button type="button" className="btn-keluar">Keluar</button>
+                        <button type="button" onClick={logoutClick} className="btn-keluar">Keluar</button>
                     </div>
                 </div>
             </div>
