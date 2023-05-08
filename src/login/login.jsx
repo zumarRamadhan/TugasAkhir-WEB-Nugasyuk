@@ -27,7 +27,7 @@ function Login (){
     let email = e.target.email.value;
     let password = e.target.password.value;
 
-    let loginapi = await fetch('http://127.0.0.1:8000/api/login', {
+    let loginapi = await fetch('https://amanah-furniture.site/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

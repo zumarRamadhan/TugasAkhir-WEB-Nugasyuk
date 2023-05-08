@@ -91,7 +91,7 @@ function BerandaGuru(){
       }, [])
 
     const logoutClick = () =>{
-        fetch("http://127.0.0.1:8000/api/logout", {
+        fetch("https://amanah-furniture.site/api/logout", {
                 method: "GET",
                 headers: {
                 "Content-Type": "application/json",
