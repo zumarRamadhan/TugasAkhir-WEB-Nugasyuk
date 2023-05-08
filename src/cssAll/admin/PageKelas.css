@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.header-kelas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-add-kelas {
+    display: flex;
+    background: var(--color-aksen);
+    color: var(--color-primer);
+    border: none;
+    padding: 13px 35px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 10px;
+    gap: 5px;
+}
+
+.btn-add-kelas:hover {
+    background: #1D77AF;
+}
+
+.header-kelas-left {
+    display: flex;
+    gap: 15px;
+}
+
+.header-kelas .header-kelas-left .btn-add-kelas p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #FFFFFF;
+}
+
+.detail-jumlah-kelas {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #2A93D5;
+}
+
+/* Styling untuk dropdown */
+select {
+    width: 250px;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #C4C4C4;
+    appearance: none;
+    padding: 10px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url('https://api.iconify.design/ic/round-navigate-next.svg?color=%232a93d5&width=30');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+}
+
+/* Styling untuk opsi yang dipilih */
+option {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #4B4B4B;
+    background-color: var(--color-primer);
+
+}
+
+option[selected] {
+    /* outline: none; */
+    /* font-weight: bold; */
+}
+
+/*  */
+
+.search-box {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.search-box input[type="text"] {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.search-box button {
+    background-color: #008CBA;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    /* padding: 8px; */
+    width: 40px;
+    height: 40px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+/*  */
+
+.content-kelas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.icon-card-kelas {
+    padding: 20px;
+    color: #2A93D5;
+    background: #D8F0FF;
+    border-radius: 10px;
+}
+
+.card-kelas {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.con-card-right-kelas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 15px;
+}
+
+.value-card-kelas {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #2A93D5;
+}
+
+.title-card-kelas {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #2A93D5;
+}
+
+.card-content-kelas-right {
+    /* display: flex; */
+    /* justify-content: flex-end; */
+}
+
+.card-content-kelas-right button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.popup-menu-kelas {
+    display: none;
+    /* display: block; */
+    /* bottom: px; */
+    position: absolute;
+    /* right: 30px; */
+    background-color: #fff;
+    /* width: 148px; */
+    z-index: 1;
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+}
+
+.popup-menu-kelas.active {
+    display: block;
+}
+
+
+.popup-menu-kelas ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* .popup-menu ul li {
+    border-bottom: 1px solid #ccc;
+}
+
+.popup-menu ul li:last-child {
+    border-bottom: none;
+} */
+
+.popup-menu-kelas ul li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+/* .popup-menu ul li a:hover {
+    background-color: transparent;
+} */
+
+#popup-menu-kelas li:nth-child(1):hover {
+    background-color: #D8F0FF;
+    border-radius: 9px 9px 0px 0px;
+}
+
+#popup-menu-kelas li:nth-child(2):hover {
+    background-color: #D8F0FF;
+}
+
+#popup-menu-kelas li:nth-child(3):hover {
+    background-color: #FFD8D8;
+}
+
+#popup-menu-kelas li:nth-child(4):hover {
+    background-color: #D8F0FF;
+    border-radius: 0px 0px 9px 9px;
+}
