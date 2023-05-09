@@ -2,8 +2,8 @@ import '../cssAll/murid/Mapel.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import Navigation from "../component/NavigationBar";
-import ImgProfil from '../assets/img-profil.svg';
+import Navigation from "../component/NavbarMurid";
+import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
@@ -18,7 +18,7 @@ import cardMapel8 from '../assets/cardAssets/cardMapel8.svg';
 import cardMapel9 from '../assets/cardAssets/cardMapel9.svg';
 import { useState } from "react";
 
-function MataPelajaran(){
+function PageMapel(){
 
     const navText = "Mata Pelajaran";
     const navigate = useNavigate();
@@ -179,37 +179,30 @@ function MataPelajaran(){
         <div>
             {/* <Sidebar/> */}
             <aside>
-                <h1 className="title-form-login" onClick={() => navigate('/admin/berandaadmin')} style={{cursor: "pointer"}}>
-                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>nugasyuk
+                <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
+                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                    nugasyuk
                 </h1>
                 <ul>
-                    <li onClick={() => navigate('/admin/berandaadmin')}>
+                    <li onClick={() => navigate('/murid/berandamurid')}>
                         <Icon icon="iconoir:home-simple" width="20" />
                         Beranda
                     </li>
-                    <li onClick={() => navigate('/admin/pageguru')} >
-                        <Icon icon="la:chalkboard-teacher" width="20" />
-                        Guru
+                    <li onClick={() => navigate('/murid/pagetugas')} >
+                        <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
+                        Tugas
                     </li>
-                    <li onClick={() => navigate('/admin/pagemurid')}>
-                        <Icon icon="ph:student" width="20" />
-                        Murid
-                    </li>
-                    <li onClick={() => navigate('/admin/pagekelas')}>
-                        <Icon icon="fluent:class-24-regular" width="20" />
-                        Kelas
-                    </li>
-                    <li className='active' onClick={() => navigate('/admin/matapelajaran')}>
-                        <Icon icon="fluent-mdl2:education" width="20" />
-                        Mata Pelajaran
-                    </li>
-                    <li onClick={() => navigate('/admin/jadwalkbm')}>
-                        <Icon icon="uiw:date" width="20" />
+                    <li onClick={() => navigate('/murid/pagekbm')}>
+                        <Icon icon="uiw:date" width="18"/>
                         Jadwal KBM
                     </li>
-                    <li onClick={() => navigate('/admin/pageassets')}>
-                        <Icon icon="ic:outline-file-copy" width="20" />
-                        Assets
+                    <li className='active' onClick={() => navigate('/murid/pagemapel')}>
+                        <Icon icon="fluent-mdl2:education" width="18"/>
+                        Mata Pelajaran
+                    </li>
+                    <li onClick={() => navigate('/murid/pagekonseling')}>
+                        <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
+                        Konseling
                     </li>
                 </ul>
             </aside>
@@ -227,7 +220,7 @@ function MataPelajaran(){
                                     <p className="mata-pelajaran">{data.namaMapel}</p>
                                     <p className="nama-guru-mapel">{data.guruPengajar}</p>
                                 </div>
-                                <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div>
+                                {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
                                 </div>
                             </div>
                             ))}
@@ -289,11 +282,17 @@ function MataPelajaran(){
                         <img src={ImgProfil} alt="" className="detail-img-profile" />
                     </div>
                     <p className="judul-detail">Email</p>
-                    <p className="value-detail">erikayanti@smkrus.sch.id</p>
+                    <p className="value-detail">zumarramadhan@smkrus.sch.id</p>
+                    <p className="judul-detail">Nama Pengguna</p>
+                    <p className="value-detail">Zumar</p>
                     <p className="judul-detail">Nama</p>
-                    <p className="value-detail">Erika Yanti, S.Pd</p>
-                    <p className="judul-detail">Devisi</p>
-                    <p className="value-detail">Admin</p>
+                    <p className="value-detail">Muhammad Zumar Ramadhan</p>
+                    <p className="judul-detail">Jurusan</p>
+                    <p className="value-detail">PPLG</p>
+                    <p className="judul-detail">Kelas</p>
+                    <p className="value-detail">11 PPLG 1</p>
+                    <p className="judul-detail">NIS</p>
+                    <p className="value-detail">04449</p>
                 </div>
                 <div className="con-btn-detail-profile">
                     <button className="forget-password" id="btn-forget-pass" onClick={showForgetPopup}>
@@ -310,4 +309,4 @@ function MataPelajaran(){
     );
 }
 
-export default MataPelajaran;
+export default PageMapel;
