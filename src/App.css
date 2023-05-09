@@ -486,7 +486,8 @@ nav .navbar img {
 /* footer notfound page*/
 .footer{
     color: #fff;
-    padding-top: 280px;
+    bottom: 0;
+    position: relative;
     opacity: 50%;
 }
 /* end footer notfound page */
