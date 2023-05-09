@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.content-mapel {
+    margin-top: 30px;
+}
+
+.con-card-mapel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media only screen and (max-width: 1240px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (min-width: 1640px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (min-width: 2030px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.card-mapel {
+    border-radius: 20px;
+    max-width: 405px;
+    position: relative;
+}
+
+.image-card-mapel {
+    width: 100%;
+    height: auto;
+}
+
+.content-card-mapel {
+    display: flex;
+    /* justify-content: space-between; */
+    /* transform: translateY(-300%); */
+    position: absolute;
+    top: 0;
+    padding-left: 30px;
+    width: 100%;
+}
+
+.card-mapel-left {
+    margin-top: 30px;
+}
+
+.mata-pelajaran {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--color-primer);
+}
+
+.nama-guru-mapel {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: px;
+    color: var(--color-primer);
+}
+
+.kelas-mapel {
+    right: 0;
+    position: absolute;
+    padding: 4px 18px;
+    background: #4B4B4B;
+    height: max-content;
+    border-radius: 0px 7px 0px 10px;
+    color: var(--color-primer);
+}
