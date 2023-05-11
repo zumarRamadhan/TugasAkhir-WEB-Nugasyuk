@@ -1,13 +1,302 @@
-.header-guru-left {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.header-jadwalKBM {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-add-jadwalKBM {
+    display: flex;
+    background: var(--color-aksen);
+    color: var(--color-primer);
+    border: none;
+    padding: 13px 35px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 10px;
+    gap: 5px;
+}
+
+.btn-add-jadwalKBM:hover {
+    background: #1D77AF;
+}
+
+.header-jadwalKBM-left {
     display: flex;
     gap: 15px;
 }
 
-.header-guru .header-guru-left .btn-add-guru p {
+.header-jadwalKBM .header-jadwalKBM-left .btn-add-jadwalKBM p {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 15px;
     /* line-height: 22px; */
     color: #FFFFFF;
+}
+
+/*  */
+
+.content-jadwalKBM {
+    margin-top: 30px;
+}
+
+.con-card-jadwalKBM {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.cardJadwalKbm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    width: 100%;
+    height: 350px;
+    border-radius: 20px;
+    color: var(--color-primer);
+}
+
+.cardJadwalKbm:nth-child(1) {
+    background: linear-gradient(180deg, #2A93D5 0%, #2785C0 100%);
+}
+
+.cardJadwalKbm:nth-child(2) {
+    background: linear-gradient(180deg, #51C0FF 0%, #3EA3DD 100%);
+}
+
+.cardJadwalKbm:nth-child(3) {
+    background: linear-gradient(180deg, #58C47D 0%, #58A4C4 0.01%, #4C9ABC 100%);
+}
+
+.cardJadwalKbm:nth-child(4) {
+    background: linear-gradient(180deg, #EB55A3 0%, #D94A94 100%);
+}
+
+.cardJadwalKbm:nth-child(5) {
+    background: linear-gradient(180deg, #B462D0 0%, #A557C0 100%);
+}
+
+.cardJadwalKbm:nth-child(6) {
+    background: linear-gradient(180deg, #585CC4 0%, #474CB6 100%);
+}
+
+.titleJadwalKbm p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.titleJadwalKbm h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.bottomjadwalKbm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conImgGuru-Kbm {
+    display: flex;
+    position: relative;
+    /* gap: 10px; */
+}
+
+.imageGuru-Kbm {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    position: relative;
+    /* right: 25px; */
+    background: #C4C4C4;
+}
+
+.imgGuru-Kbm {
+    position: relative;
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.imgGuru-Kbm:nth-child(2) {
+    right: 30px;
+}
+
+.imgGuru-Kbm:nth-child(3) {
+    right: 60px;
+}
+
+.imgGuru-Kbm:nth-child(4) {
+    right: 90px;
+}
+
+.imgGuru-Kbm:nth-child(5) {
+    right: 120px;
+}
+
+.imgGuru-Kbm:nth-child(6) {
+    right: 150px;
+}
+
+.imgGuru-Kbm:nth-child(7) {
+    right: 180px;
+}
+
+.imgGuru-Kbm:nth-child(8) {
+    right: 210px;
+}
+
+.btnDetail-Kbm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    /* width: 50px;
+    height: 50px; */
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.336);
+    cursor: pointer;
+}
+
+.btnDetail-Kbm:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.popup-kbm {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 200;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-popup-kbm {
+    width: 547px;
+    background: #ffffff;
+    /* padding: 30px; */
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.nav-popup-kbm {
+    display: flex;
+    /* justify-content: center; */
+    padding: 30px 30px 10px 30px;
+    /* justify-content: space-between; */
+    /* background: #2785C0; */
+    /* padding-bottom: 10px; */
+}
+
+/* .nav-popup-kbm .btn-close{
+    position: relative;
+    left: 0;
+} */
+
+.nav-popup-kbm h2 {
+    margin: 0 auto;
+}
+
+.con-popup-kbm {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px 30px 30px 30px;
+    height: 460px;
+}
+
+.popup-card-kbm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.image-card-kbm {
+    width: 70px;
+    border-radius: 100%;
+}
+
+.test1 {
+    display: flex;
+    gap: 30px;
+}
+
+.test2 {
+    display: flex;
+    gap: 50px;
+}
+
+.mapel-card-kbm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mapel-card-kbm p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--color-aksen);
+}
+
+.mapel-card-kbm .guruPengampu {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #4B4B4B;
+}
+
+.con-btn-card-kbm {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-edit-card-kbm {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFF625;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-delete-card-kbm {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FF3F3F;
+    border-radius: 5px;
+    color: var(--color-primer);
+    cursor: pointer;
 }

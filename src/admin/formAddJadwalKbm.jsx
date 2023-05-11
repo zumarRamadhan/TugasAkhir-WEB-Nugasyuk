@@ -1,4 +1,4 @@
-import '../cssAll/admin/PageAssets.css';
+import '../cssAll/admin/formAddJadwalKbm.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -7,12 +7,10 @@ import ImgProfil from '../assets/img-profil.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import pageAssets from "../assets/pageAssets.svg";
 import { useState } from "react";
 
-function PageAssets(){
-
-    const navText = "Assets";
+function FormAddJadwalKbm() {
+    const navText = "Tambah data";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -65,6 +63,204 @@ function PageAssets(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const valueDataKelas = [
+        {
+            id: 1,
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+            // assets: cardMapel1,
+        },
+        {
+            id: 2,
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel2,
+        },
+        {
+            id: 3,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel3,
+        },
+        {
+            id: 4,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel4,
+        },
+        {
+            id: 5,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel5,
+        },
+        {
+            id: 6,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel6,
+        },
+        {
+            id: 7,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel7,
+        },
+        {
+            id: 8,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel8,
+        },
+        {
+            id: 9,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel9,
+        },
+    ];
+
+    const valueDataGuru = [
+        {
+            id: 1,
+            kodeGuru: "BI1",
+            namaGuru: "Budiono, S.Pd",
+            mapel: "B. Inggris",
+            // profileImg: imgCardKbm,
+        },
+        {
+            id: 2,
+            kodeGuru: "OLA1",
+            namaGuru: "Asep, S.Pd",
+            mapel: "Olahraga",
+            // profileImg: imgCardKbm,
+        },
+        {
+            id: 3,
+            kodeGuru: "MTK1",
+            namaGuru: "Rini, S.Pd",
+            mapel: "Matematika",
+            // profileImg: imgCardKbm,
+        },
+        {   
+            id: 4,
+            kodeGuru: "PAI1",
+            namaGuru: "Edi, S.Pd.I",
+            mapel: "PAI",
+            // profileImg: imgCardKbm,
+        },
+    ]
+
+    const dataHari = [
+        {
+            id: 1,
+            hari: "Senin",
+        },
+        {
+            id: 2,
+            hari: "Selasa",
+        },
+        {
+            id: 3,
+            hari: "Rabu",
+        },
+        {
+            id: 4,
+            hari: "Kamis",
+        },
+        {
+            id: 5,
+            hari: "Jumat",
+        },
+        {
+            id: 6,
+            hari: "Sabtu",
+        },
+    ]
+
+    const dataJamPelajaran = [ 
+        {
+            id: 1,
+            jamKe: 1,
+            lamajam: 40,
+        },
+        {
+            id: 2,
+            jamKe: 2,
+            lamajam: 40,
+        },
+        {
+            id: 3,
+            jamKe: 3,
+            lamajam: 40,
+        },
+        {
+            id: 4,
+            jamKe: 4,
+            lamajam: 40,
+        },
+        {
+            id: 5,
+            jamKe: 5,
+            lamajam: 40,
+        },
+        {
+            id: 6,
+            jamKe: 6,
+            lamajam: 40,
+        },
+        {
+            id: 7,
+            jamKe: 7,
+            lamajam: 40,
+        },
+        {
+            id: 8,
+            jamKe: 8,
+            lamajam: 40,
+        },
+        {
+            id: 9,
+            jamKe: 9,
+            lamajam: 40,
+        },
+        {
+            id: 10,
+            jamKe: 10,
+            lamajam: 40,
+        },
+        {
+            id: 11,
+            jamKe: 11,
+            lamajam: 40,
+        },
+        {
+            id: 12,
+            jamKe: 12,
+            lamajam: 40,
+        },
+        {
+            id: 13,
+            jamKe: 13,
+            lamajam: 40,
+        },
+        {
+            id: 14,
+            jamKe: 14,
+            lamajam: 40,
+        },
+    ]
+
     return(
         <div>
             {/* <Sidebar/> */}
@@ -93,11 +289,11 @@ function PageAssets(){
                     <Icon icon="fluent-mdl2:education" width="20" />
                     Mata Pelajaran
                 </li>
-                <li onClick={() => navigate('/admin/jadwalkbm')}>
+                <li className='active' onClick={() => navigate('/admin/jadwalkbm')}>
                     <Icon icon="uiw:date" width="20" />
                     Jadwal KBM
                 </li>
-                <li className='active' onClick={() => navigate('/admin/pageassets')}>
+                <li onClick={() => navigate('/admin/pageassets')}>
                     <Icon icon="ic:outline-file-copy" width="20" />
                     Assets
                 </li>
@@ -105,17 +301,52 @@ function PageAssets(){
             </aside>
             <div className='container-content'>
                 <Navigation text={navText}/>
-                <main className='main-pageAssets'>
-                    <div className="content-pageAssets">
-                        <div className="con-content-pageAssets">
-                            <div className="img-pageAssets">
-                                <img src={pageAssets} alt="" className="imagepageAssets" />
+                <main className='main'>
+                    <div className="content-formKbm">
+                        <form action="" className="container-formKbm">
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Kode guru</div>
+                                <input type="text" className="input-formKbm" placeholder='kode guru'/>
                             </div>
-                            <div className="btn-pageAssets">
-                                <Icon icon="material-symbols:upload-rounded" width="25"/>
-                                <p>Upload File</p>
+                            
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Kelas</div>
+                                <select id="" name="" className='selectForm'>
+                                    <option hidden>-- Kelas --</option>
+                                    {valueDataKelas.map((data) => (
+                                        <option value={data.jurusan + data.tingkatan + data.kelas}>{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</option>
+                                    ))}
+                                </select>
                             </div>
-                        </div>
+
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Hari</div>
+                                <select id="" name="" className='selectForm'>
+                                    <option hidden>-- Hari --</option>
+                                    {dataHari.map((data) => (
+                                        <option>{data.hari}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Jam ke</div>
+                                <select id="" name="" className='selectForm'>
+                                    {dataJamPelajaran.map((data) => (
+                                        <option>{data.jamKe}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Jumlah jam</div>
+                                <input type="text" className="input-formKbm" placeholder='Jumlah jam'/>
+                            </div>
+
+                            <div className="con-btn-form">
+                                <button type="submin" className="btn-form" style={{cursor: "pointer"}}>Simpan perubahan</button>
+                            </div>
+                        </form>
                     </div>
                 </main>
             </div>
@@ -194,4 +425,4 @@ function PageAssets(){
     );
 }
 
-export default PageAssets;
+export default FormAddJadwalKbm;
