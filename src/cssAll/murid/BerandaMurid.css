@@ -43,7 +43,11 @@
 .icon-indie {
     /* color: #EB55A3; */
     background: var(--color-primer);
-    padding: 15px;
+    /* padding: 15px; */
+    width: 70px;
+    height: 70px;
+    align-items: center;
+    justify-content: center;
     border-radius: 10px;
 }
 
@@ -100,9 +104,12 @@
 
 .icon-indie-information{
     background: rgba(221, 221, 221, 1);
-    padding: 20px;
-    /* height: 70px;
-    width: 70px; */
+    /* padding: 20px; */
+    width: 70px;
+    height: 70px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
     border-radius: 10px;
 }
 

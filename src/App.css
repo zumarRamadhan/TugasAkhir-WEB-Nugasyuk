@@ -100,6 +100,12 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 32px 50px;
+    box-shadow: none;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.navbar.shadow {
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.20);
 }
 
 nav .navbar h1 {
@@ -121,7 +127,8 @@ nav .navbar img {
 /* end navbar */
 
 .main {
-    margin-top: 118px;
+    margin-top: 128px;
+    margin-bottom: 20px;
     padding: 0 50px;
 }
 
@@ -486,7 +493,8 @@ nav .navbar img {
 /* footer notfound page*/
 .footer{
     color: #fff;
-    padding-top: 280px;
+    bottom: 0;
+    position: relative;
     opacity: 50%;
 }
 /* end footer notfound page */

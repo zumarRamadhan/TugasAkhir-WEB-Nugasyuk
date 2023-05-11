@@ -186,12 +186,10 @@ option[selected] {
     display: none;
     /* display: block; */
     /* bottom: px; */
-    /* left: 0; */
     position: absolute;
     /* right: 30px; */
     background-color: #fff;
-    width: 148px;
-    transform: translateX(-96px);
+    /* width: 148px; */
     z-index: 1;
     border: 1px solid #C4C4C4;
     border-radius: 10px;

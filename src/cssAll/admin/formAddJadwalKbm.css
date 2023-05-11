@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.selectForm {
+    width: 100%;
+    padding: 20px 15px;
+    height: max-content;
+    font-size: 20px;
+}
+
+.container-formKbm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* width: 100%; */
+}
+
+.con-formKbm, .con-btn-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.title-formKbm {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #4B4B4B;
+}
+
+.input-formKbm {
+    padding: 20px 15px;
+    border-radius: 10px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #000000;
+    border: 1px solid #C4C4C4;
+}
+
+.con-btn-form button {
+    background: #2A93D5;
+    border-radius: 5px;
+    color: var(--color-primer);
+    border: none;
+    padding: 10px 0;
+}
+
+.con-btn-form button:hover {
+    background: #1D77AF;
+}

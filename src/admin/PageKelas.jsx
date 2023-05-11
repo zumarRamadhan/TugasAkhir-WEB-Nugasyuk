@@ -72,6 +72,13 @@ function Pagekelas() {
     );
   }
 
+  // buatkan fungsi dengan nama clickDetail maka akan membuat class popup-menu-kelas muncul, dan jika diklik lagi maka akan menghilang dan bisa di gunakan lebih dari 1 kali
+  const clickDetail = () => {
+    const popupMenuKelas = document.querySelector(".popup-menu-kelas");
+    popupMenuKelas.style.display = "flex";
+    // popupMenuKelas.style.animation = 'slide-down 0.3s ease-in-out';
+  };
+
   // create array for data kelas and for card-kelas
   const valueDataKelas = [
     {
@@ -80,11 +87,11 @@ function Pagekelas() {
     },
     {
       id: 2,
-      namaKelas: "XII DKV 2",
+      namaKelas: "XII RPL 2",
     },
     {
       id: 3,
-      namaKelas: "XII ANIMASI 3",
+      namaKelas: "XII RPL 3",
     },
   ];
 
