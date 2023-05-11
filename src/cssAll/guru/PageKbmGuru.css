@@ -7,12 +7,12 @@
     --color-sekunder: #D8F0FF;
 }
 
-.header-jadwalKBM-Guru {
+.header-pageKbm-Guru {
     display: flex;
     gap: 15px;
 }
 
-.content-jadwalKBM-Guru {
+.content-pageKbm-Guru {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px; 
@@ -20,7 +20,7 @@
     margin-top: 30px;
 }
 
-.card-jadwalKBM-Guru {
+.card-pageKbm-Guru {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,13 +31,13 @@
     padding: 10px;
 }
 
-.card-jadwalKBM-Guru-left {
+.card-pageKbm-Guru-left {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.img-jadwalKBM-Guru {
+.img-pageKbm-Guru {
     color: var(--color-aksen);
     padding: 20px;
     display: flex;
@@ -47,18 +47,18 @@
     border-radius: 10px;
 }
 
-.desc-jadwalKBM-Guru {
+.desc-pageKbm-Guru {
     color: var(--color-aksen);
     font-family: 'Poppins';
 }
 
-.title-jadwalKBM-Guru {
+.title-pageKbm-Guru {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
 }
 
-.kelas-jadwalKBM-Guru {
+.kelas-pageKbm-Guru {
     font-style: normal;
     font-weight: 500;
     font-size: 22px;

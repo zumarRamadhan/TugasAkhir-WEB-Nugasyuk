@@ -1,4 +1,4 @@
-import '../cssAll/guru/BerandaGuru.css';
+import '../cssAll/guru/JadwalKbm.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -8,9 +8,11 @@ import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import { useState } from "react";
 import ImgProfil from '../assets/profil-guru.svg';
+import damiImgMurid from '../assets/damiImgMurid.png';
+
 
 function PagePengumpulan(){
-    const navText = "Pengumpulan";
+    const navText = "KBM";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -63,6 +65,160 @@ function PagePengumpulan(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const valueDataKelas = [
+        {
+            id: 1,
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+            // assets: cardMapel1,
+        },
+        {
+            id: 2,
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel2,
+        },
+        {
+            id: 3,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel3,
+        },
+        {
+            id: 4,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel4,
+        },
+        {
+            id: 5,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel5,
+        },
+        {
+            id: 6,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel6,
+        },
+        {
+            id: 7,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel7,
+        },
+        {
+            id: 8,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel8,
+        },
+        {
+            id: 9,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel9,
+        },
+        {
+            id: 10,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel10,
+        },
+    ];
+
+    const dayData = [
+        {
+            id: 1,
+            hari: "Senin",
+        },
+        {
+            id: 2,
+            hari: "Selasa",
+        },
+        {
+            id: 3,
+            hari: "Rabu",
+        },
+        {
+            id: 4,
+            hari: "Kamis",
+        },
+        {
+            id: 5,
+            hari: "Jumat",
+        },
+        {
+            id: 6,
+            hari: "Sabtu",
+        },
+    ]
+
+    const dataCardMurid = [
+        {
+            id: 1,
+            imgProfile: damiImgMurid,
+            name: "Ahmad Aziz Wira Widodo",
+            email: "ahmadaziz@smkrus.sch.id",
+            kelas: valueDataKelas[2].kelas+" "+valueDataKelas[2].jurusan.toUpperCase()+" "+valueDataKelas[2].tingkatan,
+        },
+        {
+            id: 2,
+            imgProfile: damiImgMurid,
+            name: "Bayu Septian Kurniawan",
+            email: "bayuseptian@smkrus.sch.id",
+            kelas: valueDataKelas[2].kelas+" "+valueDataKelas[2].jurusan.toUpperCase()+" "+valueDataKelas[2].tingkatan,
+        },
+        {
+            id: 3,
+            imgProfile: damiImgMurid,
+            name: "Javier Gavra Abhinaya",
+            email: "javiergavra@smkrus.sch.id",
+            kelas: valueDataKelas[4].kelas+" "+valueDataKelas[4].jurusan.toUpperCase()+" "+valueDataKelas[4].tingkatan,
+        },
+        {
+            id: 4,
+            imgProfile: damiImgMurid,
+            name: "Khoiru Rizal Kalam Ismail",
+            email: "khoirurizal@smkrus.sch.id",
+            kelas: valueDataKelas[4].kelas+" "+valueDataKelas[4].jurusan.toUpperCase()+" "+valueDataKelas[4].tingkatan,
+        },
+        {
+            id: 5,
+            imgProfile: damiImgMurid,
+            name: "Muhammad Nur Wahid Bimawan",
+            email: "nurwahid@smkrus.sch.id",
+            kelas: valueDataKelas[8].kelas+" "+valueDataKelas[8].jurusan.toUpperCase()+" "+valueDataKelas[8].tingkatan,
+        },
+        {
+            id: 6,
+            imgProfile: damiImgMurid,
+            name: "Muh Wahyu Ageng Pambudi",
+            email: "muhwahyu@smkrus.schid",
+            kelas: valueDataKelas[8].kelas+" "+valueDataKelas[8].jurusan.toUpperCase()+" "+valueDataKelas[8].tingkatan,
+        },
+        {
+            id: 7,
+            imgProfile: damiImgMurid,
+            name: "Muhammad Vitto Corlenone",
+            email: "vittocorleone@smkrus.sch.id",
+            kelas: valueDataKelas[9].kelas+" "+valueDataKelas[9].jurusan.toUpperCase()+" "+valueDataKelas[9].tingkatan,
+        },
+    ]
+            
+
     return(
         <div>
             <aside>
@@ -91,7 +247,39 @@ function PagePengumpulan(){
             </aside>
             <div className="container-content">
                 <NavbarGuru text={navText}/>
+                <div className="main">
+                    <div className="header-jadwalKBM-Guru">
+                        <div className="header-jadwalKBM-left">
+                            <select id="jadwalKbm" name="jadwalKbm">
+                                {dayData.map((data) => (
+                                    <option>{data.hari}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div className="content-jadwalKBM-Guru">
+                        {dataCardMurid.map((data) => (
+                        <div className="card-jadwalKBM-Guru">
+                            <div className="card-jadwalKBM-Guru-left">
+                                <div className="img-jadwalKbm-Guru">
+                                    <img src={data.imgProfile} alt="" className="image-JadwalKbm-Guru"/>
+                                </div>
+                                <div className="desc-card-jadwalKBM-Guru">
+                                    <p className="name-card-jadwalKBM-Guru">{data.name}</p>
+                                    <p className="email-card-jadwalKBM-Guru">{data.email}</p>
+                                </div>
+                            </div>
+                            <div className="detaiKelas-JadwalKBM-Guru">
+                                <p>{data.kelas}</p>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+
+                </div>
             </div>
+
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
                     <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeLogoutPopup}/>

@@ -1,4 +1,4 @@
-import '../cssAll/guru/PageKbmGuru.css';
+import '../cssAll/guru/BerandaGuru.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -10,7 +10,7 @@ import { useState } from "react";
 import ImgProfil from '../assets/profil-guru.svg';
 
 function PageJadwalKbm(){
-    const navText = "KBM";
+    const navText = "Pengumpulan";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -63,73 +63,6 @@ function PageJadwalKbm(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
-
-    const valueDataKelas = [
-        {
-            id: 1,
-            kelas: '10',
-            jurusan: 'pplg',
-            tingkatan: '1',
-            // assets: cardMapel1,
-        },
-        {
-            id: 2,
-            kelas: "10",
-            jurusan: "pplg",
-            tingkatan: "2",
-            // assets: cardMapel2,
-        },
-        {
-            id: 3,
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "1",
-            // assets: cardMapel3,
-        },
-        {
-            id: 4,
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "2",
-            // assets: cardMapel4,
-        },
-        {
-            id: 5,
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "1",
-            // assets: cardMapel5,
-        },
-        {
-            id: 6,
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "2",
-            // assets: cardMapel6,
-        },
-        {
-            id: 7,
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "1",
-            // assets: cardMapel7,
-        },
-        {
-            id: 8,
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "2",
-            // assets: cardMapel8,
-        },
-        {
-            id: 9,
-            kelas: "11",
-            jurusan: "animasi",
-            tingkatan: "1",
-            // assets: cardMapel9,
-        },
-    ];
-
     return(
         <div>
             <aside>
@@ -158,29 +91,7 @@ function PageJadwalKbm(){
             </aside>
             <div className="container-content">
                 <NavbarGuru text={navText}/>
-                <div className="main">
-                    <div className="header-jadwalKBM-Guru">
-                        <div className="header-jadwalKBM-left">
-                            <select id="jadwalKbm" name="jadwalKbm">
-                                {valueDataKelas.map((data) => (
-                                    <option value={data.jurusan + data.tingkatan + data.kelas}>{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <form className="search-box">
-                            <input type="text" placeholder="Cari..." />
-                            <button>
-                            <Icon
-                                icon="material-symbols:search-rounded"
-                                width="20"
-                            ></Icon>
-                            </button>
-                        </form>
-                    </div>
-                    
-                </div>
             </div>
-
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
                     <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeLogoutPopup}/>

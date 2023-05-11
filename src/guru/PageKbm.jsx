@@ -150,7 +150,7 @@ function PageKbm(){
                     <Icon icon="uiw:date" width="18"/>
                     Pengumpulan
                 </li>
-                <li onClick={() => navigate('/guru/pagejadwalkbm')}>
+                <li onClick={() => navigate('/guru/pageJadwalKbm')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Jadwal KBM
                 </li>
@@ -159,9 +159,9 @@ function PageKbm(){
             <div className="container-content">
                 <NavbarGuru text={navText}/>
                 <div className="main">
-                    <div className="header-jadwalKBM-Guru">
-                        <div className="header-jadwalKBM-left">
-                            <select id="jadwalKbm" name="jadwalKbm">
+                    <div className="header-pageKbm-Guru">
+                        <div className="header-pageKbm-left">
+                            <select id="pageKbm" name="pageKbm">
                                 {valueDataKelas.map((data) => (
                                     <option value={data.jurusan + data.tingkatan + data.kelas}>{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</option>
                                 ))}
@@ -178,16 +178,16 @@ function PageKbm(){
                         </form>
                     </div>
 
-                    <div className="content-jadwalKBM-Guru">
+                    <div className="content-pageKbm-Guru">
                         {valueDataKelas.map((data) => (
-                        <div className="card-jadwalKBM-Guru" style={{cursor: "pointer"}}>
-                            <div className="card-jadwalKBM-Guru-left">
-                                <div className="img-jadwalKBM-Guru">
+                        <div className="card-pageKbm-Guru" style={{cursor: "pointer"}}>
+                            <div className="card-pageKbm-Guru-left">
+                                <div className="img-pageKbm-Guru">
                                     <Icon icon="fluent:class-24-regular" width={40}/>
                                 </div>
-                                <div className="desc-jadwalKBM-Guru">
-                                    <p className="title-jadwalKBM-Guru">Kelas</p>
-                                    <p className="kelas-jadwalKBM-Guru">{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</p>
+                                <div className="desc-pageKbm-Guru">
+                                    <p className="title-pageKbm-Guru">Kelas</p>
+                                    <p className="kelas-pageKbm-Guru">{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</p>
                                 </div>
                             </div>
                             <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
