@@ -9,62 +9,79 @@
 
 .content-jadwalKBM-Guru {
     margin-top: 30px;
+    padding: 17px;
+    /* background: #FFFFFF; */
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+}
+
+.valueDay {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #4B4B4B;
+
+}
+
+.con-card-jadwalKBM-Guru {
+    padding: 10px 5px;
+    gap: 10px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .card-jadwalKBM-Guru {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background: #FFFFFF;
-    border: 1px solid #E3E3E3;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border: 1px solid #C4C4C4;
     border-radius: 10px;
+    padding: 10px 20px;
+    align-items: center;
 }
 
 .card-jadwalKBM-Guru-left {
     display: flex;
     align-items: center;
-    gap: 30px;
+    width: 35%;
+    justify-content: space-between;
 }
 
-.img-jadwalKbm-Guru {
-    max-width: 100px;
-    max-height: 100px;
-}
-
-.image-JadwalKbm-Guru {
-    width: 100%;
-    height: auto;
-    border-radius: 100%;
-}
-
-.name-card-jadwalKBM-Guru {
+.id-jadwalKBM-Guru {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
-    color: var(--color-aksen);
-}
-
-.email-card-jadwalKBM-Guru {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
+    font-size: 17px;
     color: #4B4B4B;
 }
 
-.detaiKelas-JadwalKBM-Guru {
+.icon-jadwalKBM-Guru {
+    background: var(--color-sekunder);
+    color: var(--color-aksen);
+    padding: 10px;
+    border-radius: 100%;
+}
+
+.dataKelas-jadwalKBM-Guru {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
-    font-size: 15px;
-    padding: 4px 15px;
-    background: var(--color-sekunder);
+    font-size: 17px;
     color: var(--color-aksen);
-    border-radius: 5px;
+}
+
+.dataMapel-jadwalKBM-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    color: #4B4B4B;
+}
+
+.hourValue-jadwalKBM-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    color: #4B4B4B;
 }

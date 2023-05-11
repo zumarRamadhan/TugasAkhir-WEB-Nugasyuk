@@ -1,4 +1,4 @@
-import '../cssAll/guru/JadwalKbm.css';
+import '../cssAll/guru/PagePengumpulan.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -12,7 +12,7 @@ import damiImgMurid from '../assets/damiImgMurid.png';
 
 
 function PagePengumpulan(){
-    const navText = "KBM";
+    const navText = "Pengumpulan";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -164,7 +164,7 @@ function PagePengumpulan(){
             id: 6,
             hari: "Sabtu",
         },
-    ]
+    ];
 
     const dataCardMurid = [
         {
@@ -216,7 +216,7 @@ function PagePengumpulan(){
             email: "vittocorleone@smkrus.sch.id",
             kelas: valueDataKelas[9].kelas+" "+valueDataKelas[9].jurusan.toUpperCase()+" "+valueDataKelas[9].tingkatan,
         },
-    ]
+    ];
             
 
     return(
@@ -239,7 +239,7 @@ function PagePengumpulan(){
                     <Icon icon="uiw:date" width="18"/>
                     Pengumpulan
                 </li>
-                <li onClick={() => navigate('/guru/pagejadwalkbm')}>
+                <li onClick={() => navigate('/guru/pageJadwalKbm')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Jadwal KBM
                 </li>
@@ -248,29 +248,44 @@ function PagePengumpulan(){
             <div className="container-content">
                 <NavbarGuru text={navText}/>
                 <div className="main">
-                    <div className="header-jadwalKBM-Guru">
-                        <div className="header-jadwalKBM-left">
-                            <select id="jadwalKbm" name="jadwalKbm">
-                                {dayData.map((data) => (
-                                    <option>{data.hari}</option>
-                                ))}
-                            </select>
+                    <div className="header-Pengumpulan-Guru">
+                        <div className="header-Pengumpulan-left">
+                            <div className="header-pageKbm-left">
+                                <select id="pageKbm" name="pageKbm">
+                                    <option value="semua">-- Semua Kelas --</option>
+                                    {valueDataKelas.map((data) => (
+                                        <option value={data.jurusan + data.tingkatan + data.kelas}>-- {data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan} --</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <form className="search-box">
+                                <input type="text" placeholder="Cari..." />
+                                <button>
+                                <Icon
+                                    icon="material-symbols:search-rounded"
+                                    width="20"
+                                ></Icon>
+                                </button>
+                            </form>
+                        </div>
+                        <div className="header-Pengumpulan-right">
+                            <p>{dataCardMurid.length} MURID</p>
                         </div>
                     </div>
                     
-                    <div className="content-jadwalKBM-Guru">
+                    <div className="content-Pengumpulan-Guru">
                         {dataCardMurid.map((data) => (
-                        <div className="card-jadwalKBM-Guru">
-                            <div className="card-jadwalKBM-Guru-left">
-                                <div className="img-jadwalKbm-Guru">
-                                    <img src={data.imgProfile} alt="" className="image-JadwalKbm-Guru"/>
+                        <div className="card-Pengumpulan-Guru">
+                            <div className="card-Pengumpulan-Guru-left">
+                                <div className="img-Pengumpulan-Guru">
+                                    <img src={data.imgProfile} alt="" className="image-Pengumpulan-Guru"/>
                                 </div>
-                                <div className="desc-card-jadwalKBM-Guru">
-                                    <p className="name-card-jadwalKBM-Guru">{data.name}</p>
-                                    <p className="email-card-jadwalKBM-Guru">{data.email}</p>
+                                <div className="desc-card-Pengumpulan-Guru">
+                                    <p className="name-card-Pengumpulan-Guru">{data.name}</p>
+                                    <p className="email-card-Pengumpulan-Guru">{data.email}</p>
                                 </div>
                             </div>
-                            <div className="detaiKelas-JadwalKBM-Guru">
+                            <div className="detaiKelas-Pengumpulan-Guru">
                                 <p>{data.kelas}</p>
                             </div>
                         </div>
