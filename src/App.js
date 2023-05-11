@@ -86,7 +86,8 @@ function App() {
         <Route path='/bk/chat' element={<PageChat/>}/>
         {/* end role bk */}
 
-        <Route path="/*" element={<Notfound/>} />  
+        <Route path="/*" element={<Notfound/>} />
+        <Route path="/" element={<Login/>} />  
       </Routes>
     </Router>
   );
