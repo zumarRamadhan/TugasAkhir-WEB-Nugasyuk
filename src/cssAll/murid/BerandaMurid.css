@@ -12,6 +12,55 @@
     box-sizing: border-box;
 }
 
+nav {
+    position: fixed;
+    width: 100%;
+    height: max-content;
+    background: #ffffff;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 50px;
+}
+
+nav .navbar h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    /* line-height: 45px; */
+    color: #2A93D5;
+}
+
+nav .btn-notification {
+    transform: translateX(-250px);
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: #D8F0FF;
+    color: var(--color-aksen);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+nav .btn-notification:hover{
+    background: var(--color-aksen);
+    color: var(--color-primer);
+    transition: ease-in 0.5s;
+}
+
+.nav-right{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
+}
+
 /* content */
 .con-content{
     display: grid;

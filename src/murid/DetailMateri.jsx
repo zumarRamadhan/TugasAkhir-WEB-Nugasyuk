@@ -1,16 +1,16 @@
-import '../cssAll/murid/BerandaMurid.css';
+import '../cssAll/murid/DetailMateri.css';
+import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
-import IconNugasyuk from '../assets/IconNugasyuk.svg';
+import { useState } from "react";
 import NavbarMurid from '../component/NavbarMurid';
+import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
 
-function BerandaMurid(){
-    const navText = "Beranda 11 PPLG 1";
+function DetailMateri(){
+    const navText = "B. Inggris";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -68,7 +68,7 @@ function BerandaMurid(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
-    
+
     return(
         <div>
             <aside>
@@ -77,7 +77,7 @@ function BerandaMurid(){
                 nugasyuk
             </h1>
             <ul>
-                <li className='active' onClick={() => navigate('/murid/berandamurid')}>
+                <li onClick={() => navigate('/murid/berandamurid')}>
                     <Icon icon="iconoir:home-simple" width="20" />
                     Beranda
                 </li>
@@ -89,7 +89,7 @@ function BerandaMurid(){
                     <Icon icon="uiw:date" width="18"/>
                     Jadwal KBM
                 </li>
-                <li onClick={() => navigate('/murid/pagemapel')}>
+                <li className='active' onClick={() => navigate('/murid/pagemapel')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Mata Pelajaran
                 </li>
@@ -101,127 +101,30 @@ function BerandaMurid(){
             </aside>
             <div className="container-content">
                 <NavbarMurid text={navText}/>
-                <main className='main'>
-                    <div className="header-dashboard">
-                        <div className="head-left">
-                            <h1 className="intro-head">Halo <span className="name-admin">Wira</span></h1>
-                            <p className="desc-head" style={{width:"550px"}}>
-                                Selamat datang di nugasyuk, anda bisa memonitoring tugas dan materi yang diberikan oleh guru.
-                            </p>
-                        </div>
-                        <div className="head-right">
-                            <div className="kotak1"></div>
-                        </div>
-                    </div>
-
-                    <div className="con-content">
-                        <div className="content-indiecator" style={{ background: "#2AB6D5" }}>
-                            <div className="icon-indie" style={{ color: "#2AB6D5", background: "#fff" }}>
-                                <Icon icon="mdi:account-group-outline" width="40" />
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Siswa</p>
-                                <p className="value-indie"><span>35</span> Siswa</p>
-                            </div>
-                        </div>
-
-                        <div className="content-indiecator" style={{ background: "#585CC4" }}>
-                            <div className="icon-indie" style={{ color: "#585CC4", background: "#fff" }}>
-                                <Icon icon="fluent-mdl2:education" width="40"/>
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Mapel</p>
-                                <p className="value-indie"><span>14</span> Mata Pelajaran</p>
-                            </div>
-                        </div>
-
-                        <div className="content-indiecator" style={{ background: "#B462D0" }}>
-                            <div className="icon-indie" style={{ color: "#B462D0", background: "#fff" }}>
-                                <Icon icon="material-symbols:person-outline-rounded" width="40"/>
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Wali Kelas</p>
-                                <p className="value-indie"><span>Slamet Jos, S.Kom</span></p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    {/* content information */}
-                    <div className="con-content-information">
-                        <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ color: "#797979" }}>
-                                    <Icon icon="uiw:time-o" width="30"/>
+                <div className="main">
+                    <div className="con-content-material">
+                        <div className="content-material">
+                            <div className="content-material-left">
+                                <div className="icon-material">
+                                    <Icon icon="ri:book-line" width="40" style={{color: "#2A93D5"}}/>
                                 </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information"> <span>3</span> Tugas</p>
-                                    <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                <div className="desc-material">
+                                    <p className="name-material ">Materi Application Letter</p>
+                                    <p className="teacher">Budiono, S.Pd</p>
                                 </div>
                             </div>
-                            <div className="icon-navigate">
-                                <Icon icon="ic:round-navigate-next" width="30"/>
+                            <div className="content-material-right">
+                                <p className="date-upload">7 Mar 2023</p>
                             </div>
                         </div>
-
-                        <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ color: "#84E063", background:"#D5FFC6" }}>
-                                    <Icon icon="ph:check-bold" width="30" />
-                                </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information"> <span>4</span> Tugas</p>
-                                    <p className="value-indie-information">Dari <span>10</span> Tugas</p>
-                                </div>
-                            </div>
-                            <div className="icon-navigate">
-                                <Icon icon="ic:round-navigate-next" width="30"/>
-                            </div>
+                        <p className='desc-content-material'>Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa memahami
+                        materi mengenai pengertian application letter. Dibawah ini saya mencantumkan link youtube pengertian dari
+                        application letter, kalian bisa menyimak video tersebut. jika sudah selesai menyimak video kalian bisa
+                        mengerjakan tugas application letter yang saya upload pada halaman tugas. Terima kasih, sukses selalu...
+                        </p>
+                        <div className="file-material">
+                            <iframe width="330" height="150" src="https://www.youtube.com/embed/bkIumnXFQNI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen/>
                         </div>
-
-                        <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
-                                    <Icon icon="uiw:time-o" width="30"/>
-                                </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information"> <span>3</span> Tugas</p>
-                                    <p className="value-indie-information">Dari <span>10</span> Tugas</p>
-                                </div>
-                            </div>
-                            <div className="icon-navigate">
-                                <Icon icon="ic:round-navigate-next" width="30"/>
-                            </div>
-                        </div>
-
-                        <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
-                                    <Icon icon="ph:check-bold" width="30" />
-                                </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information"> <span>4</span> Tugas</p>
-                                    <p className="value-indie-information">Dari <span>10</span> Tugas</p>
-                                </div>
-                            </div>
-                            <div className="icon-navigate">
-                                <Icon icon="ic:round-navigate-next" width="30"/>
-                            </div>
-                        </div>
-                    </div>
-                    {/* end content information */}
-                </main>
-            </div>
-
-            <div className="popup-logout" id="popup-logout">
-                <div className="detail-logout">
-                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeLogoutPopup}/>
-                    <div className="image-logout">
-                        <img src={ImgLogout} alt="" className="img-logout" />
-                    </div>
-                    <p className="desc-logout">Anda yakin ingin keluar?</p>
-                    <div className="con-btn-logout">
-                        <button type="button" className="btn-batal">Batal</button>
-                        <button type="button" className="btn-keluar">Keluar</button>
                     </div>
                 </div>
             </div>
@@ -258,7 +161,7 @@ function BerandaMurid(){
             <div className="detail-profile">
                 <div className='content-detail'>
                     <div className="navbar-detail">
-                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer", color: "#4b4b4b"}} onClick={closeDetail}/>
                     <h2>Profil</h2>
                     </div>
                     <div className="detail-image-profile">
@@ -344,4 +247,4 @@ function BerandaMurid(){
     );
 }
 
-export default BerandaMurid;
+export default DetailMateri
