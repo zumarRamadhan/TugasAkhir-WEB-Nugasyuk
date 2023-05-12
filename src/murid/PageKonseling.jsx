@@ -7,6 +7,9 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import { useState } from "react";
+import CardChat from '../assets/card-chat-bk.svg';
+import CardCounseling from '../assets/card-counseling.svg';
+import ProfilBk from '../assets/profil-bk.svg';
 import ImgHubBk from '../assets/img-chatbk.svg';
 import ImgJanji from '../assets/img-janjikonseling.svg';
 
@@ -103,7 +106,81 @@ function PageKonseling(){
             <div className="container-content">
                 <NavbarMurid text={navText}/>
                 <div className="main">
-                    <div className="content-konseling">
+                    <div className="con-content-counseling">
+                        <div className="content-counseling-left">
+                            <div className="header-counseling">
+                                <div className="head-left">
+                                    <h1 className="intro-head-counseling">
+                                        Halo <span className="name-student">Wira</span>
+                                    </h1>
+                                    <p className="desc-head-counseling">
+                                        Selamat datang di nugasyuk, anda bisa memonitoring tugas tugas anak anda.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="header-counseling-right">
+                            <img src={CardChat} alt="" className="card-chat-counseling" />
+                            <div className="content-card-chat-bk">
+                                <div className="card-chat-bk-left">
+                                    <p className="title-chat-bk">Jika ada yang ingin ditanyakan kepada guru BK melalui chat</p>
+                                    <button className="btn-chat-bk">
+                                    <Icon icon="ph:chat-circle-dots" width="20"/>
+                                        Hubungi BK
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="con-content-counseling-bottom">
+                        <div className="content-counseling-left">
+                            <div className="history-counseling">
+                                <div className="head-history-counseling">
+                                    <p className="title-history-counseling">
+                                        Janji Konseling
+                                    </p>
+                                    <Icon icon="ic:round-navigate-next"  className="navigate-next-icon" width={30}/>
+                                </div>
+                                <div className="card-counseling">
+                                    <div className="teacher-bk">
+                                        <img src={ProfilBk} alt="" className="img-bk" />
+                                        <div className="name-teacher-bk">
+                                            <p>Sumijah, S.Pd</p>
+                                        </div>
+                                    </div>
+                                    <div className="information-counseling">
+                                        <div className="date-counseling">
+                                            <Icon icon="uiw:date" width="15" style={{color: "#2A93D5"}}/>
+                                            <p>Kam, 2 April 2023</p>
+                                        </div>
+                                        <div className="time-counseling">
+                                            <Icon icon="material-symbols:nest-clock-farsight-analog-outline-rounded" width="15" style={{color: "#2A93D5"}}/>
+                                            <p>Kam, 2 April 2023</p>
+                                        </div>
+                                        <div className="location-counseling">
+                                            <p>Ruang BK</p>
+                                            <Icon icon="material-symbols:location-on-outline-rounded"  width="15" style={{color: "#797979"}}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="header-counseling-right">
+                            <img src={CardCounseling} alt="" className="card-chat-counseling" />
+                            <div className="content-card-chat-bk">
+                                <div className="card-chat-bk-left">
+                                    {/* <p className="title-chat-bk">Jika ada yang ingin ditanyakan kepada guru BK melalui chat</p>
+                                    <button className="btn-chat-bk">
+                                    <Icon icon="ph:chat-circle-dots" width="20"/>
+                                        Hubungi BK
+                                    </button> */}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* <div className="content-konseling">
                         <div className="header-konseling">
                             <div className="head-left">
                                 <h1 className="intro-head-konseling">Halo <span className="name-murid">Wira</span></h1>
@@ -128,10 +205,7 @@ function PageKonseling(){
                         </div>
                         <div className="history-janji-bk">
                             <div className="head-left">
-                                {/* <h1 className="intro-head-konseling">Halo <span className="name-murid">Wira</span></h1>
-                                <p className="desc-head-konseling" style={{width:"550px"}}>
-                                    Apakah anda ingin bimbingan konseling atau ada hal yang ingin ditanyakan kepada guru BK?
-                                </p> */}
+                               
                             </div>
                         </div>
                         <div className="card-janji-bk">
@@ -148,7 +222,7 @@ function PageKonseling(){
                             </button>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             
