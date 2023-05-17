@@ -1,4 +1,4 @@
-import '../cssAll/guru/PageKbmGuru.css';
+import '../cssAll/guru/DetailKbm.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -8,9 +8,11 @@ import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import { useState } from "react";
 import ImgProfil from '../assets/profil-guru.svg';
+import damiImgMurid from '../assets/damiImgMurid.png';
 
-function PageKbm(){
-    const navText = "KBM";
+
+function DetailKbm(){
+    const navText = "{KBM 'KELAS'}";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -128,7 +130,25 @@ function PageKbm(){
             tingkatan: "1",
             // assets: cardMapel9,
         },
+        {
+            id: 10,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel10,
+        },
     ];
+
+    const [activeContent, setActiveContent] = useState("detailMateriKbm");
+
+    const showMateri = () => {
+        setActiveContent("detailMateriKbm");
+    };
+
+    const showTugas = () => {
+        setActiveContent("detailTugasKbm");
+    };
+            
 
     return(
         <div>
@@ -159,43 +179,77 @@ function PageKbm(){
             <div className="container-content">
                 <NavbarGuru text={navText}/>
                 <div className="main">
-                    <div className="header-pageKbm-Guru">
-                        <div className="header-pageKbm-left">
-                            <select id="pageKbm" name="pageKbm">
-                                {valueDataKelas.map((data) => (
-                                    <option value={data.jurusan + data.tingkatan + data.kelas}>{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <form className="search-box">
-                            <input type="text" placeholder="Cari..." />
-                            <button>
-                            <Icon
-                                icon="material-symbols:search-rounded"
-                                width="20"
-                            ></Icon>
+                    <div className="header-content">
+                        <div className="switch-container">
+                            <button
+                            id='btn-materiKbm'
+                            className={activeContent === "detailMateriKbm" ? "activeDetailKbm" : ""}
+                            onClick={showMateri}
+                            >
+                            Materi
                             </button>
-                        </form>
+                            <button
+                            id='btn-tugasKbm'
+                            className={activeContent === "detailTugasKbm" ? "activeDetailKbm" : ""}
+                            onClick={showTugas}
+                            >
+                            Tugas
+                            </button>
+                        </div>
+
+                        <button className='btn-add-materi' style={{ display: activeContent === "detailMateriKbm" ? "flex" : "none" }}>
+                            <Icon icon="ic:round-plus" width="20"></Icon>
+                            <p>Tambah Data</p>
+                        </button>
+
+                        <button className='btn-add-tugas' style={{ display: activeContent === "detailTugasKbm" ? "flex" : "none" }}>
+                            <Icon icon="ic:round-plus" width="20"></Icon>
+                            <p>Tambah Data</p>
+                        </button>
                     </div>
 
-                    <div className="content-pageKbm-Guru" onClick={() => navigate('/guru/pagekbm/detail')}>
-                        {valueDataKelas.map((data) => (
-                        <div className="card-pageKbm-Guru" style={{cursor: "pointer"}}>
-                            <div className="card-pageKbm-Guru-left">
-                                <div className="img-pageKbm-Guru">
-                                    <Icon icon="fluent:class-24-regular" width={40}/>
+                    <div className="con-DetailKbm" style={{ display: activeContent === "detailMateriKbm" ? "block" : "none" }}>
+                        <div className="card-DetailKbm-Materi" style={{cursor: "pointer"}}>
+                            <div className="card-DetailKbm-Materi-left">
+                                <div className="img-DetailKbm-Materi">
+                                    <Icon icon="ri:book-line" width={40}/>
                                 </div>
-                                <div className="desc-pageKbm-Guru">
-                                    <p className="title-pageKbm-Guru">Kelas</p>
-                                    <p className="kelas-pageKbm-Guru">{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</p>
+                                <div className="desc-DetailKbm-Materi">
+                                    <p className="judul-DetailKbm-Materi">Materi Application Letter</p>
+                                    <p className="materi-DetailKbm-Guru">Budiono, S.Pd</p>
                                 </div>
                             </div>
-                            <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                            <div className="card-DetailKbm-Materi-right">
+                                <div className="dateDetailDesc">8 Mar 2023</div>
+                                <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                            </div>
                         </div>
-                        ))}
                     </div>
+                    
+
+                    <div className="con-DetailKbm" style={{ display: activeContent === "detailTugasKbm" ? "block" : "none" }}>
+                        <div className="card-DetailKbm-Tugas" style={{cursor: "pointer"}}>
+                            <div className="card-DetailKbm-Tugas-left">
+                                <div className="img-DetailKbm-Tugas">
+                                    <Icon icon="tabler:clipboard-text" width={40}/>
+                                </div>
+                                <div className="desc-DetailKbm-Tugas">
+                                    <p className="judul-DetailKbm-Tugas">Application Letter</p>
+                                    <p className="materi-DetailKbm-Guru">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="card-DetailKbm-Tugas-right">
+                                <div className="dateDetailDesc">8 Mar 2023</div>
+                                <div className="deadline-timeTugas">Deadline : 8 Mar 2023</div>
+                                <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    
                 </div>
-            </div>
+            </div>{/* end body */}
 
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
@@ -271,4 +325,4 @@ function PageKbm(){
     );
 }
 
-export default PageKbm
+export default DetailKbm

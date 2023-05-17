@@ -24,7 +24,10 @@ import DetailTask from './murid/DetailTugas';
 // end role murid
 // role guru
 import BerandaGuru from './guru/BerandaGuru';
+
 import KBM from './guru/PageKbm';
+import DetailKbm from './guru/DetailKbm';
+
 import PagePengumpulan from './guru/PagePengumpulan';
 import Jadwal from './guru/JadwalKbm';
 // end role guru
@@ -70,7 +73,10 @@ function App() {
         {/* end role murid */}
         {/* role guru */}
         <Route path='/guru/berandaguru' element={<BerandaGuru/>}/>
+
         <Route path='/guru/pagekbm' element={<KBM/>}/>
+        <Route path='/guru/pagekbm/detail' element={<DetailKbm/>}/>
+
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>
         {/* end role guru */}
