@@ -78,6 +78,18 @@
     display: none;
 }
 
+.con-DetailKbm-Materi{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.con-DetailKbm-Tugas{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .card-DetailKbm-Materi {
     display: flex;
     justify-content: space-between;

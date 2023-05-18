@@ -1,4 +1,4 @@
-import '../cssAll/guru/DetailKbm.css';
+import '../cssAll/guru/FormMateriKBM.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -6,13 +6,13 @@ import NavbarGuru from '../component/NavbarGuru';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import ImgProfil from '../assets/profil-guru.svg';
 import damiImgMurid from '../assets/damiImgMurid.png';
 
 
-function DetailKbm(){
-    const navText = "{KBM 'KELAS'}";
+function FormMateriKBM(){
+    const navText = "Tambah Materi";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -65,6 +65,25 @@ function DetailKbm(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const fileInputRef = useRef(null);
+    const fileInputLabelRef = useRef(null);
+
+    const handleFileInputChange = () => {
+        const fileInput = fileInputRef.current;
+        const fileInputLabel = fileInputLabelRef.current;
+
+        if (fileInput.files && fileInput.files.length > 0) {
+        fileInputLabel.textContent = fileInput.files[0].name;
+        } else {
+        fileInputLabel.textContent = 'Pilih File';
+        }
+    };
+
+    useEffect(() => {
+        const fileInputLabel = fileInputLabelRef.current;
+        fileInputLabel.textContent = 'Pilih File';
+    }, []);
 
     const valueDataKelas = [
         {
@@ -188,17 +207,29 @@ function DetailKbm(){
         },
     ];  
 
-    const [activeContent, setActiveContent] = useState("detailMateriKbm");
-
-    const showMateri = () => {
-        setActiveContent("detailMateriKbm");
-    };
-
-    const showTugas = () => {
-        setActiveContent("detailTugasKbm");
-    };
-            
-
+    const tahunAjaran = [
+        {
+            id: 1,
+            tahun: '2021/2022',
+            semester : '1',
+        },
+        {
+            id: 2,
+            tahun: '2021/2022',
+            semester : '2',
+        },
+        {
+            id: 3,
+            tahun: '2022/2023',
+            semester : '1',
+        },
+        {
+            id: 4,
+            tahun: '2022/2023',
+            semester : '2',
+        },
+    ];
+        
     return(
         <div>
             <aside>
@@ -228,83 +259,66 @@ function DetailKbm(){
             <div className="container-content">
                 <NavbarGuru text={navText}/>
                 <div className="main">
-                    <div className="header-content">
-                        <div className="switch-container">
-                            <button
-                            id='btn-materiKbm'
-                            className={activeContent === "detailMateriKbm" ? "activeDetailKbm" : ""}
-                            onClick={showMateri}
-                            >
-                            Materi
-                            </button>
-                            <button
-                            id='btn-tugasKbm'
-                            className={activeContent === "detailTugasKbm" ? "activeDetailKbm" : ""}
-                            onClick={showTugas}
-                            >
-                            Tugas
-                            </button>
-                        </div>
+                    {/* <div className="content-formMateriKBM">
+                        <form action="" className="container-formMateriKBM">
 
-                        <button className='btn-add-materi' style={{ display: activeContent === "detailMateriKbm" ? "flex" : "none" }} onClick={() => navigate('/guru/pagekbm/detail/formmateri')}>
-                            <Icon icon="ic:round-plus" width="20"></Icon>
-                            <p>Tambah Data</p>
-                        </button>
+                        </form>
+                    </div> */}
+                    <div className="content-formKbm">
+                        <form action="" className="container-formKbm">
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Judul Materi</div>
+                                <input type="text" className="input-formKbm" placeholder='judul materi'/>
+                            </div>
+                            
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Deskrips Materi</div>
+                                <textarea name="" id="" rows="7" className="input-formKbm" placeholder='deskripsi materi'></textarea>
+                            </div>
 
-                        <button className='btn-add-tugas' style={{ display: activeContent === "detailTugasKbm" ? "flex" : "none" }} onClick={() => navigate('/guru/pagekbm/detail/formtugas')}>
-                            <Icon icon="ic:round-plus" width="20"></Icon>
-                            <p>Tambah Data</p>
-                        </button>
-                    </div>
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Link Materi</div>
+                                <input type="text" className="input-formKbm" placeholder='link materi'/>
+                            </div>
 
-                    <div className="con-DetailKbm" style={{ display: activeContent === "detailMateriKbm" ? "block" : "none" }}>
-                        <div className="con-DetailKbm-Materi">
-                            {valueDataMateriKbm.map((data) => (
-                            <div className="card-DetailKbm-Materi" style={{cursor: "pointer"}}>
-                                <div className="card-DetailKbm-Materi-left">
-                                    <div className="img-DetailKbm-Materi">
-                                        <Icon icon="ri:book-line" width={40}/>
-                                    </div>
-                                    <div className="desc-DetailKbm-Materi">
-                                        <p className="judul-DetailKbm-Materi">{data.namaMateri}</p>
-                                        <p className="materi-DetailKbm-Guru">{data.guru}</p>
-                                    </div>
-                                </div>
-                                <div className="card-DetailKbm-Materi-right">
-                                    <div className="dateDetailDesc">{data.tanggal}</div>
-                                    <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">File Materi</div>
+                                <div className="input-formKbm">
+                                    <input type="file" id="fileInput"  style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileInputChange} accept=".pdf,.jpg,.jpeg,.png,.docx"/>
+                                    <label htmlFor="fileInput" className='fileInput' id="fileInputLabel" ref={fileInputLabelRef}>
+                                        File Materi
+                                    </label>
                                 </div>
                             </div>
-                            ))}
-                        </div>
-                    </div>
-                    
-
-                    <div className="con-DetailKbm" style={{ display: activeContent === "detailTugasKbm" ? "block" : "none" }}>
-                        <div className="con-DetailKbm-Tugas">
-                            {valueDataTugasKbm.map((data) => (
-                            <div className="card-DetailKbm-Tugas" style={{cursor: "pointer"}}>
-                                <div className="card-DetailKbm-Tugas-left">
-                                    <div className="img-DetailKbm-Tugas">
-                                        <Icon icon="tabler:clipboard-text" width={40}/>
-                                    </div>
-                                    <div className="desc-DetailKbm-Tugas">
-                                        <p className="judul-DetailKbm-Tugas">{data.namaTugas}</p>
-                                        <p className="materi-DetailKbm-Guru">{data.guru}</p>
-                                    </div>
-                                </div>
-                                <div className="card-DetailKbm-Tugas-right">
-                                    <div className="dateDetailDesc">{data.tanggal}</div>
-                                    <div className="deadline-timeTugas">Deadline : {data.deadline}</div>
-                                    <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
-                                </div>
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Tahun ajaran</div>
+                                <select id="" name="" className='selectForm'>
+                                    <option hidden>-- Tahun ajaran --</option>
+                                    {tahunAjaran.map((data) => (
+                                        <option>{data.tahun} / semester {data.semester}</option>
+                                    ))}
+                                </select>
                             </div>
-                            ))}
-                        </div>
-                    </div>
 
-                    
-                    
+                            {/* <div className="con-formKbm">
+                                <div className="title-formKbm">Jam ke</div>
+                                <select id="" name="" className='selectForm'>
+                                    {dataJamPelajaran.map((data) => (
+                                        <option>{data.jamKe}</option>
+                                    ))}
+                                </select>
+                            </div> */}
+                            
+                            {/* <div className="con-formKbm">
+                                <div className="title-formKbm">Jumlah jam</div>
+                                <input type="text" className="input-formKbm" placeholder='Jumlah jam'/>
+                            </div> */}
+
+                            <div className="con-btn-form">
+                                <button type="submit" className="btn-form" style={{cursor: "pointer"}}>Simpan perubahan</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>{/* end body */}
 
@@ -382,4 +396,4 @@ function DetailKbm(){
     );
 }
 
-export default DetailKbm
+export default FormMateriKBM
