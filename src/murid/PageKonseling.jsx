@@ -170,11 +170,11 @@ function PageKonseling(){
                             <img src={CardCounseling} alt="" className="card-chat-counseling" />
                             <div className="content-card-chat-bk">
                                 <div className="card-chat-bk-left">
-                                    {/* <p className="title-chat-bk">Jika ada yang ingin ditanyakan kepada guru BK melalui chat</p>
-                                    <button className="btn-chat-bk">
-                                    <Icon icon="ph:chat-circle-dots" width="20"/>
-                                        Hubungi BK
-                                    </button> */}
+                                    <p className="title-promise-bk">Buat janji bertemu dengan guru BK jika anda ingin bimbingan konseling secara langsung.</p>
+                                    <button className="btn-promise-bk" onClick={() => navigate('/murid/pagekonseling/buatjanji')}>
+                                    <Icon icon="uiw:date" width="20"/>
+                                        Buat Janji
+                                    </button>
                                 </div>
                             </div>
                         </div>

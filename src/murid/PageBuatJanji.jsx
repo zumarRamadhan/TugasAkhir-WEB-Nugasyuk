@@ -1,27 +1,26 @@
-import '../cssAll/murid/Mapel.css';
+import '../cssAll/murid/BuatJanji.css';
+import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import Navigation from "../component/NavbarMurid";
+import NavbarMurid from '../component/NavbarMurid';
 import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import cardMapel1 from '../assets/cardAssets/cardMapel1.svg';
-import cardMapel2 from '../assets/cardAssets/cardMapel2.svg';
-import cardMapel3 from '../assets/cardAssets/cardMapel3.svg';
-import cardMapel4 from '../assets/cardAssets/cardMapel4.svg';
-import cardMapel5 from '../assets/cardAssets/cardMapel5.svg';
-import cardMapel6 from '../assets/cardAssets/cardMapel6.svg';
-import cardMapel7 from '../assets/cardAssets/cardMapel7.svg';
-import cardMapel8 from '../assets/cardAssets/cardMapel8.svg';
-import cardMapel9 from '../assets/cardAssets/cardMapel9.svg';
 import { useState } from "react";
+import Calendar from 'react-calendar';
+import CardChat from '../assets/card-chat-bk.svg';
+import CardCounseling from '../assets/card-counseling.svg';
+import ProfilBk from '../assets/profil-bk.svg';
+import AssetsCalendar from '../assets/79891-calendar.gif';
+import 'react-calendar/dist/Calendar.css';
 
-function PageMapel(){
 
-    const navText = "Mata Pelajaran";
+function BuatJanji(){
+    const navText = "Buat Janji";
     const navigate = useNavigate();
+
+    const [date, setDate] = useState(new Date());
 
     const closeDetail = () => {
         const detailProfile = document.querySelector('.detail-profile');
@@ -78,161 +77,108 @@ function PageMapel(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
-    
-    const valueDataMapel = [
-        {
-            id: 1,
-            namaMapel: "B. Inggris",
-            guruPengajar: "Budiono, S.Pd",
-            kelas: '10',
-            jurusan: 'pplg',
-            tingkatan: '1',
-            assets: cardMapel1,
-        },
-        {
-            id: 2,
-            namaMapel: "Olaharaga",
-            guruPengajar: "Asep, S.Pd",
-            kelas: "10",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel2,
-        },
-        {
-            id: 3,
-            namaMapel: "Matematika",
-            guruPengajar: "Rini, S.Pd",
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "1",
-            assets: cardMapel3,
-        },
-        {
-            id: 4,
-            namaMapel: "PAI",
-            guruPengajar: "Edi, S.Pd.I",
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel4,
-        },
-        {
-            id: 5,
-            namaMapel: "BK",
-            guruPengajar: "Sumijah, S.Pd",
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "1",
-            assets: cardMapel5,
-        },
-        {
-            id: 6,
-            namaMapel: "Sejarah",
-            guruPengajar: "Rini, S.Pd",
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel6,
-        },
-        {
-            id: 7,
-            namaMapel: "Game Dev",
-            guruPengajar: "Suep, S.Kom",
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "1",
-            assets: cardMapel7,
-        },
-        {
-            id: 8,
-            namaMapel: "Web Dev",
-            guruPengajar: "Sugeng, S.Kom",
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "2",
-            assets: cardMapel8,
-        },
-        {
-            id: 9,
-            namaMapel: "Desktop Dev",
-            guruPengajar: "Paimin, S.Kom",
-            kelas: "11",
-            jurusan: "animasi",
-            tingkatan: "1",
-            assets: cardMapel9,
-        },
-    ];
-
-    // for (let i = 0; i < valueDataMapel.length; i++) {
-    //     const kelas = valueDataMapel[i].kelas;
-    //     const jurusan = valueDataMapel[i].jurusan;
-    //     const tingkatan = valueDataMapel[i].tingkatan;
-    //     valueDataMapel[i].kelasAll = kelas + " " + jurusan + " " + tingkatan;
-    // }
-
-    const [jurusan, setJurusan] = useState("semua");
-
-    const handleChange = (event) => {
-        setJurusan(event.target.value);
-    };
-
-    const filterDataMapel = valueDataMapel.filter((data) =>
-        jurusan === "semua" ? true : data.jurusan === jurusan
-    );
 
     return(
         <div>
-            {/* <Sidebar/> */}
             <aside>
-                <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
-                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
-                    nugasyuk
-                </h1>
-                <ul>
-                    <li onClick={() => navigate('/murid/berandamurid')}>
-                        <Icon icon="iconoir:home-simple" width="20" />
-                        Beranda
-                    </li>
-                    <li onClick={() => navigate('/murid/pagetugas')} >
-                        <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
-                        Tugas
-                    </li>
-                    <li onClick={() => navigate('/murid/pagekbm')}>
-                        <Icon icon="uiw:date" width="18"/>
-                        Jadwal KBM
-                    </li>
-                    <li className='active' onClick={() => navigate('/murid/pagemapel')}>
-                        <Icon icon="fluent-mdl2:education" width="18"/>
-                        Mata Pelajaran
-                    </li>
-                    <li onClick={() => navigate('/murid/pagekonseling')}>
-                        <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
-                        Konseling
-                    </li>
-                </ul>
+            <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
+                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                nugasyuk
+            </h1>
+            <ul>
+                <li onClick={() => navigate('/murid/berandamurid')}>
+                    <Icon icon="iconoir:home-simple" width="20" />
+                    Beranda
+                </li>
+                <li onClick={() => navigate('/murid/pagetugas')} >
+                    <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
+                    Tugas
+                </li>
+                <li onClick={() => navigate('/murid/pagekbm')}>
+                    <Icon icon="uiw:date" width="18"/>
+                    Jadwal KBM
+                </li>
+                <li onClick={() => navigate('/murid/pagemapel')}>
+                    <Icon icon="fluent-mdl2:education" width="18"/>
+                    Mata Pelajaran
+                </li>
+                <li className='active' onClick={() => navigate('/murid/pagekonseling')}>
+                    <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
+                    Konseling
+                </li>
+            </ul>
             </aside>
-
-            <div className='container-content'>
-                <Navigation text={navText}/>
-                <main className='main'>
-                    <div className="content-mapel">
-                        <div className="con-card-mapel">
-                            {filterDataMapel.map((data) => (
-                            <div className="card-mapel" key={data.id} style={{ cursor: "pointer"}}>
-                                <img src={data.assets} alt="" className="image-card-mapel" onClick={() => navigate('murid/mapelmateri')}/>
-                                <div className="content-card-mapel">
-                                <div className="card-mapel-left">
-                                    <p className="mata-pelajaran">{data.namaMapel}</p>
-                                    <p className="nama-guru-mapel">{data.guruPengajar}</p>
-                                </div>
-                                {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
+            <div className="container-content">
+                <NavbarMurid text={navText}/>
+                <div className="main">
+                    <div className="con-content-promaise-counseling">
+                        <div className="content-promise-counseling">
+                            <div className="card-profile-teacher-bk">
+                                <img src={ProfilBk} alt="" className="img-bk-teacher" />
+                                <p className='name-bk-teacher'>Sumijah, S.Pd</p>
+                                <p className='teach'>Guru BK PPLG</p>
+                            </div>
+                            <div className="card-calendar">
+                                <div className='calendar'>
+                                    <div className='calendar-container'>
+                                        <Calendar onChange={setDate} value={date} />
+                                    </div>
+                                    {/* <p className='text-center date-selected'>
+                                        <span className='bold'>Tanggal Dipilih:</span>{' '}
+                                        {date.toDateString()}
+                                    </p> */}
                                 </div>
                             </div>
-                            ))}
+                            <div className="card-date-time">
+                                <p className='date-selected'>
+                                    {' '}{date.toDateString()}
+                                </p>
+                                <p className="text-select-time">Pilih jam konseling :</p>
+                                <div className="time-promise-counseling">
+                                    <button className="btn-time-counseling">Jam 1</button>
+                                    <button className="btn-time-counseling">Jam 2</button>
+                                    <button className="btn-time-counseling">Jam 3</button>
+                                    <button className="btn-time-counseling">Jam 4</button>
+                                    <button className="btn-time-counseling">Jam 5</button>
+                                    <button className="btn-time-counseling selected">Jam 6</button>
+                                    <button className="btn-time-counseling selected">Jam 7</button>
+                                    <button className="btn-time-counseling selected">Jam 8</button>
+                                    <button className="btn-time-counseling">Jam 9</button>
+                                    <button className="btn-time-counseling">Jam 10</button>
+                                </div>
+                                <div className="color-status-promise-counseling">
+                                    <div className="status-not-selected">
+                                        <div className="rectangle-not-selected"></div>
+                                        <p className='text-status-not-selected'>Belum dipilih</p>
+                                    </div>
+                                    <div className="status-selected">
+                                        <div className="rectangle-selected"></div>
+                                        <p className='text-status-selected'>Sudah dipilih</p>
+                                    </div>
+                                </div>
+                                <div className="dropdown-location-counseling">
+                                    <select id='location-counseling' name='location-counseling' className='dropdown-counseling'>
+                                        <option value="location" selected>Tempat Konseling</option>
+                                        <option value="location">Ruang BK</option>
+                                        <option value="location">Ruang VR</option>
+                                        <option value="location">Ruang Guru</option>
+                                    </select>
+                                </div>
+                                <div className="form-topic-counseling">
+                                    <form className='form-topic'>
+                                        <input type='text' placeholder='Topik yang ingin ditanyakan'/>
+                                    </form>
+                                </div>
+                                <button className='btn-submit-promise-counseling'>
+                                    Buat janji
+                                </button>
+                                {/* <img src={AssetsCalendar} alt="" className="gif-calendar" />
+                                <p className='text-desc-date'>Mohon pilih tanggal konseling terlebhi dahulu</p> */}
+                            </div>
                         </div>
                     </div>
-                </main>
-            </div>
+                </div>
+            </div> 
 
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
@@ -362,8 +308,8 @@ function PageMapel(){
                 </div>
             </div>
 
-        </div>   
+        </div>
     );
 }
 
-export default PageMapel;
+export default BuatJanji

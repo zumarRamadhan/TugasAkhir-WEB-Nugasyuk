@@ -1,4 +1,4 @@
-import '../cssAll/murid/PageTugas.css';
+import '../cssAll/walimurid/JadwalKbm.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -92,6 +92,88 @@ function PageMapel(){
             </aside>
             <div className="container-content">
                 <NavbarWaliMurid text={navText}/>
+                <div className="main">
+                    <div className="content-jadwal">
+                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #2A93D5, #2785C0)"}}>
+                            <div className="head-left">
+                                <p className="title-jadwal" style={{width:"350px"}}>
+                                    Jadwal KBM
+                                </p>
+                                <div className="hari-jadwal">
+                                    <p>Senin</p>
+                                </div>
+                                <div className="navigate-icon">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #51C0FF, #3EA3DD)"}}>
+                            <div className="head-left">
+                                <p className="title-jadwal" style={{width:"350px"}}>
+                                    Jadwal KBM
+                                </p>
+                                <div className="hari-jadwal">
+                                    <p>Selasa</p>
+                                </div>
+                                <div className="navigate-icon">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #58A4C4, #4C9ABC)"}}>
+                            <div className="head-left">
+                                <p className="title-jadwal" style={{width:"350px"}}>
+                                    Jadwal KBM
+                                </p>
+                                <div className="hari-jadwal">
+                                    <p>Rabu</p>
+                                </div>
+                                <div className="navigate-icon">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #EB55A3, #D94A94)"}}>
+                            <div className="head-left">
+                                <p className="title-jadwal" style={{width:"350px"}}>
+                                    Jadwal KBM
+                                </p>
+                                <div className="hari-jadwal">
+                                    <p>Kamis</p>
+                                </div>
+                                <div className="navigate-icon">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #B462D0, #9949B6)"}}>
+                            <div className="head-left">
+                                <p className="title-jadwal" style={{width:"350px"}}>
+                                    Jadwal KBM
+                                </p>
+                                <div className="hari-jadwal">
+                                    <p>Jumat</p>
+                                </div>
+                                <div className="navigate-icon">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #585CC4, #474CB6)"}}>
+                            <div className="head-left">
+                                <p className="title-jadwal" style={{width:"350px"}}>
+                                    Jadwal KBM
+                                </p>
+                                <div className="hari-jadwal">
+                                    <p>Sabtu</p>
+                                </div>
+                                <div className="navigate-icon">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div className="popup-logout" id="popup-logout">

@@ -241,7 +241,7 @@ nav .btn-notification:hover{
     position: absolute;
     top: 0;
     padding-left: 30px;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .card-chat-bk-left {
@@ -368,20 +368,35 @@ nav .btn-notification:hover{
     margin-left: 5px;
 }
 
-.btn-janji-bk{
+.title-promise-bk{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 670px;
+    margin-top: 320px;
+    color: var(--color-primer);
+}
+
+.btn-promise-bk{
     display: flex;
     background: var(--color-primer);
     color: #FA79A2;
     border: none;
     padding: 13px 35px;
     width: 200px;
-    font-weight: 600;
+    font-weight: 500;
     height: 50px;
     cursor: pointer;
     align-items: center;
+    font-size: 15px;
+    justify-content: center;
     border-radius: 10px;
     gap: 10px;
     z-index: 5;
+    margin-top: 88px;
+    margin-left: 470px;
+    float: right;
 }
 
 .title-history-counseling {
