@@ -187,15 +187,20 @@ nav .btn-notification:hover{
 
 
 /* page konseling */
-.content-konseling{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+/* content counseling top */
+.con-content-counseling{
+    display: flex;
+    width: 100%;
     gap: 20px;
 }
 
-.header-konseling {
+.content-counseling-left{
+    width: 100%;
+}
+
+.header-counseling {
     background: var(--color-primer);
-    width: 720px;
+    width: 100%;
     border: 1px solid #E3E3E3;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
     border-radius: 20px;
@@ -203,7 +208,7 @@ nav .btn-notification:hover{
     display: flex;
 }
 
-.intro-head-konseling {
+.intro-head-counseling {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
@@ -212,14 +217,14 @@ nav .btn-notification:hover{
     color: var(--color-aksen);
 }
 
-.name-murid {
+.name-student {
     background: var(--color-aksen);
     padding: 3px 14px;
     color: var(--color-primer);
     border-radius: 10px;
 }
 
-.desc-head-konseling {
+.desc-head-counseling {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -229,43 +234,138 @@ nav .btn-notification:hover{
     margin-top: 15px;
 }
 
-.card-hubungi-bk{
-    background: #C762F7;
+.content-card-chat-bk {
+    display: flex;
+    /* justify-content: space-between; */
+    /* transform: translateY(-300%); */
+    position: absolute;
+    top: 0;
+    padding-left: 30px;
     width: 100%;
-    border-radius: 20px;
-    padding: 30px 0 25px 25px;
-    display: flex; 
 }
 
-.desc-head-hubungi-bk{
+.card-chat-bk-left {
+    margin-top: 150px;
+    gap: 100px;
+}
+
+.title-chat-bk {
     font-family: 'Poppins';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 20px;
-    /* line-height: 150%; */
-    color: #fff;
-    margin-top: 15px;
+    width: 300px;
+    color: var(--color-primer);
 }
 
-.img-hubungi-bk img{
-    width: 250px;
-    z-index: 1;
-}
-
-.btn-hub-bk{
+.btn-chat-bk{
     display: flex;
     background: var(--color-primer);
     color: #C762F7;
     border: none;
     padding: 13px 35px;
     width: 200px;
-    font-weight: 600;
+    font-weight: 500;
     height: 50px;
     cursor: pointer;
     align-items: center;
+    font-size: 15px;
+    justify-content: center;
     border-radius: 10px;
     gap: 10px;
     z-index: 5;
+    margin-top: 88px;
+    float: right;
+}
+/* end content counseling top */
+
+/* content counseling bottom */
+.con-content-counseling-bottom{
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.history-counseling {
+    background: var(--color-primer);
+    width: 100%;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.head-history-counseling{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-counseling{
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    margin-top: 30px;
+    padding: 15px;
+}
+
+.teacher-bk{
+    display: flex;
+    align-items: center;
+}
+
+.name-teacher-bk{
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    color: #4b4b4b;
+    margin-left: 10px;
+}
+
+.navigate-next-icon{
+    float: right;
+    justify-content: space-between;
+    color: var(--color-aksen);
+}
+
+.information-counseling{
+    margin-top: 15px;
+    font-family: 'Poppins';
+}
+
+.date-counseling{
+    display: flex;
+    align-items: center;
+}
+
+.time-counseling{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.location-counseling{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.date-counseling p{
+    font-size: 12px;
+    color: var(--color-aksen);
+    margin-left: 5px;
+}
+
+.time-counseling p{
+    font-size: 12px;
+    color: var(--color-aksen);
+    margin-left: 5px;
+}
+
+.location-counseling p{
+    font-size: 12px;
+    color: #797979;
+    margin-left: 5px;
 }
 
 .btn-janji-bk{
@@ -284,26 +384,13 @@ nav .btn-notification:hover{
     z-index: 5;
 }
 
-.card-janji-bk{
-    background: #FA79A2;
-    width: 100%;
-    border-radius: 20px;
-    padding: 30px 0 25px 25px;
-    display: flex; 
+.title-history-counseling {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    /* line-height: 45px; */
+    color: #4b4b4b;
 }
-
-.history-janji-bk{
-    background: var(--color-primer);
-    width: 350px;
-    border: 1px solid #E3E3E3;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 20px;
-    padding: 87px 0 87px 70px;
-    display: flex;
-}
-
-.img-janji-bk{
-    width: 200px;
-    z-index: 1;
-}
+/* end contetn counseling bottom */
 /* end page konseling */
