@@ -21,6 +21,7 @@ import Konseling from './murid/PageKonseling';
 import Materi from './murid/MapelMateri';
 import DetailMateri from './murid/DetailMateri';
 import DetailTask from './murid/DetailTugas';
+import PageBuatJanji from './murid/PageBuatJanji';
 // end role murid
 // role guru
 import BerandaGuru from './guru/BerandaGuru';
@@ -38,6 +39,9 @@ import BerandaWaliMurid from './waliMurid/BerandaWaliMurid';
 import PageTugasWaliMurid from './waliMurid/PageTugas';
 import PageMapelWaliMurid from './waliMurid/PageMapel';
 import PageJadwalWaliMurid from './waliMurid/JadwalKbm';
+import MapelMateri from './waliMurid/MapelMateri';
+import MapelTugas from './waliMurid/MapelTugas';
+import DetailMaterial from './waliMurid/DetailMateri';
 // end role wali murid
 // role bk
 import BerandaBk from './guruBk/BerandaBk';
@@ -45,7 +49,6 @@ import JanjiKonseling from './guruBk/JanjiKonseling';
 import PageChat from './guruBk/PageChat';
 // end role bk
 import Notfound from './Notfound';
-import MapelMateri from './murid/MapelMateri';
 
 
 function App() {
@@ -69,6 +72,7 @@ function App() {
         <Route path="/murid/pagekbm" element={<PageJadwal/>} /> 
         <Route path="/murid/pagemapel" element={<PageMapel/>} /> 
         <Route path="/murid/pagekonseling" element={<Konseling/>} /> 
+        <Route path="/murid/pagekonseling/buatjanji" element={<PageBuatJanji/>} /> 
         <Route path="/murid/pagemapel/mapelmateri" element={<Materi/>} /> 
         <Route path="/murid/pagemapel/detailmateri" element={<DetailMateri/>} /> 
         <Route path="/murid/pagemapel/detailtugas" element={<DetailTask/>} /> 
@@ -89,6 +93,9 @@ function App() {
         <Route path='/walimurid/pagetugas' element={<PageTugasWaliMurid/>}/>
         <Route path='/walimurid/pagemapel' element={<PageMapelWaliMurid/>}/>
         <Route path='/walimurid/pagekbm' element={<PageJadwalWaliMurid/>}/>
+        <Route path='/walimurid/pagemapel/mapelmateri' element={<MapelMateri/>}/>
+        <Route path='/walimurid/pagemapel/mapeltugas' element={<MapelTugas/>}/>
+        <Route path='/walimurid/pagemapel/mapelmateri/detailmateri' element={<DetailMaterial/>}/>
         {/* end role wali murid */}
         {/* role bk */}
         <Route path='/bk/berandabk' element={<BerandaBk/>}/>

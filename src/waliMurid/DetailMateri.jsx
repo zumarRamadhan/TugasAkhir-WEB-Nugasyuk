@@ -1,26 +1,19 @@
-import '../cssAll/murid/Mapel.css';
+// import '../cssAll/walimurid/DetailMateri.css';
+import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from "react";
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import Navigation from "../component/NavbarMurid";
-import ImgProfil from '../assets/profil-murid.svg';
+import ImgProfil from '../assets/profil-walimurid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import cardMapel1 from '../assets/cardAssets/cardMapel1.svg';
-import cardMapel2 from '../assets/cardAssets/cardMapel2.svg';
-import cardMapel3 from '../assets/cardAssets/cardMapel3.svg';
-import cardMapel4 from '../assets/cardAssets/cardMapel4.svg';
-import cardMapel5 from '../assets/cardAssets/cardMapel5.svg';
-import cardMapel6 from '../assets/cardAssets/cardMapel6.svg';
-import cardMapel7 from '../assets/cardAssets/cardMapel7.svg';
-import cardMapel8 from '../assets/cardAssets/cardMapel8.svg';
-import cardMapel9 from '../assets/cardAssets/cardMapel9.svg';
-import { useState } from "react";
+import AssetsBinggris from '../assets/img-ilustration-binggris.svg';
+import imgGuru from '../assets/profil-guru.svg';
+import NavbarWaliMurid from '../component/NavbarWaliMurid';
 
-function PageMapel(){
+function DetaillMaterial(){
 
-    const navText = "Mata Pelajaran";
+    const navText = "B. Inggris";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -78,160 +71,61 @@ function PageMapel(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
-    
-    const valueDataMapel = [
-        {
-            id: 1,
-            namaMapel: "B. Inggris",
-            guruPengajar: "Budiono, S.Pd",
-            kelas: '10',
-            jurusan: 'pplg',
-            tingkatan: '1',
-            assets: cardMapel1,
-        },
-        {
-            id: 2,
-            namaMapel: "Olaharaga",
-            guruPengajar: "Asep, S.Pd",
-            kelas: "10",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel2,
-        },
-        {
-            id: 3,
-            namaMapel: "Matematika",
-            guruPengajar: "Rini, S.Pd",
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "1",
-            assets: cardMapel3,
-        },
-        {
-            id: 4,
-            namaMapel: "PAI",
-            guruPengajar: "Edi, S.Pd.I",
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel4,
-        },
-        {
-            id: 5,
-            namaMapel: "BK",
-            guruPengajar: "Sumijah, S.Pd",
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "1",
-            assets: cardMapel5,
-        },
-        {
-            id: 6,
-            namaMapel: "Sejarah",
-            guruPengajar: "Rini, S.Pd",
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel6,
-        },
-        {
-            id: 7,
-            namaMapel: "Game Dev",
-            guruPengajar: "Suep, S.Kom",
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "1",
-            assets: cardMapel7,
-        },
-        {
-            id: 8,
-            namaMapel: "Web Dev",
-            guruPengajar: "Sugeng, S.Kom",
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "2",
-            assets: cardMapel8,
-        },
-        {
-            id: 9,
-            namaMapel: "Desktop Dev",
-            guruPengajar: "Paimin, S.Kom",
-            kelas: "11",
-            jurusan: "animasi",
-            tingkatan: "1",
-            assets: cardMapel9,
-        },
-    ];
-
-    // for (let i = 0; i < valueDataMapel.length; i++) {
-    //     const kelas = valueDataMapel[i].kelas;
-    //     const jurusan = valueDataMapel[i].jurusan;
-    //     const tingkatan = valueDataMapel[i].tingkatan;
-    //     valueDataMapel[i].kelasAll = kelas + " " + jurusan + " " + tingkatan;
-    // }
-
-    const [jurusan, setJurusan] = useState("semua");
-
-    const handleChange = (event) => {
-        setJurusan(event.target.value);
-    };
-
-    const filterDataMapel = valueDataMapel.filter((data) =>
-        jurusan === "semua" ? true : data.jurusan === jurusan
-    );
 
     return(
         <div>
-            {/* <Sidebar/> */}
             <aside>
-                <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
-                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
-                    nugasyuk
-                </h1>
-                <ul>
-                    <li onClick={() => navigate('/murid/berandamurid')}>
-                        <Icon icon="iconoir:home-simple" width="20" />
-                        Beranda
-                    </li>
-                    <li onClick={() => navigate('/murid/pagetugas')} >
-                        <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
-                        Tugas
-                    </li>
-                    <li onClick={() => navigate('/murid/pagekbm')}>
-                        <Icon icon="uiw:date" width="18"/>
-                        Jadwal KBM
-                    </li>
-                    <li className='active' onClick={() => navigate('/murid/pagemapel')}>
-                        <Icon icon="fluent-mdl2:education" width="18"/>
-                        Mata Pelajaran
-                    </li>
-                    <li onClick={() => navigate('/murid/pagekonseling')}>
-                        <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
-                        Konseling
-                    </li>
-                </ul>
+            <h1 className="title-form-login" onClick={() => navigate('/walimurid/berandawalimurid')}>
+                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                nugasyuk
+            </h1>
+            <ul>
+                <li onClick={() => navigate('/walimurid/berandawalimurid')}>
+                    <Icon icon="iconoir:home-simple" width="20" />
+                    Beranda
+                </li>
+                <li onClick={() => navigate('/walimurid/pagetugas')} >
+                    <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
+                    Tugas
+                </li>
+                <li onClick={() => navigate('/walimurid/pagekbm')}>
+                    <Icon icon="uiw:date" width="18"/>
+                    Jadwal KBM
+                </li>
+                <li className='active' onClick={() => navigate('/walimurid/pagemapel')}>
+                    <Icon icon="fluent-mdl2:education" width="18"/>
+                    Mata Pelajaran
+                </li>
+            </ul>
             </aside>
-
-            <div className='container-content'>
-                <Navigation text={navText}/>
-                <main className='main'>
-                    <div className="content-mapel">
-                        <div className="con-card-mapel">
-                            {filterDataMapel.map((data) => (
-                            <div className="card-mapel" key={data.id} style={{ cursor: "pointer"}} onClick={() => navigate('/murid/pagemapel/mapelmateri')}>
-                                <img src={data.assets} alt="" className="image-card-mapel"/>
-                                <div className="content-card-mapel">
-                                <div className="card-mapel-left">
-                                    <p className="mata-pelajaran">{data.namaMapel}</p>
-                                    <p className="nama-guru-mapel">{data.guruPengajar}</p>
+            <div className="container-content">
+                <NavbarWaliMurid text={navText}/>
+                <div className="main">
+                <div className="con-content-material">
+                        <div className="content-material">
+                            <div className="content-material-left">
+                                <div className="icon-material">
+                                    <Icon icon="ri:book-line" width="40" style={{color: "#2A93D5"}}/>
                                 </div>
-                                {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
+                                <div className="desc-material">
+                                    <p className="name-material ">Materi Application Letter</p>
+                                    <p className="teacher">Budiono, S.Pd</p>
                                 </div>
                             </div>
-                            ))}
+                            <div className="content-material-right">
+                                <p className="date-upload">7 Mar 2023</p>
+                            </div>
+                        </div>
+                        <p className='desc-content-material'>Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa memahami
+                        materi mengenai pengertian application letter. Dibawah ini saya mencantumkan link youtube pengertian dari
+                        application letter, kalian bisa menyimak video tersebut. jika sudah selesai menyimak video kalian bisa
+                        mengerjakan tugas application letter yang saya upload pada halaman tugas. Terima kasih, sukses selalu...
+                        </p>
+                        <div className="file-material">
+                            <iframe width="330" height="150" src="https://www.youtube.com/embed/bkIumnXFQNI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen/>
                         </div>
                     </div>
-                </main>
+                </div>
             </div>
 
             <div className="popup-logout" id="popup-logout">
@@ -287,10 +181,10 @@ function PageMapel(){
                         <img src={ImgProfil} alt="" className="detail-img-profile" />
                     </div>
                     <p className="judul-detail">Email</p>
-                    <p className="value-detail">zumarramadhan@smkrus.sch.id</p>
-                    <p className="judul-detail">Nama Pengguna</p>
-                    <p className="value-detail">Zumar</p>
+                    <p className="value-detail">sulislaila@smkrus.sch.id</p>
                     <p className="judul-detail">Nama</p>
+                    <p className="value-detail">Sulis Laila</p>
+                    <p className="judul-detail">Orang Tua Dari</p>
                     <p className="value-detail">Muhammad Zumar Ramadhan</p>
                     <p className="judul-detail">Jurusan</p>
                     <p className="value-detail">PPLG</p>
@@ -362,8 +256,8 @@ function PageMapel(){
                 </div>
             </div>
 
-        </div>   
+        </div>
     );
 }
 
-export default PageMapel;
+export default DetaillMaterial;

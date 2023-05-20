@@ -1,26 +1,18 @@
-import '../cssAll/murid/Mapel.css';
+import '../cssAll/walimurid/DetailMateri.css';
+import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from "react";
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import Navigation from "../component/NavbarMurid";
-import ImgProfil from '../assets/profil-murid.svg';
+import ImgProfil from '../assets/profil-walimurid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import cardMapel1 from '../assets/cardAssets/cardMapel1.svg';
-import cardMapel2 from '../assets/cardAssets/cardMapel2.svg';
-import cardMapel3 from '../assets/cardAssets/cardMapel3.svg';
-import cardMapel4 from '../assets/cardAssets/cardMapel4.svg';
-import cardMapel5 from '../assets/cardAssets/cardMapel5.svg';
-import cardMapel6 from '../assets/cardAssets/cardMapel6.svg';
-import cardMapel7 from '../assets/cardAssets/cardMapel7.svg';
-import cardMapel8 from '../assets/cardAssets/cardMapel8.svg';
-import cardMapel9 from '../assets/cardAssets/cardMapel9.svg';
-import { useState } from "react";
+import AssetsBinggris from '../assets/img-ilustration-binggris.svg';
+import imgGuru from '../assets/profil-guru.svg';
+import NavbarWaliMurid from '../component/NavbarWaliMurid';
 
-function PageMapel(){
-
-    const navText = "Mata Pelajaran";
+function MatapelajaranTugas(){
+    const navText = "B. Inggris";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -78,160 +70,139 @@ function PageMapel(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
-    
-    const valueDataMapel = [
-        {
-            id: 1,
-            namaMapel: "B. Inggris",
-            guruPengajar: "Budiono, S.Pd",
-            kelas: '10',
-            jurusan: 'pplg',
-            tingkatan: '1',
-            assets: cardMapel1,
-        },
-        {
-            id: 2,
-            namaMapel: "Olaharaga",
-            guruPengajar: "Asep, S.Pd",
-            kelas: "10",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel2,
-        },
-        {
-            id: 3,
-            namaMapel: "Matematika",
-            guruPengajar: "Rini, S.Pd",
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "1",
-            assets: cardMapel3,
-        },
-        {
-            id: 4,
-            namaMapel: "PAI",
-            guruPengajar: "Edi, S.Pd.I",
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel4,
-        },
-        {
-            id: 5,
-            namaMapel: "BK",
-            guruPengajar: "Sumijah, S.Pd",
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "1",
-            assets: cardMapel5,
-        },
-        {
-            id: 6,
-            namaMapel: "Sejarah",
-            guruPengajar: "Rini, S.Pd",
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "2",
-            assets: cardMapel6,
-        },
-        {
-            id: 7,
-            namaMapel: "Game Dev",
-            guruPengajar: "Suep, S.Kom",
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "1",
-            assets: cardMapel7,
-        },
-        {
-            id: 8,
-            namaMapel: "Web Dev",
-            guruPengajar: "Sugeng, S.Kom",
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "2",
-            assets: cardMapel8,
-        },
-        {
-            id: 9,
-            namaMapel: "Desktop Dev",
-            guruPengajar: "Paimin, S.Kom",
-            kelas: "11",
-            jurusan: "animasi",
-            tingkatan: "1",
-            assets: cardMapel9,
-        },
-    ];
 
-    // for (let i = 0; i < valueDataMapel.length; i++) {
-    //     const kelas = valueDataMapel[i].kelas;
-    //     const jurusan = valueDataMapel[i].jurusan;
-    //     const tingkatan = valueDataMapel[i].tingkatan;
-    //     valueDataMapel[i].kelasAll = kelas + " " + jurusan + " " + tingkatan;
-    // }
+    const [activeContent, setActiveContent] = useState("detailMateriKbm");
 
-    const [jurusan, setJurusan] = useState("semua");
-
-    const handleChange = (event) => {
-        setJurusan(event.target.value);
+    const showMateri = () => {
+        setActiveContent("detailMateriKbm");
     };
 
-    const filterDataMapel = valueDataMapel.filter((data) =>
-        jurusan === "semua" ? true : data.jurusan === jurusan
-    );
+    const showTugas = () => {
+        setActiveContent("detailTugasKbm");
+    };
 
     return(
         <div>
-            {/* <Sidebar/> */}
             <aside>
-                <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
+                <h1 className="title-form-login" onClick={() => navigate('/walimurid/berandawalimurid')}>
                     <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
                     nugasyuk
                 </h1>
                 <ul>
-                    <li onClick={() => navigate('/murid/berandamurid')}>
+                    <li onClick={() => navigate('/walimurid/berandawalimurid')}>
                         <Icon icon="iconoir:home-simple" width="20" />
                         Beranda
                     </li>
-                    <li onClick={() => navigate('/murid/pagetugas')} >
+                    <li onClick={() => navigate('/walimurid/pagetugas')} >
                         <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
                         Tugas
                     </li>
-                    <li onClick={() => navigate('/murid/pagekbm')}>
+                    <li onClick={() => navigate('/walimurid/pagekbm')}>
                         <Icon icon="uiw:date" width="18"/>
                         Jadwal KBM
                     </li>
-                    <li className='active' onClick={() => navigate('/murid/pagemapel')}>
+                    <li className='active' onClick={() => navigate('/walimurid/pagemapel')}>
                         <Icon icon="fluent-mdl2:education" width="18"/>
                         Mata Pelajaran
                     </li>
-                    <li onClick={() => navigate('/murid/pagekonseling')}>
-                        <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
-                        Konseling
-                    </li>
                 </ul>
             </aside>
-
-            <div className='container-content'>
-                <Navigation text={navText}/>
-                <main className='main'>
-                    <div className="content-mapel">
-                        <div className="con-card-mapel">
-                            {filterDataMapel.map((data) => (
-                            <div className="card-mapel" key={data.id} style={{ cursor: "pointer"}} onClick={() => navigate('/murid/pagemapel/mapelmateri')}>
-                                <img src={data.assets} alt="" className="image-card-mapel"/>
-                                <div className="content-card-mapel">
-                                <div className="card-mapel-left">
-                                    <p className="mata-pelajaran">{data.namaMapel}</p>
-                                    <p className="nama-guru-mapel">{data.guruPengajar}</p>
-                                </div>
-                                {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
-                                </div>
+            <div className="container-content">
+                <NavbarWaliMurid text={navText}/>
+                <div className="main">
+                    <div className="con-content-subject">
+                        <div className="content-subject" style={{background: "linear-gradient(to bottom right, #8287F8, #555AD3)"}}>
+                            <div className="content-subject-left">
+                                <p className="name-subject">
+                                    B.Inggris
+                                </p>
+                                <p className="name-teacher">
+                                    Budiono, S.Pd
+                                </p>
                             </div>
-                            ))}
+                            <img src={AssetsBinggris} alt="" className="img-assets-subject" />
+                        </div>
+                        <div className="content-subject-2">
+                            <img src={imgGuru} alt="" className="img-subject-2" />
+                            <p className="name-teacher-2">Budiono, S.Pd</p>
                         </div>
                     </div>
-                </main>
+                    <div className="switch-container-walimurid">
+                        <button id='btn-materiKbm' className={activeContent === "detailMateriKbm" ? "activeDetailKbm" : ""} onClick={showMateri} >
+                            Materi
+                        </button>
+                        <button id='btn-tugasKbm' className={activeContent === "detailTugasKbm" ? "activeDetailKbm" : ""} onClick={showTugas} >
+                            Tugas
+                        </button>
+                    </div>
+                    <div className='dropdown-task'>
+                        <select id='tugas' name='tugas'>
+                            <option value="semua" selected>-- Semua Tugas --</option>
+                            <option value="tugas">Tugas selesai dalam deaadline</option>
+                            <option value="tugas">Tugas selesai lewat deadline</option>
+                            <option value="tugas">Tugas belum selesai dalam deadline</option>
+                            <option value="tugas">Tugas belum selesai lewat deadline</option>
+                        </select>
+
+                        <form className='search-box'>
+                            <input type='text' placeholder='Cari...'/>
+                            <button type='submit'>
+                                <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div className="con-material">
+                        <div className="card-material" style={{ cursor: "pointer"}} onClick={() => navigate('/walimurid/pagemapel/mapelmateri/detailmateri')}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Application Letter</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">8 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Reading</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">5 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Laporan B. Inggris</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">1 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <div className="popup-logout" id="popup-logout">
@@ -287,10 +258,10 @@ function PageMapel(){
                         <img src={ImgProfil} alt="" className="detail-img-profile" />
                     </div>
                     <p className="judul-detail">Email</p>
-                    <p className="value-detail">zumarramadhan@smkrus.sch.id</p>
-                    <p className="judul-detail">Nama Pengguna</p>
-                    <p className="value-detail">Zumar</p>
+                    <p className="value-detail">sulislaila@smkrus.sch.id</p>
                     <p className="judul-detail">Nama</p>
+                    <p className="value-detail">Sulis Laila</p>
+                    <p className="judul-detail">Orang Tua Dari</p>
                     <p className="value-detail">Muhammad Zumar Ramadhan</p>
                     <p className="judul-detail">Jurusan</p>
                     <p className="value-detail">PPLG</p>
@@ -362,8 +333,8 @@ function PageMapel(){
                 </div>
             </div>
 
-        </div>   
+        </div>
     );
 }
 
-export default PageMapel;
+export default MatapelajaranTugas
