@@ -1,4 +1,4 @@
-import '../cssAll/guru/PagePengumpulan.css';
+import '../cssAll/guru/DetailPengumpulan.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -11,7 +11,7 @@ import ImgProfil from '../assets/profil-guru.svg';
 import damiImgMurid from '../assets/damiImgMurid.png';
 
 
-function PagePengumpulan(){
+function DetailPengumpulan(){
     const navText = "Pengumpulan";
     const navigate = useNavigate();
 
@@ -65,6 +65,16 @@ function PagePengumpulan(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const [activeContent, setActiveContent] = useState("detailMenungguPengumpulan");
+
+    const showMenunggu = () => {
+        setActiveContent("detailMenungguPengumpulan");
+    };
+
+    const showSelesai = () => {
+        setActiveContent("detailSelesaiPengumpulan");
+    };
 
     const valueDataKelas = [
         {
@@ -217,7 +227,51 @@ function PagePengumpulan(){
             kelas: valueDataKelas[9].kelas+" "+valueDataKelas[9].jurusan.toUpperCase()+" "+valueDataKelas[9].tingkatan,
         },
     ];
-            
+
+    // data materi kbm berisi nama materi, tanggal, guru
+
+    const valueDataMenungguKbm = [
+        {
+            id: 1,
+            namaMateri: 'Application Letter',
+            tanggal: '8 Mar 2023',
+            deadline: '8 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 2,
+            namaMateri: 'Reading',
+            tanggal: '5 Mar 2023',
+            deadline: '5 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+    ];
+
+    // data tugas kbm berisi nama tugas, tanggal, deadline, guru
+
+    const valueDataSelesaiKbm = [
+        {
+            id: 1,
+            namaTugas: 'Application Letter',
+            tanggal: '8 Mar 2023',
+            deadline: '8 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 2,
+            namaTugas: 'Reading',
+            tanggal: '5 Mar 2023',
+            deadline: '5 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 3,
+            namaTugas: 'Laporan B. Inggris',
+            tanggal: '1 Mar 2023',
+            deadline: '1 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+    ];     
 
     return(
         <div>
@@ -248,50 +302,88 @@ function PagePengumpulan(){
             <div className="container-content">
                 <NavbarGuru text={navText}/>
                 <div className="main">
-                    <div className="header-Pengumpulan-Guru">
-                        <div className="header-Pengumpulan-left">
-                            <div className="header-pageKbm-left">
-                                <select id="pageKbm" name="pageKbm">
-                                    <option value="semua">-- Semua Kelas --</option>
-                                    {valueDataKelas.map((data) => (
-                                        <option value={data.jurusan + data.tingkatan + data.kelas}>-- {data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan} --</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <form className="search-box">
-                                <input type="text" placeholder="Cari..." />
-                                <button>
-                                <Icon
-                                    icon="material-symbols:search-rounded"
-                                    width="20"
-                                ></Icon>
-                                </button>
-                            </form>
-                        </div>
-                        <div className="header-Pengumpulan-right">
-                            <p>{dataCardMurid.length} MURID</p>
-                        </div>
-                    </div>
-                    
-                    <div className="content-Pengumpulan-Guru">
-                        {dataCardMurid.map((data) => (
-                        <div className="card-Pengumpulan-Guru" style={{cursor: 'pointer'}} onClick={() => navigate('/guru/pagepengumpulan/detail')}>
-                            <div className="card-Pengumpulan-Guru-left">
-                                <div className="img-Pengumpulan-Guru">
-                                    <img src={data.imgProfile} alt="" className="image-Pengumpulan-Guru"/>
+                    <div className="header-content-DetailPengumpulan">
+                        <div className="card-DetailPengumpulan-Guru">
+                            <div className="card-DetailPengumpulan-Guru-left">
+                                <div className="img-DetailPengumpulan-Guru">
+                                    <img src={damiImgMurid} alt="" className="image-DetailPengumpulan-Guru"/>
                                 </div>
-                                <div className="desc-card-Pengumpulan-Guru">
-                                    <p className="name-card-Pengumpulan-Guru">{data.name}</p>
-                                    <p className="email-card-Pengumpulan-Guru">{data.email}</p>
+                                <div className="desc-card-DetailPengumpulan-Guru">
+                                    <p className="name-card-DetailPengumpulan-Guru">Ahmad Aziz Wira Widodo</p>
+                                    <p className="email-card-DetailPengumpulan-Guru">ahmadaziz@smkrus.sch.id</p>
                                 </div>
                             </div>
-                            <div className="detaiKelas-Pengumpulan-Guru">
-                                <p>{data.kelas}</p>
+                            <div className="detaiKelas-DetailPengumpulan-Guru">
+                                <p>11 PPLG 1</p>
                             </div>
                         </div>
-                        ))}
                     </div>
 
+                    <div className="body-content-DetailPengumpulan">
+                        <div className="switch-container">
+                            <button
+                            id='btn-MenungguPengumpulan'
+                            className={activeContent === "detailMenungguPengumpulan" ? "activeDetailPengumpulan" : ""}
+                            onClick={showMenunggu}
+                            >
+                            Menunggu
+                            </button>
+                            <button
+                            id='btn-SelesaiPengumpulan'
+                            className={activeContent === "detailSelesaiPengumpulan" ? "activeDetailPengumpulan" : ""}
+                            onClick={showSelesai}
+                            >
+                            Selesai
+                            </button>
+                        </div>
+
+                        <div className="con-DetailPengumpulan" style={{ display: activeContent === "detailMenungguPengumpulan" ? "block" : "none" }}>
+                            <div className="con-DetailPengumpulan-Menunggu">
+                                {valueDataMenungguKbm.map((data) => (
+                                <div className="card-DetailPengumpulan-Menunggu" style={{cursor: "pointer"}}>
+                                    <div className="card-DetailPengumpulan-Menunggu-left">
+                                        <div className="img-DetailPengumpulan-Menunggu">
+                                            <Icon icon="uiw:time-o" width={40}/>
+                                        </div>
+                                        <div className="desc-DetailPengumpulan-Menunggu">
+                                            <p className="judul-DetailPengumpulan-Menunggu">{data.namaMateri}</p>
+                                            <p className="nama-DetailPengumpulan-Guru">{data.guru}</p>
+                                        </div>
+                                    </div>
+                                    <div className="card-DetailPengumpulan-Menunggu-right">
+                                        <div className="dateDetailDesc">{data.tanggal}</div>
+                                        <div className="deadline-timePengumpulan">Deadline : {data.deadline}</div>
+                                        <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+
+                        <div className="con-DetailPengumpulan" style={{ display: activeContent === "detailSelesaiPengumpulan" ? "block" : "none" }}>
+                            <div className="con-DetailPengumpulan-Selesai">
+                                {valueDataSelesaiKbm.map((data) => (
+                                <div className="card-DetailPengumpulan-Selesai" style={{cursor: "pointer"}}>
+                                    <div className="card-DetailPengumpulan-Selesai-left">
+                                        <div className="img-DetailPengumpulan-Selesai">
+                                            <Icon icon="material-symbols:check" width={40}/>
+                                        </div>
+                                        <div className="desc-DetailPengumpulan-Selesai">
+                                            <p className="judul-DetailPengumpulan-Selesai">{data.namaTugas}</p>
+                                            <p className="nama-DetailPengumpulan-Guru">{data.guru}</p>
+                                        </div>
+                                    </div>
+                                    <div className="card-DetailPengumpulan-Selesai-right">
+                                        <div className="dateDetailDesc">{data.tanggal}</div>
+                                        <div className="deadline-timePengumpulan">Deadline : {data.deadline}</div>
+                                        <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -369,4 +461,4 @@ function PagePengumpulan(){
     );
 }
 
-export default PagePengumpulan
+export default DetailPengumpulan

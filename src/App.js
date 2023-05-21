@@ -33,6 +33,8 @@ import DetailTugasKbm from './guru/DetailTugasKbm';
 import FormTugasKBM from './guru/FormTugasKBM';
 
 import PagePengumpulan from './guru/PagePengumpulan';
+import DetailPengumpulan from './guru/DetailPengumpulan';
+
 import Jadwal from './guru/JadwalKbm';
 // end role guru
 // role wali murid
@@ -87,6 +89,8 @@ function App() {
         <Route path='/guru/pagekbm/detail/formtugas' element={<FormTugasKBM/>}/>
 
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
+        <Route path='/guru/pagepengumpulan/detail' element={<DetailPengumpulan/>}/>
+
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>
         {/* end role guru */}
         {/* role wali murid */}
