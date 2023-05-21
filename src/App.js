@@ -27,7 +27,9 @@ import BerandaGuru from './guru/BerandaGuru';
 
 import KBM from './guru/PageKbm';
 import DetailKbm from './guru/DetailKbm';
+import DetailMateriKbm from './guru/DetailMateriKbm';
 import FormMateriKBM from './guru/FormMateriKBM';
+import DetailTugasKbm from './guru/DetailTugasKbm';
 import FormTugasKBM from './guru/FormTugasKBM';
 
 import PagePengumpulan from './guru/PagePengumpulan';
@@ -78,7 +80,10 @@ function App() {
 
         <Route path='/guru/pagekbm' element={<KBM/>}/>
         <Route path='/guru/pagekbm/detail' element={<DetailKbm/>}/>
+
+        <Route path='/guru/pagekbm/detail/detailmateri' element={<DetailMateriKbm/>}/>
         <Route path='/guru/pagekbm/detail/formmateri' element={<FormMateriKBM/>}/>
+        <Route path='/guru/pagekbm/detail/detailtugas' element={<DetailTugasKbm/>}/>
         <Route path='/guru/pagekbm/detail/formtugas' element={<FormTugasKBM/>}/>
 
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>

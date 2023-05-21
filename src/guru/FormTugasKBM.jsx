@@ -305,6 +305,19 @@ function FormTugasKBM(){
                                 </select>
                             </div>
 
+                            <div className="switch-inputTugas">
+                                <h2 className="title-formKbm">Apakah murid dapat menginput jawaban?</h2>
+                                <div className="con-radio">
+                                    <label>
+                                        <input type="radio" name="jawaban" value="yes"/>Ya
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="jawaban" value="no"/>Tidak
+                                    </label>
+                                </div>
+                                
+                            </div>
+
                             {/* <div className="con-formKbm">
                                 <div className="title-formKbm">Jam ke</div>
                                 <select id="" name="" className='selectForm'>

@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+a {
+    text-decoration: none;
+}
+
+.con-card-detailTugas {
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.header-card-detailTugas {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.left-header-card-detailTugas {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.icon-header-card-detailTugas {
+    background: #D8F0FF;
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--color-aksen);
+}
+
+.title-header-card-detailTugas {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--color-aksen);
+}
+
+.guru-header-card-detailTugas {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #797979;
+}
+
+.right-header-card-detailTugas {
+    position: absolute;
+    display: flex;
+    gap: 30px;
+    top: 0;
+    right: 0;
+    align-items: center;
+}
+
+.date-header-card-detailTugas {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #797979;
+}
+
+.icon-options {
+    color: var(--color-aksen);
+}
+
+.desc-card-detailTugas {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 22px;
+    color: #4B4B4B;
+}
+
+.infoDeadline {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 30px;
+    color: var(--color-aksen);
+}
+
+.value-fileOrlink {
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    padding: 10px 60px 10px 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: max-content;
+}
+
+.value-fileOrlink iframe {
+    width: 180px;
+    height: 120px;
+    border-radius: 10px;
+}
+
+.title-fileOrlink {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #4B4B4B;
+}
+
+.link-detailTugas {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #797979;
+}
+
+.link-detailTugas span {
+    color: var(--color-aksen);
+}
+
+.btn-cek-pengumpulan {
+    margin-top: 30px;
+    border-radius: 5px;
+    background: var(--color-aksen);
+    padding: 9px 54px;
+    /* line-height: 0; */
+    width: max-content;
+    line-height: 22px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .15s ease-in-out;
+    color: var(--color-primer);
+}
+
+.btn-cek-pengumpulan:hover {
+    background: #1D77AF;
+    
+}
