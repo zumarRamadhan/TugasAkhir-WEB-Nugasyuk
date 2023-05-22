@@ -90,10 +90,13 @@ a{
     border: 1px solid #C4C4C4;
     border-radius: 10px;
     padding: 10px 60px 10px 10px;
-    display: flex;
-    align-items: center;
     gap: 20px;
     width: max-content;
+}
+
+#value-fileOrlink {
+    display: flex;
+    align-items: center;
 }
 
 .value-fileOrlink iframe {

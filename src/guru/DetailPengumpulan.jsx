@@ -340,7 +340,7 @@ function DetailPengumpulan(){
                         <div className="con-DetailPengumpulan" style={{ display: activeContent === "detailMenungguPengumpulan" ? "block" : "none" }}>
                             <div className="con-DetailPengumpulan-Menunggu">
                                 {valueDataMenungguKbm.map((data) => (
-                                <div className="card-DetailPengumpulan-Menunggu" style={{cursor: "pointer"}}>
+                                <div className="card-DetailPengumpulan-Menunggu" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagepengumpulan/detail/detailmenunggu')}>
                                     <div className="card-DetailPengumpulan-Menunggu-left">
                                         <div className="img-DetailPengumpulan-Menunggu">
                                             <Icon icon="uiw:time-o" width={40}/>
@@ -364,7 +364,7 @@ function DetailPengumpulan(){
                         <div className="con-DetailPengumpulan" style={{ display: activeContent === "detailSelesaiPengumpulan" ? "block" : "none" }}>
                             <div className="con-DetailPengumpulan-Selesai">
                                 {valueDataSelesaiKbm.map((data) => (
-                                <div className="card-DetailPengumpulan-Selesai" style={{cursor: "pointer"}}>
+                                <div className="card-DetailPengumpulan-Selesai" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagepengumpulan/detail/detailselesai')}>
                                     <div className="card-DetailPengumpulan-Selesai-left">
                                         <div className="img-DetailPengumpulan-Selesai">
                                             <Icon icon="material-symbols:check" width={40}/>

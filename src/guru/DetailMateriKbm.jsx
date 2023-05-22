@@ -240,13 +240,11 @@ function DetailMateriKbm(){
                             Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa memahami materi mengenai pengertian application letter. Dibawah ini saya mencantumkan link youtube pengertian dari application letter, kalian bisa menyimak video tersebut. jika sudah selesai menyimak video kalian bisa mengerjakan tugas application letter yang saya upload pada halaman tugas. Terima kasih, sukses selalu...
                         </p>
 
-                        <a href="https://www.youtube.com/watch?v=0jdq6Wc3rE0">
-                            <div className="value-fileOrlink" style={{cursor:"pointer"}}>
-                                <iframe src="https://www.youtube.com/embed/0jdq6Wc3rE0" frameborder="0" allowfullscreen></iframe>
-                                <div>
-                                    <h1 className="title-fileOrlink">Application Letter</h1>
-                                    <p className="link-detailMateri">YouTube <span>Klik</span></p>
-                                </div>                               
+                        <a href="https://youtu.be/0jdq6Wc3rE0" className="value-fileOrlink" id='value-fileOrlink'>
+                            <iframe src="https://www.youtube.com/embed/0jdq6Wc3rE0" frameborder="0" allowfullscreen></iframe>
+                            <div>
+                                <h1 className="title-fileOrlink">Application Letter</h1>
+                                <p className="link-detailMenunggu">YouTube <span>Klik</span></p>
                             </div>
                         </a>
                     </div>

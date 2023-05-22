@@ -34,6 +34,8 @@ import FormTugasKBM from './guru/FormTugasKBM';
 
 import PagePengumpulan from './guru/PagePengumpulan';
 import DetailPengumpulan from './guru/DetailPengumpulan';
+import DetailSelesai from './guru/DetailSelesai';
+import DetailMenunggu from './guru/DetailMenunggu';
 
 import Jadwal from './guru/JadwalKbm';
 // end role guru
@@ -50,6 +52,7 @@ import PageChat from './guruBk/PageChat';
 // end role bk
 import Notfound from './Notfound';
 import MapelMateri from './murid/MapelMateri';
+
 
 
 function App() {
@@ -90,7 +93,9 @@ function App() {
 
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
         <Route path='/guru/pagepengumpulan/detail' element={<DetailPengumpulan/>}/>
-
+        <Route path='/guru/pagepengumpulan/detail/detailmenunggu' element={<DetailMenunggu/>}/>
+        <Route path='/guru/pagepengumpulan/detail/detailselesai' element={<DetailSelesai/>}/
+        >
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>
         {/* end role guru */}
         {/* role wali murid */}

@@ -242,13 +242,11 @@ function DetailTugasKbm(){
 
                         <p className="infoDeadline">Deatline : 1 Mar 2022</p>
 
-                        <a href="https://www.youtube.com/watch?v=0jdq6Wc3rE0">
-                            <div className="value-fileOrlink" style={{cursor:"pointer"}}>
-                                <iframe src="https://www.youtube.com/embed/0jdq6Wc3rE0" frameborder="0" allowfullscreen></iframe>
-                                <div>
-                                    <h1 className="title-fileOrlink">Application Letter</h1>
-                                    <p className="link-detailTugas">YouTube <span>Klik</span></p>
-                                </div>                               
+                        <a href="https://youtu.be/0jdq6Wc3rE0" className="value-fileOrlink" id='value-fileOrlink'>
+                            <iframe src="https://www.youtube.com/embed/0jdq6Wc3rE0" frameborder="0" allowfullscreen></iframe>
+                            <div>
+                                <h1 className="title-fileOrlink">Application Letter</h1>
+                                <p className="link-detailMenunggu">YouTube <span>Klik</span></p>
                             </div>
                         </a>
 
