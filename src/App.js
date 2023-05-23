@@ -11,6 +11,8 @@ import MataPelajaran from './admin/MataPelajaran';
 import JadwalKBM from './admin/JadwalKBM';
 import PageAssets from './admin/PageAssets';
 import FormAddJadwalKbm from './admin/formAddJadwalKbm';
+import FormAddMurid from './admin/FormAddMurid';
+import FormAddGuru from './admin/FormAddGuru';
 // end role admin
 // role murid
 import BerandaMurid from './murid/BerandaMurid';
@@ -53,6 +55,8 @@ function App() {
         <Route path="/admin/jadwalkbm" element={<JadwalKBM/>} />
         <Route path="/admin/pageassets" element={<PageAssets/>} />
         <Route path="/admin/jadwalkbm/tambah" element={<FormAddJadwalKbm/>} />
+        <Route path="/admin/pagemurid/formaddmurid" element={<FormAddMurid/>} />
+        <Route path="/admin/pageguru/formaddguru" element={<FormAddGuru/>} />
         {/* end role admin */}
         {/* role murid */}
         <Route path="/murid/berandamurid" element={<BerandaMurid/>} /> 
