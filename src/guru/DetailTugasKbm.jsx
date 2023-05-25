@@ -1,4 +1,4 @@
-import '../cssAll/guru/DetailKbm.css';
+import '../cssAll/guru/DetailTugasKbm.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -11,8 +11,8 @@ import ImgProfil from '../assets/profil-guru.svg';
 import damiImgMurid from '../assets/damiImgMurid.png';
 
 
-function DetailKbm(){
-    const navText = "{KBM 'KELAS'}";
+function DetailTugasKbm(){
+    const navText = "KBM 11 PPLG 1";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -186,18 +186,7 @@ function DetailKbm(){
             deadline: '1 Mar 2023',
             guru: 'Budiono, S.Pd',
         },
-    ];  
-
-    const [activeContent, setActiveContent] = useState("detailMateriKbm");
-
-    const showMateri = () => {
-        setActiveContent("detailMateriKbm");
-    };
-
-    const showTugas = () => {
-        setActiveContent("detailTugasKbm");
-    };
-            
+    ];          
 
     return(
         <div>
@@ -228,83 +217,43 @@ function DetailKbm(){
             <div className="container-content">
                 <NavbarGuru text={navText}/>
                 <div className="main">
-                    <div className="header-content">
-                        <div className="switch-container">
-                            <button
-                            id='btn-materiKbm'
-                            className={activeContent === "detailMateriKbm" ? "activeDetailKbm" : ""}
-                            onClick={showMateri}
-                            >
-                            Materi
-                            </button>
-                            <button
-                            id='btn-tugasKbm'
-                            className={activeContent === "detailTugasKbm" ? "activeDetailKbm" : ""}
-                            onClick={showTugas}
-                            >
-                            Tugas
-                            </button>
-                        </div>
-
-                        <button className='btn-add-materi' style={{ display: activeContent === "detailMateriKbm" ? "flex" : "none" }} onClick={() => navigate('/guru/pagekbm/detail/formmateri')}>
-                            <Icon icon="ic:round-plus" width="20"></Icon>
-                            <p>Tambah Data</p>
-                        </button>
-
-                        <button className='btn-add-tugas' style={{ display: activeContent === "detailTugasKbm" ? "flex" : "none" }} onClick={() => navigate('/guru/pagekbm/detail/formtugas')}>
-                            <Icon icon="ic:round-plus" width="20"></Icon>
-                            <p>Tambah Data</p>
-                        </button>
-                    </div>
-
-                    <div className="con-DetailKbm" style={{ display: activeContent === "detailMateriKbm" ? "block" : "none" }}>
-                        <div className="con-DetailKbm-Materi">
-                            {valueDataMateriKbm.map((data) => (
-                            <div className="card-DetailKbm-Materi" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagekbm/detail/detailmateri')}>
-                                <div className="card-DetailKbm-Materi-left">
-                                    <div className="img-DetailKbm-Materi">
-                                        <Icon icon="ri:book-line" width={40}/>
-                                    </div>
-                                    <div className="desc-DetailKbm-Materi">
-                                        <p className="judul-DetailKbm-Materi">{data.namaMateri}</p>
-                                        <p className="materi-DetailKbm-Guru">{data.guru}</p>
-                                    </div>
+                    <div className="con-card-detailTugas">
+                        <div className="header-card-detailTugas">
+                            <div className="left-header-card-detailTugas">
+                                <div className="icon-header-card-detailTugas">
+                                    <Icon icon="tabler:clipboard-text" width={40}/>
                                 </div>
-                                <div className="card-DetailKbm-Materi-right">
-                                    <div className="dateDetailDesc">{data.tanggal}</div>
-                                    <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                                <div className="text-header-card-detailTugas">
+                                    <h1 className="title-header-card-detailTugas">Tugas Application Letter</h1>
+                                    <p className="guru-header-card-detailTugas">Budiono, S.Pd</p>
                                 </div>
                             </div>
-                            ))}
-                        </div>
-                    </div>
-                    
-
-                    <div className="con-DetailKbm" style={{ display: activeContent === "detailTugasKbm" ? "block" : "none" }}>
-                        <div className="con-DetailKbm-Tugas">
-                            {valueDataTugasKbm.map((data) => (
-                            <div className="card-DetailKbm-Tugas" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagekbm/detail/detailtugas')}>
-                                <div className="card-DetailKbm-Tugas-left">
-                                    <div className="img-DetailKbm-Tugas">
-                                        <Icon icon="tabler:clipboard-text" width={40}/>
-                                    </div>
-                                    <div className="desc-DetailKbm-Tugas">
-                                        <p className="judul-DetailKbm-Tugas">{data.namaTugas}</p>
-                                        <p className="materi-DetailKbm-Guru">{data.guru}</p>
-                                    </div>
-                                </div>
-                                <div className="card-DetailKbm-Tugas-right">
-                                    <div className="dateDetailDesc">{data.tanggal}</div>
-                                    <div className="deadline-timeTugas">Deadline : {data.deadline}</div>
-                                    <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                            <div className="right-header-card-detailTugas">
+                                <p className="date-header-card-detailTugas">8 Mar 2023</p>
+                                <div className="icon-options" style={{cursor:"pointer"}}>
+                                    <Icon icon="mi:options-vertical" width={40}/>
                                 </div>
                             </div>
-                            ))}
                         </div>
-                    </div>
 
-                    
-                    
+                        <p className="desc-card-detailTugas">
+                            Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa memahami Tugas mengenai pengertian application letter. Dibawah ini saya mencantumkan link youtube pengertian dari application letter, kalian bisa menyimak video tersebut. jika sudah selesai menyimak video, silahkan resume materi apa saja yang di dapat. Terima kasih, sukses selalu...
+                        </p>
+
+                        <p className="infoDeadline">Deatline : 1 Mar 2022</p>
+
+                        <a href="https://youtu.be/0jdq6Wc3rE0" className="value-fileOrlink" id='value-fileOrlink'>
+                            <iframe src="https://www.youtube.com/embed/0jdq6Wc3rE0" frameborder="0" allowfullscreen></iframe>
+                            <div>
+                                <h1 className="title-fileOrlink">Application Letter</h1>
+                                <p className="link-detailMenunggu">YouTube <span>Klik</span></p>
+                            </div>
+                        </a>
+
+                        <div className="btn-cek-pengumpulan">
+                            Cek Pengumpulan
+                        </div>
+                    </div>    
                 </div>
             </div>{/* end body */}
 
@@ -382,4 +331,4 @@ function DetailKbm(){
     );
 }
 
-export default DetailKbm
+export default DetailTugasKbm

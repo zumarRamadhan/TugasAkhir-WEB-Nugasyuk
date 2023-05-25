@@ -1,4 +1,4 @@
-import '../cssAll/guru/DetailKbm.css';
+import '../cssAll/guru/DetailPengumpulan.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -11,8 +11,8 @@ import ImgProfil from '../assets/profil-guru.svg';
 import damiImgMurid from '../assets/damiImgMurid.png';
 
 
-function DetailKbm(){
-    const navText = "{KBM 'KELAS'}";
+function DetailPengumpulan(){
+    const navText = "Pengumpulan";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -65,6 +65,16 @@ function DetailKbm(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const [activeContent, setActiveContent] = useState("detailMenungguPengumpulan");
+
+    const showMenunggu = () => {
+        setActiveContent("detailMenungguPengumpulan");
+    };
+
+    const showSelesai = () => {
+        setActiveContent("detailSelesaiPengumpulan");
+    };
 
     const valueDataKelas = [
         {
@@ -139,32 +149,107 @@ function DetailKbm(){
         },
     ];
 
-    // data materi kbm berisi nama materi, tanggal, guru
-
-    const valueDataMateriKbm = [
+    const dayData = [
         {
             id: 1,
-            namaMateri: 'Materi Application Letter',
+            hari: "Senin",
+        },
+        {
+            id: 2,
+            hari: "Selasa",
+        },
+        {
+            id: 3,
+            hari: "Rabu",
+        },
+        {
+            id: 4,
+            hari: "Kamis",
+        },
+        {
+            id: 5,
+            hari: "Jumat",
+        },
+        {
+            id: 6,
+            hari: "Sabtu",
+        },
+    ];
+
+    const dataCardMurid = [
+        {
+            id: 1,
+            imgProfile: damiImgMurid,
+            name: "Ahmad Aziz Wira Widodo",
+            email: "ahmadaziz@smkrus.sch.id",
+            kelas: valueDataKelas[2].kelas+" "+valueDataKelas[2].jurusan.toUpperCase()+" "+valueDataKelas[2].tingkatan,
+        },
+        {
+            id: 2,
+            imgProfile: damiImgMurid,
+            name: "Bayu Septian Kurniawan",
+            email: "bayuseptian@smkrus.sch.id",
+            kelas: valueDataKelas[2].kelas+" "+valueDataKelas[2].jurusan.toUpperCase()+" "+valueDataKelas[2].tingkatan,
+        },
+        {
+            id: 3,
+            imgProfile: damiImgMurid,
+            name: "Javier Gavra Abhinaya",
+            email: "javiergavra@smkrus.sch.id",
+            kelas: valueDataKelas[4].kelas+" "+valueDataKelas[4].jurusan.toUpperCase()+" "+valueDataKelas[4].tingkatan,
+        },
+        {
+            id: 4,
+            imgProfile: damiImgMurid,
+            name: "Khoiru Rizal Kalam Ismail",
+            email: "khoirurizal@smkrus.sch.id",
+            kelas: valueDataKelas[4].kelas+" "+valueDataKelas[4].jurusan.toUpperCase()+" "+valueDataKelas[4].tingkatan,
+        },
+        {
+            id: 5,
+            imgProfile: damiImgMurid,
+            name: "Muhammad Nur Wahid Bimawan",
+            email: "nurwahid@smkrus.sch.id",
+            kelas: valueDataKelas[8].kelas+" "+valueDataKelas[8].jurusan.toUpperCase()+" "+valueDataKelas[8].tingkatan,
+        },
+        {
+            id: 6,
+            imgProfile: damiImgMurid,
+            name: "Muh Wahyu Ageng Pambudi",
+            email: "muhwahyu@smkrus.schid",
+            kelas: valueDataKelas[8].kelas+" "+valueDataKelas[8].jurusan.toUpperCase()+" "+valueDataKelas[8].tingkatan,
+        },
+        {
+            id: 7,
+            imgProfile: damiImgMurid,
+            name: "Muhammad Vitto Corlenone",
+            email: "vittocorleone@smkrus.sch.id",
+            kelas: valueDataKelas[9].kelas+" "+valueDataKelas[9].jurusan.toUpperCase()+" "+valueDataKelas[9].tingkatan,
+        },
+    ];
+
+    // data materi kbm berisi nama materi, tanggal, guru
+
+    const valueDataMenungguKbm = [
+        {
+            id: 1,
+            namaMateri: 'Application Letter',
             tanggal: '8 Mar 2023',
+            deadline: '8 Mar 2023',
             guru: 'Budiono, S.Pd',
         },
         {
             id: 2,
-            namaMateri: 'Materi Reading',
+            namaMateri: 'Reading',
             tanggal: '5 Mar 2023',
+            deadline: '5 Mar 2023',
             guru: 'Budiono, S.Pd',
-        },
-        {
-            id: 3,
-            namaMateri: 'Materi Laporan B. Inggris',
-            tanggal: '12/12/2021',
-            guru: '1 Mar 2023',
         },
     ];
 
     // data tugas kbm berisi nama tugas, tanggal, deadline, guru
 
-    const valueDataTugasKbm = [
+    const valueDataSelesaiKbm = [
         {
             id: 1,
             namaTugas: 'Application Letter',
@@ -186,18 +271,7 @@ function DetailKbm(){
             deadline: '1 Mar 2023',
             guru: 'Budiono, S.Pd',
         },
-    ];  
-
-    const [activeContent, setActiveContent] = useState("detailMateriKbm");
-
-    const showMateri = () => {
-        setActiveContent("detailMateriKbm");
-    };
-
-    const showTugas = () => {
-        setActiveContent("detailTugasKbm");
-    };
-            
+    ];     
 
     return(
         <div>
@@ -211,11 +285,11 @@ function DetailKbm(){
                     <Icon icon="iconoir:home-simple" width="20" />
                     Beranda
                 </li>
-                <li className='active' onClick={() => navigate('/guru/pagekbm')} >
+                <li onClick={() => navigate('/guru/pagekbm')} >
                     <Icon icon="ph:chalkboard-teacher" width="20" />
                     KBM
                 </li>
-                <li onClick={() => navigate('/guru/pagepengumpulan')}>
+                <li className='active' onClick={() => navigate('/guru/pagepengumpulan')}>
                     <Icon icon="uiw:date" width="18"/>
                     Pengumpulan
                 </li>
@@ -228,85 +302,90 @@ function DetailKbm(){
             <div className="container-content">
                 <NavbarGuru text={navText}/>
                 <div className="main">
-                    <div className="header-content">
+                    <div className="header-content-DetailPengumpulan">
+                        <div className="card-DetailPengumpulan-Guru">
+                            <div className="card-DetailPengumpulan-Guru-left">
+                                <div className="img-DetailPengumpulan-Guru">
+                                    <img src={damiImgMurid} alt="" className="image-DetailPengumpulan-Guru"/>
+                                </div>
+                                <div className="desc-card-DetailPengumpulan-Guru">
+                                    <p className="name-card-DetailPengumpulan-Guru">Ahmad Aziz Wira Widodo</p>
+                                    <p className="email-card-DetailPengumpulan-Guru">ahmadaziz@smkrus.sch.id</p>
+                                </div>
+                            </div>
+                            <div className="detaiKelas-DetailPengumpulan-Guru">
+                                <p>11 PPLG 1</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="body-content-DetailPengumpulan">
                         <div className="switch-container">
                             <button
-                            id='btn-materiKbm'
-                            className={activeContent === "detailMateriKbm" ? "activeDetailKbm" : ""}
-                            onClick={showMateri}
+                            id='btn-MenungguPengumpulan'
+                            className={activeContent === "detailMenungguPengumpulan" ? "activeDetailPengumpulan" : ""}
+                            onClick={showMenunggu}
                             >
-                            Materi
+                            Menunggu
                             </button>
                             <button
-                            id='btn-tugasKbm'
-                            className={activeContent === "detailTugasKbm" ? "activeDetailKbm" : ""}
-                            onClick={showTugas}
+                            id='btn-SelesaiPengumpulan'
+                            className={activeContent === "detailSelesaiPengumpulan" ? "activeDetailPengumpulan" : ""}
+                            onClick={showSelesai}
                             >
-                            Tugas
+                            Selesai
                             </button>
                         </div>
 
-                        <button className='btn-add-materi' style={{ display: activeContent === "detailMateriKbm" ? "flex" : "none" }} onClick={() => navigate('/guru/pagekbm/detail/formmateri')}>
-                            <Icon icon="ic:round-plus" width="20"></Icon>
-                            <p>Tambah Data</p>
-                        </button>
-
-                        <button className='btn-add-tugas' style={{ display: activeContent === "detailTugasKbm" ? "flex" : "none" }} onClick={() => navigate('/guru/pagekbm/detail/formtugas')}>
-                            <Icon icon="ic:round-plus" width="20"></Icon>
-                            <p>Tambah Data</p>
-                        </button>
-                    </div>
-
-                    <div className="con-DetailKbm" style={{ display: activeContent === "detailMateriKbm" ? "block" : "none" }}>
-                        <div className="con-DetailKbm-Materi">
-                            {valueDataMateriKbm.map((data) => (
-                            <div className="card-DetailKbm-Materi" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagekbm/detail/detailmateri')}>
-                                <div className="card-DetailKbm-Materi-left">
-                                    <div className="img-DetailKbm-Materi">
-                                        <Icon icon="ri:book-line" width={40}/>
+                        <div className="con-DetailPengumpulan" style={{ display: activeContent === "detailMenungguPengumpulan" ? "block" : "none" }}>
+                            <div className="con-DetailPengumpulan-Menunggu">
+                                {valueDataMenungguKbm.map((data) => (
+                                <div className="card-DetailPengumpulan-Menunggu" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagepengumpulan/detail/detailmenunggu')}>
+                                    <div className="card-DetailPengumpulan-Menunggu-left">
+                                        <div className="img-DetailPengumpulan-Menunggu">
+                                            <Icon icon="uiw:time-o" width={40}/>
+                                        </div>
+                                        <div className="desc-DetailPengumpulan-Menunggu">
+                                            <p className="judul-DetailPengumpulan-Menunggu">{data.namaMateri}</p>
+                                            <p className="nama-DetailPengumpulan-Guru">{data.guru}</p>
+                                        </div>
                                     </div>
-                                    <div className="desc-DetailKbm-Materi">
-                                        <p className="judul-DetailKbm-Materi">{data.namaMateri}</p>
-                                        <p className="materi-DetailKbm-Guru">{data.guru}</p>
+                                    <div className="card-DetailPengumpulan-Menunggu-right">
+                                        <div className="dateDetailDesc">{data.tanggal}</div>
+                                        <div className="deadline-timePengumpulan">Deadline : {data.deadline}</div>
+                                        <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
                                     </div>
                                 </div>
-                                <div className="card-DetailKbm-Materi-right">
-                                    <div className="dateDetailDesc">{data.tanggal}</div>
-                                    <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
-                                </div>
+                                ))}
                             </div>
-                            ))}
+                        </div>
+                        
+
+                        <div className="con-DetailPengumpulan" style={{ display: activeContent === "detailSelesaiPengumpulan" ? "block" : "none" }}>
+                            <div className="con-DetailPengumpulan-Selesai">
+                                {valueDataSelesaiKbm.map((data) => (
+                                <div className="card-DetailPengumpulan-Selesai" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagepengumpulan/detail/detailselesai')}>
+                                    <div className="card-DetailPengumpulan-Selesai-left">
+                                        <div className="img-DetailPengumpulan-Selesai">
+                                            <Icon icon="material-symbols:check" width={40}/>
+                                        </div>
+                                        <div className="desc-DetailPengumpulan-Selesai">
+                                            <p className="judul-DetailPengumpulan-Selesai">{data.namaTugas}</p>
+                                            <p className="nama-DetailPengumpulan-Guru">{data.guru}</p>
+                                        </div>
+                                    </div>
+                                    <div className="card-DetailPengumpulan-Selesai-right">
+                                        <div className="dateDetailDesc">{data.tanggal}</div>
+                                        <div className="deadline-timePengumpulan">Deadline : {data.deadline}</div>
+                                        <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                    
-
-                    <div className="con-DetailKbm" style={{ display: activeContent === "detailTugasKbm" ? "block" : "none" }}>
-                        <div className="con-DetailKbm-Tugas">
-                            {valueDataTugasKbm.map((data) => (
-                            <div className="card-DetailKbm-Tugas" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagekbm/detail/detailtugas')}>
-                                <div className="card-DetailKbm-Tugas-left">
-                                    <div className="img-DetailKbm-Tugas">
-                                        <Icon icon="tabler:clipboard-text" width={40}/>
-                                    </div>
-                                    <div className="desc-DetailKbm-Tugas">
-                                        <p className="judul-DetailKbm-Tugas">{data.namaTugas}</p>
-                                        <p className="materi-DetailKbm-Guru">{data.guru}</p>
-                                    </div>
-                                </div>
-                                <div className="card-DetailKbm-Tugas-right">
-                                    <div className="dateDetailDesc">{data.tanggal}</div>
-                                    <div className="deadline-timeTugas">Deadline : {data.deadline}</div>
-                                    <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
-                                </div>
-                            </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    
-                    
                 </div>
-            </div>{/* end body */}
+            </div>
 
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
@@ -382,4 +461,4 @@ function DetailKbm(){
     );
 }
 
-export default DetailKbm
+export default DetailPengumpulan

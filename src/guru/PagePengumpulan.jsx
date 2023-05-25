@@ -275,7 +275,7 @@ function PagePengumpulan(){
                     
                     <div className="content-Pengumpulan-Guru">
                         {dataCardMurid.map((data) => (
-                        <div className="card-Pengumpulan-Guru">
+                        <div className="card-Pengumpulan-Guru" style={{cursor: 'pointer'}} onClick={() => navigate('/guru/pagepengumpulan/detail')}>
                             <div className="card-Pengumpulan-Guru-left">
                                 <div className="img-Pengumpulan-Guru">
                                     <img src={data.imgProfile} alt="" className="image-Pengumpulan-Guru"/>
