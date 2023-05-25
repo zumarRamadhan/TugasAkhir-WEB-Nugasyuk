@@ -1,4 +1,4 @@
-import '../cssAll/walimurid/PageTugas.css';
+import '../cssAll/murid/PageTugas.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';

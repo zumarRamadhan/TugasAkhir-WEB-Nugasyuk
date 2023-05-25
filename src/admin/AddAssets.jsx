@@ -25,7 +25,7 @@ import cardMapel15 from '../assets/cardAssets/cardMapel15.svg';
 import icondelete from  '../assets/icon-delete.svg'
 
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function AddAssets(){
 
@@ -86,38 +86,18 @@ function AddAssets(){
     const valueDataAddAssets = [
         {
             id: 1,
-            namaMapel: "B. Inggris",
-            guruPengajar: "Budiono, S.Pd",
-            kelas: '10',
-            jurusan: 'pplg',
-            tingkatan: '1',
             assets: cardMapel1,
         },
         {
             id: 2,
-            namaMapel: "Olaharaga",
-            guruPengajar: "Asep, S.Pd",
-            kelas: "10",
-            jurusan: "pplg",
-            tingkatan: "2",
             assets: cardMapel2,
         },
         {
             id: 3,
-            namaMapel: "Matematika",
-            guruPengajar: "Rini, S.Pd",
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "1",
             assets: cardMapel3,
         },
         {
             id: 4,
-            namaMapel: "PAI",
-            guruPengajar: "Edi, S.Pd.I",
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "2",
             assets: cardMapel4,
         },
         {
@@ -130,29 +110,14 @@ function AddAssets(){
         },
         {
             id: 7,
-            namaMapel: "Game Dev",
-            guruPengajar: "Suep, S.Kom",
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "1",
             assets: cardMapel7,
         },
         {
             id: 8,
-            namaMapel: "Web Dev",
-            guruPengajar: "Sugeng, S.Kom",
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "2",
             assets: cardMapel8,
         },
         {
             id: 9,
-            namaMapel: "Desktop Dev",
-            guruPengajar: "Paimin, S.Kom",
-            kelas: "11",
-            jurusan: "animasi",
-            tingkatan: "1",
             assets: cardMapel9,
         },
         {
@@ -187,7 +152,26 @@ function AddAssets(){
     function handleHover(id){
         setIdHover(id)
     }
-    console.log(idHover);
+    
+    const fileInputRef = useRef(null);
+
+    const handleFileUpload = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          // Periksa jenis file yang diunggah
+          const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
+          if (allowedTypes.includes(file.type)) {
+            // Lakukan sesuatu dengan file yang diunggah, seperti mengirimnya ke server
+            console.log('File selected:', file.name);
+          } else {
+            console.log('Only JPG, PNG, AND SVG files are allowed.');
+          }
+        }
+    };
     return(
         <div>
             {/* <Sidebar/> */}
@@ -232,10 +216,17 @@ function AddAssets(){
                 <main className='main'>
                     <div className="header-mapel">
                         <div className="header-mapel-left">
-                            <button className="btn-add-mapel">
-                                <Icon icon="material-symbols:upload" width="20"></Icon>
-                                <p>Upload File</p>
-                            </button>
+                        <button className="btn-add-mapel" onClick={handleFileUpload}>
+                            <Icon icon="material-symbols:upload" width="20" />
+                            <p>Upload File</p>
+                        </button>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleFileChange}
+                            accept=".jpg, .png, .svg"
+                        />
                         </div>
                     </div>
 
