@@ -7,6 +7,7 @@ import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
+import imgCardKbm from '../assets/guru-karman.svg';
 import ImgBinggris from '../assets/img-binggris.svg';
 import { useState } from "react";
 
@@ -70,6 +71,143 @@ function JadwalKBM(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
+    const closeDetailKbm = () => {
+        const popupLogout = document.querySelector('.popup-kbm');
+        setTimeout(() => popupLogout.style.display = "none", 250);
+        popupLogout.style.animation = 'slide-up 0.3s ease-in-out';
+    }
+    
+    const showDetailKbm = () => {
+        const popupForget = document.querySelector('.popup-kbm');
+        popupForget.style.display = 'flex';
+        popupForget.style.animation = 'slide-down 0.3s ease-in-out';
+    }
+
+
+    const valueDataKelas = [
+        {
+            id: 1,
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+            // assets: cardMapel1,
+        },
+        {
+            id: 2,
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel2,
+        },
+        {
+            id: 3,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel3,
+        },
+        {
+            id: 4,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel4,
+        },
+        {
+            id: 5,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel5,
+        },
+        {
+            id: 6,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel6,
+        },
+        {
+            id: 7,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel7,
+        },
+        {
+            id: 8,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel8,
+        },
+        {
+            id: 9,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel9,
+        },
+    ];
+
+    const valueDataGuru = [
+        {
+            id: 1,
+            kodeGuru: "BI1",
+            namaGuru: "Budiono, S.Pd",
+            mapel: "B. Inggris",
+            profileImg: imgCardKbm,
+        },
+        {
+            id: 2,
+            kodeGuru: "OLA1",
+            namaGuru: "Asep, S.Pd",
+            mapel: "Olahraga",
+            profileImg: imgCardKbm,
+        },
+        {
+            id: 3,
+            kodeGuru: "MTK1",
+            namaGuru: "Rini, S.Pd",
+            mapel: "Matematika",
+            profileImg: imgCardKbm,
+        },
+        {   
+            id: 4,
+            kodeGuru: "PAI1",
+            namaGuru: "Edi, S.Pd.I",
+            mapel: "PAI",
+            profileImg: imgCardKbm,
+        },
+    ]
+
+    const valueCardKbm = [
+        {
+            id: 1,
+            hari: "Senin",
+        },
+        {
+            id: 2,
+            hari: "Selasa",
+        },
+        {
+            id: 3,
+            hari: "Rabu",
+        },
+        {
+            id: 4,
+            hari: "Kamis",
+        },
+        {
+            id: 5,
+            hari: "Jumat",
+        },
+        {
+            id: 6,
+            hari: "Sabtu",
+        },
+    ]
+
     return(
         <div>
             <aside>
@@ -103,85 +241,63 @@ function JadwalKBM(){
             <div className="container-content">
                 <NavbarMurid text={navText}/>
                 <div className="main">
-                    <div className="content-jadwal">
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #2A93D5, #2785C0)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Senin</p>
+                    <div className="content-jadwalKBM">
+                        <div className="con-card-jadwalKBM">
+                            {valueCardKbm.map((cardKbm) => (
+                            <div className="cardJadwalKbm">
+                                <div className="titleJadwalKbm">
+                                    <p>Jadwal KBM</p>
+                                    <h1>{cardKbm.hari}</h1>
                                 </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #51C0FF, #3EA3DD)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Selasa</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #58A4C4, #4C9ABC)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Rabu</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                                <div className="bottomjadwalKbm">
+                                    <div className="conImgGuru-Kbm">
+                                        <div className="imgGuru-Kbm">
+                                            <img src={imgCardKbm} alt="" className="imageGuru-Kbm" />
+                                        </div>
+                                        <div className="imgGuru-Kbm">
+                                            <img src={imgCardKbm} alt="" className="imageGuru-Kbm" />
+                                        </div>
+                                        <div className="imgGuru-Kbm">
+                                            <img src={imgCardKbm} alt="" className="imageGuru-Kbm" />
+                                        </div>
+                                        <div className="imgGuru-Kbm">
+                                            <img src={imgCardKbm} alt="" className="imageGuru-Kbm" />
+                                        </div>
+                                    </div>
+                                    <div className="btnDetail-Kbm">
+                                        <Icon icon="ic:round-navigate-next" width="30" className='iconDetail-Kbm' onClick={showDetailKbm}/>
+                                    </div>
                                 </div>
                             </div>
+                            ))}
                         </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #EB55A3, #D94A94)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Kamis</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                    </div>
+                </div>
+            </div>
+
+            <div className="popup-kbm">
+                <div className="detail-popup-kbm">
+                    <div className="nav-popup-kbm">
+                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer", color: "#4b4b4b"}} className='btn-close' onClick={closeDetailKbm}/>
+                        <h2 className="day-schedule">Senin</h2>
+                    </div>
+                    <div className="con-popup-kbm">
+                        {valueDataGuru.map((dataGuru) => (
+                        <div className="popup-card-kbm">
+                            <div className="test1">
+                                <img src={dataGuru.profileImg} alt="" className="image-card-kbm" />
+                                <div className="mapel-card-kbm">
+                                    <p>{dataGuru.mapel}</p>
+                                    <p className="guruPengampu">{dataGuru.namaGuru}</p>
                                 </div>
                             </div>
+                            <div className="test2">
+                                <div className="jamMengajar">
+                                    <span>07.00</span> - <span>08.20</span> 
+                                </div>
+                            </div>         
                         </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #B462D0, #9949B6)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Jumat</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #585CC4, #474CB6)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Sabtu</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>

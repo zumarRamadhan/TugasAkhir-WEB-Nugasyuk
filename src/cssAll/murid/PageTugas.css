@@ -6,6 +6,26 @@
   --color-aksen: #2a93d5;
 }
 
+.header-task-student {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-task-student-left {
+  display: flex;
+  gap: 15px;
+}
+
+.header-task-student .header-task-student-left p {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  /* line-height: 22px; */
+  color: #FFFFFF;
+}
+
 .content-task {
   margin-top: 30px;
 }

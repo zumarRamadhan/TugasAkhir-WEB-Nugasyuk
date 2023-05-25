@@ -218,8 +218,8 @@ function PageMapel(){
                     <div className="content-mapel">
                         <div className="con-card-mapel">
                             {filterDataMapel.map((data) => (
-                            <div className="card-mapel" key={data.id}>
-                                <img src={data.assets} alt="" className="image-card-mapel" onClick={() => navigate('murid/mapelmateri')}/>
+                            <div className="card-mapel" key={data.id} style={{ cursor: "pointer" }}>
+                                <img src={data.assets} alt="" className="image-card-mapel" onClick={() => navigate('/murid/pagemapel/mapelmateri')}/>
                                 <div className="content-card-mapel">
                                 <div className="card-mapel-left">
                                     <p className="mata-pelajaran">{data.namaMapel}</p>

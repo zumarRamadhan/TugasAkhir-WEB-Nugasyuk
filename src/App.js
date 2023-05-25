@@ -20,6 +20,8 @@ import Konseling from './murid/PageKonseling';
 import Materi from './murid/MapelMateri';
 import DetailMateri from './murid/DetailMateri';
 import DetailTask from './murid/DetailTugas';
+import HistoryCounseling from './murid/RiwayatKonseling';
+import PageBuatJanji from './murid/PageBuatJanji';
 // end role murid
 // role guru
 import BerandaGuru from './guru/BerandaGuru';
@@ -62,9 +64,11 @@ function App() {
         <Route path="/murid/pagekbm" element={<PageJadwal/>} /> 
         <Route path="/murid/pagemapel" element={<PageMapel/>} /> 
         <Route path="/murid/pagekonseling" element={<Konseling/>} /> 
-        <Route path="/murid/mapelmateri" element={<Materi/>} /> 
+        <Route path="/murid/pagekonseling/buatjanji" element={<PageBuatJanji/>} /> 
+        <Route path="/murid/pagemapel/mapelmateri" element={<Materi/>} /> 
         <Route path="/murid/detailmateri" element={<DetailMateri/>} /> 
         <Route path="/murid/detailtugas" element={<DetailTask/>} /> 
+        <Route path="/murid/pagekonseling/riwayatkonseling" element={<HistoryCounseling/>} /> 
         {/* end role murid */}
         {/* role guru */}
         <Route path='/guru/berandaguru' element={<BerandaGuru/>}/>

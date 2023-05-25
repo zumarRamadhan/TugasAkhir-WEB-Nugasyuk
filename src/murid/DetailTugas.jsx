@@ -122,7 +122,7 @@ function DetailTask(){
                             pengertian reading kalian bisa melanjutkan mengerjakan reading. Terima kasih,
                             sukses terus semuanya...
                         </p>
-                        <p className="deadline-time">Deadline : <span>10 Mar 2023</span></p>
+                        <p className="task-deadline-time">Deadline : <span>10 Mar 2023</span></p>
                         <div className="submition-task">
                             <p className="title-submition">
                                 Pengumpulan Tugas

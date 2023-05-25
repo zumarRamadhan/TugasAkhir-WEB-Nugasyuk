@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
+import '../cssAll/murid/BerandaMurid.css';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import NavbarMurid from '../component/NavbarMurid';
 import ImgProfil from '../assets/profil-murid.svg';
@@ -140,7 +141,7 @@ function PageKonseling(){
                                     <p className="title-history-counseling">
                                         Janji Konseling
                                     </p>
-                                    <Icon icon="ic:round-navigate-next"  className="navigate-next-icon" width={30}/>
+                                    <Icon icon="ic:round-navigate-next"  className="navigate-next-icon" width={30} style={{ cursor: "pointer" }} onClick={() => navigate('/murid/pagekonseling/riwayatkonseling')}/>
                                 </div>
                                 <div className="card-counseling">
                                     <div className="teacher-bk">
@@ -154,13 +155,15 @@ function PageKonseling(){
                                             <Icon icon="uiw:date" width="15" style={{color: "#2A93D5"}}/>
                                             <p>Kam, 2 April 2023</p>
                                         </div>
-                                        <div className="time-counseling">
-                                            <Icon icon="material-symbols:nest-clock-farsight-analog-outline-rounded" width="15" style={{color: "#2A93D5"}}/>
-                                            <p>Kam, 2 April 2023</p>
-                                        </div>
-                                        <div className="location-counseling">
-                                            <p>Ruang BK</p>
-                                            <Icon icon="material-symbols:location-on-outline-rounded"  width="15" style={{color: "#797979"}}/>
+                                        <div className="information-counseling-bottom">
+                                            <div className="time-counseling">
+                                                <Icon icon="material-symbols:nest-clock-farsight-analog-outline-rounded" width="15" style={{color: "#2A93D5"}}/>
+                                                <p>Jam 4</p>
+                                            </div>
+                                            <div className="location-counseling">
+                                                <p>Ruang BK</p>
+                                                <Icon icon="material-symbols:location-on-outline-rounded"  width="15" style={{color: "#797979"}}/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -170,11 +173,11 @@ function PageKonseling(){
                             <img src={CardCounseling} alt="" className="card-chat-counseling" />
                             <div className="content-card-chat-bk">
                                 <div className="card-chat-bk-left">
-                                    {/* <p className="title-chat-bk">Jika ada yang ingin ditanyakan kepada guru BK melalui chat</p>
-                                    <button className="btn-chat-bk">
-                                    <Icon icon="ph:chat-circle-dots" width="20"/>
-                                        Hubungi BK
-                                    </button> */}
+                                    <p className="title-promise-bk">Buat janji bertemu dengan guru BK jika anda ingin bimbingan konseling secara langsung.</p>
+                                    <button className="btn-promise-bk" onClick={() => navigate('/murid/pagekonseling/buatjanji')}>
+                                    <Icon icon="uiw:date" width="20"/>
+                                        Buat Janji
+                                    </button>
                                 </div>
                             </div>
                         </div>
