@@ -177,7 +177,7 @@ function PageTugas(){
                     </div>
 
                     <div className="content-task">
-                        {valueDataTugas.map((data) => (
+                        {/* {valueDataTugas.map((data) => (
                         <div className="card-task" style={{ cursor: "pointer"}}>
                             <div className="indiecator-left">
                                 <div className="icon-indie-information" style={{ background: "#DDDDDD" }}>
@@ -194,9 +194,9 @@ function PageTugas(){
                                 <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
                             </div>
                         </div>
-                        ))}
+                        ))} */}
 
-                        {/* <div className="card-task" style={{ cursor: "pointer"}}>
+                        <div className="card-task" style={{ cursor: "pointer"}}>
                             <div className="indiecator-left">
                                 <div className="icon-indie-information" style={{ background: "#FFFA87" }}>
                                     <Icon icon="uiw:time-o" width="30" style={{ color: "#CBC41A" }}/>
@@ -279,7 +279,7 @@ function PageTugas(){
                                 <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>5 Mar 2023</span></p>
                                 <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
                             </div>
-                        </div> */}
+                        </div>
 
                     </div>
                 </div>
