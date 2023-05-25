@@ -11,7 +11,14 @@ import ImgProfil from '../assets/img-profil.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-
+import foto8 from '../assets/foto8.png';
+import foto9 from '../assets/foto9.png';
+import foto10 from '../assets/foto10.png';
+import foto11 from '../assets/foto11.png';
+import foto12 from '../assets/foto12.png';
+import foto13 from '../assets/foto13.png';
+import foto14 from '../assets/foto14.png';
+import iconaksi from '../assets/iconaksi.svg';
 function DataMurid(){
     const navText = "Data Murid";
     const navigate = useNavigate();
@@ -109,9 +116,9 @@ function DataMurid(){
             <div className='container-content'>
                 <Navigation text={navText}/>
                 <main className='main'>
-                    <div className='header-murid'>
+                <div className='header-murid'>
                         <div className='header-murid-left'>
-                            <button className='btn-add-murid'>
+                            <button className='btn-add-murid' onClick={() => navigate('/admin/pagemurid/formaddmurid')}>
                                 <Icon icon="ic:round-plus" width="20"></Icon>
                                 <p>Tambah Data</p>
                             </button>
@@ -136,8 +143,144 @@ function DataMurid(){
                             <p className='detail-jumlah-murid'><span>1000</span> Murid</p>
                         </div>
                     </div>
-
-                    <div className='container-murid'>
+                    
+                    <div className='container-table'>
+                <table className="content-table-murid">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>NIY</th>
+                            <th>Pengampu</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src={foto8} alt="" /></td>
+                            <td>Ahmad Aziz Wira Widodo</td>
+                            <td>ahmadaziz@smkrus.sch.id</td>
+                            <td>04423</td>
+                            <td>
+                                <div className='pangampu'>PPLG</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto9} alt="" /></td>
+                            <td>Khoiru Rizal Kalam Ismail</td>
+                            <td>khoirurizal@smkrus.sch.id</td>
+                            <td>04424</td>
+                            <td>
+                                <div className='pangampu1'>PPLG</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto10} alt="" /></td>
+                            <td>Muhammad Zumar Ram...</td>
+                            <td>zumarramadhan@smkrus.sch.id</td>
+                            <td>04425</td>
+                            <td>
+                                <div className='pangampu1'>PPLG</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto11} alt="" /></td>
+                            <td>Muhammad Nur Wahid...</td>
+                            <td>nurwahid@smkrus.sch.id</td>
+                            <td>04426</td>
+                            <td>
+                                <div className='pangampu1'>Teknik Grafika</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto12} alt="" /></td>
+                            <td>Muh Wahyu Ageng Pam...</td>
+                            <td>muhwahyu@smkrus.sch.id</td>
+                            <td>04427</td>
+                            <td>
+                                <div className='pangampu1'>Normadaf</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto13} alt="" /></td>
+                            <td>DKV</td>
+                            <td>jumanji@smkrus.sch.id</td>
+                            <td>02226</td>
+                            <td>
+                                <div className='pangampu1'>Normadaf</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto14} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto8} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto9} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto10} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto11} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto11} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                    {/* <div className='container-murid'>
                         <div className='card-content-murid'>
                             <div className='card-content-murid-left'>
                                 <div className='img-profile-murid'>
@@ -191,7 +334,7 @@ function DataMurid(){
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </main>
             </div>
 

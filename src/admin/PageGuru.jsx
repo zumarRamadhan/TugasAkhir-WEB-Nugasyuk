@@ -11,6 +11,14 @@ import ImgProfil from '../assets/img-profil.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
+import foto from '../assets/Foto1.png';
+import foto2 from '../assets/foto2.png';
+import foto3 from '../assets/foto3.png';
+import foto4 from '../assets/foto4.png';
+import foto5 from '../assets/foto5.png';
+import foto6 from '../assets/foto6.png';
+import foto7 from '../assets/foto7.png';
+import iconaksi from '../assets/iconaksi.svg';
 
 function BerandaGuru() {
     const navText = "Data Guru";
@@ -108,7 +116,171 @@ function BerandaGuru() {
             <div className='container-content'>
                 <Navigation text={navText}/>
                 <main className='main'>
-                    <div className='header-guru'>
+                <div className='header-guru'>
+                        <div className='header-guru-left'>
+                            <button className='btn-add-guru'  onClick={() => navigate('/admin/pageguru/formaddguru')}>
+                                <Icon icon="ic:round-plus" width="20"></Icon>
+                                <p>Tambah Data</p>  
+                            </button>
+
+                            <select id='guru' name='guru'>
+                                <option value="semua" selected>-- Semua Guru --</option>
+                                <option value="produktif">Guru Produktif</option>
+                                <option value="nonproduktif">Guru Nonproduktif</option>
+                                <option value="bk">Guru BK</option>f
+                            </select>
+
+                            <form className='search-box'>
+                                <input type='text' placeholder='Cari...'/>
+                                <button type='submit'>
+                                    <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                                </button>
+                            </form>
+                        </div>
+                        <div className='header-guru-right'>
+                            <p className='detail-jumlah-guru'><span>30</span> Guru</p>
+                        </div>
+                    </div>
+                    
+                <div className='container-table'>
+                <table className="content-table-guru">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>NIY</th>
+                            <th>Pengampu</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src={foto} alt="" /></td>
+                            <td>Karma Gia, S.Kom</td>
+                            <td>karmangia@smkrus.sch.id</td>
+                            <td>02221</td>
+                            <td>
+                                <div className='pangampu'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto2} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto3} alt="" /></td>
+                            <td>Paimin, S.Kom</td>
+                            <td>paimin@smkrus.sch.id</td>
+                            <td>02223</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto4} alt="" /></td>
+                            <td>Melani Sumini, S.Sn</td>
+                            <td>melanisumini@smkrus.sch.id</td>
+                            <td>02224</td>
+                            <td>
+                                <div className='pangampu1'>BK</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto5} alt="" /></td>
+                            <td>Edi, S.Pd.I</td>
+                            <td>edi@smkrus.sch.id</td>
+                            <td>02225</td>
+                            <td>
+                                <div className='pangampu1'>Normadaf</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto6} alt="" /></td>
+                            <td>Jumanji, S.Pd.I</td>
+                            <td>jumanji@smkrus.sch.id</td>
+                            <td>02226</td>
+                            <td>
+                                <div className='pangampu1'>Normadaf</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto7} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                        <tr>
+                            <td><img src={foto} alt="" /></td>
+                            <td>Kris Sutarno, S.Sn</td>
+                            <td>krissutarno@smkrus.sch.id</td>
+                            <td>02222</td>
+                            <td>
+                                <div className='pangampu1'>Produktif</div>
+                            </td>
+                            <td><img src={iconaksi} alt="" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+              
+
+                    {/* <div className='header-guru'>
                         <div className='header-guru-left'>
                             <button className='btn-add-guru'>
                                 <Icon icon="ic:round-plus" width="20"></Icon>
@@ -188,7 +360,7 @@ function BerandaGuru() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </main>
             </div>
 
