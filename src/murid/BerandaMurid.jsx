@@ -7,7 +7,8 @@ import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Axios from 'axios';
 
 function BerandaMurid(){
     const navText = "Beranda 11 PPLG 1";
@@ -68,6 +69,18 @@ function BerandaMurid(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+
+    // useEffect(() => {
+    //     Axios.post('https://www.nugasyuk.my.id/api/login')
+    //     .then(result => {
+    //         console.log('data API', result);
+    //     })
+    //     .catch(err => {
+    //         console.log('error: ', err)
+    //     })
+    // }, [])
+
     
     return(
         <div>
@@ -102,15 +115,17 @@ function BerandaMurid(){
             <div className="container-content">
                 <NavbarMurid text={navText}/>
                 <main className='main'>
-                    <div className="header-dashboard">
-                        <div className="head-left">
-                            <h1 className="intro-head">Halo <span className="name-admin">Wira</span></h1>
-                            <p className="desc-head" style={{width:"550px"}}>
+                    <div className="header-dashboard-home-student">
+                        <div className="head-left-home-student">
+                            <h1 className="intro-head-student">Halo <span className="student-name">Wira</span></h1>
+                            <p className="desc-head-home-student" style={{width:"550px"}}>
                                 Selamat datang di nugasyuk, anda bisa memonitoring tugas dan materi yang diberikan oleh guru.
                             </p>
                         </div>
-                        <div className="head-right">
-                            <div className="kotak1"></div>
+                        <div className="head-right-home-student">
+                            <div className="reactangle-1">
+                                {/* <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut, iure esse rem minima necessitatibus omnis eveniet doloremque reiciendis aliquam magni?</p> */}
+                            </div>
                         </div>
                     </div>
 
@@ -148,63 +163,75 @@ function BerandaMurid(){
                     
                     {/* content information */}
                     <div className="con-content-information">
-                        <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ color: "#797979" }}>
-                                    <Icon icon="uiw:time-o" width="30"/>
+                        <div className="content-status-task">
+                            <p className='text-status-task'>Belum Selesai Dalam Deadline</p>
+                            <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
+                                <div className="indiecator-left">
+                                    <div className="icon-indie-information" style={{ color: "#797979" }}>
+                                        <Icon icon="uiw:time-o" width="30"/>
+                                    </div>
+                                    <div className="desc-indie">
+                                        <p className="title-indie-information"> <span>3</span> Tugas</p>
+                                        <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                    </div>
                                 </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information"> <span>3</span> Tugas</p>
-                                    <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                <div className="icon-navigate">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
                                 </div>
-                            </div>
-                            <div className="icon-navigate">
-                                <Icon icon="ic:round-navigate-next" width="30"/>
                             </div>
                         </div>
 
-                        <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ color: "#84E063", background:"#D5FFC6" }}>
-                                    <Icon icon="ph:check-bold" width="30" />
+                        <div className="content-status-task">
+                            <p className="text-status-task">Selesai Dalam Deadline</p>
+                            <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
+                                <div className="indiecator-left">
+                                    <div className="icon-indie-information" style={{ color: "#84E063", background:"#D5FFC6" }}>
+                                        <Icon icon="ph:check-bold" width="30" />
+                                    </div>
+                                    <div className="desc-indie">
+                                        <p className="title-indie-information"> <span>4</span> Tugas</p>
+                                        <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                    </div>
                                 </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information"> <span>4</span> Tugas</p>
-                                    <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                <div className="icon-navigate">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
                                 </div>
-                            </div>
-                            <div className="icon-navigate">
-                                <Icon icon="ic:round-navigate-next" width="30"/>
                             </div>
                         </div>
 
-                        <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
-                                    <Icon icon="uiw:time-o" width="30"/>
+                        <div className="content-status-task">
+                            <p className="text-status-task">Belum Selesai Lebih Dari Deadline</p>
+                            <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
+                                <div className="indiecator-left">
+                                    <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
+                                        <Icon icon="uiw:time-o" width="30"/>
+                                    </div>
+                                    <div className="desc-indie">
+                                        <p className="title-indie-information"> <span>3</span> Tugas</p>
+                                        <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                    </div>
                                 </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information"> <span>3</span> Tugas</p>
-                                    <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                <div className="icon-navigate">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
                                 </div>
-                            </div>
-                            <div className="icon-navigate">
-                                <Icon icon="ic:round-navigate-next" width="30"/>
                             </div>
                         </div>
 
-                        <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
-                                    <Icon icon="ph:check-bold" width="30" />
+                        <div className="content-status-task">
+                            <p className="text-status-task">Selesai Lebih Dari Deadline</p>
+                            <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
+                                <div className="indiecator-left">
+                                    <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
+                                        <Icon icon="ph:check-bold" width="30" />
+                                    </div>
+                                    <div className="desc-indie">
+                                        <p className="title-indie-information"> <span>4</span> Tugas</p>
+                                        <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                    </div>
                                 </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information"> <span>4</span> Tugas</p>
-                                    <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                <div className="icon-navigate">
+                                    <Icon icon="ic:round-navigate-next" width="30"/>
                                 </div>
-                            </div>
-                            <div className="icon-navigate">
-                                <Icon icon="ic:round-navigate-next" width="30"/>
                             </div>
                         </div>
                     </div>

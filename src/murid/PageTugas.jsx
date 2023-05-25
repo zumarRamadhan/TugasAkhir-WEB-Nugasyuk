@@ -151,20 +151,21 @@ function PageTugas(){
             <div className="container-content">
                 <NavbarMurid text={navText}/>
                 <div className="main">
-                    <div className='header-guru'>
-                        <div className='header-guru-left'>
+                    <div className='header-task-student'>
+                        <div className='header-task-student-left'>
                             <select id='guru' name='guru'>
                                 <option value="semua" selected>-- Semua Tugas --</option>
-                                <option value="produktif">Guru Produktif</option>
-                                <option value="nonproduktif">Guru Nonproduktif</option>
-                                <option value="bk">Guru BK</option>f
+                                <option value="task">Tugas selesai dalam deadline</option>
+                                <option value="nonproduktif">Tugas selesai lewat deadline</option>
+                                <option value="bk">Tugas belum selesai dalam deadline</option>
+                                <option value="bk">Tugas belum selesai lewat deadline</option>
+                                <option value="bk">Menunggu konfirmasi guru</option>
                             </select>
 
                             <select id='guru' name='guru'>
                                 <option value="semua" selected>-- Semua Mapel --</option>
-                                <option value="produktif">Guru Produktif</option>
-                                <option value="nonproduktif">Guru Nonproduktif</option>
-                                <option value="bk">Guru BK</option>f
+                                <option value="produktif">Produktif</option>
+                                <option value="nonproduktif">Normadaf</option>
                             </select>
 
                             <form className='search-box'>

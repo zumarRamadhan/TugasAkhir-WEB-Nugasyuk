@@ -12,7 +12,7 @@ import Calendar from 'react-calendar';
 import CardChat from '../assets/card-chat-bk.svg';
 import CardCounseling from '../assets/card-counseling.svg';
 import ProfilBk from '../assets/profil-bk.svg';
-import AssetsCalendar from '../assets/79891-calendar.gif';
+// import AssetsCalendar from '../assets/79891-calendar.gif';
 import 'react-calendar/dist/Calendar.css';
 
 

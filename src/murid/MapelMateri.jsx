@@ -71,6 +71,17 @@ function MapelMateri(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
+    const [activeContent, setActiveContent] = useState("detailMateriKbm");
+
+    const showMaterial = () => {
+        setActiveContent("material-kbm");
+    };
+
+    const showTask = () => {
+        setActiveContent("task-kbm");
+    };
+        
+
     return(
         <div>
              <aside>
@@ -122,13 +133,22 @@ function MapelMateri(){
                         </div>
                     </div>
                     <div className='dropdown-task'>
-                        <select id='tugas' name='tugas'>
-                            <option value="semua" selected>-- Semua Tugas --</option>
-                            <option value="tugas">Tugas selesai dalam deaadline</option>
-                            <option value="tugas">Tugas selesai lewat deadline</option>
-                            <option value="tugas">Tugas belum selesai dalam deadline</option>
-                            <option value="tugas">Tugas belum selesai lewat deadline</option>
-                        </select>
+                        <div className="switch-container">
+                            <button
+                                id='btn-materiKbm'
+                                className={activeContent === "material-kbm" ? "activeDetailKbm" : ""}
+                                onClick={showMaterial}
+                                >
+                                Materi
+                            </button>
+                            <button
+                                id='btn-tugasKbm'
+                                className={activeContent === "task-kbm" ? "activeDetailKbm" : ""}
+                                onClick={showTask}
+                                >
+                                Tugas
+                            </button>
+                        </div>
 
                         <form className='search-box'>
                             <input type='text' placeholder='Cari...'/>
@@ -138,7 +158,7 @@ function MapelMateri(){
                         </form>
                     </div>
 
-                    <div className="con-material">
+                    <div className="con-material material-kbm" style={{ display: activeContent === "material-kbm" ? "block" : "none" }}>
                         <div className="card-material" style={{ cursor: "pointer"}}>
                             <div className="indiecator-left">
                                 <div className="icon-indie" style={{ background: "#D8F0FF" }}>
@@ -183,6 +203,57 @@ function MapelMateri(){
                             </div>
                             <div className="indiecator-right">
                                 <p className="time-upload">1 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className="con-material taskKbm" style={{ display: activeContent === "task-kbm" ? "block" : "none" }}>
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#FFFA87" }}>
+                                    <Icon icon="uiw:time-o" width="30" style={{ color: "#CBC41A" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Laporan B. Inggris</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">1 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#DDDDDD" }}>
+                                    <Icon icon="uiw:time-o" width="30" style={{ color: "#797979" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Reading</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">5 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D5FFC6" }}>
+                                    <Icon icon="material-symbols:check-small-rounded" width="50" style={{ color: "#84E063" }}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Application Letter</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">8 Mar 2023</p>
                                 <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
                             </div>
                         </div>

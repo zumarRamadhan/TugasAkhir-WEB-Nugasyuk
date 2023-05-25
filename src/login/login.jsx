@@ -1,17 +1,17 @@
 import '../login/login.css'
-import React, { useState } from 'react';
+import React, { useState, useEffect, props } from 'react';
 import { Icon } from '@iconify/react';
 import greenLoginIcon from '../assets/73782-education.gif';
-// import greenLoginIcon from '../assets/login-animation.gif';
 import userIcon from '../assets/user-icon.svg';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 function Login (){
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [passwordShown, setPasswordShown] = useState(false);
 
@@ -19,61 +19,40 @@ function Login (){
     setPasswordShown(!passwordShown);
   }
 
-  function togglePassword() {
-    setPasswordShown(!passwordShown);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleEmail = (e) => {
+    console.log(e.target.value)
+    setEmail(e.target.value)
   }
 
-  const loginClick = async(e) =>{
-    e.preventDefault();
-    let email = e.target.email.value;
-    let password = e.target.password.value;
+  const handlePassword = (e) => {
+    setPassword(e.target.value)
+  }
 
-    let loginapi = await fetch("https://amanah-furniture.site/api/login",{
-        // url: "https://amanah-furniture.site/api/login",
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          // 'application/x-www-form-urlencoded'
-          // 'Origin': 'https://amanah-furniture.site/api/login',
-          // accept: 'application/json',
-          // 'Access-Control-Allow-Credentials: true'
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
+  const login = (e) => {
+    e.preventDefault()
+    console.log("submited form")
+    axios.post('https://www.nugasyuk.my.id/api/login', {
+      email: email,
+      password: password
     })
-    .then(res => res.json())
-    .then(hasil => {return hasil});
+    .then((response) => {
+        console.log(response.data)
+        // props.userAuthentication()
+        // console.log(response.data)
+        localStorage.setItem('token', response.data.token)
+        alert('success')
+        // props.history.push('/')
+    })
+    .catch((err) => {
+        console.log(err)
+        console.log(err.response)
+        alert(err.response.data.error.message)
+    })
+  }
 
-    if (loginapi.token === undefined)
-      alert('login gagal')
-
-    else if (loginapi.kelas_id !== undefined)
-    return[
-      window.location.replace('murid/berandamurid'),
-      sessionStorage.setItem('token',JSON.stringify(loginapi.token))
-    ]
-    
-
-      else if (loginapi.mapel_id !== undefined)
-      return[
-        window.location.replace('guru/berandaguru'),
-        sessionStorage.setItem('token',JSON.stringify(loginapi.token))
-      ]
-
-        else if (loginapi.siswa_id !== undefined)
-        return[
-          window.location.replace('waliMurid/berandawalimurid'),
-          sessionStorage.setItem('token',loginapi.token)
-        ]
-
-          else
-          return[
-            window.location.replace('admin/berandaadmin'),
-            sessionStorage.setItem('token',JSON.stringify(loginapi.token))
-          ]
-    }
   return ( 
     <div className="container-login">
       <div className="image-login">
@@ -87,10 +66,18 @@ function Login (){
         <div className="con-desc">
           <p className="desc-form-login">Masukkan akun anda terlebih dahulu untuk masuk!</p>
         </div>
-        <form className="form-login" onSubmit={loginClick}>
+        <form className="form-login" onSubmit={login}>
           <div className="con-form-username">
             <img src={userIcon} className="icon-input" />
-            <input type="text" id="email" name='email' placeholder="email" className="input-username" />
+            <input type="text" 
+              id="email"
+              name='email'
+              placeholder="email"
+              className="input-username"
+              value={email}
+              onChange={handleEmail}
+              required
+             />
           </div>
           <div className="con-form-password">
             <img src={passIcon} className="icon-input" />
@@ -100,12 +87,15 @@ function Login (){
               name='password'
               placeholder="password"
               className="input-password"
+              value={password}
+              onChange={handlePassword}
+              required
             />
             <button type="button" onClick={togglePassword} className="btn-mata">
               <img src={mataIcon} className="icon-mata" />
             </button>
           </div>
-          <button type="submit" className="btn-login">
+          <button type="submit" value="Login" className="btn-login">
             MASUK
           </button>
         </form>

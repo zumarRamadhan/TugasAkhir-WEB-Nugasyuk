@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
+import '../cssAll/murid/BerandaMurid.css';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import NavbarMurid from '../component/NavbarMurid';
 import ImgProfil from '../assets/profil-murid.svg';
@@ -140,7 +141,7 @@ function PageKonseling(){
                                     <p className="title-history-counseling">
                                         Janji Konseling
                                     </p>
-                                    <Icon icon="ic:round-navigate-next"  className="navigate-next-icon" width={30}/>
+                                    <Icon icon="ic:round-navigate-next"  className="navigate-next-icon" width={30} style={{ cursor: "pointer" }} onClick={() => navigate('/murid/pagekonseling/riwayatkonseling')}/>
                                 </div>
                                 <div className="card-counseling">
                                     <div className="teacher-bk">
@@ -154,13 +155,15 @@ function PageKonseling(){
                                             <Icon icon="uiw:date" width="15" style={{color: "#2A93D5"}}/>
                                             <p>Kam, 2 April 2023</p>
                                         </div>
-                                        <div className="time-counseling">
-                                            <Icon icon="material-symbols:nest-clock-farsight-analog-outline-rounded" width="15" style={{color: "#2A93D5"}}/>
-                                            <p>Kam, 2 April 2023</p>
-                                        </div>
-                                        <div className="location-counseling">
-                                            <p>Ruang BK</p>
-                                            <Icon icon="material-symbols:location-on-outline-rounded"  width="15" style={{color: "#797979"}}/>
+                                        <div className="information-counseling-bottom">
+                                            <div className="time-counseling">
+                                                <Icon icon="material-symbols:nest-clock-farsight-analog-outline-rounded" width="15" style={{color: "#2A93D5"}}/>
+                                                <p>Jam 4</p>
+                                            </div>
+                                            <div className="location-counseling">
+                                                <p>Ruang BK</p>
+                                                <Icon icon="material-symbols:location-on-outline-rounded"  width="15" style={{color: "#797979"}}/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
