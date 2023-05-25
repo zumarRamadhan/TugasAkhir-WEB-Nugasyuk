@@ -10,6 +10,7 @@ import PageKelas from './admin/PageKelas';
 import MataPelajaran from './admin/MataPelajaran';
 import JadwalKBM from './admin/JadwalKBM';
 import PageAssets from './admin/PageAssets';
+import AddAssets from './admin/AddAssets';
 import FormAddJadwalKbm from './admin/formAddJadwalKbm';
 import FormAddMurid from './admin/FormAddMurid';
 import FormAddGuru from './admin/FormAddGuru';
@@ -54,6 +55,7 @@ function App() {
         <Route path="/admin/matapelajaran" element={<MataPelajaran/>} />
         <Route path="/admin/jadwalkbm" element={<JadwalKBM/>} />
         <Route path="/admin/pageassets" element={<PageAssets/>} />
+        <Route path="/admin/pageassets/add" element={<AddAssets/>} />
         <Route path="/admin/jadwalkbm/tambah" element={<FormAddJadwalKbm/>} />
         <Route path="/admin/pagemurid/formaddmurid" element={<FormAddMurid/>} />
         <Route path="/admin/pageguru/formaddguru" element={<FormAddGuru/>} />

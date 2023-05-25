@@ -1,4 +1,4 @@
-import '../cssAll/admin/PageAssets.css';
+import '../cssAll/admin/AddAssets.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -7,10 +7,27 @@ import ImgProfil from '../assets/img-profil.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import pageAssets from "../assets/pageAssets.svg";
+import cardMapel1 from '../assets/cardAssets/cardMapel1.svg';
+import cardMapel2 from '../assets/cardAssets/cardMapel2.svg';
+import cardMapel3 from '../assets/cardAssets/cardMapel3.svg';
+import cardMapel4 from '../assets/cardAssets/cardMapel4.svg';
+import cardMapel5 from '../assets/cardAssets/cardMapel5.svg';
+import cardMapel6 from '../assets/cardAssets/cardMapel6.svg';
+import cardMapel7 from '../assets/cardAssets/cardMapel7.svg';
+import cardMapel8 from '../assets/cardAssets/cardMapel8.svg';
+import cardMapel9 from '../assets/cardAssets/cardMapel9.svg';
+import cardMapel10 from '../assets/cardAssets/cardMapel10.svg';
+import cardMapel11 from '../assets/cardAssets/cardMapel11.svg';
+import cardMapel12 from '../assets/cardAssets/cardMapel12.svg';
+import cardMapel13 from '../assets/cardAssets/cardMapel13.svg';
+import cardMapel14 from '../assets/cardAssets/cardMapel14.svg';
+import cardMapel15 from '../assets/cardAssets/cardMapel15.svg';
+import icondelete from  '../assets/icon-delete.svg'
+
+
 import { useState } from "react";
 
-function PageAssets(){
+function AddAssets(){
 
     const navText = "Assets";
     const navigate = useNavigate();
@@ -65,56 +82,176 @@ function PageAssets(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+    
+    const valueDataAddAssets = [
+        {
+            id: 1,
+            namaMapel: "B. Inggris",
+            guruPengajar: "Budiono, S.Pd",
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+            assets: cardMapel1,
+        },
+        {
+            id: 2,
+            namaMapel: "Olaharaga",
+            guruPengajar: "Asep, S.Pd",
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+            assets: cardMapel2,
+        },
+        {
+            id: 3,
+            namaMapel: "Matematika",
+            guruPengajar: "Rini, S.Pd",
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+            assets: cardMapel3,
+        },
+        {
+            id: 4,
+            namaMapel: "PAI",
+            guruPengajar: "Edi, S.Pd.I",
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+            assets: cardMapel4,
+        },
+        {
+            id: 5,
+            assets: cardMapel5,
+        },
+        {
+            id: 6,
+            assets: cardMapel6,
+        },
+        {
+            id: 7,
+            namaMapel: "Game Dev",
+            guruPengajar: "Suep, S.Kom",
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+            assets: cardMapel7,
+        },
+        {
+            id: 8,
+            namaMapel: "Web Dev",
+            guruPengajar: "Sugeng, S.Kom",
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+            assets: cardMapel8,
+        },
+        {
+            id: 9,
+            namaMapel: "Desktop Dev",
+            guruPengajar: "Paimin, S.Kom",
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+            assets: cardMapel9,
+        },
+        {
+            id: 10,
+            assets: cardMapel10,
+        },
+
+        {
+            id: 11,
+            assets: cardMapel11,
+        },
+
+        {
+            id: 12,
+            assets: cardMapel12,
+        },
+
+        {
+            id: 13,
+            assets: cardMapel13,
+        },
+        {
+            id: 14,
+            assets: cardMapel14,
+        },
+        {
+            id: 15,
+            assets: cardMapel15,
+        },
+    ];
+    const [idHover, setIdHover] = useState(null)
+    function handleHover(id){
+        setIdHover(id)
+    }
+    console.log(idHover);
     return(
         <div>
             {/* <Sidebar/> */}
             <aside>
-            <h1 className="title-form-login" onClick={() => navigate('/admin/berandaadmin')} style={{cursor: "pointer"}}>
-                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>nugasyuk
-            </h1>
-            <ul>
-                <li onClick={() => navigate('/admin/berandaadmin')}>
-                    <Icon icon="iconoir:home-simple" width="20" />
-                    Beranda
-                </li>
-                <li onClick={() => navigate('/admin/pageguru')} >
-                    <Icon icon="la:chalkboard-teacher" width="20" />
-                    Guru
-                </li>
-                <li onClick={() => navigate('/admin/pagemurid')}>
-                    <Icon icon="ph:student" width="20" />
-                    Murid
-                </li>
-                <li onClick={() => navigate('/admin/pagekelas')}>
-                    <Icon icon="fluent:class-24-regular" width="20" />
-                    Kelas
-                </li>
-                <li onClick={() => navigate('/admin/matapelajaran')}>
-                    <Icon icon="fluent-mdl2:education" width="20" />
-                    Mata Pelajaran
-                </li>
-                <li onClick={() => navigate('/admin/jadwalkbm')}>
-                    <Icon icon="uiw:date" width="20" />
-                    Jadwal KBM
-                </li>
-                <li className='active' onClick={() => navigate('/admin/pageassets')}>
-                    <Icon icon="ic:outline-file-copy" width="20" />
-                    Assets
-                </li>
-            </ul>
+                <h1 className="title-form-login" onClick={() => navigate('/admin/berandaadmin')} style={{cursor: "pointer"}}>
+                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>nugasyuk
+                </h1>
+                <ul>
+                    <li onClick={() => navigate('/admin/berandaadmin')}>
+                        <Icon icon="iconoir:home-simple" width="20" />
+                        Beranda
+                    </li>
+                    <li onClick={() => navigate('/admin/pageguru')} >
+                        <Icon icon="la:chalkboard-teacher" width="20" />
+                        Guru
+                    </li>
+                    <li onClick={() => navigate('/admin/pagemurid')}>
+                        <Icon icon="ph:student" width="20" />
+                        Murid
+                    </li>
+                    <li onClick={() => navigate('/admin/pagekelas')}>
+                        <Icon icon="fluent:class-24-regular" width="20" />
+                        Kelas
+                    </li>
+                    <li onClick={() => navigate('/admin/matapelajaran')}>
+                        <Icon icon="fluent-mdl2:education" width="20" />
+                        Mata Pelajaran
+                    </li>
+                    <li onClick={() => navigate('/admin/jadwalkbm')}>
+                        <Icon icon="uiw:date" width="20" />
+                        Jadwal KBM
+                    </li>
+                    <li className='active' onClick={() => navigate('/admin/pageassets')}>
+                        <Icon icon="ic:outline-file-copy" width="20" />
+                        Assets
+                    </li>
+                </ul>
             </aside>
+
             <div className='container-content'>
                 <Navigation text={navText}/>
-                <main className='main-pageAssets'>
-                    <div className="content-pageAssets">
-                        <div className="con-content-pageAssets">
-                            <div className="img-pageAssets">
-                                <img src={pageAssets} alt="" className="imagepageAssets" />
-                            </div>
-                            <div className="btn-pageAssets" onClick={() => navigate('/admin/pageassets/add')}>
-                                <Icon icon="material-symbols:upload-rounded" width="25"/>
+                <main className='main'>
+                    <div className="header-mapel">
+                        <div className="header-mapel-left">
+                            <button className="btn-add-mapel">
+                                <Icon icon="material-symbols:upload" width="20"></Icon>
                                 <p>Upload File</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="content-AddAssets">
+                        <div className="con-card-AddAssets">
+                            {valueDataAddAssets.map((data) => (
+                            <div className="card-AddAssets" key={data.id} onMouseEnter={() => handleHover(data.id)} onMouseOut={() => setIdHover(null)}>
+                                <img src={data.assets} alt="" className="image-card-AddAssets" />
+                               
+                              {idHover === data.id ? <div className='container-delete' id={data.id}>
+                                <img src={icondelete} alt="" />
+                                </div>
+                                : null
+                                }
                             </div>
+                            ))}
                         </div>
                     </div>
                 </main>
@@ -194,4 +331,4 @@ function PageAssets(){
     );
 }
 
-export default PageAssets;
+export default AddAssets;
