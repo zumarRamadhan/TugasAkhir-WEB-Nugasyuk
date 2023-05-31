@@ -164,24 +164,12 @@ option[selected] {
 }
 
 .content-table-murid tbody:hover tr:hover {
-    background-color: #EBF0FE;
+    background-color: var(--color-sekunder);
 }
 
 .content-table-murid tbody tr:nth-child(odd) {
     background-color: #efefefb6;
-    /* border: 3px solid #EBF0FE; */
 }
-
-/* .content-table-murid tbody .btn-detail {
-    background-color: #3661EB;
-    width: 80px;
-    height: 30px;
-    border-radius: 5px;
-    font-size: 10px;
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1.5rem;
-} */
 
 .content-table-murid td {
     font-size: 15px;
@@ -207,8 +195,6 @@ option[selected] {
     margin-right: 1rem;
     border-radius: 50%
 }
-
-/* jika tr di hover maka pengampu akan berubah warna */
 
 .content-table-murid tbody tr:hover .jurusan {
     background: #2A93D5;

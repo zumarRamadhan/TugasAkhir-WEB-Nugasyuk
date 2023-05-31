@@ -291,7 +291,6 @@ function DataMurid(){
                         </div>
                         <div className='header-murid-right'>
                             <p className='detail-jumlah-murid'><span>{dataTabelMurid.length}</span> Murid</p>
-                            {/* <p className='detail-jumlah-murid'><span></span> Murid</p> */}
                         </div>
                     </div>
                     {/* jika data pada renderData kosong maka tampilkan dataNotFound */}
