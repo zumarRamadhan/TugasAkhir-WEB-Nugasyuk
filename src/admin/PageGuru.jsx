@@ -204,12 +204,16 @@ function BerandaGuru() {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredData, setFilteredData] = useState({dataTabelGuru});
     
-    console.log(filteredData);
     const renderData = filteredData.length > 0 ? filteredData : dataTabelGuru;
     const dataNotFound = filteredData.length === 0;
 
+    useEffect(() => {
+        handleSearch();
+    }, [searchQuery]);
+    
+
     const handleSearch = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         const filteredData = dataTabelGuru.filter((value) => {
             return (
                 value.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
