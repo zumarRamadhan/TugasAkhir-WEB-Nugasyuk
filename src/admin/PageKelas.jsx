@@ -209,24 +209,13 @@ function Pagekelas() {
                         />
                       </button>
                     </div>
-                    <div
-                      id="popup-menu-kelas"
-                      className={`popup-menu-kelas ${
-                        selected === index && active ? "active" : ""
-                      }`}
-                    >
+                    <div id="popup-menu-kelas" className={`popup-menu-kelas ${selected === index && active ? "active" : ""}`}>
                       <ul>
-                        <li>
-                          <a href="#" id="detail-guru">Detail</a>
-                        </li>
                         <li>
                           <a href="#" id="edit-guru">Edit</a>
                         </li>
                         <li>
                           <a href="#" id="hapus-guru">Hapus</a>
-                        </li>
-                        <li>
-                          <a href="#" id="tambah-guru">Tambah Code</a>
                         </li>
                       </ul>
                     </div>

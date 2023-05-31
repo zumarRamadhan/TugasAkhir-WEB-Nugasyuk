@@ -6,7 +6,7 @@ import Navigation from "../component/NavigationBar";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImgProfil from '../assets/img-profil.svg';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 
@@ -68,6 +68,50 @@ function BerandaAdmin (){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
     
+    const savedItem = sessionStorage.getItem("token");
+    
+    const token = JSON.parse(savedItem)
+
+    const [admin, setUsers] = useState([])
+
+    // const headers = new Headers();
+    // headers.set("Content-type", "application/json");
+    // headers.set("Access-Control-Allow-Origin", "*");
+    // headers.set()
+
+    const fetchAdminData = () => {
+        fetch("https://amanah-furniture.site/api/dataadmin",{
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            'Origin': 'https://amanah-furniture.site/api/dataadmin',
+            Authorization: `Bearer ${token}`,
+            },
+        })
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            setUsers(data)
+          })
+      }
+
+      useEffect(() => {
+        fetchAdminData()
+      }, [])
+
+    const logoutClick = () =>{
+        fetch('https://amanah-furniture.site/api/dataadmin',{
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Access-Control-Allow-Headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control",
+            },
+        })
+
+        sessionStorage.removeItem('token');
+        window.location.replace('/login')
+    }
 
   return(
       <div className='body'>
@@ -114,7 +158,7 @@ function BerandaAdmin (){
             <main className='main'>
                 <div className="header-dashboard">
                     <div className="head-left">
-                        <h1 className="intro-head">Halo <span className="name-admin">Erika Yanti, S.pd</span></h1>
+                        <h1 className="intro-head">Halo <span className="name-admin">{admin.nama}</span></h1>
                         <p className="desc-head">Selamat datang di admin nugasyuk, anda bisa memonitoring data guru, siswa dan lain lain.</p>
                     </div>
                     <div className="head-right">
@@ -123,45 +167,45 @@ function BerandaAdmin (){
                 </div>
 
                 <div className="con-content-admin">   
-                    <div className="content-indiecator" style={{ background: "#EB55A3" }}>
+                    <div className="content-indiecator" style={{ background: "#EB55A3", cursor:"pointer" }} onClick={() => navigate('/admin/pagemurid')}>
                         <div className="icon-indie" style={{ color: "#EB55A3" }}>
                             <Icon icon="mdi:account-group-outline" width="40" />
                         </div>
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Siswa Keseluruhan</p>
-                            <p className="value-indie"><span>1000</span> Siswa</p>
+                            <p className="value-indie"><span>{admin.jumlah_siswa}</span> Siswa</p>
                         </div>
                     </div>
 
-                    <div className="content-indiecator" style={{ background: "#2A93D5" }}>
+                    <div className="content-indiecator" style={{ background: "#2A93D5", cursor:"pointer" }} onClick={() => navigate('/admin/pagekelas')}>
                         <div className="icon-indie" style={{ color: "#2A93D5" }}>
                             <Icon icon="fluent:class-24-regular" width="40" />
                         </div>
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Kelas Keseluruhan</p>
                             <p className="value-indie">
-                            <span>25</span> Kelas</p>
+                            <span>{admin.jumlah_kelas}</span> Kelas</p>
                         </div>
                     </div>
 
-                    <div className="content-indiecator" style={{ background: "#B462D0" }}>
+                    <div className="content-indiecator" style={{ background: "#B462D0", cursor:"pointer" }} onClick={() => navigate('/admin/pageguru')}>
                         <div className="icon-indie" style={{ color: "#B462D0" }}>
                             <Icon icon="la:chalkboard-teacher" width="40" />
                         </div>
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Guru Keseluruhan</p>
-                            <p className="value-indie"><span>30</span> Guru</p>
+                            <p className="value-indie"><span>{admin.jumlah_guru}</span> Guru</p>
                         </div>
                     </div>
 
-                    <div className="content-indiecator" style={{ background: "#585CC4" }}>
+                    <div className="content-indiecator" style={{ background: "#585CC4", cursor:"pointer" }} onClick={() => navigate('/admin/pagekelas')}>
                         <div className="icon-indie" style={{ color: "#585CC4" }}>
                             <Icon icon="fluent-mdl2:education" width="40" />
                         </div>
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Jurusan</p>
                             <p className="value-indie">
-                            <span>5</span> Jurusan</p>
+                            <span>{admin.jumlah_jurusan}</span> Jurusan</p>
                         </div>
                     </div>
                 </div>
@@ -177,7 +221,7 @@ function BerandaAdmin (){
                 <p className="desc-logout">Anda yakin ingin keluar?</p>
                 <div className="con-btn-logout">
                     <button type="button" className="btn-batal">Batal</button>
-                    <button type="button" className="btn-keluar">Keluar</button>
+                    <button type="button" onClick={logoutClick} className="btn-keluar">Keluar</button>
                 </div>
             </div>
         </div>

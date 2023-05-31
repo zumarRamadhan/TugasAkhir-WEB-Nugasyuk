@@ -1,6 +1,6 @@
 import '../cssAll/admin/DataMurid.css'
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from "../component/Sidebar";
 import Navigation from "../component/NavigationBar";
 import Kalam from "../assets/murid-kalam.png";
@@ -61,7 +61,9 @@ function DataMurid(){
     const [passwordType, setPasswordType] = useState("password");
     const [passwordTypeNew, setPasswordTypeNew] = useState("password");
     const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
-
+    const [active, setActive] = useState();
+    const [selected, setSelected] = useState();
+    
     function togglePasswordVisibility() {
         setPasswordType(passwordType === "password" ? "text" : "password");
     }
@@ -73,6 +75,153 @@ function DataMurid(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const valueDataKelas = [
+        {
+            id: 1,
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+        },
+        {
+            id: 2,
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+        },
+        {
+            id: 3,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+        },
+        {
+            id: 4,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+        },
+        {
+            id: 5,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "1",
+        },
+        {
+            id: 6,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "2",
+        },
+        {
+            id: 7,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+        },
+        {
+            id: 8,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+        },
+        {
+            id: 9,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+        },
+        {
+            id: 10,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "2",
+        },
+    ];
+
+    const dataTabelMurid = [
+        {
+            id: 1,
+            imgProfile: foto8,
+            name: "Ahmad Aziz Wira Widodo",
+            email: "ahmadaziz@smkrus.sch.id",
+            kelas: valueDataKelas[2].jurusan.toUpperCase()
+        },
+        {
+            id: 2,
+            imgProfile: foto9,
+            name: "Bayu Septian Kurniawan",
+            email: "bayuseptian@smkrus.sch.id",
+            kelas: valueDataKelas[2].jurusan.toUpperCase()
+        },
+        {
+            id: 3,
+            imgProfile: foto10,
+            name: "Javier Gavra Abhinaya",
+            email: "javiergavra@smkrus.sch.id",
+            kelas: valueDataKelas[4].jurusan.toUpperCase()
+        },
+        {
+            id: 4,
+            imgProfile: foto11,
+            name: "Khoiru Rizal Kalam Ismail",
+            email: "khoirurizal@smkrus.sch.id",
+            kelas: valueDataKelas[4].jurusan.toUpperCase()
+        },
+        {
+            id: 5,
+            imgProfile: foto12,
+            name: "Muhammad Nur Wahid Bimawan",
+            email: "nurwahid@smkrus.sch.id",
+            kelas: valueDataKelas[8].jurusan.toUpperCase()
+        },
+        {
+            id: 6,
+            imgProfile: foto13,
+            name: "Muh Wahyu Ageng Pambudi",
+            email: "muhwahyu@smkrus.schid",
+            kelas: valueDataKelas[8].jurusan.toUpperCase()
+        },
+        {
+            id: 7,
+            imgProfile: foto14,
+            name: "Muhammad Vitto Corlenone",
+            email: "vittocorleone@smkrus.sch.id",
+            kelas: valueDataKelas[9].jurusan.toUpperCase(),
+        },
+    ];
+
+    function handleToggle(e) {
+        console.log(e);
+        setActive(!active);
+        setSelected(e);
+    }
+    
+    useEffect(() => {
+        console.log(active);
+    }, [active]);
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
+    
+    const renderData = filteredData.length > 0 ? filteredData : dataTabelMurid;
+    const dataNotFound = filteredData.length === 0;
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        const filteredData = dataTabelMurid.filter((value) => {
+            return (
+                value.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                value.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                value.kelas.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        });
+        setFilteredData(filteredData);
+    };
+    
+    const handleChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
 
     return(
         <div>
@@ -132,209 +281,72 @@ function DataMurid(){
                                 <option value="jurusan">Teknik Grafika</option>
                             </select>
 
-                            <form className='search-box'>
-                                <input type='text' placeholder='Cari...'/>
+                            <form className='search-box' onSubmit={handleSearch}>
+                                <input type='text' placeholder='Cari...' value={searchQuery} onChange={handleChange} />
                                 <button type='submit'>
-                                    <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                                <Icon icon="material-symbols:search-rounded" width="20"></Icon>
                                 </button>
                             </form>
                         </div>
                         <div className='header-murid-right'>
-                            <p className='detail-jumlah-murid'><span>1000</span> Murid</p>
+                            <p className='detail-jumlah-murid'><span>{dataTabelMurid.length}</span> Murid</p>
+                            {/* <p className='detail-jumlah-murid'><span></span> Murid</p> */}
                         </div>
                     </div>
                     
                     <div className='container-table'>
-                <table className="content-table-murid">
-                    <thead>
-                        <tr>
-                            <th>Foto</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>NIY</th>
-                            <th>Pengampu</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src={foto8} alt="" /></td>
-                            <td>Ahmad Aziz Wira Widodo</td>
-                            <td>ahmadaziz@smkrus.sch.id</td>
-                            <td>04423</td>
-                            <td>
-                                <div className='pangampu'>PPLG</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto9} alt="" /></td>
-                            <td>Khoiru Rizal Kalam Ismail</td>
-                            <td>khoirurizal@smkrus.sch.id</td>
-                            <td>04424</td>
-                            <td>
-                                <div className='pangampu1'>PPLG</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto10} alt="" /></td>
-                            <td>Muhammad Zumar Ram...</td>
-                            <td>zumarramadhan@smkrus.sch.id</td>
-                            <td>04425</td>
-                            <td>
-                                <div className='pangampu1'>PPLG</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto11} alt="" /></td>
-                            <td>Muhammad Nur Wahid...</td>
-                            <td>nurwahid@smkrus.sch.id</td>
-                            <td>04426</td>
-                            <td>
-                                <div className='pangampu1'>Teknik Grafika</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto12} alt="" /></td>
-                            <td>Muh Wahyu Ageng Pam...</td>
-                            <td>muhwahyu@smkrus.sch.id</td>
-                            <td>04427</td>
-                            <td>
-                                <div className='pangampu1'>Normadaf</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto13} alt="" /></td>
-                            <td>DKV</td>
-                            <td>jumanji@smkrus.sch.id</td>
-                            <td>02226</td>
-                            <td>
-                                <div className='pangampu1'>Normadaf</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto14} alt="" /></td>
-                            <td>Kris Sutarno, S.Sn</td>
-                            <td>krissutarno@smkrus.sch.id</td>
-                            <td>02222</td>
-                            <td>
-                                <div className='pangampu1'>Produktif</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto8} alt="" /></td>
-                            <td>Kris Sutarno, S.Sn</td>
-                            <td>krissutarno@smkrus.sch.id</td>
-                            <td>02222</td>
-                            <td>
-                                <div className='pangampu1'>Produktif</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto9} alt="" /></td>
-                            <td>Kris Sutarno, S.Sn</td>
-                            <td>krissutarno@smkrus.sch.id</td>
-                            <td>02222</td>
-                            <td>
-                                <div className='pangampu1'>Produktif</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto10} alt="" /></td>
-                            <td>Kris Sutarno, S.Sn</td>
-                            <td>krissutarno@smkrus.sch.id</td>
-                            <td>02222</td>
-                            <td>
-                                <div className='pangampu1'>Produktif</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto11} alt="" /></td>
-                            <td>Kris Sutarno, S.Sn</td>
-                            <td>krissutarno@smkrus.sch.id</td>
-                            <td>02222</td>
-                            <td>
-                                <div className='pangampu1'>Produktif</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                        <tr>
-                            <td><img src={foto11} alt="" /></td>
-                            <td>Kris Sutarno, S.Sn</td>
-                            <td>krissutarno@smkrus.sch.id</td>
-                            <td>02222</td>
-                            <td>
-                                <div className='pangampu1'>Produktif</div>
-                            </td>
-                            <td><img src={iconaksi} alt="" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
-                    {/* <div className='container-murid'>
-                        <div className='card-content-murid'>
-                            <div className='card-content-murid-left'>
-                                <div className='img-profile-murid'>
-                                    <img src={Wira} alt='' className='image-profile-murid'/>
-                                </div>
-                                <div className='detail-card-murid'>
-                                    <p className='nama-murid'>Ahmad Aziz Wira Widodo</p>
-                                    <p className='email-murid'>ahmadaziz@smkrus.sch.id</p>
-                                    <div className='jurusan-murid'>PPLG</div>
-                                </div>
-                            </div>
-                            <div className='btn-action'>
-                                <div className='card-content-guru-right'>
-                                    <button id='popup-button' type='submit'><Icon icon="mi:options-vertical" width="40" color="#2A93D5"/></button>
-                                </div>
-                                <div id='popup-menu' className='popup-menu'>
-                                    <ul>
-                                        <li><a href="#" id="detail-murid">Detail</a></li>
-                                        <li><a href="#" id="edit-murid">Edit</a></li>
-                                        <li><a href="#" id="hapus-murid">Hapus</a></li>
-                                        <li><a href="#" id="tambah-murid">Tambah Code</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <table className="content-table-murid">
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>NIS</th>
+                                    <th>Jurusan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {renderData.map((data, index) => (
+                                    <tr key={index} style={{ cursor: 'pointer' }}>
+                                    <td>
+                                        <img src={data.imgProfile} alt='' />
+                                    </td>
+                                    <td>{data.name}</td>
+                                    <td>{data.email}</td>
+                                    <td>04423</td>
+                                    <td>
+                                        <div className='jurusan'>{data.kelas}</div>
+                                    </td>
+                                    <td>
+                                        <img src={iconaksi} alt='' onClick={() => handleToggle(index)} />
+                                        <div
+                                        id='popup-menu-muridAdmin'
+                                        className={`popup-menu-muridAdmin ${selected === index && active ? 'active' : ''}`}
+                                        >
+                                        <ul>
+                                            <li>
+                                            <a href='#'>Detail</a>
+                                            </li>
+                                            <li>
+                                            <a href='#'>Edit</a>
+                                            </li>
+                                            <li>
+                                            <a href='#'>Hapus</a>
+                                            </li>
+                                        </ul>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div className='container-murid'>
-                        <div className='card-content-murid'>
-                            <div className='card-content-murid-left'>
-                                <div className='img-profile-murid'>
-                                    <img src={Kalam} alt='' className='image-profile-murid'/>
-                                </div>
-                                <div className='detail-card-murid'>
-                                    <p className='nama-murid'>Khoiru Rizal Kalam ISmail</p>
-                                    <p className='email-murid'>khoirurizal@smkrus.sch.id</p>
-                                    <div className='jurusan-murid'>PPLG</div>
-                                </div>
-                            </div>
-                            <div className='tests'>
-                                <div className='card-content-murid-right'>
-                                    <button id='popup-button' type='submit'><Icon icon="mi:options-vertical" width="35" color="#2A93D5"/></button>
-                                </div>
-                                <div id='popup-menu' className='popup-menu'>
-                                    <ul>
-                                        <li><a href="#" id="detail-murid">Detail</a></li>
-                                        <li><a href="#" id="edit-murid">Edit</a></li>
-                                        <li><a href="#" id="hapus-murid">Hapus</a></li>
-                                        <li><a href="#" id="tambah-murid">Tambah Code</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                    {dataNotFound && (
+                        <div className="dataNotFound">
+                            <p>Maaf, data tidak ditemukan</p>
                         </div>
-                    </div> */}
+                    )}
                 </main>
             </div>
 
