@@ -71,7 +71,7 @@ function MapelMateri(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
-    const [activeContent, setActiveContent] = useState("detailMateriKbm");
+    const [activeContent, setActiveContent] = useState("material-kbm");
 
     const showMaterial = () => {
         setActiveContent("material-kbm");

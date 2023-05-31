@@ -1,14 +1,14 @@
 import '../cssAll/murid/BerandaMurid.css';
 import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useHistory } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import NavbarMurid from '../component/NavbarMurid';
 import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useEffect, useState } from "react";
-import Axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 function BerandaMurid(){
     const navText = "Beranda 11 PPLG 1";
@@ -70,18 +70,42 @@ function BerandaMurid(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
-
-    // useEffect(() => {
-    //     Axios.post('https://www.nugasyuk.my.id/api/login')
-    //     .then(result => {
-    //         console.log('data API', result);
-    //     })
-    //     .catch(err => {
-    //         console.log('error: ', err)
-    //     })
-    // }, [])
-
+    const saveToken = sessionStorage.getItem('token');
     
+    const [dataBerandaMurid, setDataBerandaMurid] = useState([]);
+    const [isLoading, setisLoading] = useState(false);
+    const [isError, setisError] = useState(false);
+
+    useEffect(() => {
+        axios.get('https://www.nugasyuk.my.id/api/murid/datamurid', { 
+            headers : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`
+            }
+         } )
+        .then(result => {
+            console.log('data API', result.data);
+            const responseAPI = result.data;
+
+            setDataBerandaMurid(responseAPI.data);
+            setisLoading(false);
+        })
+        .catch(err => {
+            console.log('terjadi kesalahan: ', err)
+            setisError(true);
+            setisLoading(false);
+        })
+    }, [])
+
+    if (isLoading)
+    return <div id="load">
+               <div>.</div>
+               <div>.</div>
+               <div>.</div>
+               <div>.</div>
+           </div>;
+   else if (dataBerandaMurid && !isError)
+
     return(
         <div>
             <aside>
@@ -117,7 +141,7 @@ function BerandaMurid(){
                 <main className='main'>
                     <div className="header-dashboard-home-student">
                         <div className="head-left-home-student">
-                            <h1 className="intro-head-student">Halo <span className="student-name">Wira</span></h1>
+                        <h1 className="intro-head-student">Halo <span className="student-name">{dataBerandaMurid.nama}</span></h1>
                             <p className="desc-head-home-student" style={{width:"550px"}}>
                                 Selamat datang di nugasyuk, anda bisa memonitoring tugas dan materi yang diberikan oleh guru.
                             </p>
@@ -136,7 +160,7 @@ function BerandaMurid(){
                             </div>
                             <div className="desc-indie">
                                 <p className="title-indie">Jumlah Siswa</p>
-                                <p className="value-indie"><span>35</span> Siswa</p>
+                                <p className="value-indie"><span>{dataBerandaMurid.jumlah_siswa}</span> Siswa</p>
                             </div>
                         </div>
 
@@ -146,7 +170,7 @@ function BerandaMurid(){
                             </div>
                             <div className="desc-indie">
                                 <p className="title-indie">Jumlah Mapel</p>
-                                <p className="value-indie"><span>14</span> Mata Pelajaran</p>
+                                <p className="value-indie"><span>{dataBerandaMurid.jumlah_mapel}</span> Mata Pelajaran</p>
                             </div>
                         </div>
 
@@ -156,7 +180,7 @@ function BerandaMurid(){
                             </div>
                             <div className="desc-indie">
                                 <p className="title-indie">Wali Kelas</p>
-                                <p className="value-indie"><span>Slamet Jos, S.Kom</span></p>
+                                <p className="value-indie"><span>{dataBerandaMurid.wali_kelas}</span></p>
                             </div>
                         </div>
                     </div>
@@ -171,8 +195,8 @@ function BerandaMurid(){
                                         <Icon icon="uiw:time-o" width="30"/>
                                     </div>
                                     <div className="desc-indie">
-                                        <p className="title-indie-information"> <span>3</span> Tugas</p>
-                                        <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                        <p className="title-indie-information"> <span>{dataBerandaMurid.belum_dalamdeadline}</span> Tugas</p>
+                                        <p className="value-indie-information">Dari <span>{dataBerandaMurid.jumlah_tugas}</span> Tugas</p>
                                     </div>
                                 </div>
                                 <div className="icon-navigate">
@@ -189,8 +213,8 @@ function BerandaMurid(){
                                         <Icon icon="ph:check-bold" width="30" />
                                     </div>
                                     <div className="desc-indie">
-                                        <p className="title-indie-information"> <span>4</span> Tugas</p>
-                                        <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                        <p className="title-indie-information"> <span>{dataBerandaMurid.selesai_dalamdeadline}</span> Tugas</p>
+                                        <p className="value-indie-information">Dari <span>{dataBerandaMurid.jumlah_tugas}</span> Tugas</p>
                                     </div>
                                 </div>
                                 <div className="icon-navigate">
@@ -207,8 +231,8 @@ function BerandaMurid(){
                                         <Icon icon="uiw:time-o" width="30"/>
                                     </div>
                                     <div className="desc-indie">
-                                        <p className="title-indie-information"> <span>3</span> Tugas</p>
-                                        <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                        <p className="title-indie-information"> <span>{dataBerandaMurid.belum_lebihdeadline}</span> Tugas</p>
+                                        <p className="value-indie-information">Dari <span>{dataBerandaMurid.jumlah_tugas}</span> Tugas</p>
                                     </div>
                                 </div>
                                 <div className="icon-navigate">
@@ -225,8 +249,8 @@ function BerandaMurid(){
                                         <Icon icon="ph:check-bold" width="30" />
                                     </div>
                                     <div className="desc-indie">
-                                        <p className="title-indie-information"> <span>4</span> Tugas</p>
-                                        <p className="value-indie-information">Dari <span>10</span> Tugas</p>
+                                        <p className="title-indie-information"> <span>{dataBerandaMurid.selesai_lebihdeadline}</span> Tugas</p>
+                                        <p className="value-indie-information">Dari <span>{dataBerandaMurid.jumlah_tugas}</span> Tugas</p>
                                     </div>
                                 </div>
                                 <div className="icon-navigate">

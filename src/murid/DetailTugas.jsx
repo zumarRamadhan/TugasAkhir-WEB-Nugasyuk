@@ -1,13 +1,14 @@
 import '../cssAll/murid/DetailTugas.css';
 import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavbarMurid from '../component/NavbarMurid';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
+import axios from 'axios';
 
 function DetailTask(){
     const navText = "B. Inggris";
@@ -69,6 +70,47 @@ function DetailTask(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
+    const saveToken = sessionStorage.getItem('token');
+
+    const [dataDetailTugas, setDataDetailTugas] = useState([]);
+
+    const [isLoading, setisLoading] = useState(false);
+    const [isError, setisError] = useState(false);
+
+    useEffect(() => {
+        setisLoading(true);
+        axios
+        .get('https://www.nugasyuk.my.id/api/murid/matapelajaran/tugas/', { 
+            headers : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`
+            }
+         } )
+        .then(result => {
+            console.log('data API', result.data);
+            // const responseAPI = result.data;
+
+            setDataDetailTugas(result.data.tugas);
+            setisLoading(false);
+        })
+        .catch(err => {
+            console.log('terjadi kesalahan: ', err)
+            setisError(true);
+            setisLoading(false);
+        })
+    }, [])
+
+    // if (!dataTugas) return <h3>Loading...</h3>;
+
+    if (isLoading)
+     return <div id="load">
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+            </div>;
+    else if (dataDetailTugas && !isError)
+
     return(
         <div>
             <aside>
@@ -102,6 +144,7 @@ function DetailTask(){
             <div className="container-content">
                 <NavbarMurid text={navText}/>
                 <div className="main">
+                {dataDetailTugas && dataDetailTugas.map((detailTugas => (
                     <div className="con-content-detail-task">
                         <div className="content-detail-task">
                             <div className="content-detail-task-left">
@@ -118,9 +161,7 @@ function DetailTask(){
                             </div>
                         </div>
                         <p className='desc-content-detail-task'>
-                            Assalamualaikum wr wb, setelah kalian memahami
-                            pengertian reading kalian bisa melanjutkan mengerjakan reading. Terima kasih,
-                            sukses terus semuanya...
+                            {detailTugas.soal}
                         </p>
                         <p className="task-deadline-time">Deadline : <span>10 Mar 2023</span></p>
                         <div className="submition-task">
@@ -139,6 +180,7 @@ function DetailTask(){
                             </button>
                         </div>
                     </div>
+                )))}
                 </div>
             </div>
 
