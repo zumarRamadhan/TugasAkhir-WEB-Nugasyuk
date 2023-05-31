@@ -168,8 +168,8 @@ option[selected] {
 }
 
 .content-table-murid tbody tr:nth-child(odd) {
-    /* background-color: #eaeaea; */
-    border: 3px solid #EBF0FE;
+    background-color: #efefefb6;
+    /* border: 3px solid #EBF0FE; */
 }
 
 /* .content-table-murid tbody .btn-detail {
@@ -275,8 +275,12 @@ option[selected] {
 }
 
 .dataNotFound{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    padding: 50px 0;
+    font-size: 20px;
+    color: #333
+}
+
+.tdImg{
+    padding: 10px;
 }
