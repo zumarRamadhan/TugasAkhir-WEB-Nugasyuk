@@ -19,6 +19,7 @@ import foto5 from '../assets/foto5.png';
 import foto6 from '../assets/foto6.png';
 import foto7 from '../assets/foto7.png';
 import iconaksi from '../assets/iconaksi.svg';
+import ImgDelete from '../assets/imgDelete.svg';
 
 function BerandaGuru() {
     const navText = "Data Guru";
@@ -40,6 +41,35 @@ function BerandaGuru() {
         setTimeout(() => popupLogout.style.display = "none", 250);
         popupLogout.style.animation = 'slide-up 0.3s ease-in-out';
     }
+
+    const showDeletePopup = () => {
+        const popupDelete = document.querySelector('#popup-Delete');
+        popupDelete.style.display = 'flex';
+        popupDelete.style.animation = 'slide-down 0.3s ease-in-out';
+    }
+    
+    const closeDeletePopup = () => {
+        const popupDelete = document.querySelector('#popup-Delete');
+        setTimeout(() => popupDelete.style.display = "none", 250);
+        popupDelete.style.animation = 'slide-up 0.3s ease-in-out';
+    }
+
+    const showKodePopup = () => {
+        const popupKode = document.querySelector('#popup-Kode');
+        popupKode.style.display = 'flex';
+        popupKode.style.animation = 'slide-down 0.3s ease-in-out';
+    }
+    
+    const closeKodePopup = () => {
+        const popupKode = document.querySelector('#popup-Kode');
+        setTimeout(() => popupKode.style.display = "none", 250);
+        popupKode.style.animation = 'slide-up 0.3s ease-in-out';
+        // jika di close maka #inpurKode dan #inputMapel akan di clear
+        const clearKode = document.querySelector('#inputKode');
+        clearKode.value = "";
+        const clearMapel = document.querySelector('#inputMapel');
+        clearMapel.value = "";
+    }
     
     const showForgetPopup = () => {
         const popupForget = document.querySelector('#popup-forget');
@@ -51,7 +81,7 @@ function BerandaGuru() {
         const popupForget = document.querySelector('#popup-forget');
         setTimeout(() => popupForget.style.display = "none", 250);
         popupForget.style.animation = 'slide-up 0.3s ease-in-out';
-        const clearpassword = document.querySelector('#password', '#newPassword', '#confirmPassword');
+        const clearpassword = document.querySelector('#password');
         clearpassword.value = "";
         const clearpasswordNew = document.querySelector('#newPassword');
         clearpasswordNew.value = "";
@@ -207,13 +237,13 @@ function BerandaGuru() {
     const renderData = filteredData.length > 0 ? filteredData : dataTabelGuru;
     const dataNotFound = filteredData.length === 0;
 
-    useEffect(() => {
-        handleSearch();
-    }, [searchQuery]);
+    // useEffect(() => {
+    //     handleSearch();
+    // }, [searchQuery]);
     
 
     const handleSearch = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         const filteredData = dataTabelGuru.filter((value) => {
             return (
                 value.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -339,10 +369,9 @@ function BerandaGuru() {
                                                 <a href='#'>Edit</a>
                                             </li>
                                             <li>
-                                                <a href='#'>Hapus</a>
+                                                <a onClick={showDeletePopup}>Hapus</a>
                                             </li>
-                                            <li>
-                                                <a href='#'>Tambah Kode</a>
+                                            <li> <a onClick={showKodePopup}>Tambah Kode</a>
                                             </li>
                                         </ul>
                                         </div>
@@ -370,11 +399,44 @@ function BerandaGuru() {
                 </div>
             </div>
 
+            <div className="popup-Delete" id="popup-Delete">
+                <div className="detail-Delete">
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDeletePopup}/>
+                    <div className="image-Delete">
+                        <img src={ImgDelete} alt="" className="img-Delete" />
+                    </div>
+                    <p className="desc-Delete">Anda yakin ingin menghapus?</p>
+                    <div className="con-btn-Delete">
+                        <button type="button" className="btn-batal">Batal</button>
+                        <button type="button" className="btn-delete">Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="popup-Kode" id="popup-Kode">
+                <form action='' className="detail-Kode">
+                    <div className="navbar-detail-Kode">
+                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeKodePopup}/>
+                        <h2>Tambah Kode Guru</h2>
+                        <div className='divKosong'></div>
+                    </div>
+                    <p className="judul-form">Nama Guru</p>
+                    <input type="text" id="" value="" disabled readonly className="inputGuru"/>
+                    <p className="judul-form">Kode Guru</p>
+                    <input type="text" id="inputKode" className="inputGuru"/>
+                    <p className="judul-form">Mata Pelajaran</p>
+                    <input type="text" id="inputMapel" className="inputGuru"/>
+
+                    <button type="submit" className="btn-sumbitKode">Tambah</button>
+                </form>
+            </div>
+
             <div className="popup-forget" id="popup-forget">
                 <form action="" className="detail-forget-password">
                     <div className="navbar-detail-forget">
                         <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeForgetPopupAndClearInput}/>
                         <h2>Ganti Password</h2>
+                        <div className='divKosong'></div>
                     </div>
                     <p className="judul-form">Sandi lama</p>
                     <div className="con-form-password">
@@ -395,7 +457,7 @@ function BerandaGuru() {
                         <button type="button" className="btn-mata" onClick={togglePasswordVisibilityConfirm}><img src={mataIcon} alt=""/></button>
                     </div>
 
-                    <button type="submit" className="btn-simpan">Simpan sandi baru</button>
+                    <button type='submit' className="btn-simpan">Simpan sandi baru</button>
                 </form>
             </div>
 

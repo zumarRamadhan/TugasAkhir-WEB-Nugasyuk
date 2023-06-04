@@ -219,7 +219,7 @@ option[selected] {
     z-index: 1;
     border: 1px solid #C4C4C4;
     border-radius: 10px;
-    transform: translateX(-80%);
+    transform: translateX(-100%);
 }
 
 .popup-menu-muridAdmin.active {

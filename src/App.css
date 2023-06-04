@@ -279,6 +279,11 @@ nav .navbar img {
 
 .navbar-detail-forget {
     display: flex;
+    justify-content: space-between;
+}
+
+.divKosong{
+    width: 30px;
 }
 
 .navbar-detail-forget h2 {
@@ -286,9 +291,10 @@ nav .navbar img {
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    margin-left: 134px;
+    margin: auto;
+    /* margin-left: 134px; */
     color: #2A93D5;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     /* line-height: 30px; */
 }
 
@@ -466,7 +472,177 @@ nav .navbar img {
     transition: 0.25s ease-in-out;
 }
 
-/* end popup logout */
+/* end popup Delete */
+
+/* popup Delete */
+#popup-Delete {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 200;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation-fill-mode: forwards;
+}
+
+.img-Delete{
+    max-width: 230px;
+    height: auto;
+}
+
+.detail-Delete {
+    background: #FFFFFF;
+    border-radius: 20px;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.image-Delete {
+    display: flex;
+    justify-content: center;
+}
+
+.con-btn-Delete {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.desc-Delete {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #797979;
+    text-align: center;
+}
+
+.btn-batal {
+    background: #D8F0FF;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #2A93D5;
+    width: 100%;
+    cursor: pointer;
+}
+
+.btn-batal:hover {
+    background: #2A93D5;
+    color: var(--color-primer);
+    transition: 0.25s ease-in-out;
+}
+
+.btn-delete {
+    background: #FFC6C6;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #FF3F3F;
+    width: 100%;
+    padding: 14px 0;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background: #FF3F3F;
+    color: var(--color-primer);
+    transition: 0.25s ease-in-out;
+}
+
+/* end popup Delete */
+
+/* pop up kode */
+
+#popup-Kode {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 200;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation-fill-mode: forwards;
+}
+
+.detail-Kode {
+    background: #FFFFFF;
+    border-radius: 20px;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.navbar-detail-Kode {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-detail-Kode h2 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    /* margin-left: 134px; */
+    color: #2A93D5;
+    /* margin-bottom: 20px; */
+    /* line-height: 30px; */
+}
+
+.inputGuru {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    color: #000000;
+}
+
+.inputGuru:focus {
+    outline: none;
+}
+
+.btn-sumbitKode {
+    margin-top: 40px;
+    background: var(--color-aksen);
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--color-primer);
+    border: none;
+    padding: 9px 0;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.btn-sumbitKode:hover {
+    background: #1D77AF;
+    transition: 0.10s ease-in-out;
+}
 
 /* notfound */
 .notfound{

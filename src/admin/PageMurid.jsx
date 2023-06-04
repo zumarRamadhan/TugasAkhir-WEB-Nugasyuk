@@ -19,6 +19,7 @@ import foto12 from '../assets/foto12.png';
 import foto13 from '../assets/foto13.png';
 import foto14 from '../assets/foto14.png';
 import iconaksi from '../assets/iconaksi.svg';
+import ImgDelete from '../assets/imgDelete.svg';
 function DataMurid(){
     const navText = "Data Murid";
     const navigate = useNavigate();
@@ -38,6 +39,18 @@ function DataMurid(){
         const popupLogout = document.querySelector('#popup-logout');
         setTimeout(() => popupLogout.style.display = "none", 250);
         popupLogout.style.animation = 'slide-up 0.3s ease-in-out';
+    }
+
+    const showDeletePopup = () => {
+        const popupDelete = document.querySelector('#popup-Delete');
+        popupDelete.style.display = 'flex';
+        popupDelete.style.animation = 'slide-down 0.3s ease-in-out';
+    }
+    
+    const closeDeletePopup = () => {
+        const popupDelete = document.querySelector('#popup-Delete');
+        setTimeout(() => popupDelete.style.display = "none", 250);
+        popupDelete.style.animation = 'slide-up 0.3s ease-in-out';
     }
     
     const showForgetPopup = () => {
@@ -337,7 +350,7 @@ function DataMurid(){
                                             <a href='#'>Edit</a>
                                             </li>
                                             <li>
-                                            <a href='#'>Hapus</a>
+                                            <a onClick={showDeletePopup}>Hapus</a>
                                             </li>
                                         </ul>
                                         </div>
@@ -361,6 +374,20 @@ function DataMurid(){
                     <div className="con-btn-logout">
                         <button type="button" className="btn-batal">Batal</button>
                         <button type="button" className="btn-keluar">Keluar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="popup-Delete" id="popup-Delete">
+                <div className="detail-Delete">
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDeletePopup}/>
+                    <div className="image-Delete">
+                        <img src={ImgDelete} alt="" className="img-Delete" />
+                    </div>
+                    <p className="desc-Delete">Anda yakin ingin menghapus?</p>
+                    <div className="con-btn-Delete">
+                        <button type="button" className="btn-batal">Batal</button>
+                        <button type="button" className="btn-delete">Hapus</button>
                     </div>
                 </div>
             </div>
