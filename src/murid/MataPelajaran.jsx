@@ -16,7 +16,8 @@ import cardMapel6 from '../assets/cardAssets/cardMapel6.svg';
 import cardMapel7 from '../assets/cardAssets/cardMapel7.svg';
 import cardMapel8 from '../assets/cardAssets/cardMapel8.svg';
 import cardMapel9 from '../assets/cardAssets/cardMapel9.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 function PageMapel(){
 
@@ -180,6 +181,47 @@ function PageMapel(){
         jurusan === "semua" ? true : data.jurusan === jurusan
     );
 
+    const saveToken = sessionStorage.getItem('token');
+
+    const [dataMapel, setDataMapel] = useState([]);
+
+    const [isLoading, setisLoading] = useState(false);
+    const [isError, setisError] = useState(false);
+
+    useEffect(() => {
+        setisLoading(true);
+        axios
+        .get('https://www.nugasyuk.my.id/api/murid/matapelajaran', { 
+            headers : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`
+            }
+         } )
+        .then(result => {
+            console.log('data API', result.data);
+            // const responseAPI = result.data;
+
+            setDataMapel(result.data.kelas);
+            setisLoading(false);
+        })
+        .catch(err => {
+            console.log('terjadi kesalahan: ', err)
+            setisError(true);
+            setisLoading(false);
+        })
+    }, [])
+
+    // if (!dataTugas) return <h3>Loading...</h3>;
+
+    if (isLoading)
+     return <div id="load">
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+            </div>;
+    else if (dataMapel && !isError)
+
     return(
         <div>
             {/* <Sidebar/> */}
@@ -217,18 +259,18 @@ function PageMapel(){
                 <main className='main'>
                     <div className="content-mapel">
                         <div className="con-card-mapel">
-                            {filterDataMapel.map((data) => (
-                            <div className="card-mapel" key={data.id} style={{ cursor: "pointer" }}>
-                                <img src={data.assets} alt="" className="image-card-mapel" onClick={() => navigate('/murid/pagemapel/mapelmateri')}/>
+                            {dataMapel && dataMapel.map((listMapel =>  (
+                            <div className="card-mapel" key={listMapel.id} style={{ cursor: "pointer" }}>
+                                <img src={cardMapel1} alt="" className="image-card-mapel" onClick={() => navigate('/murid/pagemapel/mapelmateri')}/>
                                 <div className="content-card-mapel">
                                 <div className="card-mapel-left">
-                                    <p className="mata-pelajaran">{data.namaMapel}</p>
-                                    <p className="nama-guru-mapel">{data.guruPengajar}</p>
+                                    <p className="mata-pelajaran">{listMapel.nama_mapel}</p>
+                                    <p className="nama-guru-mapel">{listMapel.nama_guru}</p>
                                 </div>
                                 {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
                                 </div>
                             </div>
-                            ))}
+                            )))}
                         </div>
                     </div>
                 </main>

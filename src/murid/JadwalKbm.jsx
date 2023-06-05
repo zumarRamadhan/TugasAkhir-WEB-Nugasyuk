@@ -9,7 +9,8 @@ import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import imgCardKbm from '../assets/guru-karman.svg';
 import ImgBinggris from '../assets/img-binggris.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 function JadwalKBM(){
     const navText = "Jadwal KBM 11 PPLG 1";
@@ -208,6 +209,48 @@ function JadwalKBM(){
         },
     ]
 
+
+    const saveToken = sessionStorage.getItem('token');
+
+    const [dataJadwal, setDataJadwal] = useState([]);
+
+    const [isLoading, setisLoading] = useState(false);
+    const [isError, setisError] = useState(false);
+
+    useEffect(() => {
+        setisLoading(true);
+        axios
+        .get('https://www.nugasyuk.my.id/api/murid/jadwal', { 
+            headers : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`
+            }
+         } )
+        .then(result => {
+            console.log('data API', result.data);
+            // const responseAPI = result.data;
+
+            setDataJadwal(result.data.data);
+            setisLoading(false);
+        })
+        .catch(err => {
+            console.log('terjadi kesalahan: ', err)
+            setisError(true);
+            setisLoading(false);
+        })
+    }, [])
+
+    // if (!dataTugas) return <h3>Loading...</h3>;
+
+    if (isLoading)
+     return <div id="load">
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+            </div>;
+    else if (dataJadwal && !isError)
+
     return(
         <div>
             <aside>
@@ -243,25 +286,16 @@ function JadwalKBM(){
                 <div className="main">
                     <div className="content-jadwalKBM">
                         <div className="con-card-jadwalKBM">
-                            {valueCardKbm.map((cardKbm) => (
-                            <div className="cardJadwalKbm">
+                            {dataJadwal && dataJadwal.map((listJadwal =>  (
+                            <div className="cardJadwalKbm" key={listJadwal.id}>
                                 <div className="titleJadwalKbm">
                                     <p>Jadwal KBM</p>
-                                    <h1>{cardKbm.hari}</h1>
+                                    <h1>{listJadwal.hari}</h1>
                                 </div>
                                 <div className="bottomjadwalKbm">
                                     <div className="conImgGuru-Kbm">
                                         <div className="imgGuru-Kbm">
-                                            <img src={imgCardKbm} alt="" className="imageGuru-Kbm" />
-                                        </div>
-                                        <div className="imgGuru-Kbm">
-                                            <img src={imgCardKbm} alt="" className="imageGuru-Kbm" />
-                                        </div>
-                                        <div className="imgGuru-Kbm">
-                                            <img src={imgCardKbm} alt="" className="imageGuru-Kbm" />
-                                        </div>
-                                        <div className="imgGuru-Kbm">
-                                            <img src={imgCardKbm} alt="" className="imageGuru-Kbm" />
+                                            <img src="" alt="" className="imageGuru-Kbm" />
                                         </div>
                                     </div>
                                     <div className="btnDetail-Kbm">
@@ -269,7 +303,7 @@ function JadwalKBM(){
                                     </div>
                                 </div>
                             </div>
-                            ))}
+                            )))}
                         </div>
                     </div>
                 </div>

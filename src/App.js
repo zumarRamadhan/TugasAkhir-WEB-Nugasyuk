@@ -63,6 +63,13 @@ import Notfound from './Notfound';
 
 
 function App() {
+
+  // const [isUserLoggedIn, setUserLoggedIn] = useState(false);
+
+  // const userAuthentication = () => {
+  //   setUserLoggedIn(!isUserLoggedIn)
+  // }
+
   return(
     <Router>
       <Routes>

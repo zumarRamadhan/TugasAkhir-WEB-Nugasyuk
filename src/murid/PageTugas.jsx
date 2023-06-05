@@ -7,7 +7,9 @@ import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
+import { Shimmer } from 'react-shimmer'
 
 function PageTugas(){
     const navText = "Tugas";
@@ -69,54 +71,47 @@ function PageTugas(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
-    const valueDataTugas = [
-        {
-            id: 1,
-            nameTask: "Sejarah Gojek",
-            nameTeacher: "Rini, S.Pd",
-            dateUpload: '6 Mar 2023',
-            deadline: '7 Mar 2023',
-            icon: 'icon="uiw:time-o" width="30" style={{ color: "#797979" }}',
-            background: 'style={{ background: "#DDDDDD" }}',
-        },
-        {
-            id: 2,
-            nameTask: "Application Letter",
-            nameTeacher: "Budiono, S.Pd",
-            dateUpload: '6 Mar 2023',
-            deadline: '7 Mar 2023',
-            icon: 'icon="uiw:time-o" width="30" style={{ color: "#CBC41A" }}',
-            background: 'style={{ background: "#FFFA87" }}',
-        },
-        {
-            id: 3,
-            nameTask: "Jump",
-            nameTeacher: "Suep, S.Kom",
-            dateUpload: '5 Mar 2023',
-            deadline: '5 Mar 2023',
-            icon: 'icon="uiw:time-o" width="30" style={{ color: "#FF3F3F" }}',
-            background: 'style={{ background: "#FFC6C6" }}',
-        },
-        {
-            id: 4,
-            nameTask: "Project Monitoring Suhu",
-            nameTeacher: "Bagoes, S.Kom",
-            dateUpload: '5 Mar 2023',
-            deadline: '5 Mar 2023',
-            icon: 'icon="uiw:time-o" width="30" style={{ color: "#797979" }}',
-            background: 'style={{ background: "#DDDDDD" }}',
-        },
-        {
-            id: 5,
-            nameTask: "Aksara Jawa",
-            nameTeacher: "Sumiyatii, S.Pd",
-            dateUpload: '6 Mar 2023',
-            deadline: '7 Mar 2023',
-            icon: 'icon="uiw:time-o" width="30" style={{ color: "#797979" }}',
-            background: 'style={{ background: "#DDDDDD" }}',
-        }
-    ];
-  
+
+    const saveToken = sessionStorage.getItem('token');
+
+    const [dataTugas, setDataTugas] = useState([]);
+
+    const [isLoading, setisLoading] = useState(false);
+    const [isError, setisError] = useState(false);
+
+    useEffect(() => {
+        setisLoading(true);
+        axios
+        .get('https://www.nugasyuk.my.id/api/murid/tugas', { 
+            headers : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`
+            }
+         } )
+        .then(result => {
+            console.log('data API', result.data);
+            // const responseAPI = result.data;
+
+            setDataTugas(result.data.tugas);
+            setisLoading(false);
+        })
+        .catch(err => {
+            console.log('terjadi kesalahan: ', err)
+            setisError(true);
+            setisLoading(false);
+        })
+    }, [])
+
+    // if (!dataTugas) return <h3>Loading...</h3>;
+
+    if (isLoading)
+     return <div id="load">
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+            </div>;
+    else if (dataTugas && !isError)
 
     return(
         <div>
@@ -176,28 +171,29 @@ function PageTugas(){
                             </form>
                         </div>
                     </div>
-
+                    
                     <div className="content-task">
-                        {/* {valueDataTugas.map((data) => (
-                        <div className="card-task" style={{ cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ background: "#DDDDDD" }}>
-                                    <Icon icon="uiw:time-o" width="30" style={{ color: "#FF3F3F" }}/>
+                        {dataTugas && dataTugas.map((listTugas => (
+                            <div className="card-task" style={{ cursor: "pointer"}} key={listTugas.id}>
+                                <div className="indiecator-left">
+                                    <div className="icon-indie-information" style={{ background: "#DDDDDD" }}>
+                                        <Icon icon="uiw:time-o" width="30" style={{ color: "#797979" }}/>
+                                    </div>
+                                    <div className="desc-indie">
+                                        <p className="title-indie-information">{listTugas.soal}</p>
+                                        <p className="value-indie-information">{listTugas.nama_guru}</p>
+                                    </div>
                                 </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information">{data.nameTask}</p>
-                                    <p className="value-indie-information">{data.nameTeacher}</p>
+                                <div className="indiecator-right">
+                                    <p className="time-upload">{listTugas.date}</p>
+                                    <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>{listTugas.deadline}</span></p>
+                                    <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
                                 </div>
                             </div>
-                            <div className="indiecator-right">
-                                <p className="time-upload">{data.dateUpload}</p>
-                                <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>{data.deadline}</span></p>
-                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
-                            </div>
-                        </div>
-                        ))} */}
+                        )))}
+                    </div>
 
-                        <div className="card-task" style={{ cursor: "pointer"}}>
+                        {/* <div className="card-task" style={{ cursor: "pointer"}}>
                             <div className="indiecator-left">
                                 <div className="icon-indie-information" style={{ background: "#FFFA87" }}>
                                     <Icon icon="uiw:time-o" width="30" style={{ color: "#CBC41A" }}/>
@@ -280,9 +276,9 @@ function PageTugas(){
                                 <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>5 Mar 2023</span></p>
                                 <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
                             </div>
-                        </div>
-
-                    </div>
+                        </div> */}
+{/* 
+                    </div> */}
                 </div>
             </div>
 
@@ -416,6 +412,9 @@ function PageTugas(){
 
         </div>
     );
+    else {
+        return <h1>Something Went Wrong</h1>;
+      }
 }
 
 export default PageTugas;
