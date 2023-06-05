@@ -54,7 +54,19 @@ function Login (){
         sessionStorage.setItem('token', response.data.token)
         // alert('login Berhasil')
         setisLoading(true);
-        window.location.replace('murid/berandamurid')
+        if (response.data.kelas_id !== undefined) 
+          return window.location.replace('murid/berandamurid')
+
+         else if (response.data.mapel_id !== undefined)
+          return window.location.replace('guru/berandaguru')
+          
+         else if (response.data.siswa_id !== undefined)
+          return window.location.replace('waliMurid/berandawalimurid')
+          
+        else 
+          return window.location.replace('admin/berandaadmin')
+        
+       
         // props.history.push('murid/berandamurid')
     })
     .catch((err) => {

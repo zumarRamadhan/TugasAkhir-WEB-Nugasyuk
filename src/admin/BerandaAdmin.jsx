@@ -9,8 +9,8 @@ import mataIcon from '../assets/icon-mata.svg';
 import { useState, useEffect } from "react";
 import ImgProfil from '../assets/img-profil.svg';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-
 import { useNavigate, Link } from 'react-router-dom';
+import axios from "axios";
 
 
 function BerandaAdmin (){
@@ -68,50 +68,44 @@ function BerandaAdmin (){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
-    const savedItem = sessionStorage.getItem("token");
-    
-    const token = JSON.parse(savedItem)
+    const saveToken = sessionStorage.getItem("token");
 
-    const [admin, setUsers] = useState([])
+    const [dataBerandaAdmin, setDataBerandaAdmin] = useState([]);
+    const [isLoading, setisLoading] = useState(false);
+    const [isError, setisError] = useState(false);
 
-    // const headers = new Headers();
-    // headers.set("Content-type", "application/json");
-    // headers.set("Access-Control-Allow-Origin", "*");
-    // headers.set()
-
-    const fetchAdminData = () => {
-        fetch("https://amanah-furniture.site/api/dataadmin",{
-            method: "GET",
+    useEffect(() => {
+        axios
+          .get("https://www.nugasyuk.my.id/api/admin/dataadmin", {
             headers: {
-            "Content-Type": "application/json",
-            'Origin': 'https://amanah-furniture.site/api/dataadmin',
-            Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${saveToken}`,
             },
-        })
-          .then(response => {
-            return response.json()
           })
-          .then(data => {
-            setUsers(data)
+          .then((result) => {
+            console.log("data API", result.data);
+            const responseAPI = result.data;
+    
+            setDataBerandaAdmin(responseAPI.data);
+            setisLoading(false);
           })
-      }
-
-      useEffect(() => {
-        fetchAdminData()
-      }, [])
-
-    const logoutClick = () =>{
-        fetch('https://amanah-furniture.site/api/dataadmin',{
-                method: "GET",
-                headers: {
-                Authorization: `Bearer ${token}`,
-                "Access-Control-Allow-Headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control",
-                },
-            })
-
-            sessionStorage.removeItem('token');
-            window.location.replace('/login')
-    }
+          .catch((err) => {
+            console.log("terjadi kesalahan: ", err);
+            setisError(true);
+            setisLoading(false);
+          });
+      }, []);
+    
+      if (isLoading)
+        return (
+          <div id="load">
+            <div>.</div>
+            <div>.</div>
+            <div>.</div>
+            <div>.</div>
+          </div>
+        );
+      else if (dataBerandaAdmin && !isError)
 
   return(
       <div className='body'>
@@ -158,7 +152,7 @@ function BerandaAdmin (){
             <main className='main'>
                 <div className="header-dashboard">
                     <div className="head-left">
-                        <h1 className="intro-head">Halo <span className="name-admin">{admin.nama}</span></h1>
+                        <h1 className="intro-head">Halo <span className="name-admin">{dataBerandaAdmin.data}</span></h1>
                         <p className="desc-head">Selamat datang di admin nugasyuk, anda bisa memonitoring data guru, siswa dan lain lain.</p>
                     </div>
                     <div className="head-right">
@@ -173,7 +167,7 @@ function BerandaAdmin (){
                         </div>
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Siswa Keseluruhan</p>
-                            <p className="value-indie"><span>{admin.jumlah_siswa}</span> Siswa</p>
+                            <p className="value-indie"><span>{}</span> Siswa</p>
                         </div>
                     </div>
 
@@ -184,7 +178,7 @@ function BerandaAdmin (){
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Kelas Keseluruhan</p>
                             <p className="value-indie">
-                            <span>{admin.jumlah_kelas}</span> Kelas</p>
+                            <span>{}</span> Kelas</p>
                         </div>
                     </div>
 
@@ -194,7 +188,7 @@ function BerandaAdmin (){
                         </div>
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Guru Keseluruhan</p>
-                            <p className="value-indie"><span>{admin.jumlah_guru}</span> Guru</p>
+                            <p className="value-indie"><span>{}</span> Guru</p>
                         </div>
                     </div>
 
@@ -205,7 +199,7 @@ function BerandaAdmin (){
                         <div className="desc-indie">
                             <p className="title-indie">Jumlah Jurusan</p>
                             <p className="value-indie">
-                            <span>{admin.jumlah_jurusan}</span> Jurusan</p>
+                            <span>{}</span> Jurusan</p>
                         </div>
                     </div>
                 </div>
@@ -221,7 +215,7 @@ function BerandaAdmin (){
                 <p className="desc-logout">Anda yakin ingin keluar?</p>
                 <div className="con-btn-logout">
                     <button type="button" className="btn-batal">Batal</button>
-                    <button type="button" onClick={logoutClick} className="btn-keluar">Keluar</button>
+                    <button type="button" className="btn-keluar">Keluar</button>
                 </div>
             </div>
         </div>
