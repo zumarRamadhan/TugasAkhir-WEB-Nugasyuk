@@ -20,10 +20,12 @@ import foto6 from '../assets/foto6.png';
 import foto7 from '../assets/foto7.png';
 import iconaksi from '../assets/iconaksi.svg';
 import ImgDelete from '../assets/imgDelete.svg';
+import ImgDetail from '../assets/damiDetailGuru.png';
 
 function BerandaGuru() {
     const navText = "Data Guru";
     const navigate = useNavigate();
+    const [inputKodeGuru, setInputKodeGuru] = useState('crotx')
 
     const closeDetail = () => {
         const detailProfile = document.querySelector('.detail-profile');
@@ -50,6 +52,18 @@ function BerandaGuru() {
     
     const closeDeletePopup = () => {
         const popupDelete = document.querySelector('#popup-Delete');
+        setTimeout(() => popupDelete.style.display = "none", 250);
+        popupDelete.style.animation = 'slide-up 0.3s ease-in-out';
+    }
+
+    const showDetailPopup = () => {
+        const popupDelete = document.querySelector('.popup-detailGuru');
+        popupDelete.style.display = 'flex';
+        popupDelete.style.animation = 'slide-down 0.3s ease-in-out';
+    }
+    
+    const closeDetailPopup = () => {
+        const popupDelete = document.querySelector('.popup-detailGuru');
         setTimeout(() => popupDelete.style.display = "none", 250);
         popupDelete.style.animation = 'slide-up 0.3s ease-in-out';
     }
@@ -176,48 +190,64 @@ function BerandaGuru() {
             imgProfile: foto,
             name: "Karma Gia, S.Kom",
             email: "karmangia@smkrus.sch.id",
+            telp: "081234567890",
             niy: "02221",
             materi: "produktif",
+            alamat: "Prambatan Kidul, RT.05 RW.01, Kaliwungu, Kudus",
+            mengampu: "Pemrograman Dasar",
+            kode: "KG1",
+            // mengambil kelas jurusan angkatan dari valueDataKelas dengan id 1, 3, 5 menggunakan huruf besar
+            kelas: valueDataKelas.filter((item) => item.id === 1 || item.id === 3 || item.id === 5 || item.id === 6).map((item) => item.kelas.toUpperCase() + " " + item.jurusan.toUpperCase() + " " + item.tingkatan),
         },
         {
             id: 2,
             imgProfile: foto2,
             name: "Kris Sutarno, S.Sn",
             email: "krissutarno@smkrus.sch.id",
+            telp: "081234567890",
             niy: '02222',
             materi: "produktif",
+            alamat: "Prambatan Kidul, RT.05 RW.01, Kaliwungu, Kudus",
         },
         {
             id: 3,
             imgProfile: foto3,
             name: "Paimin, S.Kom",
             email: "paimin@smkrus.sch.id",
+            telp: "081234567890",
             niy: '02223',
             materi: "produktif",
+            alamat: "Prambatan Kidul, RT.05 RW.01, Kaliwungu, Kudus",
         },
         {
             id: 4,
             imgProfile: foto4,
             name: "Melani Sumini, S.Sn",
             email: "melanisumini@smkrus.sch.id",
+            telp: "081234567890",
             niy: '02224',
             materi: "BK",
+            alamat: "Prambatan Kidul, RT.05 RW.01, Kaliwungu, Kudus",
         },
         {
             id: 5,
             imgProfile: foto5,
             name: "Edi, S.Pd.I",
             email: "edi@smkrus.sch.id",
+            telp: "081234567890",
             niy: '02225',
             materi: "normadaf",
+            alamat: "Prambatan Kidul, RT.05 RW.01, Kaliwungu, Kudus",
         },
         {
             id: 6,
             imgProfile: foto6,
             name: "Jumanji, S.Pd.I",
             email: "jumanji@smkrus.sch.id",
+            telp: "081234567890",
             niy: '02226',
             materi: "normadaf",
+            alamat: "Prambatan Kidul, RT.05 RW.01, Kaliwungu, Kudus",
         },
     ];
 
@@ -237,13 +267,13 @@ function BerandaGuru() {
     const renderData = filteredData.length > 0 ? filteredData : dataTabelGuru;
     const dataNotFound = filteredData.length === 0;
 
-    // useEffect(() => {
-    //     handleSearch();
-    // }, [searchQuery]);
+    useEffect(() => {
+        handleSearch();
+    }, [searchQuery]);
     
 
     const handleSearch = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         const filteredData = dataTabelGuru.filter((value) => {
             return (
                 value.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -363,7 +393,7 @@ function BerandaGuru() {
                                         >
                                         <ul>
                                             <li>
-                                                <a href='#'>Detail</a>
+                                                <a onClick={showDetailPopup}>Detail</a>
                                             </li>
                                             <li>
                                                 <a href='#'>Edit</a>
@@ -384,6 +414,86 @@ function BerandaGuru() {
                     )}
                 </main>
             </div>
+            
+            <div className="popup-detailGuru">
+                <div className="detail-popup-detailGuru">
+                    <div className="navbar-detail-detailGuru">
+                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetailPopup}/>
+                        <h2>"nama"</h2>
+                        <div className='divKosong'></div>
+                    </div>
+                    <div className="con-popup-detailGuru">
+                        {dataTabelGuru.slice(0, 1).map((data) => (
+                        <div className="content-detail-detailGuru">
+                            <div className="img-detailGuru">
+                                <img src={ImgDetail} alt="" className="image-detailGuru"/>
+                            </div>
+                            <h3>Nama :</h3>
+                            <p className="nama-detailGuru">{data.name}</p>
+                            <h3>Email :</h3>
+                            <p className="email-detailGuru">{data.email}</p>
+                            <h3>Nomor Telp :</h3>
+                            <p className="nomor-detailGuru">{data.telp}</p>
+                            <h3>NIY :</h3>
+                            <p className="niy-detailGuru">{data.niy}</p>
+                            <h3>Alamat :</h3>
+                            <p className="alamat-detailGuru">{data.alamat}</p>
+                            <h3>Mengajar :</h3>
+                            <div className="con-mengajar-detailGuru">
+                                <p className="mengajar-detailGuru">{data.mengampu}</p>
+                            </div>
+                            {/* <p className="mengajar-detailGuru">{data.mengampu}</p> */}
+                            <h3>Kode :</h3>
+                            <div className="con-kode-detailGuru">
+                                <p className="kode-detailGuru">{data.kode}</p>
+                            </div>
+                            {/* <p className="kode-detailGuru">{data.kode}</p> */}
+                            <h3>Mengajar Kelas :</h3>
+                            <div className='con-mengajarkelas-detailGuru'>
+                                {/* mengambil data kelas berupa loop */}
+                                {data.kelas.map((data) => (
+                                    <p className="mengajarKelas-detailGuru">{data}</p>
+                                ))}
+                            </div>
+                            {/* <p className="mengajarKelas-detailGuru">{data.kelas}</p> */}
+                        </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* <div className="popup-detailGuru" id="popup-detailGuru">
+                <div className="detail-detailGuru">
+                    <div className="navbar-detail-detailGuru">
+                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetailPopup}/>
+                        <h2>"nama"</h2>
+                        <div className='divKosong'></div>
+                    </div>
+                    {dataTabelGuru.slice(0, 1).map((data) => (
+                    <div className="content-detail-detailGuru">
+                        <div className="img-detailGuru">
+                            <img src={ImgDetail} alt="" className="image-detailGuru"/>
+                        </div>
+                        <h3>Nama :</h3>
+                        <p className="nama-detailGuru">{data.name}</p>
+                        <h3>Email :</h3>
+                        <p className="email-detailGuru">{data.email}</p>
+                        <h3>Nomor Telp :</h3>
+                        <p className="nomor-detailGuru">{data.telp}</p>
+                        <h3>NIY :</h3>
+                        <p className="niy-detailGuru">{data.niy}</p>
+                        <h3>Alamat :</h3>
+                        <p className="alamat-detailGuru">{data.alamat}</p>
+                        <h3>Mengajar :</h3>
+                        <p className="mengajar-detailGuru">{data.mengampu}</p>
+                        <h3>Kode :</h3>
+                        <p className="kode-detailGuru">{data.kode}</p>
+                        <h3>Mengajar Kelas :</h3>
+                        <p className="mengajarKelas-detailGuru">{data.kelas}</p>
+                    </div>
+                    ))}
+                </div>
+            </div> */}
 
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
@@ -423,7 +533,7 @@ function BerandaGuru() {
                     <p className="judul-form">Nama Guru</p>
                     <input type="text" id="" value="" disabled readonly className="inputGuru"/>
                     <p className="judul-form">Kode Guru</p>
-                    <input type="text" id="inputKode" className="inputGuru"/>
+                    <input type="text" value={inputKodeGuru} onChange={(e) => setInputKodeGuru(e.target.value)} id="inputKode" className="inputGuru"/>
                     <p className="judul-form">Mata Pelajaran</p>
                     <input type="text" id="inputMapel" className="inputGuru"/>
 

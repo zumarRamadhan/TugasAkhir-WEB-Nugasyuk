@@ -169,9 +169,9 @@ option[selected] {
     background-color: var(--color-sekunder);
 }
 
-.content-table-guru tbody tr:nth-child(odd) {
+/* .content-table-guru tbody tr:nth-child(odd) {
     background-color: #efefefb6;
-}
+} */
 
 .content-table-guru td {
     font-size: 15px;

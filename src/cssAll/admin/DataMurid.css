@@ -167,9 +167,9 @@ option[selected] {
     background-color: var(--color-sekunder);
 }
 
-.content-table-murid tbody tr:nth-child(odd) {
+/* .content-table-murid tbody tr:nth-child(odd) {
     background-color: #efefefb6;
-}
+} */
 
 .content-table-murid td {
     font-size: 15px;
