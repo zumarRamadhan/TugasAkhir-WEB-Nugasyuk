@@ -35,11 +35,14 @@ function Login (){
     setPassword(e.target.value)
   }
 
+  const [isLoading, setisLoading] = useState(false);
+  const [isError, setisError] = useState(false);
+
   // const {isUserLoggedIn, userAuthentication} = props
 
   const login = (e) => {
     e.preventDefault()
-    console.log("submited form")
+    console.log("mengirim data")
     axios.post('https://www.nugasyuk.my.id/api/login', {
       email: email,
       password: password
@@ -49,16 +52,29 @@ function Login (){
         // props.userAuthentication()
         console.log(response.data)
         sessionStorage.setItem('token', response.data.token)
-        alert('login success')
+        // alert('login Berhasil')
+        setisLoading(true);
         window.location.replace('murid/berandamurid')
         // props.history.push('murid/berandamurid')
     })
     .catch((err) => {
-        console.log(err)
+        console.log("terjadi kesalahan : ", err)
+        alert('login gagal')
         console.log(err.response)
+        setisLoading(false);
         // alert(err.response.data.error.message)
     })
   }
+
+  if (isLoading)
+    return (
+      <div id="load">
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+      </div>
+    );
 
   return ( 
     <div className="container-login">

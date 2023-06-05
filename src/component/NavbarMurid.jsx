@@ -14,11 +14,13 @@ function NavbarMurid(props){
         detailNotification.style.transform = 'translateX(0px)';
     }
 
+    const {textNavigasi} = props;
+
     return(
         <div>
             <nav>
                 <div className="navbar">
-                    <h1>{props.text}</h1>
+                    <h1>{textNavigasi}</h1>
                     <div className="nav-right">
                         <div className="img-profile" style={{ cursor: "pointer" }}>
                             <img src={ImgProfil} alt="img-profile" onClick={showDetail} />

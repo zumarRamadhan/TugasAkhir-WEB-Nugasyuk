@@ -15,7 +15,6 @@ import ImgHubBk from '../assets/img-chatbk.svg';
 import ImgJanji from '../assets/img-janjikonseling.svg';
 
 function PageKonseling(){
-    const navText = "Bimbingan Konseling";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -105,7 +104,7 @@ function PageKonseling(){
             </ul>
             </aside>
             <div className="container-content">
-                <NavbarMurid text={navText}/>
+                <NavbarMurid textNavigasi={'Bimbingan Konseling'}/>
                 <div className="main">
                     <div className="con-content-counseling">
                         <div className="content-counseling-left">

@@ -21,7 +21,6 @@ import axios from 'axios';
 
 function PageMapel(){
 
-    const navText = "Mata Pelajaran";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -200,8 +199,7 @@ function PageMapel(){
         .then(result => {
             console.log('data API', result.data);
             // const responseAPI = result.data;
-
-            setDataMapel(result.data.kelas);
+            setDataMapel(result.data.data);
             setisLoading(false);
         })
         .catch(err => {
@@ -255,21 +253,30 @@ function PageMapel(){
             </aside>
 
             <div className='container-content'>
-                <Navigation text={navText}/>
+                <Navigation textNavigasi={'Mata Pelajaran'}/>
                 <main className='main'>
                     <div className="content-mapel">
                         <div className="con-card-mapel">
                             {dataMapel && dataMapel.map((listMapel =>  (
-                            <div className="card-mapel" key={listMapel.id} style={{ cursor: "pointer" }}>
-                                <img src={cardMapel1} alt="" className="image-card-mapel" onClick={() => navigate('/murid/pagemapel/mapelmateri')}/>
-                                <div className="content-card-mapel">
-                                <div className="card-mapel-left">
-                                    <p className="mata-pelajaran">{listMapel.nama_mapel}</p>
-                                    <p className="nama-guru-mapel">{listMapel.nama_guru}</p>
-                                </div>
-                                {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
-                                </div>
-                            </div>
+                                <Link 
+                                    className='link-navigate' 
+                                    to={"/murid/pagemapel/mapelmateri/" + listMapel.id}
+                                >
+                                    <div className="card-mapel" key={listMapel.id} style={{ cursor: "pointer" }}  onClick={() => navigate('/murid/pagemapel/mapelmateri/${id}')} id='123'>
+                                        <img 
+                                            src={cardMapel8} 
+                                            alt=""
+                                            className="image-card-mapel"
+                                        />
+                                        <div className="content-card-mapel">
+                                        <div className="card-mapel-left">
+                                            <p className="mata-pelajaran">{listMapel.nama_mapel}</p>
+                                            <p className="nama-guru-mapel">{listMapel.nama_guru}</p>
+                                        </div>
+                                        {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
+                                        </div>
+                                    </div>
+                                </Link>
                             )))}
                         </div>
                     </div>

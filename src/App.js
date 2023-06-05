@@ -41,7 +41,6 @@ import JanjiKonseling from './guruBk/JanjiKonseling';
 import PageChat from './guruBk/PageChat';
 // end role bk
 import Notfound from './Notfound';
-import MapelMateri from './murid/MapelMateri';
 
 
 function App() {
@@ -72,9 +71,9 @@ function App() {
         <Route path="/murid/pagemapel" element={<PageMapel/>} /> 
         <Route path="/murid/pagekonseling" element={<Konseling/>} /> 
         <Route path="/murid/pagekonseling/buatjanji" element={<PageBuatJanji/>} /> 
-        <Route path="/murid/pagemapel/mapelmateri" element={<Materi/>} /> 
+        <Route path="/murid/pagemapel/mapelmateri/:id" element={<Materi/>} /> 
         <Route path="/murid/detailmateri" element={<DetailMateri/>} /> 
-        <Route path="/murid/detailtugas" element={<DetailTask/>} /> 
+        <Route path="/murid/detailtugas/:id" element={<DetailTask/>} /> 
         <Route path="/murid/pagekonseling/riwayatkonseling" element={<HistoryCounseling/>} /> 
         {/* end role murid */}
         {/* role guru */}
