@@ -113,6 +113,50 @@ function BerandaAdmin (){
             window.location.replace('/login')
     }
     
+    const savedItem = sessionStorage.getItem("token");
+    
+    const token = JSON.parse(savedItem)
+
+    const [admin, setUsers] = useState([])
+
+    // const headers = new Headers();
+    // headers.set("Content-type", "application/json");
+    // headers.set("Access-Control-Allow-Origin", "*");
+    // headers.set()
+
+    const fetchAdminData = () => {
+        fetch("https://amanah-furniture.site/api/dataadmin",{
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            'Origin': 'https://amanah-furniture.site/api/dataadmin',
+            Authorization: `Bearer ${token}`,
+            },
+        })
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            setUsers(data)
+          })
+      }
+
+      useEffect(() => {
+        fetchAdminData()
+      }, [])
+
+    const logoutClick = () =>{
+        fetch('https://amanah-furniture.site/api/dataadmin',{
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Access-Control-Allow-Headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control",
+            },
+        })
+
+        sessionStorage.removeItem('token');
+        window.location.replace('/login')
+    }
 
   return(
       <div className='body'>
@@ -168,7 +212,7 @@ function BerandaAdmin (){
                 </div>
 
                 <div className="con-content-admin">   
-                    <div className="content-indiecator" style={{ background: "#EB55A3" }}>
+                    <div className="content-indiecator" style={{ background: "#EB55A3", cursor:"pointer" }} onClick={() => navigate('/admin/pagemurid')}>
                         <div className="icon-indie" style={{ color: "#EB55A3" }}>
                             <Icon icon="mdi:account-group-outline" width="40" />
                         </div>
@@ -178,7 +222,7 @@ function BerandaAdmin (){
                         </div>
                     </div>
 
-                    <div className="content-indiecator" style={{ background: "#2A93D5" }}>
+                    <div className="content-indiecator" style={{ background: "#2A93D5", cursor:"pointer" }} onClick={() => navigate('/admin/pagekelas')}>
                         <div className="icon-indie" style={{ color: "#2A93D5" }}>
                             <Icon icon="fluent:class-24-regular" width="40" />
                         </div>
@@ -189,7 +233,7 @@ function BerandaAdmin (){
                         </div>
                     </div>
 
-                    <div className="content-indiecator" style={{ background: "#B462D0" }}>
+                    <div className="content-indiecator" style={{ background: "#B462D0", cursor:"pointer" }} onClick={() => navigate('/admin/pageguru')}>
                         <div className="icon-indie" style={{ color: "#B462D0" }}>
                             <Icon icon="la:chalkboard-teacher" width="40" />
                         </div>
@@ -199,7 +243,7 @@ function BerandaAdmin (){
                         </div>
                     </div>
 
-                    <div className="content-indiecator" style={{ background: "#585CC4" }}>
+                    <div className="content-indiecator" style={{ background: "#585CC4", cursor:"pointer" }} onClick={() => navigate('/admin/pagekelas')}>
                         <div className="icon-indie" style={{ color: "#585CC4" }}>
                             <Icon icon="fluent-mdl2:education" width="40" />
                         </div>

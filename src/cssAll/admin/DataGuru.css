@@ -124,136 +124,15 @@ option[selected] {
 
 /*  */
 
-.container-guru {
-    margin-top: 30px;
-}
-
-.card-content-guru {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    padding: 15px 30px 15px 15px;
-    background: #FFFFFF;
-    border: 1px solid #E3E3E3;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 20px;
-}
-
-.card-content-guru-left {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.image-profile-guru {
-    width: 120px;
-    height: 120px;
-}
-
-.detail-card-guru .nama-guru {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    color: #2A93D5;
-}
-
-.detail-card-guru .email-guru {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    color: #797979;
-}
-
-.detail-card-guru .jurusan-guru {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    color: #2A93D5;
-    background: #D8F0FF;
-    border-radius: 5px;
-    padding: 4px 17px;
-    width: max-content;
-    margin-top: 10px;
-}
-
-.card-content-guru-right {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.card-content-guru-right button {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.popup-menu {
-    display: none;
-    /* bottom: px; */
-    position: absolute;
-    right: 30px;
-    background-color: #fff;
-    width: 148px;
-    z-index: 1;
-    border: 1px solid #C4C4C4;
-    border-radius: 10px;
-}
-
-.popup-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-/* .popup-menu ul li {
-    border-bottom: 1px solid #ccc;
-}
-
-.popup-menu ul li:last-child {
-    border-bottom: none;
-} */
-
-.popup-menu ul li a {
-    display: block;
-    padding: 10px;
-    color: #333;
-    text-decoration: none;
-}
-
-/* .popup-menu ul li a:hover {
-    background-color: transparent;
-} */
-
-#popup-menu li:nth-child(1):hover {
-    background-color: #D8F0FF;
-    border-radius: 9px 9px 0px 0px;
-}
-
-#popup-menu li:nth-child(2):hover {
-    background-color: #D8F0FF;
-}
-
-#popup-menu li:nth-child(3):hover {
-    background-color: #FFD8D8;
-}
-
-#popup-menu li:nth-child(4):hover {
-    background-color: #D8F0FF;
-    border-radius: 0px 0px 9px 9px;
-}
-
 /* TABLE */
 .container-table {
     width: 100%;
     background: #FFFFFF;
-border: 1px solid #C4C4C4;
-border-radius: 10px;
-
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    margin-top: 30px;
 }
+
 .content-table-guru {
     width: 100%;
     background-color: white;
@@ -262,39 +141,44 @@ border-radius: 10px;
     border-top: none;
     border-collapse: collapse;
     position: relative;
-  }
-  .content-table-guru thead th {
+}
+
+.content-table-guru thead{
+    width: 100%;
+    border-bottom: 1px solid #000;
+}
+
+.content-table-guru thead th {
     text-align: left;
     font-weight: 500;
     font-size: 14px;
     padding: 1.5rem 0;
     padding-left: -10px;
     color: #797979;
-  }
-  .content-table-guru thead th:nth-child(1) {
+}
+
+.content-table-guru thead th:nth-child(1) {
     padding-left: 1.5rem;
-  }
-  .content-table-guru tbody tr {
+}
+
+.content-table-guru tbody tr {
     width: 100%;
-  }
-  .content-table-guru tbody tr:nth-child(odd) {
-    background-color: #EBF0FE;
-  }
-  .content-table-guru tbody .btn-detail {
-    background-color: #3661EB;
-    width: 80px;
-    height: 30px;
-    border-radius: 5px;
-    font-size: 10px;
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1.5rem;
-  }
-  .content-table-guru td {
+}
+
+.content-table-guru tbody:hover tr:hover {
+    background-color: var(--color-sekunder);
+}
+
+/* .content-table-guru tbody tr:nth-child(odd) {
+    background-color: #efefefb6;
+} */
+
+.content-table-guru td {
     font-size: 15px;
     color: #797979;
-  }
-  .content-table-guru .row-img {
+}
+
+.content-table-guru .row-img {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -302,28 +186,24 @@ border-radius: 10px;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     padding: 0.5rem 1.5rem;
-  }
-  .content-table-guru .row-img img {
+}
+
+.content-table-guru .row-img img {
     width: 35px;
     height: 35px;
     margin-right: 1rem;
     border-radius: 50%
-  }
+}
 
-.content-table-guru .pangampu{
-    width: 100px;
-    height: 30px;
-    font-size: 15px;
+.content-table-guru tbody tr:hover .pengampu {
     background: #2A93D5;
     color: white;
-    display: grid;
-    place-items: center;
-    border-radius: 5px;
+}
 
-}.content-table-guru .pangampu1 {
+.pengampu {
     width: 100px;
     height: 30px;
     font-size: 15px;
@@ -332,4 +212,71 @@ border-radius: 10px;
     display: grid;
     place-items: center;
     border-radius: 5px;
+}
+
+.popup-menu-guruAdmin {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    z-index: 1;
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    transform: translateX(-100%);
+}
+
+.popup-menu-guruAdmin.active {
+    display: block;
+}
+
+
+.popup-menu-guruAdmin ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 9px;
+}
+
+.popup-menu-guruAdmin ul li {
+    padding-right: 30px;
+    width: 100%;
+}
+
+.popup-menu-guruAdmin ul li:nth-child(4){
+    width: max-content;
+}
+
+.popup-menu-guruAdmin ul li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+#popup-menu-guruAdmin li:nth-child(1):hover {
+    background-color: #D8F0FF;
+    border-radius: 9px 9px 0px 0px;
+}
+
+#popup-menu-guruAdmin li:nth-child(2):hover {
+    background-color: #D8F0FF;
+}
+
+#popup-menu-guruAdmin li:nth-child(3):hover {
+    background-color: #FFD8D8;
+}
+
+#popup-menu-guruAdmin li:nth-child(4):hover {
+    background-color: #D8F0FF;
+    border-radius: 0px 0px 9px 9px;
+}
+
+.dataNotFound{
+    text-align: center;
+    padding: 50px 0;
+    font-size: 20px;
+    color: #333
+}
+
+.tdImg{
+    padding: 10px;
 }

@@ -27,7 +27,7 @@
     gap: 5px;
 }
 
-.btn-add-murid:hover{
+.btn-add-murid:hover {
     background: #1D77AF;
 }
 
@@ -122,137 +122,15 @@ option[selected] {
 
 /*  */
 
-.container-murid {
-    margin-top: 30px;
-}
-
-.card-content-murid {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    padding: 15px 30px 15px 15px;
-    background: #FFFFFF;
-    border: 1px solid #E3E3E3;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 20px;
-}
-
-.card-content-murid-left {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.image-profile-murid {
-    width: 120px;
-    height: 120px;
-}
-
-.detail-card-murid .nama-murid {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    color: #2A93D5;
-}
-
-.detail-card-murid .email-murid {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    color: #797979;
-}
-
-.detail-card-murid .jurusan-murid {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    color: #2A93D5;
-    background: #D8F0FF;
-    border-radius: 5px;
-    padding: 4px 17px;
-    width: max-content;
-    margin-top: 10px;
-}
-
-.card-content-murid-right {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.card-content-murid-right button {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.popup-menu {
-    display: none;
-    /* bottom: px; */
-    position: absolute;
-    right: 30px;
-    background-color: #fff;
-    width: 148px;
-    z-index: 1;
-    border: 1px solid #C4C4C4;
-    border-radius: 10px;
-}
-
-.popup-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-/* .popup-menu ul li {
-    border-bottom: 1px solid #ccc;
-}
-
-.popup-menu ul li:last-child {
-    border-bottom: none;
-} */
-
-.popup-menu ul li a {
-    display: block;
-    padding: 10px;
-    color: #333;
-    text-decoration: none;
-}
-
-/* .popup-menu ul li a:hover {
-    background-color: transparent;
-} */
-
-#popup-menu li:nth-child(1):hover {
-    background-color: #D8F0FF;
-    border-radius: 9px 9px 0px 0px;
-}
-
-#popup-menu li:nth-child(2):hover {
-    background-color: #D8F0FF;
-}
-
-#popup-menu li:nth-child(3):hover {
-    background-color: #FFD8D8;
-}
-
-#popup-menu li:nth-child(4):hover {
-    background-color: #D8F0FF;
-    border-radius: 0px 0px 9px 9px;
-}
-
 /* TABLE */
 .container-table {
     width: 100%;
     background: #FFFFFF;
-border: 1px solid #C4C4C4;
-border-radius: 10px;
-margin-top: 30px;
-
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    margin-top: 30px;
 }
+
 .content-table-murid {
     width: 100%;
     background-color: white;
@@ -261,39 +139,44 @@ margin-top: 30px;
     border-top: none;
     border-collapse: collapse;
     position: relative;
-  }
-  .content-table-murid thead th {
+}
+
+.content-table-murid thead{
+    width: 100%;
+    border-bottom: 1px solid #000;
+}
+
+.content-table-murid thead th {
     text-align: left;
     font-weight: 500;
     font-size: 14px;
     padding: 1.5rem 0;
     padding-left: -10px;
     color: #797979;
-  }
-  .content-table-murid thead th:nth-child(1) {
+}
+
+.content-table-murid thead th:nth-child(1) {
     padding-left: 1.5rem;
-  }
-  .content-table-murid tbody tr {
+}
+
+.content-table-murid tbody tr {
     width: 100%;
-  }
-  .content-table-murid tbody tr:nth-child(odd) {
-    background-color: #EBF0FE;
-  }
-  .content-table-murid tbody .btn-detail {
-    background-color: #3661EB;
-    width: 80px;
-    height: 30px;
-    border-radius: 5px;
-    font-size: 10px;
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1.5rem;
-  }
-  .content-table-murid td {
+}
+
+.content-table-murid tbody:hover tr:hover {
+    background-color: var(--color-sekunder);
+}
+
+/* .content-table-murid tbody tr:nth-child(odd) {
+    background-color: #efefefb6;
+} */
+
+.content-table-murid td {
     font-size: 15px;
     color: #797979;
-  }
-  .content-table-murid .row-img {
+}
+
+.content-table-murid .row-img {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -301,28 +184,24 @@ margin-top: 30px;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     padding: 0.5rem 1.5rem;
-  }
-  .content-table-murid .row-img img {
+}
+
+.content-table-murid .row-img img {
     width: 35px;
     height: 35px;
     margin-right: 1rem;
     border-radius: 50%
-  }
+}
 
-.content-table-murid .pangampu{
-    width: 100px;
-    height: 30px;
-    font-size: 15px;
+.content-table-murid tbody tr:hover .jurusan {
     background: #2A93D5;
     color: white;
-    display: grid;
-    place-items: center;
-    border-radius: 5px;
+}
 
-}.content-table-murid .pangampu1 {
+.jurusan {
     width: 100px;
     height: 30px;
     font-size: 15px;
@@ -331,4 +210,63 @@ margin-top: 30px;
     display: grid;
     place-items: center;
     border-radius: 5px;
+}
+
+.popup-menu-muridAdmin {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    z-index: 1;
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    transform: translateX(-100%);
+}
+
+.popup-menu-muridAdmin.active {
+    display: block;
+}
+
+
+.popup-menu-muridAdmin ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 9px;
+}
+
+.popup-menu-muridAdmin ul li {
+    padding-right: 30px;
+    
+}
+
+.popup-menu-muridAdmin ul li a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+#popup-menu-muridAdmin li:nth-child(1):hover {
+    background-color: #D8F0FF;
+    border-radius: 9px 9px 0px 0px;
+}
+
+#popup-menu-muridAdmin li:nth-child(2):hover {
+    background-color: #D8F0FF;
+}
+
+#popup-menu-muridAdmin li:nth-child(3):hover {
+    background-color: #FFD8D8;
+    border-radius: 0px 0px 9px 9px;
+}
+
+.dataNotFound{
+    text-align: center;
+    padding: 50px 0;
+    font-size: 20px;
+    color: #333
+}
+
+.tdImg{
+    padding: 10px;
 }

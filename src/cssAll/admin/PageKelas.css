@@ -184,12 +184,8 @@ option[selected] {
 
 .popup-menu-kelas {
     display: none;
-    /* display: block; */
-    /* bottom: px; */
     position: absolute;
-    /* right: 30px; */
     background-color: #fff;
-    /* width: 148px; */
     z-index: 1;
     border: 1px solid #C4C4C4;
     border-radius: 10px;
@@ -204,15 +200,13 @@ option[selected] {
     list-style: none;
     margin: 0;
     padding: 0;
+    border-radius: 9px;
 }
 
-/* .popup-menu ul li {
-    border-bottom: 1px solid #ccc;
+.popup-menu-kelas ul li {
+    padding-right: 30px;
+    
 }
-
-.popup-menu ul li:last-child {
-    border-bottom: none;
-} */
 
 .popup-menu-kelas ul li a {
     display: block;
@@ -221,24 +215,12 @@ option[selected] {
     text-decoration: none;
 }
 
-/* .popup-menu ul li a:hover {
-    background-color: transparent;
-} */
-
 #popup-menu-kelas li:nth-child(1):hover {
     background-color: #D8F0FF;
     border-radius: 9px 9px 0px 0px;
 }
 
 #popup-menu-kelas li:nth-child(2):hover {
-    background-color: #D8F0FF;
-}
-
-#popup-menu-kelas li:nth-child(3):hover {
     background-color: #FFD8D8;
-}
-
-#popup-menu-kelas li:nth-child(4):hover {
-    background-color: #D8F0FF;
     border-radius: 0px 0px 9px 9px;
 }

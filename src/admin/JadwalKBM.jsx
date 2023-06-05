@@ -294,39 +294,39 @@ function JadwalKBM(){
             </div>
 
             <div className="popup-kbm">
-                    <div className="detail-popup-kbm">
-                        <div className="nav-popup-kbm">
-                            <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} className='btn-close' onClick={closeDetailKbm}/>
-                            <h2>Senin</h2>
-                        </div>
-                        <div className="con-popup-kbm">
-                            {valueDataGuru.map((dataGuru) => (
-                            <div className="popup-card-kbm">
-                                <div className="test1">
-                                    <img src={dataGuru.profileImg} alt="" className="image-card-kbm" />
-                                    <div className="mapel-card-kbm">
-                                        <p>{dataGuru.mapel}</p>
-                                        <p className="guruPengampu">{dataGuru.namaGuru}</p>
-                                    </div>
+                <div className="detail-popup-kbm">
+                    <div className="nav-popup-kbm">
+                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} className='btn-close' onClick={closeDetailKbm}/>
+                        <h2>Senin</h2>
+                    </div>
+                    <div className="con-popup-kbm">
+                        {valueDataGuru.map((dataGuru) => (
+                        <div className="popup-card-kbm">
+                            <div className="test1">
+                                <img src={dataGuru.profileImg} alt="" className="image-card-kbm" />
+                                <div className="mapel-card-kbm">
+                                    <p>{dataGuru.mapel}</p>
+                                    <p className="guruPengampu">{dataGuru.namaGuru}</p>
                                 </div>
-                                <div className="test2">
-                                    <div className="jamMengajar">
-                                        <span>07.00</span> - <span>08.20</span> 
-                                    </div>
-                                    <div className="con-btn-card-kbm">
-                                        <div className="btn-edit-card-kbm" onClick={() => navigate('/admin/jadwalkbm/tambah')}>
-                                            <Icon icon="material-symbols:edit-outline-rounded" width="15"/>
-                                        </div>
-                                        <div className="btn-delete-card-kbm">
-                                            <Icon icon="ic:round-delete-outline" />
-                                        </div>
-                                    </div> 
-                                </div>         
                             </div>
-                            ))}
+                            <div className="test2">
+                                <div className="jamMengajar">
+                                    <span>07.00</span> - <span>08.20</span> 
+                                </div>
+                                <div className="con-btn-card-kbm">
+                                    <div className="btn-edit-card-kbm" onClick={() => navigate('/admin/jadwalkbm/tambah')}>
+                                        <Icon icon="material-symbols:edit-outline-rounded" width="15"/>
+                                    </div>
+                                    <div className="btn-delete-card-kbm">
+                                        <Icon icon="ic:round-delete-outline" />
+                                    </div>
+                                </div> 
+                            </div>         
                         </div>
+                        ))}
                     </div>
                 </div>
+            </div>
 
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
