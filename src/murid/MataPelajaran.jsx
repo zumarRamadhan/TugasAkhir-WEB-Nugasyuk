@@ -229,35 +229,27 @@ function PageMapel(){
                     nugasyuk
                 </h1>
                 <ul>
-                    <li onClick={() => navigate('/admin/berandaadmin')}>
+                    <li onClick={() => navigate('/murid/berandamurid')}>
                         <Icon icon="iconoir:home-simple" width="20" />
                         Beranda
                     </li>
-                    <li onClick={() => navigate('/admin/pageguru')} >
-                        <Icon icon="la:chalkboard-teacher" width="20" />
-                        Guru
+                    <li onClick={() => navigate('/murid/pagetugas')} >
+                        <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
+                        Tugas
                     </li>
-                    <li onClick={() => navigate('/admin/pagemurid')}>
-                        <Icon icon="ph:student" width="20" />
-                        Murid
-                    </li>
-                    <li onClick={() => navigate('/admin/pagekelas')}>
-                        <Icon icon="fluent:class-24-regular" width="20" />
-                        Kelas
-                    </li>
-                    <li className='active' onClick={() => navigate('/admin/matapelajaran')}>
-                        <Icon icon="fluent-mdl2:education" width="20" />
-                        Mata Pelajaran
-                    </li>
-                    <li onClick={() => navigate('/admin/jadwalkbm')}>
-                        <Icon icon="uiw:date" width="20" />
+                    <li onClick={() => navigate('/murid/pagekbm')}>
+                        <Icon icon="uiw:date" width="18"/>
                         Jadwal KBM
                     </li>
-                    <li onClick={() => navigate('/admin/pageassets')}>
-                        <Icon icon="ic:outline-file-copy" width="20" />
-                        Assets
+                    <li className='active' onClick={() => navigate('/murid/pagemapel')}>
+                        <Icon icon="fluent-mdl2:education" width="18"/>
+                        Mata Pelajaran
                     </li>
-                </ul>
+                    <li onClick={() => navigate('/murid/pagekonseling')}>
+                        <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
+                        Konseling
+                    </li>
+                </ul>   
             </aside>
 
             <div className='container-content'>

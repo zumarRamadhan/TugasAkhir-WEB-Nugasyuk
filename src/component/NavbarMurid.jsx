@@ -1,7 +1,7 @@
 import '../cssAll/murid/BerandaMurid.css';
 import ImgProfil from '../assets/profil-murid.svg';
 import { Icon } from '@iconify/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function NavbarMurid(props){
     const showDetail = () => {

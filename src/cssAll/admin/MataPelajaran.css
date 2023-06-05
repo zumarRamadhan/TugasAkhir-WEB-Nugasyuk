@@ -53,36 +53,6 @@
     color: #2A93D5;
 }
 
-/* Styling untuk dropdown */
-select {
-    width: 250px;
-    padding: 10px;
-    font-size: 153px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 1px solid #C4C4C4;
-    appearance: none;
-    padding: 10px;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    /* background: url('https://api.iconify.design/ic/round-navigate-next.svg?color=%232a93d5&width=30');
-    background-repeat: no-repeat; */
-    /* background-position: calc(100% - 10px) center; */
-}
-
-/* Styling untuk opsi yang dipilih */
-option {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    /* line-height: 22px; */
-    color: #4B4B4B;
-    background-color: var(--color-primer);
-}
-
-
 /*  */
 
 .search-box {
