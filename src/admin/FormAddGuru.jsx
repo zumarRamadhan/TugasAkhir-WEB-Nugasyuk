@@ -317,42 +317,29 @@ function FormAddGuru() {
                     <div className="content-formKbm">
                         <form action="" className="container-formKbm">
                             <div className="con-formKbm">
-                                <div className="title-formKbm">Profil</div>
-                                <input type="file" className="input-formKbm" placeholder='' />
+                                <div className="title-formKbm">Profi</div>
+                                <input type="file" className="input-formKbm"/>
                             </div>
 
                             <div className="con-formKbm">
-                                <div className="title-formKbm">Kelas</div>
-                                <select id="" name="" className='selectForm'>
-                                    <option hidden>-- Kelas --</option>
-                                    {valueDataKelas.map((data) => (
-                                        <option value={data.jurusan + data.tingkatan + data.kelas}>{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</option>
-                                    ))}
-                                </select>
+                            <div className="title-formKbm">Nama</div>
+                                <input type="text" className="input-formKbm" placeholder='Karma Gia, S.Kom' />
                             </div>
 
                             <div className="con-formKbm">
-                                <div className="title-formKbm">Hari</div>
-                                <select id="" name="" className='selectForm'>
-                                    <option hidden>-- Hari --</option>
-                                    {dataHari.map((data) => (
-                                        <option>{data.hari}</option>
-                                    ))}
-                                </select>
+                              
+                            <div className="title-formKbm">Email</div>
+                                <input type="text" className="input-formKbm" placeholder='karmangia@smkrus.schid' />
                             </div>
 
                             <div className="con-formKbm">
-                                <div className="title-formKbm">Jam ke</div>
-                                <select id="" name="" className='selectForm'>
-                                    {dataJamPelajaran.map((data) => (
-                                        <option>{data.jamKe}</option>
-                                    ))}
-                                </select>
+                            <div className="title-formKbm">Nomor Tlp</div>
+                             <input type="text" className="input-formKbm" placeholder='089999999' />
                             </div>
-
+                            
                             <div className="con-formKbm">
-                                <div className="title-formKbm">Jumlah jam</div>
-                                <input type="text" className="input-formKbm" placeholder='Jumlah jam' />
+                            <div className="title-formKbm">Alamat</div>
+                             <input type="text" className="input-formKbm" placeholder='Prambatan Kidul, RT.05, RW.01, Kaliwungu, Kudus' />
                             </div>
 
                             <div className="con-btn-form">
