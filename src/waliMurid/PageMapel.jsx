@@ -1,4 +1,4 @@
-import '../cssAll/murid/PageTugas.css';
+import '../cssAll/walimurid/PageMapel.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -6,6 +6,15 @@ import NavbarWaliMurid from '../component/NavbarWaliMurid';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
+import cardMapel1 from '../assets/cardAssets/cardMapel1.svg';
+import cardMapel2 from '../assets/cardAssets/cardMapel2.svg';
+import cardMapel3 from '../assets/cardAssets/cardMapel3.svg';
+import cardMapel4 from '../assets/cardAssets/cardMapel4.svg';
+import cardMapel5 from '../assets/cardAssets/cardMapel5.svg';
+import cardMapel6 from '../assets/cardAssets/cardMapel6.svg';
+import cardMapel7 from '../assets/cardAssets/cardMapel7.svg';
+import cardMapel8 from '../assets/cardAssets/cardMapel8.svg';
+import cardMapel9 from '../assets/cardAssets/cardMapel9.svg';
 import { useState } from "react";
 import ImgProfil from '../assets/profil-walimurid.svg';
 
@@ -15,6 +24,11 @@ function PageMapel(){
 
     const closeDetail = () => {
         const detailProfile = document.querySelector('.detail-profile');
+        detailProfile.style.transform = 'translateX(350px)';
+    }
+
+    const closeDetailNotif = () => {
+        const detailProfile = document.querySelector('.detail-notif');
         detailProfile.style.transform = 'translateX(350px)';
     }
     
@@ -63,6 +77,107 @@ function PageMapel(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+    
+    const valueDataMapel = [
+        {
+            id: 1,
+            namaMapel: "B. Inggris",
+            guruPengajar: "Budiono, S.Pd",
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+            assets: cardMapel1,
+        },
+        {
+            id: 2,
+            namaMapel: "Olaharaga",
+            guruPengajar: "Asep, S.Pd",
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+            assets: cardMapel2,
+        },
+        {
+            id: 3,
+            namaMapel: "Matematika",
+            guruPengajar: "Rini, S.Pd",
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+            assets: cardMapel3,
+        },
+        {
+            id: 4,
+            namaMapel: "PAI",
+            guruPengajar: "Edi, S.Pd.I",
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+            assets: cardMapel4,
+        },
+        {
+            id: 5,
+            namaMapel: "BK",
+            guruPengajar: "Sumijah, S.Pd",
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "1",
+            assets: cardMapel5,
+        },
+        {
+            id: 6,
+            namaMapel: "Sejarah",
+            guruPengajar: "Rini, S.Pd",
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "2",
+            assets: cardMapel6,
+        },
+        {
+            id: 7,
+            namaMapel: "Game Dev",
+            guruPengajar: "Suep, S.Kom",
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+            assets: cardMapel7,
+        },
+        {
+            id: 8,
+            namaMapel: "Web Dev",
+            guruPengajar: "Sugeng, S.Kom",
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+            assets: cardMapel8,
+        },
+        {
+            id: 9,
+            namaMapel: "Desktop Dev",
+            guruPengajar: "Paimin, S.Kom",
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+            assets: cardMapel9,
+        },
+    ];
+
+    // for (let i = 0; i < valueDataMapel.length; i++) {
+    //     const kelas = valueDataMapel[i].kelas;
+    //     const jurusan = valueDataMapel[i].jurusan;
+    //     const tingkatan = valueDataMapel[i].tingkatan;
+    //     valueDataMapel[i].kelasAll = kelas + " " + jurusan + " " + tingkatan;
+    // }
+
+    const [jurusan, setJurusan] = useState("semua");
+
+    const handleChange = (event) => {
+        setJurusan(event.target.value);
+    };
+
+    const filterDataMapel = valueDataMapel.filter((data) =>
+        jurusan === "semua" ? true : data.jurusan === jurusan
+    );
 
     return(
         <div>
@@ -92,6 +207,24 @@ function PageMapel(){
             </aside>
             <div className="container-content">
                 <NavbarWaliMurid text={navText}/>
+                <main className='main'>
+                    <div className="content-mapel">
+                        <div className="con-card-mapel">
+                            {filterDataMapel.map((data) => (
+                            <div className="card-mapel" key={data.id} style={{ cursor: "pointer"}}>
+                                <img src={data.assets} alt="" className="image-card-mapel" onClick={() => navigate('/walimurid/pagemapel/mapelmateri')}/>
+                                <div className="content-card-mapel">
+                                <div className="card-mapel-left">
+                                    <p className="mata-pelajaran">{data.namaMapel}</p>
+                                    <p className="nama-guru-mapel">{data.guruPengajar}</p>
+                                </div>
+                                {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
+                                </div>
+                            </div>
+                            ))}
+                        </div>
+                    </div>
+                </main>
             </div>
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">

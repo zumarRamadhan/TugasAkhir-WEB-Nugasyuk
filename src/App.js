@@ -49,6 +49,9 @@ import BerandaWaliMurid from './waliMurid/BerandaWaliMurid';
 import PageTugasWaliMurid from './waliMurid/PageTugas';
 import PageMapelWaliMurid from './waliMurid/PageMapel';
 import PageJadwalWaliMurid from './waliMurid/JadwalKbm';
+import MapelMateri from './waliMurid/MapelMateri';
+import MapelTugas from './waliMurid/MapelTugas';
+import DetailMaterial from './waliMurid/DetailMateri';
 // end role wali murid
 // role bk
 import BerandaBk from './guruBk/BerandaBk';
@@ -57,20 +60,13 @@ import PageChat from './guruBk/PageChat';
 // end role bk
 import Notfound from './Notfound';
 
-
-
 function App() {
-
-  // const [isUserLoggedIn, setUserLoggedIn] = useState(false);
-
-  // const userAuthentication = () => {
-  //   setUserLoggedIn(!isUserLoggedIn)
-  // }
 
   return(
     <Router>
       <Routes>
         <Route path="/login" element={<Login/>} /> 
+
          {/*role admin  */}
         <Route path="/admin/berandaadmin" element={<BerandaAdmin/>} />  
         <Route path="/admin/pageguru" element={<PageGuru/>} />  
@@ -84,12 +80,15 @@ function App() {
         <Route path="/admin/pagemurid/formaddmurid" element={<FormAddMurid/>} />
         <Route path="/admin/pageguru/formaddguru" element={<FormAddGuru/>} />
         {/* end role admin */}
+
         {/* role murid */}
         <Route path="/murid/berandamurid" element={<BerandaMurid/>} /> 
         <Route path="/murid/pagetugas" element={<PageTugas/>} /> 
         <Route path="/murid/pagekbm" element={<PageJadwal/>} /> 
         <Route path="/murid/pagemapel" element={<PageMapel/>} /> 
         <Route path="/murid/pagekonseling" element={<Konseling/>} /> 
+        <Route path="/murid/pagekonseling/buatjanji" element={<PageBuatJanji/>} /> 
+        <Route path="/murid/mapelmateri" element={<Materi/>} /> 
         <Route path="/murid/pagemapel/mapelmateri" element={<Materi/>} /> 
         <Route path="/murid/pagemapel/detailmateri" element={<DetailMateri/>} /> 
         <Route path="/murid/pagemapel/detailtugas" element={<DetailTask/>} /> 
@@ -99,6 +98,7 @@ function App() {
         <Route path="/murid/detailtugas/:id" element={<DetailTask/>} /> 
         <Route path="/murid/pagekonseling/riwayatkonseling" element={<HistoryCounseling/>} /> 
         {/* end role murid */}
+
         {/* role guru */}
         <Route path='/guru/berandaguru' element={<BerandaGuru/>}/>
 
@@ -113,16 +113,20 @@ function App() {
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
         <Route path='/guru/pagepengumpulan/detail' element={<DetailPengumpulan/>}/>
         <Route path='/guru/pagepengumpulan/detail/detailmenunggu' element={<DetailMenunggu/>}/>
-        <Route path='/guru/pagepengumpulan/detail/detailselesai' element={<DetailSelesai/>}/
-        >
+        <Route path='/guru/pagepengumpulan/detail/detailselesai' element={<DetailSelesai/>}/>
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>
         {/* end role guru */}
+
         {/* role wali murid */}
         <Route path='/walimurid/berandawalimurid' element={<BerandaWaliMurid/>}/>
         <Route path='/walimurid/pagetugas' element={<PageTugasWaliMurid/>}/>
         <Route path='/walimurid/pagemapel' element={<PageMapelWaliMurid/>}/>
         <Route path='/walimurid/pagekbm' element={<PageJadwalWaliMurid/>}/>
+        <Route path='/walimurid/pagemapel/mapelmateri' element={<MapelMateri/>}/>
+        <Route path='/walimurid/pagemapel/mapeltugas' element={<MapelTugas/>}/>
+        <Route path='/walimurid/pagemapel/mapelmateri/detailmateri' element={<DetailMaterial/>}/>
         {/* end role wali murid */}
+
         {/* role bk */}
         <Route path='/bk/berandabk' element={<BerandaBk/>}/>
         <Route path='/bk/janjikonseling' element={<JanjiKonseling/>}/>
@@ -135,5 +139,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;

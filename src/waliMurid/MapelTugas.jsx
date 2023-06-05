@@ -1,15 +1,18 @@
-import '../cssAll/murid/BerandaMurid.css';
+import '../cssAll/walimurid/DetailMateri.css';
+import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from "react";
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import NavbarWaliMurid from '../component/NavbarWaliMurid';
+import ImgProfil from '../assets/profil-walimurid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
-import ImgProfil from '../assets/profil-walimurid.svg';
-function BerandaWaliMurid(){
-    const navText = "Beranda 11 PPLG 1";
+import AssetsBinggris from '../assets/img-ilustration-binggris.svg';
+import imgGuru from '../assets/profil-guru.svg';
+import NavbarWaliMurid from '../component/NavbarWaliMurid';
+
+function MatapelajaranTugas(){
+    const navText = "B. Inggris";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -68,152 +71,141 @@ function BerandaWaliMurid(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
+    const [activeContent, setActiveContent] = useState("detailMateriKbm");
+
+    const showMateri = () => {
+        setActiveContent("detailMateriKbm");
+    };
+
+    const showTugas = () => {
+        setActiveContent("detailTugasKbm");
+    };
+
     return(
         <div>
             <aside>
-            <h1 className="title-form-login" onClick={() => navigate('/walimurid/berandawalimurid')}>
-                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
-                nugasyuk
-            </h1>
-            <ul>
-                <li className='active' onClick={() => navigate('/walimurid/berandawalimurid')}>
-                    <Icon icon="iconoir:home-simple" width="20" />
-                    Beranda
-                </li>
-                <li onClick={() => navigate('/walimurid/pagetugas')} >
-                    <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
-                    Tugas
-                </li>
-                <li onClick={() => navigate('/walimurid/pagekbm')}>
-                    <Icon icon="uiw:date" width="18"/>
-                    Jadwal KBM
-                </li>
-                <li onClick={() => navigate('/walimurid/pagemapel')}>
-                    <Icon icon="fluent-mdl2:education" width="18"/>
-                    Mata Pelajaran
-                </li>
-            </ul>
+                <h1 className="title-form-login" onClick={() => navigate('/walimurid/berandawalimurid')}>
+                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                    nugasyuk
+                </h1>
+                <ul>
+                    <li onClick={() => navigate('/walimurid/berandawalimurid')}>
+                        <Icon icon="iconoir:home-simple" width="20" />
+                        Beranda
+                    </li>
+                    <li onClick={() => navigate('/walimurid/pagetugas')} >
+                        <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
+                        Tugas
+                    </li>
+                    <li onClick={() => navigate('/walimurid/pagekbm')}>
+                        <Icon icon="uiw:date" width="18"/>
+                        Jadwal KBM
+                    </li>
+                    <li className='active' onClick={() => navigate('/walimurid/pagemapel')}>
+                        <Icon icon="fluent-mdl2:education" width="18"/>
+                        Mata Pelajaran
+                    </li>
+                </ul>
             </aside>
             <div className="container-content">
                 <NavbarWaliMurid text={navText}/>
-              <main className='main'>
-                <div className="header-dashboard">
-                    <div className="head-left">
-                    <h1 className="intro-head">
-                        Halo <span className="name-admin">Sulis Laila</span>
-                    </h1>
-                    <p className="desc-head">
-                    Selamat datang di nugasyuk, anda bisa memonitoring tugas tugas anak anda.
-                    </p>
+                <div className="main">
+                    <div className="con-content-subject">
+                        <div className="content-subject" style={{background: "linear-gradient(to bottom right, #8287F8, #555AD3)"}}>
+                            <div className="content-subject-left">
+                                <p className="name-subject">
+                                    B.Inggris
+                                </p>
+                                <p className="name-teacher">
+                                    Budiono, S.Pd
+                                </p>
+                            </div>
+                            <img src={AssetsBinggris} alt="" className="img-assets-subject" />
+                        </div>
+                        <div className="content-subject-2">
+                            <img src={imgGuru} alt="" className="img-subject-2" />
+                            <p className="name-teacher-2">Budiono, S.Pd</p>
+                        </div>
                     </div>
-                    <div className="head-right">
-                    <div className="kotak1"></div>
+                    <div className="switch-container">
+                        <button id='btn-materiKbm' className={activeContent === "detailMateriKbm" ? "activeDetailKbm" : ""} onClick={showMateri} >
+                            Materi
+                        </button>
+                        <button id='btn-tugasKbm' className={activeContent === "detailTugasKbm" ? "activeDetailKbm" : ""} onClick={showTugas} >
+                            Tugas
+                        </button>
                     </div>
+                    <div className='dropdown-task'>
+                        <select id='tugas' name='tugas'>
+                            <option value="semua" selected>-- Semua Tugas --</option>
+                            <option value="tugas">Tugas selesai dalam deaadline</option>
+                            <option value="tugas">Tugas selesai lewat deadline</option>
+                            <option value="tugas">Tugas belum selesai dalam deadline</option>
+                            <option value="tugas">Tugas belum selesai lewat deadline</option>
+                        </select>
+
+                        <form className='search-box'>
+                            <input type='text' placeholder='Cari...'/>
+                            <button type='submit'>
+                                <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div className="con-material">
+                        <div className="card-material" style={{ cursor: "pointer"}} onClick={() => navigate('/walimurid/pagemapel/mapelmateri/detailmateri')}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Application Letter</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">8 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Reading</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">5 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Laporan B. Inggris</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">1 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+            </div>
 
-                <div className="con-content">
-                    <div className="content-indiecator" style={{ background: "#2AB6D5" }}>
-                    <div className="icon-indie" style={{ color: "#2AB6D5", background: "#fff" }}>
-                        <Icon icon="mdi:account-group-outline" width="40" />
-                    </div>
-                    <div className="desc-indie">
-                        <p className="title-indie">Jumlah Siswa</p>
-                        <p className="value-indie">
-                        <span>35</span> Siswa
-                        </p>
-                    </div>
-                    </div>
-                    <div className="content-indiecator" style={{ background: "#585CC4" }}>
-                    <div className="icon-indie" style={{ color: "#585CC4", background: "#fff" }}>
-                        <Icon icon="fluent-mdl2:education" width="40"/>
-                    </div>
-                    <div className="desc-indie">
-                        <p className="title-indie">Jumlah Mapel</p>
-                        <p className="value-indie">
-                        <span>14</span> Mata Pelajaran
-                        </p>
-                    </div>
-                    </div>
-                    <div className="content-indiecator" style={{ background: "#B462D0" }}>
-                    <div className="icon-indie" style={{ color: "#B462D0", background: "#fff" }}>
-                        <Icon icon="material-symbols:person-outline-rounded" width="40"/>
-                    </div>
-                    <div className="desc-indie">
-                        <p className="title-indie">Wali Kelas</p>
-                        <p className="value-indie">
-                        <span>Slamet Jos, S.Kom</span>
-                        </p>
-                    </div>
-                    </div>
-                </div>
-                
-                {/* content information */}
-                <div className="con-content-information">
-                    <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                        <div className="indiecator-left">
-                            <div className="icon-indie-information" style={{ color: "#797979" }}>
-                                <Icon icon="uiw:time-o" width="30"/>
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie-information"> <span>3</span> Tugas</p>
-                                <p className="value-indie-information">Dari <span>10</span> Tugas</p>
-                            </div>
-                        </div>
-                        <div className="icon-navigate">
-                            <Icon icon="ic:round-navigate-next" width="30"/>
-                        </div>
-                    </div>
-
-                    <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                        <div className="indiecator-left">
-                            <div className="icon-indie-information" style={{ color: "#84E063", background:"#D5FFC6" }}>
-                                <Icon icon="ph:check-bold" width="30" />
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie-information"> <span>4</span> Tugas</p>
-                                <p className="value-indie-information">Dari <span>10</span> Tugas</p>
-                            </div>
-                        </div>
-                        <div className="icon-navigate">
-                            <Icon icon="ic:round-navigate-next" width="30"/>
-                        </div>
-                    </div>
-
-                    <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                        <div className="indiecator-left">
-                            <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
-                                <Icon icon="uiw:time-o" width="30"/>
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie-information"> <span>3</span> Tugas</p>
-                                <p className="value-indie-information">Dari <span>10</span> Tugas</p>
-                            </div>
-                        </div>
-                        <div className="icon-navigate">
-                            <Icon icon="ic:round-navigate-next" width="30"/>
-                        </div>
-                    </div>
-
-                    <div className="content-indiecator-information" style={{ background: "#fff", cursor: "pointer"}}>
-                        <div className="indiecator-left">
-                            <div className="icon-indie-information" style={{ color: "#FF3F3F", background:"#FFC6C6" }}>
-                                <Icon icon="ph:check-bold" width="30" />
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie-information"> <span>4</span> Tugas</p>
-                                <p className="value-indie-information">Dari <span>10</span> Tugas</p>
-                            </div>
-                        </div>
-                        <div className="icon-navigate">
-                            <Icon icon="ic:round-navigate-next" width="30"/>
-                        </div>
-                    </div>
-                </div>
-                {/* end content information */}
-            </main>
-          </div>
-
-          <div className="popup-logout" id="popup-logout">
+            <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
                     <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeLogoutPopup}/>
                     <div className="image-logout">
@@ -345,4 +337,4 @@ function BerandaWaliMurid(){
     );
 }
 
-export default BerandaWaliMurid;
+export default MatapelajaranTugas

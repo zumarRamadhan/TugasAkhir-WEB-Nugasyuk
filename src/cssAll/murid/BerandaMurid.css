@@ -308,6 +308,7 @@ nav .btn-notification:hover{
     position: absolute;
     top: 0;
     padding-left: 30px;
+    /* width: 100%; */
 }
 
 .card-chat-bk-left {

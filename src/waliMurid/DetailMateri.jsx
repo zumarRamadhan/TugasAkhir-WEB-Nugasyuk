@@ -1,20 +1,28 @@
-import '../cssAll/walimurid/JadwalKbm.css';
+// import '../cssAll/walimurid/DetailMateri.css';
+import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from "react";
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import NavbarWaliMurid from '../component/NavbarWaliMurid';
+import ImgProfil from '../assets/profil-walimurid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
-import ImgProfil from '../assets/profil-walimurid.svg';
+import AssetsBinggris from '../assets/img-ilustration-binggris.svg';
+import imgGuru from '../assets/profil-guru.svg';
+import NavbarWaliMurid from '../component/NavbarWaliMurid';
 
-function PageMapel(){
-    const navText = "Jadwal KBM 11 PPLG 1";
+function DetaillMaterial(){
+
+    const navText = "B. Inggris";
     const navigate = useNavigate();
 
     const closeDetail = () => {
         const detailProfile = document.querySelector('.detail-profile');
+        detailProfile.style.transform = 'translateX(350px)';
+    }
+
+    const closeDetailNotif = () => {
+        const detailProfile = document.querySelector('.detail-notif');
         detailProfile.style.transform = 'translateX(350px)';
     }
     
@@ -80,11 +88,11 @@ function PageMapel(){
                     <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
                     Tugas
                 </li>
-                <li className='active' onClick={() => navigate('/walimurid/pagekbm')}>
+                <li onClick={() => navigate('/walimurid/pagekbm')}>
                     <Icon icon="uiw:date" width="18"/>
                     Jadwal KBM
                 </li>
-                <li onClick={() => navigate('/walimurid/pagemapel')}>
+                <li className='active' onClick={() => navigate('/walimurid/pagemapel')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Mata Pelajaran
                 </li>
@@ -93,84 +101,28 @@ function PageMapel(){
             <div className="container-content">
                 <NavbarWaliMurid text={navText}/>
                 <div className="main">
-                    <div className="content-jadwal">
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #2A93D5, #2785C0)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Senin</p>
+                <div className="con-content-material">
+                        <div className="content-material">
+                            <div className="content-material-left">
+                                <div className="icon-material">
+                                    <Icon icon="ri:book-line" width="40" style={{color: "#2A93D5"}}/>
                                 </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
+                                <div className="desc-material">
+                                    <p className="name-material ">Materi Application Letter</p>
+                                    <p className="teacher">Budiono, S.Pd</p>
                                 </div>
+                            </div>
+                            <div className="content-material-right">
+                                <p className="date-upload">7 Mar 2023</p>
                             </div>
                         </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #51C0FF, #3EA3DD)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Selasa</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #58A4C4, #4C9ABC)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Rabu</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #EB55A3, #D94A94)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Kamis</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #B462D0, #9949B6)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Jumat</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card-jadwal" style={{background: "linear-gradient(to bottom right, #585CC4, #474CB6)"}}>
-                            <div className="head-left">
-                                <p className="title-jadwal" style={{width:"350px"}}>
-                                    Jadwal KBM
-                                </p>
-                                <div className="hari-jadwal">
-                                    <p>Sabtu</p>
-                                </div>
-                                <div className="navigate-icon">
-                                    <Icon icon="ic:round-navigate-next" width="30"/>
-                                </div>
-                            </div>
+                        <p className='desc-content-material'>Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa memahami
+                        materi mengenai pengertian application letter. Dibawah ini saya mencantumkan link youtube pengertian dari
+                        application letter, kalian bisa menyimak video tersebut. jika sudah selesai menyimak video kalian bisa
+                        mengerjakan tugas application letter yang saya upload pada halaman tugas. Terima kasih, sukses selalu...
+                        </p>
+                        <div className="file-material">
+                            <iframe width="330" height="150" src="https://www.youtube.com/embed/bkIumnXFQNI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen/>
                         </div>
                     </div>
                 </div>
@@ -252,8 +204,60 @@ function PageMapel(){
                     </button>
                 </div>
             </div>
+
+            <div className="detail-notif">
+                <div className='content-detail-notif'>
+                    <div className="navbar-detail-notif">
+                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer", color: "#4b4b4b"}} onClick={closeDetailNotif}/>
+                        <h2>Notifikasi</h2>
+                    </div>
+                    <p className="day">
+                        Hari Ini
+                    </p>
+                    <div className="notif">
+                        <div className="icon-notif">
+                            <Icon icon="tabler:clipboard-text" width="30" />
+                        </div>
+                        <div className="content-notif">
+                            <div className="name-notif">
+                                <p>Application Letter</p>
+                            </div>
+                            <div className="teacher">
+                                <p>Budiono, S.Pd</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="notif">
+                        <div className="icon-notif">
+                            <Icon icon="tabler:clipboard-text" width="30" />
+                        </div>
+                        <div className="content-notif">
+                            <div className="name-notif">
+                                <p>Sejarah Gojek</p>
+                            </div>
+                            <div className="teacher">
+                                <p>Rini, S.Pd</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="notif">
+                        <div className="icon-notif">
+                            <Icon icon="ri:book-line" width="30"/>
+                        </div>
+                        <div className="content-notif">
+                            <div className="name-notif">
+                                <p>Sejarah Gojek</p>
+                            </div>
+                            <div className="teacher">
+                                <p>Rini, S.Pd</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 }
 
-export default PageMapel;
+export default DetaillMaterial;

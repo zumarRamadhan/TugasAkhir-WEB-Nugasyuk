@@ -12,11 +12,12 @@ import Calendar from 'react-calendar';
 import CardChat from '../assets/card-chat-bk.svg';
 import CardCounseling from '../assets/card-counseling.svg';
 import ProfilBk from '../assets/profil-bk.svg';
-// import AssetsCalendar from '../assets/79891-calendar.gif';
+import AssetsCalendar from '../assets/79891-calendar.gif';
 import 'react-calendar/dist/Calendar.css';
 
 
 function BuatJanji(){
+    const navText = "Buat Janji";
     const navigate = useNavigate();
 
     const [date, setDate] = useState(new Date());
@@ -108,7 +109,7 @@ function BuatJanji(){
             </ul>
             </aside>
             <div className="container-content">
-                <NavbarMurid textNavigasi={'Buat Janji'}/>
+                <NavbarMurid text={navText}/>
                 <div className="main">
                     <div className="con-content-promaise-counseling">
                         <div className="content-promise-counseling">
