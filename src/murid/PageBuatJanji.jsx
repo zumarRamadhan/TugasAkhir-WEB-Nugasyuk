@@ -17,7 +17,6 @@ import 'react-calendar/dist/Calendar.css';
 
 
 function BuatJanji(){
-    const navText = "Buat Janji";
     const navigate = useNavigate();
 
     const [date, setDate] = useState(new Date());
@@ -109,7 +108,7 @@ function BuatJanji(){
             </ul>
             </aside>
             <div className="container-content">
-                <NavbarMurid text={navText}/>
+                <NavbarMurid textNavigasi={'Buat Janji'}/>
                 <div className="main">
                     <div className="con-content-promaise-counseling">
                         <div className="content-promise-counseling">

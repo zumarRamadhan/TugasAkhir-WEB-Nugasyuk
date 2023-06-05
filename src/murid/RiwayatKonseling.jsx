@@ -14,7 +14,6 @@ import ProfilBk from '../assets/profil-bk.svg';
 
 
 function RiwayatKonseling(){
-    const navText = "Riwayat Janji Konseling";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -104,7 +103,7 @@ function RiwayatKonseling(){
             </ul>
             </aside>
             <div className="container-content">
-                <NavbarMurid text={navText}/>
+                <NavbarMurid textNavigasi={'Riwayat Janji Konseling'}/>
                 <div className="main">
                     <div className="con-content-history-counseling">
                         <div className="content-history-promise-counseling">
