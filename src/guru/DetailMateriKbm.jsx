@@ -1,4 +1,4 @@
-import '../cssAll/guru/BerandaGuru.css';
+import '../cssAll/guru/DetailMateriKbm.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -6,11 +6,13 @@ import NavbarGuru from '../component/NavbarGuru';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ImgProfil from '../assets/profil-guru.svg';
+import damiImgMurid from '../assets/damiImgMurid.png';
 
-function BerandaGuru(){
-    const navText = "Beranda";
+
+function DetailMateriKbm(){
+    const navText = "KBM 11 PPLG 1";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -64,45 +66,127 @@ function BerandaGuru(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
-    const savedItem = sessionStorage.getItem("token");
-    
-    const token = JSON.parse(savedItem)
+    const valueDataKelas = [
+        {
+            id: 1,
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+            // assets: cardMapel1,
+        },
+        {
+            id: 2,
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel2,
+        },
+        {
+            id: 3,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel3,
+        },
+        {
+            id: 4,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel4,
+        },
+        {
+            id: 5,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel5,
+        },
+        {
+            id: 6,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel6,
+        },
+        {
+            id: 7,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel7,
+        },
+        {
+            id: 8,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel8,
+        },
+        {
+            id: 9,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel9,
+        },
+        {
+            id: 10,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel10,
+        },
+    ];
 
-    const [guru, setUsers] = useState([])
+    // data materi kbm berisi nama materi, tanggal, guru
 
-    const fetchGuruData = () => {
-        fetch("https://amanah-furniture.site/api/dataguru", {
-            method: "GET",
-            headers: {
-            "Content-Type": "application/json",
-            'Origin': 'https://amanah-furniture.site/api/dataguru',
-            Authorization: `Bearer ${token}`,
-            },
-        })
-          .then(response => {
-            return response.json()
-          })
-          .then(data => {
-            setUsers(data)
-          })
-      }
+    const valueDataMateriKbm = [
+        {
+            id: 1,
+            namaMateri: 'Materi Application Letter',
+            tanggal: '8 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 2,
+            namaMateri: 'Materi Reading',
+            tanggal: '5 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 3,
+            namaMateri: 'Materi Laporan B. Inggris',
+            tanggal: '12/12/2021',
+            guru: '1 Mar 2023',
+        },
+    ];
 
-      useEffect(() => {
-        fetchGuruData()
-      }, [])
+    // data tugas kbm berisi nama tugas, tanggal, deadline, guru
 
-    const logoutClick = () =>{
-        fetch("https://amanah-furniture.site/api/logout", {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-                },
-            })
-
-            sessionStorage.removeItem('token');
-            window.location.replace('/login')
-    }
+    const valueDataTugasKbm = [
+        {
+            id: 1,
+            namaTugas: 'Application Letter',
+            tanggal: '8 Mar 2023',
+            deadline: '8 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 2,
+            namaTugas: 'Reading',
+            tanggal: '5 Mar 2023',
+            deadline: '5 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 3,
+            namaTugas: 'Laporan B. Inggris',
+            tanggal: '1 Mar 2023',
+            deadline: '1 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+    ];          
 
     return(
         <div>
@@ -112,11 +196,11 @@ function BerandaGuru(){
                 nugasyuk
             </h1>
             <ul>
-                <li className='active' onClick={() => navigate('/guru/berandaguru')}>
+                <li onClick={() => navigate('/guru/berandaguru')}>
                     <Icon icon="iconoir:home-simple" width="20" />
                     Beranda
                 </li>
-                <li onClick={() => navigate('/guru/pagekbm')} >
+                <li className='active' onClick={() => navigate('/guru/pagekbm')} >
                     <Icon icon="ph:chalkboard-teacher" width="20" />
                     KBM
                 </li>
@@ -124,7 +208,7 @@ function BerandaGuru(){
                     <Icon icon="uiw:date" width="18"/>
                     Pengumpulan
                 </li>
-                <li onClick={() => navigate('/guru/pagejadwalkbm')}>
+                <li onClick={() => navigate('/guru/pageJadwalKbm')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Jadwal KBM
                 </li>
@@ -132,56 +216,40 @@ function BerandaGuru(){
             </aside>
             <div className="container-content">
                 <NavbarGuru text={navText}/>
-                <main className='main'>
-                    <div className="header-dashboard">
-                        <div className="head-left">
-                            <h1 className="intro-head">Halo <span className="name-admin">{guru.nama_guru}</span></h1>
-                            <p className="desc-head" style={{width:"550px"}}> Selamat datang di nugasyuk, anda bisa memonitoring siswa, memberikan materi dan tugas.</p>
-                        </div>
-                        <div className="head-right">
-                            <div className="kotak1"></div>
-                        </div>
-                    </div>
-
-                    <div className="con-content">
-                        <div className="content-indiecator" style={{ background: "#2AD5A2" }}>
-                            <div className="icon-indie" style={{ color: "#2AD5A2" }}>
-                                <Icon icon="fluent:class-24-regular" width="40" />
+                <div className="main">
+                    <div className="con-card-detailMateri">
+                        <div className="header-card-detailMateri">
+                            <div className="left-header-card-detailMateri">
+                                <div className="icon-header-card-detailMateri">
+                                    <Icon icon="ri:book-line" width={40}/>
+                                </div>
+                                <div className="text-header-card-detailMateri">
+                                    <h1 className="title-header-card-detailMateri">Materi Application Letter</h1>
+                                    <p className="guru-header-card-detailMateri">Budiono, S.Pd</p>
+                                </div>
                             </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Kelas Yang Diajar</p>
-                                <p className="value-indie">
-                                <span>{guru.jumlah_kelas}</span> Kelas
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div className="content-indiecator" style={{ background: "#2A93D5" }}>
-                            <div className="icon-indie" style={{ color: "#2A93D5" }}>
-                                <Icon icon="ri:book-line" width="40"/>
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Materi Yang Diberikan</p>
-                                <p className="value-indie">
-                                <span>{guru.jumlah_materi}</span> Materi
-                                </p>
+                            <div className="right-header-card-detailMateri">
+                                <p className="date-header-card-detailMateri">8 Mar 2023</p>
+                                <div className="icon-options" style={{cursor:"pointer"}}>
+                                    <Icon icon="mi:options-vertical" width={40}/>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="content-indiecator" style={{ background: "#FF71A4" }}>
-                            <div className="icon-indie" style={{ color: "#FF71A4" }}>
-                                <Icon icon="tabler:clipboard-text" width="40" />
+                        <p className="desc-card-detailMateri">
+                            Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa memahami materi mengenai pengertian application letter. Dibawah ini saya mencantumkan link youtube pengertian dari application letter, kalian bisa menyimak video tersebut. jika sudah selesai menyimak video kalian bisa mengerjakan tugas application letter yang saya upload pada halaman tugas. Terima kasih, sukses selalu...
+                        </p>
+
+                        <a href="https://youtu.be/0jdq6Wc3rE0" className="value-fileOrlink" id='value-fileOrlink'>
+                            <iframe src="https://www.youtube.com/embed/0jdq6Wc3rE0" frameborder="0" allowfullscreen></iframe>
+                            <div>
+                                <h1 className="title-fileOrlink">Application Letter</h1>
+                                <p className="link-detailMenunggu">YouTube <span>Klik</span></p>
                             </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Tugas Yang Diberikan</p>
-                                <p className="value-indie">
-                                <span>{guru.jumlah_tugas}</span> Tugas
-                                </p>
-                            </div>
-                        </div>
+                        </a>
                     </div>
-                </main>
-            </div>
+                </div>
+            </div>{/* end body */}
 
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
@@ -192,7 +260,7 @@ function BerandaGuru(){
                     <p className="desc-logout">Anda yakin ingin keluar?</p>
                     <div className="con-btn-logout">
                         <button type="button" className="btn-batal">Batal</button>
-                        <button type="button" onClick={logoutClick} className="btn-keluar">Keluar</button>
+                        <button type="button" className="btn-keluar">Keluar</button>
                     </div>
                 </div>
             </div>
@@ -257,4 +325,4 @@ function BerandaGuru(){
     );
 }
 
-export default BerandaGuru
+export default DetailMateriKbm

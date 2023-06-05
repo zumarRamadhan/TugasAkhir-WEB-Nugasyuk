@@ -1,4 +1,4 @@
-import '../cssAll/guru/JadwalKbm.css';
+import '../cssAll/guru/DetailPengumpulan.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -8,9 +8,11 @@ import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import { useState } from "react";
 import ImgProfil from '../assets/profil-guru.svg';
+import damiImgMurid from '../assets/damiImgMurid.png';
 
-function PageJadwalKbm(){
-    const navText = "Jadwal KBM";
+
+function DetailPengumpulan(){
+    const navText = "Pengumpulan";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -64,6 +66,16 @@ function PageJadwalKbm(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
+    const [activeContent, setActiveContent] = useState("detailMenungguPengumpulan");
+
+    const showMenunggu = () => {
+        setActiveContent("detailMenungguPengumpulan");
+    };
+
+    const showSelesai = () => {
+        setActiveContent("detailSelesaiPengumpulan");
+    };
+
     const valueDataKelas = [
         {
             id: 1,
@@ -110,44 +122,30 @@ function PageJadwalKbm(){
         {
             id: 7,
             kelas: "10",
-            jurusan: "anim",
+            jurusan: "animasi",
             tingkatan: "1",
             // assets: cardMapel7,
         },
         {
             id: 8,
             kelas: "10",
-            jurusan: "anim",
+            jurusan: "animasi",
             tingkatan: "2",
             // assets: cardMapel8,
         },
         {
             id: 9,
             kelas: "11",
-            jurusan: "anim",
+            jurusan: "animasi",
             tingkatan: "1",
             // assets: cardMapel9,
         },
         {
             id: 10,
             kelas: "11",
-            jurusan: "anim",
+            jurusan: "animasi",
             tingkatan: "2",
             // assets: cardMapel10,
-        },
-        {
-            id: 11,
-            kelas: "11",
-            jurusan: "dkv",
-            tingkatan: "1",
-            // assets: cardMapel11,
-        },
-        {
-            id: 12,
-            kelas: "11",
-            jurusan: "dkv",
-            tingkatan: "2",
-            // assets: cardMapel12,
         },
     ];
 
@@ -178,162 +176,102 @@ function PageJadwalKbm(){
         },
     ];
 
-    const valueDataGuru = [
+    const dataCardMurid = [
         {
             id: 1,
-            kodeGuru: "BI1",
-            namaGuru: "Budiono, S.Pd",
-            mapel: "B. Inggris",
-            // profileImg: imgCardKbm,
+            imgProfile: damiImgMurid,
+            name: "Ahmad Aziz Wira Widodo",
+            email: "ahmadaziz@smkrus.sch.id",
+            kelas: valueDataKelas[2].kelas+" "+valueDataKelas[2].jurusan.toUpperCase()+" "+valueDataKelas[2].tingkatan,
         },
         {
             id: 2,
-            kodeGuru: "OLA1",
-            namaGuru: "Asep, S.Pd",
-            mapel: "Olahraga",
-            // profileImg: imgCardKbm,
+            imgProfile: damiImgMurid,
+            name: "Bayu Septian Kurniawan",
+            email: "bayuseptian@smkrus.sch.id",
+            kelas: valueDataKelas[2].kelas+" "+valueDataKelas[2].jurusan.toUpperCase()+" "+valueDataKelas[2].tingkatan,
         },
         {
             id: 3,
-            kodeGuru: "MTK1",
-            namaGuru: "Rini, S.Pd",
-            mapel: "Matematika",
-            // profileImg: imgCardKbm,
+            imgProfile: damiImgMurid,
+            name: "Javier Gavra Abhinaya",
+            email: "javiergavra@smkrus.sch.id",
+            kelas: valueDataKelas[4].kelas+" "+valueDataKelas[4].jurusan.toUpperCase()+" "+valueDataKelas[4].tingkatan,
         },
-        {   
+        {
             id: 4,
-            kodeGuru: "PAI1",
-            namaGuru: "Edi, S.Pd.I",
-            mapel: "PAI",
-            // profileImg: imgCardKbm,
+            imgProfile: damiImgMurid,
+            name: "Khoiru Rizal Kalam Ismail",
+            email: "khoirurizal@smkrus.sch.id",
+            kelas: valueDataKelas[4].kelas+" "+valueDataKelas[4].jurusan.toUpperCase()+" "+valueDataKelas[4].tingkatan,
         },
-    ]
+        {
+            id: 5,
+            imgProfile: damiImgMurid,
+            name: "Muhammad Nur Wahid Bimawan",
+            email: "nurwahid@smkrus.sch.id",
+            kelas: valueDataKelas[8].kelas+" "+valueDataKelas[8].jurusan.toUpperCase()+" "+valueDataKelas[8].tingkatan,
+        },
+        {
+            id: 6,
+            imgProfile: damiImgMurid,
+            name: "Muh Wahyu Ageng Pambudi",
+            email: "muhwahyu@smkrus.schid",
+            kelas: valueDataKelas[8].kelas+" "+valueDataKelas[8].jurusan.toUpperCase()+" "+valueDataKelas[8].tingkatan,
+        },
+        {
+            id: 7,
+            imgProfile: damiImgMurid,
+            name: "Muhammad Vitto Corlenone",
+            email: "vittocorleone@smkrus.sch.id",
+            kelas: valueDataKelas[9].kelas+" "+valueDataKelas[9].jurusan.toUpperCase()+" "+valueDataKelas[9].tingkatan,
+        },
+    ];
 
-    const jamPelajaran = [
+    // data materi kbm berisi nama materi, tanggal, guru
+
+    const valueDataMenungguKbm = [
         {
             id: 1,
-            startingHour: "07:00",
-            hourIsOver: "07:40",
+            namaMateri: 'Application Letter',
+            tanggal: '8 Mar 2023',
+            deadline: '8 Mar 2023',
+            guru: 'Budiono, S.Pd',
         },
         {
             id: 2,
-            startingHour: "07:40",
-            hourIsOver: "08:20",
-        },
-        {
-            id: 3,
-            startingHour: "08:20",
-            hourIsOver: "09:00",
-        },
-        {
-            id: 4,
-            startingHour: "09:00",
-            hourIsOver: "09:40",
-        },
-        {
-            id: 5,
-            startingHour: "10.00",
-            hourIsOver: "10:40",
-        },
-        {
-            id: 6,
-            startingHour: "10:40",
-            hourIsOver: "11:20",
-        },
-        {
-            id: 7,
-            startingHour: "11:20",
-            hourIsOver: "12:00",
-        },
-        {
-            id: 8,
-            startingHour: "12:30",
-            hourIsOver: "13:10",
-        },
-        {
-            id: 9,
-            startingHour: "13:10",
-            hourIsOver: "13:50",
-        },
-        {
-            id: 10,
-            startingHour: "13:50",
-            hourIsOver: "14:30",
+            namaMateri: 'Reading',
+            tanggal: '5 Mar 2023',
+            deadline: '5 Mar 2023',
+            guru: 'Budiono, S.Pd',
         },
     ];
-    
-    const jadwalKBM = [
+
+    // data tugas kbm berisi nama tugas, tanggal, deadline, guru
+
+    const valueDataSelesaiKbm = [
         {
             id: 1,
-            kelas: valueDataKelas[2].kelas+" "+valueDataKelas[2].jurusan.toUpperCase()+" "+valueDataKelas[2].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[0].startingHour,
-            hourIsOver: jamPelajaran[0].hourIsOver,
+            namaTugas: 'Application Letter',
+            tanggal: '8 Mar 2023',
+            deadline: '8 Mar 2023',
+            guru: 'Budiono, S.Pd',
         },
         {
             id: 2,
-            kelas: valueDataKelas[2].kelas+" "+valueDataKelas[2].jurusan.toUpperCase()+" "+valueDataKelas[2].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[1].startingHour,
-            hourIsOver: jamPelajaran[1].hourIsOver,
+            namaTugas: 'Reading',
+            tanggal: '5 Mar 2023',
+            deadline: '5 Mar 2023',
+            guru: 'Budiono, S.Pd',
         },
         {
             id: 3,
-            kelas: valueDataKelas[4].kelas+" "+valueDataKelas[4].jurusan.toUpperCase()+" "+valueDataKelas[4].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[2].startingHour,
-            hourIsOver: jamPelajaran[2].hourIsOver, 
+            namaTugas: 'Laporan B. Inggris',
+            tanggal: '1 Mar 2023',
+            deadline: '1 Mar 2023',
+            guru: 'Budiono, S.Pd',
         },
-        {
-            id: 4,
-            kelas: valueDataKelas[4].kelas+" "+valueDataKelas[4].jurusan.toUpperCase()+" "+valueDataKelas[4].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[3].startingHour,
-            hourIsOver: jamPelajaran[3].hourIsOver,
-        },
-        {
-            id: 5,
-            kelas: valueDataKelas[8].kelas+" "+valueDataKelas[8].jurusan.toUpperCase()+" "+valueDataKelas[8].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[4].startingHour,
-            hourIsOver: jamPelajaran[4].hourIsOver,
-        },
-        {
-            id: 6,
-            kelas: valueDataKelas[8].kelas+" "+valueDataKelas[8].jurusan.toUpperCase()+" "+valueDataKelas[8].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[5].startingHour,
-            hourIsOver: jamPelajaran[5].hourIsOver,
-        },
-        {
-            id: 7,
-            kelas: valueDataKelas[9].kelas+" "+valueDataKelas[9].jurusan.toUpperCase()+" "+valueDataKelas[9].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[6].startingHour,
-            hourIsOver: jamPelajaran[6].hourIsOver,
-        },
-        {
-            id: 8,
-            kelas: valueDataKelas[9].kelas+" "+valueDataKelas[9].jurusan.toUpperCase()+" "+valueDataKelas[9].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[7].startingHour,
-            hourIsOver: jamPelajaran[7].hourIsOver,
-        },
-        {
-            id: 9,
-            kelas: valueDataKelas[10].kelas+" "+valueDataKelas[10].jurusan.toUpperCase()+" "+valueDataKelas[10].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[8].startingHour,
-            hourIsOver: jamPelajaran[8].hourIsOver,
-        },
-        {
-            id: 10,
-            kelas: valueDataKelas[10].kelas+" "+valueDataKelas[10].jurusan.toUpperCase()+" "+valueDataKelas[10].tingkatan,
-            mapel: valueDataGuru[0].mapel,
-            startingHour: jamPelajaran[9].startingHour,
-            hourIsOver: jamPelajaran[9].hourIsOver,
-        },
-    ];
+    ];     
 
     return(
         <div>
@@ -351,11 +289,11 @@ function PageJadwalKbm(){
                     <Icon icon="ph:chalkboard-teacher" width="20" />
                     KBM
                 </li>
-                <li onClick={() => navigate('/guru/pagepengumpulan')}>
+                <li className='active' onClick={() => navigate('/guru/pagepengumpulan')}>
                     <Icon icon="uiw:date" width="18"/>
                     Pengumpulan
                 </li>
-                <li className='active' onClick={() => navigate('/guru/pagejadwalkbm')}>
+                <li onClick={() => navigate('/guru/pageJadwalKbm')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Jadwal KBM
                 </li>
@@ -364,32 +302,86 @@ function PageJadwalKbm(){
             <div className="container-content">
                 <NavbarGuru text={navText}/>
                 <div className="main">
-                    <div className="header-jadwalKBM-Guru">
-                        <div className="header-jadwalKBM-left">
-                            <select id="jadwalKbm" name="jadwalKbm">
-                                {dayData.map((data) => (
-                                    <option>-- {data.hari} --</option>
-                                ))}
-                            </select>
+                    <div className="header-content-DetailPengumpulan">
+                        <div className="card-DetailPengumpulan-Guru">
+                            <div className="card-DetailPengumpulan-Guru-left">
+                                <div className="img-DetailPengumpulan-Guru">
+                                    <img src={damiImgMurid} alt="" className="image-DetailPengumpulan-Guru"/>
+                                </div>
+                                <div className="desc-card-DetailPengumpulan-Guru">
+                                    <p className="name-card-DetailPengumpulan-Guru">Ahmad Aziz Wira Widodo</p>
+                                    <p className="email-card-DetailPengumpulan-Guru">ahmadaziz@smkrus.sch.id</p>
+                                </div>
+                            </div>
+                            <div className="detaiKelas-DetailPengumpulan-Guru">
+                                <p>11 PPLG 1</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="content-jadwalKBM-Guru">
-                        <p className="valueDay">Senin</p>
-                        <div className="con-card-jadwalKBM-Guru">
-                            {jadwalKBM.map((data) => (
-                            <div className="card-jadwalKBM-Guru">
-                                <div className="card-jadwalKBM-Guru-left">
-                                    <p className="id-jadwalKBM-Guru">{data.id}</p>
-                                    <div className="icon-jadwalKBM-Guru">
-                                        <Icon icon="fluent:class-24-regular" width="30" />
+                    <div className="body-content-DetailPengumpulan">
+                        <div className="switch-container">
+                            <button
+                            id='btn-MenungguPengumpulan'
+                            className={activeContent === "detailMenungguPengumpulan" ? "activeDetailPengumpulan" : ""}
+                            onClick={showMenunggu}
+                            >
+                            Menunggu
+                            </button>
+                            <button
+                            id='btn-SelesaiPengumpulan'
+                            className={activeContent === "detailSelesaiPengumpulan" ? "activeDetailPengumpulan" : ""}
+                            onClick={showSelesai}
+                            >
+                            Selesai
+                            </button>
+                        </div>
+
+                        <div className="con-DetailPengumpulan" style={{ display: activeContent === "detailMenungguPengumpulan" ? "block" : "none" }}>
+                            <div className="con-DetailPengumpulan-Menunggu">
+                                {valueDataMenungguKbm.map((data) => (
+                                <div className="card-DetailPengumpulan-Menunggu" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagepengumpulan/detail/detailmenunggu')}>
+                                    <div className="card-DetailPengumpulan-Menunggu-left">
+                                        <div className="img-DetailPengumpulan-Menunggu">
+                                            <Icon icon="uiw:time-o" width={40}/>
+                                        </div>
+                                        <div className="desc-DetailPengumpulan-Menunggu">
+                                            <p className="judul-DetailPengumpulan-Menunggu">{data.namaMateri}</p>
+                                            <p className="nama-DetailPengumpulan-Guru">{data.guru}</p>
+                                        </div>
                                     </div>
-                                    <p className="dataKelas-jadwalKBM-Guru">{data.kelas}</p>
-                                    <p className="dataMapel-jadwalKBM-Guru">{data.mapel}</p>
+                                    <div className="card-DetailPengumpulan-Menunggu-right">
+                                        <div className="dateDetailDesc">{data.tanggal}</div>
+                                        <div className="deadline-timePengumpulan">Deadline : {data.deadline}</div>
+                                        <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                                    </div>
                                 </div>
-                                <div className="hourValue-jadwalKBM-Guru"><span className='startingHour'>{data.startingHour}</span> - <span className='hourIsOver'>{data.hourIsOver}</span></div>
+                                ))}
                             </div>
-                            ))}
+                        </div>
+                        
+
+                        <div className="con-DetailPengumpulan" style={{ display: activeContent === "detailSelesaiPengumpulan" ? "block" : "none" }}>
+                            <div className="con-DetailPengumpulan-Selesai">
+                                {valueDataSelesaiKbm.map((data) => (
+                                <div className="card-DetailPengumpulan-Selesai" style={{cursor: "pointer"}} onClick={() => navigate('/guru/pagepengumpulan/detail/detailselesai')}>
+                                    <div className="card-DetailPengumpulan-Selesai-left">
+                                        <div className="img-DetailPengumpulan-Selesai">
+                                            <Icon icon="material-symbols:check" width={40}/>
+                                        </div>
+                                        <div className="desc-DetailPengumpulan-Selesai">
+                                            <p className="judul-DetailPengumpulan-Selesai">{data.namaTugas}</p>
+                                            <p className="nama-DetailPengumpulan-Guru">{data.guru}</p>
+                                        </div>
+                                    </div>
+                                    <div className="card-DetailPengumpulan-Selesai-right">
+                                        <div className="dateDetailDesc">{data.tanggal}</div>
+                                        <div className="deadline-timePengumpulan">Deadline : {data.deadline}</div>
+                                        <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                                    </div>
+                                </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -469,4 +461,4 @@ function PageJadwalKbm(){
     );
 }
 
-export default PageJadwalKbm
+export default DetailPengumpulan

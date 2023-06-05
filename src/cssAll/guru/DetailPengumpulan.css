@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.body-content-DetailPengumpulan{
+    margin-top: 40px;
+}
+
+.header-DetailPengumpulan-left {
+    display: flex;
+    gap: 15px;
+}
+
+.header-DetailPengumpulan-right {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--color-aksen);
+}
+
+.content-DetailPengumpulan-Guru {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-DetailPengumpulan-Guru {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.card-DetailPengumpulan-Guru-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.img-DetailPengumpulan-Guru {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.image-DetailPengumpulan-Guru {
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
+.name-card-DetailPengumpulan-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--color-aksen);
+}
+
+.email-card-DetailPengumpulan-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #4B4B4B;
+}
+
+.detaiKelas-DetailPengumpulan-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 4px 15px;
+    background: var(--color-sekunder);
+    color: var(--color-aksen);
+    border-radius: 5px;
+}
+
+/*  */
+
+#btn-MenungguPengumpulan, #btn-SelesaiPengumpulan {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 5px 43px;
+    border-radius: 5px;
+    background-color: var(--color-sekunder);
+    color: var(--color-aksen);
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+#btn-MenungguPengumpulan.activeDetailPengumpulan, #btn-SelesaiPengumpulan.activeDetailPengumpulan {
+    background-color: var(--color-aksen);
+    color: var(--color-primer);
+    /* transition-delay: 0.9s; */
+}
+
+/* #btn-MenungguPengumpulan:hover, #btn-SelesaiPengumpulan:hover {
+    background-color: #2a93d5;
+    color: #fff;
+    transition: 0.1s ease-in-out;
+} */
+
+.con-DetailPengumpulan {
+    display: none;
+}
+
+.con-DetailPengumpulan-Menunggu{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.con-DetailPengumpulan-Selesai{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-DetailPengumpulan-Menunggu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.card-DetailPengumpulan-Menunggu-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.img-DetailPengumpulan-Menunggu {
+    color: #CBC41A;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FFFA87;
+    border-radius: 10px;
+}
+
+.desc-DetailPengumpulan-Menunggu {
+    color: #4B4B4B;
+    font-family: 'Poppins';
+}
+
+.judul-DetailPengumpulan-Menunggu {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.nama-DetailPengumpulan-Guru {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #797979;
+}
+
+.card-DetailPengumpulan-Menunggu-right {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.dateDetailDesc {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: #797979;
+}
+
+/*  */
+
+.card-DetailPengumpulan-Selesai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.card-DetailPengumpulan-Selesai-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.img-DetailPengumpulan-Selesai {
+    color: #84E063;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #D5FFC6;
+    border-radius: 10px;
+}
+
+.desc-DetailPengumpulan-Selesai {
+    color: var(--color-aksen);
+    font-family: 'Poppins';
+}
+
+.judul-DetailPengumpulan-Selesai {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.Menunggu-DetailPengumpulan-Guru {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #797979;
+}
+
+.card-DetailPengumpulan-Selesai-right {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.deadline-timePengumpulan {
+    margin-left: 30px;
+    color: var(--color-aksen);
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/*  */

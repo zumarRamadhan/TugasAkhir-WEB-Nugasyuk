@@ -1,4 +1,4 @@
-import '../cssAll/guru/BerandaGuru.css';
+import '../cssAll/guru/FormMateriKBM.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
@@ -6,11 +6,13 @@ import NavbarGuru from '../component/NavbarGuru';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import ImgProfil from '../assets/profil-guru.svg';
+import damiImgMurid from '../assets/damiImgMurid.png';
 
-function BerandaGuru(){
-    const navText = "Beranda";
+
+function FormMateriKBM(){
+    const navText = "Tambah Materi";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -64,46 +66,170 @@ function BerandaGuru(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
-    const savedItem = sessionStorage.getItem("token");
-    
-    const token = JSON.parse(savedItem)
+    const fileInputRef = useRef(null);
+    const fileInputLabelRef = useRef(null);
 
-    const [guru, setUsers] = useState([])
+    const handleFileInputChange = () => {
+        const fileInput = fileInputRef.current;
+        const fileInputLabel = fileInputLabelRef.current;
 
-    const fetchGuruData = () => {
-        fetch("https://amanah-furniture.site/api/dataguru", {
-            method: "GET",
-            headers: {
-            "Content-Type": "application/json",
-            'Origin': 'https://amanah-furniture.site/api/dataguru',
-            Authorization: `Bearer ${token}`,
-            },
-        })
-          .then(response => {
-            return response.json()
-          })
-          .then(data => {
-            setUsers(data)
-          })
-      }
+        if (fileInput.files && fileInput.files.length > 0) {
+        fileInputLabel.textContent = fileInput.files[0].name;
+        } else {
+        fileInputLabel.textContent = 'Pilih File';
+        }
+    };
 
-      useEffect(() => {
-        fetchGuruData()
-      }, [])
+    useEffect(() => {
+        const fileInputLabel = fileInputLabelRef.current;
+        fileInputLabel.textContent = 'Pilih File';
+    }, []);
 
-    const logoutClick = () =>{
-        fetch("https://amanah-furniture.site/api/logout", {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-                },
-            })
+    const valueDataKelas = [
+        {
+            id: 1,
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+            // assets: cardMapel1,
+        },
+        {
+            id: 2,
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel2,
+        },
+        {
+            id: 3,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel3,
+        },
+        {
+            id: 4,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel4,
+        },
+        {
+            id: 5,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel5,
+        },
+        {
+            id: 6,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel6,
+        },
+        {
+            id: 7,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel7,
+        },
+        {
+            id: 8,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel8,
+        },
+        {
+            id: 9,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel9,
+        },
+        {
+            id: 10,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel10,
+        },
+    ];
 
-            sessionStorage.removeItem('token');
-            window.location.replace('/login')
-    }
+    // data materi kbm berisi nama materi, tanggal, guru
 
+    const valueDataMateriKbm = [
+        {
+            id: 1,
+            namaMateri: 'Materi Application Letter',
+            tanggal: '8 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 2,
+            namaMateri: 'Materi Reading',
+            tanggal: '5 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 3,
+            namaMateri: 'Materi Laporan B. Inggris',
+            tanggal: '12/12/2021',
+            guru: '1 Mar 2023',
+        },
+    ];
+
+    // data tugas kbm berisi nama tugas, tanggal, deadline, guru
+
+    const valueDataTugasKbm = [
+        {
+            id: 1,
+            namaTugas: 'Application Letter',
+            tanggal: '8 Mar 2023',
+            deadline: '8 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 2,
+            namaTugas: 'Reading',
+            tanggal: '5 Mar 2023',
+            deadline: '5 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+        {
+            id: 3,
+            namaTugas: 'Laporan B. Inggris',
+            tanggal: '1 Mar 2023',
+            deadline: '1 Mar 2023',
+            guru: 'Budiono, S.Pd',
+        },
+    ];  
+
+    const tahunAjaran = [
+        {
+            id: 1,
+            tahun: '2021/2022',
+            semester : '1',
+        },
+        {
+            id: 2,
+            tahun: '2021/2022',
+            semester : '2',
+        },
+        {
+            id: 3,
+            tahun: '2022/2023',
+            semester : '1',
+        },
+        {
+            id: 4,
+            tahun: '2022/2023',
+            semester : '2',
+        },
+    ];
+        
     return(
         <div>
             <aside>
@@ -112,11 +238,11 @@ function BerandaGuru(){
                 nugasyuk
             </h1>
             <ul>
-                <li className='active' onClick={() => navigate('/guru/berandaguru')}>
+                <li onClick={() => navigate('/guru/berandaguru')}>
                     <Icon icon="iconoir:home-simple" width="20" />
                     Beranda
                 </li>
-                <li onClick={() => navigate('/guru/pagekbm')} >
+                <li className='active' onClick={() => navigate('/guru/pagekbm')} >
                     <Icon icon="ph:chalkboard-teacher" width="20" />
                     KBM
                 </li>
@@ -124,7 +250,7 @@ function BerandaGuru(){
                     <Icon icon="uiw:date" width="18"/>
                     Pengumpulan
                 </li>
-                <li onClick={() => navigate('/guru/pagejadwalkbm')}>
+                <li onClick={() => navigate('/guru/pageJadwalKbm')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Jadwal KBM
                 </li>
@@ -132,56 +258,69 @@ function BerandaGuru(){
             </aside>
             <div className="container-content">
                 <NavbarGuru text={navText}/>
-                <main className='main'>
-                    <div className="header-dashboard">
-                        <div className="head-left">
-                            <h1 className="intro-head">Halo <span className="name-admin">{guru.nama_guru}</span></h1>
-                            <p className="desc-head" style={{width:"550px"}}> Selamat datang di nugasyuk, anda bisa memonitoring siswa, memberikan materi dan tugas.</p>
-                        </div>
-                        <div className="head-right">
-                            <div className="kotak1"></div>
-                        </div>
-                    </div>
+                <div className="main">
+                    {/* <div className="content-formMateriKBM">
+                        <form action="" className="container-formMateriKBM">
 
-                    <div className="con-content">
-                        <div className="content-indiecator" style={{ background: "#2AD5A2" }}>
-                            <div className="icon-indie" style={{ color: "#2AD5A2" }}>
-                                <Icon icon="fluent:class-24-regular" width="40" />
+                        </form>
+                    </div> */}
+                    <div className="content-formKbm">
+                        <form action="" className="container-formKbm">
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Judul Materi</div>
+                                <input type="text" className="input-formKbm" placeholder='judul materi'/>
                             </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Kelas Yang Diajar</p>
-                                <p className="value-indie">
-                                <span>{guru.jumlah_kelas}</span> Kelas
-                                </p>
+                            
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Deskrips Materi</div>
+                                <textarea name="" id="" rows="7" className="input-formKbm" placeholder='deskripsi materi'></textarea>
                             </div>
-                        </div>
-                        
-                        <div className="content-indiecator" style={{ background: "#2A93D5" }}>
-                            <div className="icon-indie" style={{ color: "#2A93D5" }}>
-                                <Icon icon="ri:book-line" width="40"/>
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Materi Yang Diberikan</p>
-                                <p className="value-indie">
-                                <span>{guru.jumlah_materi}</span> Materi
-                                </p>
-                            </div>
-                        </div>
 
-                        <div className="content-indiecator" style={{ background: "#FF71A4" }}>
-                            <div className="icon-indie" style={{ color: "#FF71A4" }}>
-                                <Icon icon="tabler:clipboard-text" width="40" />
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Link Materi</div>
+                                <input type="text" className="input-formKbm" placeholder='link materi'/>
                             </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Tugas Yang Diberikan</p>
-                                <p className="value-indie">
-                                <span>{guru.jumlah_tugas}</span> Tugas
-                                </p>
+
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">File Materi</div>
+                                <div className="input-formKbm">
+                                    <input type="file" id="fileInput"  style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileInputChange} accept=".pdf,.jpg,.jpeg,.png,.docx"/>
+                                    <label htmlFor="fileInput" className='fileInput' id="fileInputLabel" ref={fileInputLabelRef}>
+                                        File Materi
+                                    </label>
+                                </div>
                             </div>
-                        </div>
+                            <div className="con-formKbm">
+                                <div className="title-formKbm">Tahun ajaran</div>
+                                <select id="" name="" className='selectForm'>
+                                    <option hidden>-- Tahun ajaran --</option>
+                                    {tahunAjaran.map((data) => (
+                                        <option>{data.tahun} / semester {data.semester}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* <div className="con-formKbm">
+                                <div className="title-formKbm">Jam ke</div>
+                                <select id="" name="" className='selectForm'>
+                                    {dataJamPelajaran.map((data) => (
+                                        <option>{data.jamKe}</option>
+                                    ))}
+                                </select>
+                            </div> */}
+                            
+                            {/* <div className="con-formKbm">
+                                <div className="title-formKbm">Jumlah jam</div>
+                                <input type="text" className="input-formKbm" placeholder='Jumlah jam'/>
+                            </div> */}
+
+                            <div className="con-btn-form">
+                                <button type="submit" className="btn-form" style={{cursor: "pointer"}}>Simpan perubahan</button>
+                            </div>
+                        </form>
                     </div>
-                </main>
-            </div>
+                </div>
+            </div>{/* end body */}
 
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
@@ -192,7 +331,7 @@ function BerandaGuru(){
                     <p className="desc-logout">Anda yakin ingin keluar?</p>
                     <div className="con-btn-logout">
                         <button type="button" className="btn-batal">Batal</button>
-                        <button type="button" onClick={logoutClick} className="btn-keluar">Keluar</button>
+                        <button type="button" className="btn-keluar">Keluar</button>
                     </div>
                 </div>
             </div>
@@ -257,4 +396,4 @@ function BerandaGuru(){
     );
 }
 
-export default BerandaGuru
+export default FormMateriKBM

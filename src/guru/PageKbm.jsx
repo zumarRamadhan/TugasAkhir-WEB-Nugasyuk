@@ -63,6 +63,73 @@ function PageKbm(){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
+
+    const valueDataKelas = [
+        {
+            id: 1,
+            kelas: '10',
+            jurusan: 'pplg',
+            tingkatan: '1',
+            // assets: cardMapel1,
+        },
+        {
+            id: 2,
+            kelas: "10",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel2,
+        },
+        {
+            id: 3,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel3,
+        },
+        {
+            id: 4,
+            kelas: "11",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel4,
+        },
+        {
+            id: 5,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "1",
+            // assets: cardMapel5,
+        },
+        {
+            id: 6,
+            kelas: "12",
+            jurusan: "pplg",
+            tingkatan: "2",
+            // assets: cardMapel6,
+        },
+        {
+            id: 7,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel7,
+        },
+        {
+            id: 8,
+            kelas: "10",
+            jurusan: "animasi",
+            tingkatan: "2",
+            // assets: cardMapel8,
+        },
+        {
+            id: 9,
+            kelas: "11",
+            jurusan: "animasi",
+            tingkatan: "1",
+            // assets: cardMapel9,
+        },
+    ];
+
     return(
         <div>
             <aside>
@@ -83,7 +150,7 @@ function PageKbm(){
                     <Icon icon="uiw:date" width="18"/>
                     Pengumpulan
                 </li>
-                <li onClick={() => navigate('/guru/pagejadwalkbm')}>
+                <li onClick={() => navigate('/guru/pageJadwalKbm')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Jadwal KBM
                 </li>
@@ -91,30 +158,116 @@ function PageKbm(){
             </aside>
             <div className="container-content">
                 <NavbarGuru text={navText}/>
-                    <div className="main">
-                        <div className='header-guru'>
-                            <div className='header-guru-left'>
-                                <select id='kelas' name='kelas'>
-                                    <option value="semua" selected>-- Semua Kelas --</option>
-                                    <option value="jurusan">11 PPLG 1</option>
-                                    <option value="jurusan">11 PPLG 2</option>
-                                    <option value="jurusan">11 ANIM 1</option>
-                                    <option value="jurusan">11 ANIM 2</option>
-                                    <option value="jurusan">11 DKV 1</option>
-                                    <option value="jurusan">11 DKV 2</option>
-                                </select>
-
-                                <form className='search-box'>
-                                    <input type='text' placeholder='Cari...'/>
-                                    <button type='submit'>
-                                        <Icon icon="material-symbols:search-rounded" width="20"></Icon>
-                                    </button>
-                                </form>
-                            </div>
+                <div className="main">
+                    <div className="header-pageKbm-Guru">
+                        <div className="header-pageKbm-left">
+                            <select id="pageKbm" name="pageKbm">
+                                {valueDataKelas.map((data) => (
+                                    <option value={data.jurusan + data.tingkatan + data.kelas}>{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</option>
+                                ))}
+                            </select>
                         </div>
+                        <form className="search-box">
+                            <input type="text" placeholder="Cari..." />
+                            <button>
+                            <Icon
+                                icon="material-symbols:search-rounded"
+                                width="20"
+                            ></Icon>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div className="content-pageKbm-Guru" onClick={() => navigate('/guru/pagekbm/detail')}>
+                        {valueDataKelas.map((data) => (
+                        <div className="card-pageKbm-Guru" style={{cursor: "pointer"}}>
+                            <div className="card-pageKbm-Guru-left">
+                                <div className="img-pageKbm-Guru">
+                                    <Icon icon="fluent:class-24-regular" width={40}/>
+                                </div>
+                                <div className="desc-pageKbm-Guru">
+                                    <p className="title-pageKbm-Guru">Kelas</p>
+                                    <p className="kelas-pageKbm-Guru">{data.kelas} {data.jurusan.toUpperCase()} {data.tingkatan}</p>
+                                </div>
+                            </div>
+                            <Icon icon="ic:round-navigate-next" width={30} color='#2A93D5'/>
+                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
+
+            <div className="popup-logout" id="popup-logout">
+                <div className="detail-logout">
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeLogoutPopup}/>
+                    <div className="image-logout">
+                        <img src={ImgLogout} alt="" className="img-logout" />
+                    </div>
+                    <p className="desc-logout">Anda yakin ingin keluar?</p>
+                    <div className="con-btn-logout">
+                        <button type="button" className="btn-batal">Batal</button>
+                        <button type="button" className="btn-keluar">Keluar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="popup-forget" id="popup-forget">
+                <form action="" className="detail-forget-password">
+                    <div className="navbar-detail-forget">
+                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeForgetPopupAndClearInput}/>
+                        <h2>Ganti Password</h2>
+                    </div>
+                    <p className="judul-form">Sandi lama</p>
+                    <div className="con-form-password">
+                        <img src={passIcon} alt=""/>
+                        <input type={passwordType} id="password" placeholder="*********" className="input-password"/>
+                        <button type="button" className="btn-mata" onClick={togglePasswordVisibility}><img src={mataIcon} alt=""/></button>
+                    </div>
+                    <p className="judul-form">Sandi baru</p>
+                    <div className="con-form-password">
+                        <img src={passIcon} alt=""/>
+                        <input type={passwordTypeNew} id="newPassword" placeholder="*********" className="input-password"/>
+                        <button type="button" className="btn-mata" onClick={togglePasswordVisibilityNew}><img src={mataIcon} alt=""/></button>
+                    </div>
+                    <p className="judul-form">Konfirmasi sandi baru</p>
+                    <div className="con-form-password">
+                        <img src={passIcon} alt=""/>
+                        <input type={passwordTypeConfirm} id="confirmPassword" placeholder="*********" className="input-password"/>
+                        <button type="button" className="btn-mata" onClick={togglePasswordVisibilityConfirm}><img src={mataIcon} alt=""/></button>
+                    </div>
+
+                    <button type="submit" className="btn-simpan">Simpan sandi baru</button>
+                </form>
+            </div>
+
+            <div className="detail-profile">
+                <div className='content-detail'>
+                    <div className="navbar-detail">
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
+                    <h2>Profil</h2>
+                    </div>
+                    <div className="detail-image-profile">
+                        <img src={ImgProfil} alt="" className="detail-img-profile" />
+                    </div>
+                    <p className="judul-detail">Email</p>
+                    <p className="value-detail">budiono@smkrus.sch.id</p>
+                    <p className="judul-detail">Nama</p>
+                    <p className="value-detail">Budiono, S.Pd</p>
+                    <p className="judul-detail">Pengampu</p>
+                    <p className="value-detail">Bahasa Inggris</p>
+                </div>
+                <div className="con-btn-detail-profile">
+                    <button className="forget-password" id="btn-forget-pass" onClick={showForgetPopup}>
+                        <Icon icon="material-symbols:key-outline-rounded" width="30" />
+                        <p>Ganti Password</p>
+                    </button>
+                    <button className="logout" id="btn-logout" onClick={showLogoutPopup}>
+                        <Icon icon="material-symbols:logout-rounded" width="30" />
+                        <p>Logout</p>
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }
 

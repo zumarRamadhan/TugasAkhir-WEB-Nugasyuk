@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.header-Pengumpulan-Guru {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-Pengumpulan-left {
+    display: flex;
+    gap: 15px;
+}
+
+.header-Pengumpulan-right {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--color-aksen);
+}
+
+.content-Pengumpulan-Guru {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-Pengumpulan-Guru {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.card-Pengumpulan-Guru-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.img-Pengumpulan-Guru {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.image-Pengumpulan-Guru {
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
+.name-card-Pengumpulan-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--color-aksen);
+}
+
+.email-card-Pengumpulan-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #4B4B4B;
+}
+
+.detaiKelas-Pengumpulan-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 4px 15px;
+    background: var(--color-sekunder);
+    color: var(--color-aksen);
+    border-radius: 5px;
+}

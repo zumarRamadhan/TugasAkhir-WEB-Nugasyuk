@@ -29,8 +29,19 @@ import PageBuatJanji from './murid/PageBuatJanji';
 // end role murid
 // role guru
 import BerandaGuru from './guru/BerandaGuru';
+
 import KBM from './guru/PageKbm';
+import DetailKbm from './guru/DetailKbm';
+import DetailMateriKbm from './guru/DetailMateriKbm';
+import FormMateriKBM from './guru/FormMateriKBM';
+import DetailTugasKbm from './guru/DetailTugasKbm';
+import FormTugasKBM from './guru/FormTugasKBM';
+
 import PagePengumpulan from './guru/PagePengumpulan';
+import DetailPengumpulan from './guru/DetailPengumpulan';
+import DetailSelesai from './guru/DetailSelesai';
+import DetailMenunggu from './guru/DetailMenunggu';
+
 import Jadwal from './guru/JadwalKbm';
 // end role guru
 // role wali murid
@@ -46,6 +57,7 @@ import PageChat from './guruBk/PageChat';
 // end role bk
 import Notfound from './Notfound';
 import MapelMateri from './murid/MapelMateri';
+
 
 
 function App() {
@@ -79,6 +91,9 @@ function App() {
         <Route path="/murid/pagekbm" element={<PageJadwal/>} /> 
         <Route path="/murid/pagemapel" element={<PageMapel/>} /> 
         <Route path="/murid/pagekonseling" element={<Konseling/>} /> 
+        <Route path="/murid/pagemapel/mapelmateri" element={<Materi/>} /> 
+        <Route path="/murid/pagemapel/detailmateri" element={<DetailMateri/>} /> 
+        <Route path="/murid/pagemapel/detailtugas" element={<DetailTask/>} /> 
         <Route path="/murid/pagekonseling/buatjanji" element={<PageBuatJanji/>} /> 
         <Route path="/murid/pagemapel/mapelmateri" element={<Materi/>} /> 
         <Route path="/murid/detailmateri" element={<DetailMateri/>} /> 
@@ -87,8 +102,20 @@ function App() {
         {/* end role murid */}
         {/* role guru */}
         <Route path='/guru/berandaguru' element={<BerandaGuru/>}/>
+
         <Route path='/guru/pagekbm' element={<KBM/>}/>
+        <Route path='/guru/pagekbm/detail' element={<DetailKbm/>}/>
+
+        <Route path='/guru/pagekbm/detail/detailmateri' element={<DetailMateriKbm/>}/>
+        <Route path='/guru/pagekbm/detail/formmateri' element={<FormMateriKBM/>}/>
+        <Route path='/guru/pagekbm/detail/detailtugas' element={<DetailTugasKbm/>}/>
+        <Route path='/guru/pagekbm/detail/formtugas' element={<FormTugasKBM/>}/>
+
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
+        <Route path='/guru/pagepengumpulan/detail' element={<DetailPengumpulan/>}/>
+        <Route path='/guru/pagepengumpulan/detail/detailmenunggu' element={<DetailMenunggu/>}/>
+        <Route path='/guru/pagepengumpulan/detail/detailselesai' element={<DetailSelesai/>}/
+        >
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>
         {/* end role guru */}
         {/* role wali murid */}
@@ -103,7 +130,8 @@ function App() {
         <Route path='/bk/chat' element={<PageChat/>}/>
         {/* end role bk */}
 
-        <Route path="/*" element={<Notfound/>} />  
+        <Route path="/*" element={<Notfound/>} />
+        <Route path="/" element={<Login/>} />  
       </Routes>
     </Router>
   );

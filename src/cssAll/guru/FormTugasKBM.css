@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.switch-inputTugas input[type="radio"] {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
+
+  .switch-inputTugas label{
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .con-radio{
+    display: flex;
+    gap: 15px;
+  }

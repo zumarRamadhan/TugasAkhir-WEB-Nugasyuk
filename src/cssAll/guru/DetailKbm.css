@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.header-content{
+    display: flex;
+    gap: 15px;
+}
+
+.switch-container {
+    width: max-content;
+    display: flex;
+    gap: 2px;
+    margin-bottom: 20px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: var(--color-sekunder);
+}
+
+#btn-materiKbm, #btn-tugasKbm {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 5px 43px;
+    border-radius: 5px;
+    background-color: var(--color-sekunder);
+    color: var(--color-aksen);
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+#btn-materiKbm.activeDetailKbm, #btn-tugasKbm.activeDetailKbm {
+    background-color: var(--color-aksen);
+    color: var(--color-primer);
+    /* transition-delay: 0.9s; */
+}
+
+.btn-add-materi, .btn-add-tugas{
+    display: flex;
+    background: var(--color-aksen);
+    color: var(--color-primer);
+    border: none;
+    padding: 13px 35px;
+    width: max-content;
+    height: 50px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 10px;
+    gap: 5px;
+}
+
+.btn-add-materi:hover, .btn-add-tugas:hover{
+    background: #1D77AF;
+}
+
+.btn-add-materi p, .btn-add-tugas p{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: #FFFFFF;
+}
+
+/* #btn-materiKbm:hover, #btn-tugasKbm:hover {
+    background-color: #2a93d5;
+    color: #fff;
+    transition: 0.1s ease-in-out;
+} */
+
+.con-DetailKbm {
+    display: none;
+}
+
+.con-DetailKbm-Materi{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.con-DetailKbm-Tugas{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-DetailKbm-Materi {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.card-DetailKbm-Materi-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.img-DetailKbm-Materi {
+    color: var(--color-aksen);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #D8F0FF;
+    border-radius: 10px;
+}
+
+.desc-DetailKbm-Materi {
+    color: var(--color-aksen);
+    font-family: 'Poppins';
+}
+
+.judul-DetailKbm-Materi {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.materi-DetailKbm-Guru {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #797979;
+}
+
+.card-DetailKbm-Materi-right {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.dateDetailDesc {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: #797979;
+}
+
+/*  */
+
+.card-DetailKbm-Tugas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.card-DetailKbm-Tugas-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.img-DetailKbm-Tugas {
+    color: var(--color-aksen);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #D8F0FF;
+    border-radius: 10px;
+}
+
+.desc-DetailKbm-Tugas {
+    color: var(--color-aksen);
+    font-family: 'Poppins';
+}
+
+.judul-DetailKbm-Tugas {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.materi-DetailKbm-Guru {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #797979;
+}
+
+.card-DetailKbm-Tugas-right {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.deadline-timeTugas {
+    margin-left: 30px;
+    color: var(--color-aksen);
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/*  */

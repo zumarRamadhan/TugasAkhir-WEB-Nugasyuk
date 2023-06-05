@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.header-content-detailSelesai {
+    margin-bottom: 30px;
+}
+
+.header-detailSelesai-left {
+    display: flex;
+    gap: 15px;
+}
+
+.header-detailSelesai-right {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--color-aksen);
+}
+
+.content-detailSelesai-Guru {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-detailSelesai-Guru {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.card-detailSelesai-Guru-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.img-detailSelesai-Guru {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.image-detailSelesai-Guru {
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
+.name-card-detailSelesai-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--color-aksen);
+}
+
+.email-card-detailSelesai-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #4B4B4B;
+}
+
+.detaiKelas-detailSelesai-Guru {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 4px 15px;
+    background: var(--color-sekunder);
+    color: var(--color-aksen);
+    border-radius: 5px;
+}
+
+/*  */
+
+a {
+    text-decoration: none;
+    width: fit-content;
+}
+
+.con-card-detailSelesai {
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.header-card-detailSelesai {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.left-header-card-detailSelesai {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.icon-header-card-detailSelesai {
+    background: #D5FFC6;
+    border-radius: 10px;
+    padding: 15px;
+    color: #84E063;
+}
+
+.title-header-card-detailSelesai {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--color-aksen);
+}
+
+.guru-header-card-detailSelesai {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #797979;
+}
+
+.right-header-card-detailSelesai {
+    position: absolute;
+    display: flex;
+    gap: 30px;
+    top: 0;
+    right: 0;
+    align-items: center;
+}
+
+.date-header-card-detailSelesai {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #797979;
+}
+
+.icon-options {
+    color: var(--color-aksen);
+}
+
+.desc-card-detailSelesai {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 22px;
+    color: #4B4B4B;
+}
+
+.infoDeadline {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 30px;
+    color: var(--color-aksen);
+}
+
+.con-value-fileOrlink {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-openSitus {
+    background: var(--color-aksen);
+    border-radius: 10px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--color-primer);
+    cursor: pointer;
+    transition: 0.3s;
+    height: max-content;
+}
+
+.btn-openSitus:hover {
+    background: #1D77AF;
+    color: var(--color-primer);
+}
+
+.value-link, .value-file {
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    padding: 10px 78px 10px 10px;
+    gap: 20px;
+    cursor: pointer;
+    width: max-content;
+}
+
+#value-link, #value-file {
+    display: flex;
+    align-items: center;
+}
+
+.value-link iframe {
+    width: 160px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.title-fileOrlink {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #4B4B4B;
+}
+
+.link-detailSelesai {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #797979;
+}
+
+.link-detailSelesai span {
+    color: var(--color-aksen);
+}
+
+.con-soal-jawaban {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.icon-value-file {
+    padding: 25.5px;
+    border-radius: 5px;
+    background: var(--color-aksen);
+    color: var(--color-primer);
+}
+
+.title-value-file {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #4B4B4B;
+}
+
+.file-detailSelesai {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #797979;
+}
+
+.file-detailSelesai span {
+    color: var(--color-aksen);
+}
+
+.sectionJawaban {
+    margin-top: 40px;
+    border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    padding: 15px;
+    width: max-content;
+}
+
+.title-sectionJawaban {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #4B4B4B;
+}
+
+.btn-collection-confirmation {
+    margin-top: 30px;
+    border-radius: 5px;
+    background: var(--color-aksen);
+    padding: 9px 54px;
+    width: 100%;
+    line-height: 22px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .15s ease-in-out;
+    color: var(--color-primer);
+}
+
+.btn-collection-confirmation:hover {
+    background: #1D77AF;
+}

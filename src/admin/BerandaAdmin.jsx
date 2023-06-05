@@ -67,7 +67,7 @@ function BerandaAdmin (){
     function togglePasswordVisibilityConfirm() {
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
-    
+
     const savedItem = sessionStorage.getItem("token");
     
     const token = JSON.parse(savedItem)
@@ -102,15 +102,15 @@ function BerandaAdmin (){
 
     const logoutClick = () =>{
         fetch('https://amanah-furniture.site/api/dataadmin',{
-            method: "GET",
-            headers: {
+                method: "GET",
+                headers: {
                 Authorization: `Bearer ${token}`,
                 "Access-Control-Allow-Headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control",
-            },
-        })
+                },
+            })
 
-        sessionStorage.removeItem('token');
-        window.location.replace('/login')
+            sessionStorage.removeItem('token');
+            window.location.replace('/login')
     }
 
   return(

@@ -1,62 +1,65 @@
-.header-guru-left {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --color-primer: #FFFFFF;
+    --color-aksen: #2A93D5;
+    --color-sekunder: #D8F0FF;
+}
+
+.header-pageKbm-Guru {
     display: flex;
     gap: 15px;
 }
 
-.header-guru .header-guru-left .btn-add-guru p {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    /* line-height: 22px; */
-    color: #FFFFFF;
+.content-pageKbm-Guru {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; 
+    width: 100%;
+    margin-top: 30px;
 }
 
-select {
-    width: 250px;
-    height: 50px;
+.card-pageKbm-Guru {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
     padding: 10px;
-    font-size: 15px;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    border: 1px solid #C4C4C4;
-    appearance: none;
-    padding: 10px;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    /* background: url('https://api.iconify.design/ic/round-navigate-next.svg?color=%232a93d5&width=30'); */
-    background-repeat: no-repeat;
-    background-position: calc(100% - 10px) center;
 }
 
-.search-box {
+.card-pageKbm-Guru-left {
     display: flex;
     align-items: center;
-    width: 300px;
-    background-color: #fff;
-    border: 1px solid #c4c4c4;
+    gap: 15px;
+}
+
+.img-pageKbm-Guru {
+    color: var(--color-aksen);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #D8F0FF;
     border-radius: 10px;
-    /* padding: 8px; */
-    height: 50px;
 }
 
-.search-box input[type="text"] {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    padding: 10px;
+.desc-pageKbm-Guru {
+    color: var(--color-aksen);
+    font-family: 'Poppins';
 }
 
-.search-box button[type="submit"] {
-    background-color: #008CBA;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    /* padding: 8px; */
-    margin-left: 5px;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
+.title-pageKbm-Guru {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.kelas-pageKbm-Guru {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
 }
