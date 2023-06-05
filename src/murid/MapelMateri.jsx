@@ -1,18 +1,18 @@
-import '../cssAll/murid/PageTugas.css';
+import '../cssAll/murid/MapelMateri.css';
+import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from "react";
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import NavbarMurid from '../component/NavbarMurid';
 import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState, useEffect } from "react";
-import axios from 'axios';
-import { Shimmer } from 'react-shimmer'
+import AssetsBinggris from '../assets/img-ilustration-binggris.svg';
+import NavbarMurid from '../component/NavbarMurid';
+import imgGuru from '../assets/profil-guru.svg'
 
-function PageTugas(){
-    const navText = "Tugas";
+function MapelMateri(){
+    const navText = "B. Inggris";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -71,214 +71,194 @@ function PageTugas(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
+    const [activeContent, setActiveContent] = useState("material-kbm");
 
-    const saveToken = sessionStorage.getItem('token');
+    const showMaterial = () => {
+        setActiveContent("material-kbm");
+    };
 
-    const [dataTugas, setDataTugas] = useState([]);
-
-    const [isLoading, setisLoading] = useState(false);
-    const [isError, setisError] = useState(false);
-
-    useEffect(() => {
-        setisLoading(true);
-        axios
-        .get('https://www.nugasyuk.my.id/api/murid/tugas', { 
-            headers : {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${saveToken}`
-            }
-         } )
-        .then(result => {
-            console.log('data API', result.data);
-            // const responseAPI = result.data;
-
-            setDataTugas(result.data.tugas);
-            setisLoading(false);
-        })
-        .catch(err => {
-            console.log('terjadi kesalahan: ', err)
-            setisError(true);
-            setisLoading(false);
-        })
-    }, [])
-
-    // if (!dataTugas) return <h3>Loading...</h3>;
-
-    if (isLoading)
-     return <div id="load">
-                <div>.</div>
-                <div>.</div>
-                <div>.</div>
-                <div>.</div>
-            </div>;
-    else if (dataTugas && !isError)
+    const showTask = () => {
+        setActiveContent("task-kbm");
+    };
+        
 
     return(
         <div>
-            <aside>
-                <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
-                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
-                    nugasyuk
-                </h1>
-                <ul>
-                    <li onClick={() => navigate('/murid/berandamurid')}>
-                        <Icon icon="iconoir:home-simple" width="20" />
-                        Beranda
-                    </li>
-                    <li className='active' onClick={() => navigate('/murid/pagetugas')} >
-                        <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
-                        Tugas
-                    </li>
-                    <li onClick={() => navigate('/murid/pagekbm')}>
-                        <Icon icon="uiw:date" width="18"/>
-                        Jadwal KBM
-                    </li>
-                    <li onClick={() => navigate('/murid/pagemapel')}>
-                        <Icon icon="fluent-mdl2:education" width="18"/>
-                        Mata Pelajaran
-                    </li>
-                    <li onClick={() => navigate('/murid/pagekonseling')}>
-                        <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
-                        Konseling
-                    </li>
-                </ul>
+             <aside>
+            <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
+                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                nugasyuk
+            </h1>
+            <ul>
+                <li onClick={() => navigate('/murid/berandamurid')}>
+                    <Icon icon="iconoir:home-simple" width="20" />
+                    Beranda
+                </li>
+                <li onClick={() => navigate('/murid/pagetugas')} >
+                    <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
+                    Tugas
+                </li>
+                <li onClick={() => navigate('/murid/pagekbm')}>
+                    <Icon icon="uiw:date" width="18"/>
+                    Jadwal KBM
+                </li>
+                <li className='active' onClick={() => navigate('/murid/pagemapel')}>
+                    <Icon icon="fluent-mdl2:education" width="18"/>
+                    Mata Pelajaran
+                </li>
+                <li onClick={() => navigate('/murid/pagekonseling')}>
+                    <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
+                    Konseling
+                </li>
+            </ul>
             </aside>
             <div className="container-content">
                 <NavbarMurid text={navText}/>
                 <div className="main">
-                    <div className='header-task-student'>
-                        <div className='header-task-student-left'>
-                            <select id='guru' name='guru'>
-                                <option value="semua" selected>-- Semua Tugas --</option>
-                                <option value="task">Tugas selesai dalam deadline</option>
-                                <option value="nonproduktif">Tugas selesai lewat deadline</option>
-                                <option value="bk">Tugas belum selesai dalam deadline</option>
-                                <option value="bk">Tugas belum selesai lewat deadline</option>
-                                <option value="bk">Menunggu konfirmasi guru</option>
-                            </select>
-
-                            <select id='guru' name='guru'>
-                                <option value="semua" selected>-- Semua Mapel --</option>
-                                <option value="produktif">Produktif</option>
-                                <option value="nonproduktif">Normadaf</option>
-                            </select>
-
-                            <form className='search-box'>
-                                <input type='text' placeholder='Cari...'/>
-                                <button type='submit'>
-                                    <Icon icon="material-symbols:search-rounded" width="20"></Icon>
-                                </button>
-                            </form>
+                    <div className="con-content-subject">
+                        <div className="content-subject" style={{background: "linear-gradient(to bottom right, #8287F8, #555AD3)"}}>
+                            <div className="content-subject-left">
+                                <p className="name-subject">
+                                    B.Inggris
+                                </p>
+                                <p className="name-teacher">
+                                    Budiono, S.Pd
+                                </p>
+                            </div>
+                            <img src={AssetsBinggris} alt="" className="img-assets-subject" />
+                        </div>
+                        <div className="content-subject-2">
+                            <img src={imgGuru} alt="" className="img-subject-2" />
+                            <p className="name-teacher-2">Budiono, S.Pd</p>
                         </div>
                     </div>
-                    
-                    <div className="content-task">
-                        {dataTugas && dataTugas.map((listTugas => (
-                            <div className="card-task" style={{ cursor: "pointer"}} key={listTugas.id}>
-                                <div className="indiecator-left">
-                                    <div className="icon-indie-information" style={{ background: "#DDDDDD" }}>
-                                        <Icon icon="uiw:time-o" width="30" style={{ color: "#797979" }}/>
-                                    </div>
-                                    <div className="desc-indie">
-                                        <p className="title-indie-information">{listTugas.soal}</p>
-                                        <p className="value-indie-information">{listTugas.nama_guru}</p>
-                                    </div>
-                                </div>
-                                <div className="indiecator-right">
-                                    <p className="time-upload">{listTugas.date}</p>
-                                    <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>{listTugas.deadline}</span></p>
-                                    <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
-                                </div>
-                            </div>
-                        )))}
+                    <div className='dropdown-task'>
+                        <div className="switch-container">
+                            <button
+                                id='btn-materiKbm'
+                                className={activeContent === "material-kbm" ? "activeDetailKbm" : ""}
+                                onClick={showMaterial}
+                                >
+                                Materi
+                            </button>
+                            <button
+                                id='btn-tugasKbm'
+                                className={activeContent === "task-kbm" ? "activeDetailKbm" : ""}
+                                onClick={showTask}
+                                >
+                                Tugas
+                            </button>
+                        </div>
+
+                        <form className='search-box'>
+                            <input type='text' placeholder='Cari...'/>
+                            <button type='submit'>
+                                <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                            </button>
+                        </form>
                     </div>
 
-                        {/* <div className="card-task" style={{ cursor: "pointer"}}>
+                    <div className="con-material material-kbm" style={{ display: activeContent === "material-kbm" ? "block" : "none" }}>
+                        <div className="card-material" style={{ cursor: "pointer"}}>
                             <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ background: "#FFFA87" }}>
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Application Letter</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">8 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Reading</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">5 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#D8F0FF" }}>
+                                    <Icon icon="ri:book-line" width="30" style={{color: "#2A93D5"}}/>
+                                </div>
+                                <div className="desc-indie">
+                                    <p className="material-name">Materi Laporan B. Inggris</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
+                                </div>
+                            </div>
+                            <div className="indiecator-right">
+                                <p className="time-upload">1 Mar 2023</p>
+                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className="con-material taskKbm" style={{ display: activeContent === "task-kbm" ? "block" : "none" }}>
+                        <div className="card-material" style={{ cursor: "pointer"}}>
+                            <div className="indiecator-left">
+                                <div className="icon-indie" style={{ background: "#FFFA87" }}>
                                     <Icon icon="uiw:time-o" width="30" style={{ color: "#CBC41A" }}/>
                                 </div>
                                 <div className="desc-indie">
-                                    <p className="title-indie-information">Application Letter</p>
-                                    <p className="value-indie-information">Budiono, S.Pd</p>
+                                    <p className="material-name">Materi Laporan B. Inggris</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
                                 </div>
                             </div>
                             <div className="indiecator-right">
-                                <p className="time-upload">6 Mar 2023</p>
-                                <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>7 Mar 2023</span></p>
+                                <p className="time-upload">1 Mar 2023</p>
                                 <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
                             </div>
                         </div>
 
-                        <div className="card-task" style={{ cursor: "pointer"}}>
+                        <div className="card-material" style={{ cursor: "pointer"}}>
                             <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ background: "#FFC6C6" }}>
-                                    <Icon icon="uiw:time-o" width="30" style={{ color: "#FF3F3F" }}/>
+                                <div className="icon-indie" style={{ background: "#DDDDDD" }}>
+                                    <Icon icon="uiw:time-o" width="30" style={{ color: "#797979" }}/>
                                 </div>
                                 <div className="desc-indie">
-                                    <p className="title-indie-information">Jump</p>
-                                    <p className="value-indie-information">Suep, S.Kom</p>
+                                    <p className="material-name">Materi Reading</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
                                 </div>
                             </div>
                             <div className="indiecator-right">
                                 <p className="time-upload">5 Mar 2023</p>
-                                <p className="deadline-time" style={{color: "#FF3F3F"}}>Deadline : <span>5 Mar 2023</span></p>
                                 <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
                             </div>
                         </div>
 
-                        <div className="card-task" style={{ cursor: "pointer"}}>
+                        <div className="card-material" style={{ cursor: "pointer"}}>
                             <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ background: "#FFC6C6" }}>
-                                    <Icon icon="material-symbols:check-small-rounded" width="50" style={{ color: "#FF3F3F" }}/>
-                                </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information">Project Monitoring Suhu</p>
-                                    <p className="value-indie-information">Bagoes, S.Kom</p>
-                                </div>
-                            </div>
-                            <div className="indiecator-right">
-                                <p className="time-upload">5 Mar 2023</p>
-                                <p className="deadline-time" style={{color: "#FF3F3F"}}>Deadline : <span>5 Mar 2023</span></p>
-                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
-                            </div>
-                        </div>
-
-                        <div className="card-task" style={{ cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ background: "#D5FFC6" }}>
+                                <div className="icon-indie" style={{ background: "#D5FFC6" }}>
                                     <Icon icon="material-symbols:check-small-rounded" width="50" style={{ color: "#84E063" }}/>
                                 </div>
                                 <div className="desc-indie">
-                                    <p className="title-indie-information">Aksara Jawa</p>
-                                    <p className="value-indie-information">Sumiyati, S.Pd</p>
+                                    <p className="material-name">Materi Application Letter</p>
+                                    <p className="teacher-name">Budiono, S.Pd</p>
                                 </div>
                             </div>
                             <div className="indiecator-right">
-                                <p className="time-upload">5 Mar 2023</p>
-                                <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>5 Mar 2023</span></p>
+                                <p className="time-upload">8 Mar 2023</p>
                                 <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
                             </div>
                         </div>
-                        
-                        <div className="card-task" style={{ cursor: "pointer"}}>
-                            <div className="indiecator-left">
-                                <div className="icon-indie-information" style={{ background: "#D5FFC6" }}>
-                                    <Icon icon="material-symbols:check-small-rounded" width="50" style={{ color: "#84E063" }}/>
-                                </div>
-                                <div className="desc-indie">
-                                    <p className="title-indie-information">Aksara Jawa</p>
-                                    <p className="value-indie-information">Sumiyati, S.Pd</p>
-                                </div>
-                            </div>
-                            <div className="indiecator-right">
-                                <p className="time-upload">5 Mar 2023</p>
-                                <p className="deadline-time" style={{color: "#2A93D5"}}>Deadline : <span>5 Mar 2023</span></p>
-                                <Icon icon="ic:round-navigate-next" width="30" className="icon-navigate"/>
-                            </div>
-                        </div> */}
-{/* 
-                    </div> */}
+                    </div>
+
                 </div>
             </div>
 
@@ -328,7 +308,7 @@ function PageTugas(){
             <div className="detail-profile">
                 <div className='content-detail'>
                     <div className="navbar-detail">
-                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer", color: "#4b4b4b"}} onClick={closeDetail}/>
                     <h2>Profil</h2>
                     </div>
                     <div className="detail-image-profile">
@@ -412,9 +392,6 @@ function PageTugas(){
 
         </div>
     );
-    else {
-        return <h1>Something Went Wrong</h1>;
-      }
 }
 
-export default PageTugas;
+export default MapelMateri

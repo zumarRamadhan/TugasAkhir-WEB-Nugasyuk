@@ -2,8 +2,8 @@ import '../cssAll/murid/Mapel.css';
 import { Icon } from '@iconify/react';
 import { useNavigate, Link } from 'react-router-dom';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import Navigation from "../component/NavigationBar";
-import ImgProfil from '../assets/img-profil.svg';
+import Navigation from "../component/NavbarMurid";
+import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
@@ -16,15 +16,21 @@ import cardMapel6 from '../assets/cardAssets/cardMapel6.svg';
 import cardMapel7 from '../assets/cardAssets/cardMapel7.svg';
 import cardMapel8 from '../assets/cardAssets/cardMapel8.svg';
 import cardMapel9 from '../assets/cardAssets/cardMapel9.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
-function MataPelajaran(){
+function PageMapel(){
 
     const navText = "Mata Pelajaran";
     const navigate = useNavigate();
 
     const closeDetail = () => {
         const detailProfile = document.querySelector('.detail-profile');
+        detailProfile.style.transform = 'translateX(350px)';
+    }
+
+    const closeDetailNotif = () => {
+        const detailProfile = document.querySelector('.detail-notif');
         detailProfile.style.transform = 'translateX(350px)';
     }
     
@@ -175,36 +181,77 @@ function MataPelajaran(){
         jurusan === "semua" ? true : data.jurusan === jurusan
     );
 
+    const saveToken = sessionStorage.getItem('token');
+
+    const [dataMapel, setDataMapel] = useState([]);
+
+    const [isLoading, setisLoading] = useState(false);
+    const [isError, setisError] = useState(false);
+
+    useEffect(() => {
+        setisLoading(true);
+        axios
+        .get('https://www.nugasyuk.my.id/api/murid/matapelajaran', { 
+            headers : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`
+            }
+         } )
+        .then(result => {
+            console.log('data API', result.data);
+            // const responseAPI = result.data;
+
+            setDataMapel(result.data.kelas);
+            setisLoading(false);
+        })
+        .catch(err => {
+            console.log('terjadi kesalahan: ', err)
+            setisError(true);
+            setisLoading(false);
+        })
+    }, [])
+
+    // if (!dataTugas) return <h3>Loading...</h3>;
+
+    if (isLoading)
+     return <div id="load">
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+            </div>;
+    else if (dataMapel && !isError)
+
     return(
         <div>
             {/* <Sidebar/> */}
             <aside>
-            <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
-                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
-                nugasyuk
-            </h1>
-            <ul>
-                <li onClick={() => navigate('/murid/berandamurid')}>
-                    <Icon icon="iconoir:home-simple" width="20" />
-                    Beranda
-                </li>
-                <li onClick={() => navigate('/murid/pagetugas')} >
-                    <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
-                    Tugas
-                </li>
-                <li onClick={() => navigate('/murid/pagekbm')}>
-                    <Icon icon="uiw:date" width="18"/>
-                    Jadwal KBM
-                </li>
-                <li className='active' onClick={() => navigate('/murid/pagemapel')}>
-                    <Icon icon="fluent-mdl2:education" width="18"/>
-                    Mata Pelajaran
-                </li>
-                <li onClick={() => navigate('/murid/pagekonseling')}>
-                    <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
-                    Konseling
-                </li>
-            </ul>
+                <h1 className="title-form-login" onClick={() => navigate('/murid/berandamurid')}>
+                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
+                    nugasyuk
+                </h1>
+                <ul>
+                    <li onClick={() => navigate('/murid/berandamurid')}>
+                        <Icon icon="iconoir:home-simple" width="20" />
+                        Beranda
+                    </li>
+                    <li onClick={() => navigate('/murid/pagetugas')} >
+                        <Icon icon="fluent:clipboard-bullet-list-rtl-20-regular" width="25" />
+                        Tugas
+                    </li>
+                    <li onClick={() => navigate('/murid/pagekbm')}>
+                        <Icon icon="uiw:date" width="18"/>
+                        Jadwal KBM
+                    </li>
+                    <li className='active' onClick={() => navigate('/murid/pagemapel')}>
+                        <Icon icon="fluent-mdl2:education" width="18"/>
+                        Mata Pelajaran
+                    </li>
+                    <li onClick={() => navigate('/murid/pagekonseling')}>
+                        <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
+                        Konseling
+                    </li>
+                </ul>
             </aside>
 
             <div className='container-content'>
@@ -212,18 +259,18 @@ function MataPelajaran(){
                 <main className='main'>
                     <div className="content-mapel">
                         <div className="con-card-mapel">
-                            {filterDataMapel.map((data) => (
-                            <div className="card-mapel" key={data.id}>
-                                <img src={data.assets} alt="" className="image-card-mapel" />
+                            {dataMapel && dataMapel.map((listMapel =>  (
+                            <div className="card-mapel" key={listMapel.id} style={{ cursor: "pointer" }}>
+                                <img src={cardMapel1} alt="" className="image-card-mapel" onClick={() => navigate('/murid/pagemapel/mapelmateri')}/>
                                 <div className="content-card-mapel">
                                 <div className="card-mapel-left">
-                                    <p className="mata-pelajaran">{data.namaMapel}</p>
-                                    <p className="nama-guru-mapel">{data.guruPengajar}</p>
+                                    <p className="mata-pelajaran">{listMapel.nama_mapel}</p>
+                                    <p className="nama-guru-mapel">{listMapel.nama_guru}</p>
                                 </div>
-                                <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div>
+                                {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
                                 </div>
                             </div>
-                            ))}
+                            )))}
                         </div>
                     </div>
                 </main>
@@ -282,11 +329,17 @@ function MataPelajaran(){
                         <img src={ImgProfil} alt="" className="detail-img-profile" />
                     </div>
                     <p className="judul-detail">Email</p>
-                    <p className="value-detail">erikayanti@smkrus.sch.id</p>
+                    <p className="value-detail">zumarramadhan@smkrus.sch.id</p>
+                    <p className="judul-detail">Nama Pengguna</p>
+                    <p className="value-detail">Zumar</p>
                     <p className="judul-detail">Nama</p>
-                    <p className="value-detail">Erika Yanti, S.Pd</p>
-                    <p className="judul-detail">Devisi</p>
-                    <p className="value-detail">Admin</p>
+                    <p className="value-detail">Muhammad Zumar Ramadhan</p>
+                    <p className="judul-detail">Jurusan</p>
+                    <p className="value-detail">PPLG</p>
+                    <p className="judul-detail">Kelas</p>
+                    <p className="value-detail">11 PPLG 1</p>
+                    <p className="judul-detail">NIS</p>
+                    <p className="value-detail">04449</p>
                 </div>
                 <div className="con-btn-detail-profile">
                     <button className="forget-password" id="btn-forget-pass" onClick={showForgetPopup}>
@@ -299,8 +352,60 @@ function MataPelajaran(){
                     </button>
                 </div>
             </div>
+
+            <div className="detail-notif">
+                <div className='content-detail-notif'>
+                    <div className="navbar-detail-notif">
+                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer", color: "#4b4b4b"}} onClick={closeDetailNotif}/>
+                        <h2>Notifikasi</h2>
+                    </div>
+                    <p className="day">
+                        Hari Ini
+                    </p>
+                    <div className="notif">
+                        <div className="icon-notif">
+                            <Icon icon="tabler:clipboard-text" width="30" />
+                        </div>
+                        <div className="content-notif">
+                            <div className="name-notif">
+                                <p>Application Letter</p>
+                            </div>
+                            <div className="teacher">
+                                <p>Budiono, S.Pd</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="notif">
+                        <div className="icon-notif">
+                            <Icon icon="tabler:clipboard-text" width="30" />
+                        </div>
+                        <div className="content-notif">
+                            <div className="name-notif">
+                                <p>Sejarah Gojek</p>
+                            </div>
+                            <div className="teacher">
+                                <p>Rini, S.Pd</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="notif">
+                        <div className="icon-notif">
+                            <Icon icon="ri:book-line" width="30"/>
+                        </div>
+                        <div className="content-notif">
+                            <div className="name-notif">
+                                <p>Sejarah Gojek</p>
+                            </div>
+                            <div className="teacher">
+                                <p>Rini, S.Pd</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>   
     );
 }
 
-export default MataPelajaran;
+export default PageMapel;

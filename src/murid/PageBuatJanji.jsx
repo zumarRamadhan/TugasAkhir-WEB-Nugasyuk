@@ -1,6 +1,6 @@
+import '../cssAll/murid/BuatJanji.css';
 import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import '../cssAll/murid/BerandaMurid.css';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import NavbarMurid from '../component/NavbarMurid';
 import ImgProfil from '../assets/profil-murid.svg';
@@ -8,15 +8,19 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
 import { useState } from "react";
+import Calendar from 'react-calendar';
 import CardChat from '../assets/card-chat-bk.svg';
 import CardCounseling from '../assets/card-counseling.svg';
 import ProfilBk from '../assets/profil-bk.svg';
-import ImgHubBk from '../assets/img-chatbk.svg';
-import ImgJanji from '../assets/img-janjikonseling.svg';
+// import AssetsCalendar from '../assets/79891-calendar.gif';
+import 'react-calendar/dist/Calendar.css';
 
-function PageKonseling(){
-    const navText = "Bimbingan Konseling";
+
+function BuatJanji(){
+    const navText = "Buat Janji";
     const navigate = useNavigate();
+
+    const [date, setDate] = useState(new Date());
 
     const closeDetail = () => {
         const detailProfile = document.querySelector('.detail-profile');
@@ -107,128 +111,75 @@ function PageKonseling(){
             <div className="container-content">
                 <NavbarMurid text={navText}/>
                 <div className="main">
-                    <div className="con-content-counseling">
-                        <div className="content-counseling-left">
-                            <div className="header-counseling">
-                                <div className="head-left">
-                                    <h1 className="intro-head-counseling">
-                                        Halo <span className="name-student">Wira</span>
-                                    </h1>
-                                    <p className="desc-head-counseling">
-                                        Selamat datang di nugasyuk, anda bisa memonitoring tugas tugas anak anda.
-                                    </p>
+                    <div className="con-content-promaise-counseling">
+                        <div className="content-promise-counseling">
+                            <div className="card-profile-teacher-bk">
+                                <img src={ProfilBk} alt="" className="img-bk-teacher" />
+                                <p className='name-bk-teacher'>Sumijah, S.Pd</p>
+                                <p className='teach'>Guru BK PPLG</p>
+                            </div>
+                            <div className="card-calendar">
+                                <div className='calendar'>
+                                    <div className='calendar-container'>
+                                        <Calendar onChange={setDate} value={date} />
+                                    </div>
+                                    {/* <p className='text-center date-selected'>
+                                        <span className='bold'>Tanggal Dipilih:</span>{' '}
+                                        {date.toDateString()}
+                                    </p> */}
                                 </div>
                             </div>
-                        </div>
-                        <div className="header-counseling-right">
-                            <img src={CardChat} alt="" className="card-chat-counseling" />
-                            <div className="content-card-chat-bk">
-                                <div className="card-chat-bk-left">
-                                    <p className="title-chat-bk">Jika ada yang ingin ditanyakan kepada guru BK melalui chat</p>
-                                    <button className="btn-chat-bk">
-                                    <Icon icon="ph:chat-circle-dots" width="20"/>
-                                        Hubungi BK
-                                    </button>
+                            <div className="card-date-time">
+                                <p className='date-selected'>
+                                    {' '}{date.toDateString()}
+                                </p>
+                                <p className="text-select-time">Pilih jam konseling :</p>
+                                <div className="time-promise-counseling">
+                                    <button className="btn-time-counseling">Jam 1</button>
+                                    <button className="btn-time-counseling">Jam 2</button>
+                                    <button className="btn-time-counseling">Jam 3</button>
+                                    <button className="btn-time-counseling">Jam 4</button>
+                                    <button className="btn-time-counseling">Jam 5</button>
+                                    <button className="btn-time-counseling selected">Jam 6</button>
+                                    <button className="btn-time-counseling selected">Jam 7</button>
+                                    <button className="btn-time-counseling selected">Jam 8</button>
+                                    <button className="btn-time-counseling">Jam 9</button>
+                                    <button className="btn-time-counseling">Jam 10</button>
                                 </div>
+                                <div className="color-status-promise-counseling">
+                                    <div className="status-not-selected">
+                                        <div className="rectangle-not-selected"></div>
+                                        <p className='text-status-not-selected'>Belum dipilih</p>
+                                    </div>
+                                    <div className="status-selected">
+                                        <div className="rectangle-selected"></div>
+                                        <p className='text-status-selected'>Sudah dipilih</p>
+                                    </div>
+                                </div>
+                                <div className="dropdown-location-counseling">
+                                    <select id='location-counseling' name='location-counseling' className='dropdown-counseling'>
+                                        <option value="location" selected>Tempat Konseling</option>
+                                        <option value="location">Ruang BK</option>
+                                        <option value="location">Ruang VR</option>
+                                        <option value="location">Ruang Guru</option>
+                                    </select>
+                                </div>
+                                <div className="form-topic-counseling">
+                                    <form className='form-topic'>
+                                        <input type='text' placeholder='Topik yang ingin ditanyakan'/>
+                                    </form>
+                                </div>
+                                <button className='btn-submit-promise-counseling'>
+                                    Buat janji
+                                </button>
+                                {/* <img src={AssetsCalendar} alt="" className="gif-calendar" />
+                                <p className='text-desc-date'>Mohon pilih tanggal konseling terlebhi dahulu</p> */}
                             </div>
                         </div>
                     </div>
-
-                    <div className="con-content-counseling-bottom">
-                        <div className="content-counseling-left">
-                            <div className="history-counseling">
-                                <div className="head-history-counseling">
-                                    <p className="title-history-counseling">
-                                        Janji Konseling
-                                    </p>
-                                    <Icon icon="ic:round-navigate-next"  className="navigate-next-icon" width={30} style={{ cursor: "pointer" }} onClick={() => navigate('/murid/pagekonseling/riwayatkonseling')}/>
-                                </div>
-                                <div className="card-counseling">
-                                    <div className="teacher-bk">
-                                        <img src={ProfilBk} alt="" className="img-bk" />
-                                        <div className="name-teacher-bk">
-                                            <p>Sumijah, S.Pd</p>
-                                        </div>
-                                    </div>
-                                    <div className="information-counseling">
-                                        <div className="date-counseling">
-                                            <Icon icon="uiw:date" width="15" style={{color: "#2A93D5"}}/>
-                                            <p>Kam, 2 April 2023</p>
-                                        </div>
-                                        <div className="information-counseling-bottom">
-                                            <div className="time-counseling">
-                                                <Icon icon="material-symbols:nest-clock-farsight-analog-outline-rounded" width="15" style={{color: "#2A93D5"}}/>
-                                                <p>Jam 4</p>
-                                            </div>
-                                            <div className="location-counseling">
-                                                <p>Ruang BK</p>
-                                                <Icon icon="material-symbols:location-on-outline-rounded"  width="15" style={{color: "#797979"}}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="header-counseling-right">
-                            <img src={CardCounseling} alt="" className="card-chat-counseling" />
-                            <div className="content-card-chat-bk">
-                                <div className="card-chat-bk-left">
-                                    <p className="title-promise-bk">Buat janji bertemu dengan guru BK jika anda ingin bimbingan konseling secara langsung.</p>
-                                    <button className="btn-promise-bk" onClick={() => navigate('/murid/pagekonseling/buatjanji')}>
-                                    <Icon icon="uiw:date" width="20"/>
-                                        Buat Janji
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* <div className="content-konseling">
-                        <div className="header-konseling">
-                            <div className="head-left">
-                                <h1 className="intro-head-konseling">Halo <span className="name-murid">Wira</span></h1>
-                                <p className="desc-head-konseling" style={{width:"550px"}}>
-                                    Apakah anda ingin bimbingan konseling atau ada hal yang ingin ditanyakan kepada guru BK?
-                                </p>
-                            </div>
-                        </div>
-                        <div className="card-hubungi-bk">
-                            <div className="head-left">
-                                <p className="desc-head-hubungi-bk" style={{width:"350px"}}>
-                                    Jika ada yang ingin ditanyakan kepada guru BK melalui chat
-                                </p>
-                                <div className="img-hubungi-bk">
-                                    <img src={ImgHubBk} alt="" />
-                                </div>
-                                <button className='btn-hub-bk'>
-                                    <Icon icon="ph:chat-circle-dots" width="20"/>
-                                <p>Hubungi BK</p>
-                            </button>
-                            </div>
-                        </div>
-                        <div className="history-janji-bk">
-                            <div className="head-left">
-                               
-                            </div>
-                        </div>
-                        <div className="card-janji-bk">
-                            <div className="head-left">
-                                <p className="desc-head-hubungi-bk" style={{width:"350px"}}>
-                                    Jika ada yang ingin ditanyakan kepada guru BK melalui chat
-                                </p>
-                                <div className="img-janji-bk">
-                                    <img src={ImgJanji} alt="" />
-                                </div>
-                                <button className='btn-janji-bk'>
-                                    <Icon icon="uiw:date" width="20"/>
-                                <p>Buat Janji</p>
-                            </button>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
-            </div>
-            
+            </div> 
+
             <div className="popup-logout" id="popup-logout">
                 <div className="detail-logout">
                     <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeLogoutPopup}/>
@@ -361,4 +312,4 @@ function PageKonseling(){
     );
 }
 
-export default PageKonseling
+export default BuatJanji

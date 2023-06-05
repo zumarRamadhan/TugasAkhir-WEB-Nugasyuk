@@ -1,21 +1,17 @@
+import '../cssAll/murid/DetailTugas.css';
 import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
-import '../cssAll/murid/BerandaMurid.css';
-import IconNugasyuk from '../assets/IconNugasyuk.svg';
+import { useState, useEffect } from "react";
 import NavbarMurid from '../component/NavbarMurid';
+import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useState } from "react";
-import CardChat from '../assets/card-chat-bk.svg';
-import CardCounseling from '../assets/card-counseling.svg';
-import ProfilBk from '../assets/profil-bk.svg';
-import ImgHubBk from '../assets/img-chatbk.svg';
-import ImgJanji from '../assets/img-janjikonseling.svg';
+import axios from 'axios';
 
-function PageKonseling(){
-    const navText = "Bimbingan Konseling";
+function DetailTask(){
+    const navText = "B. Inggris";
     const navigate = useNavigate();
 
     const closeDetail = () => {
@@ -74,6 +70,47 @@ function PageKonseling(){
         setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
     }
 
+    const saveToken = sessionStorage.getItem('token');
+
+    const [dataDetailTugas, setDataDetailTugas] = useState([]);
+
+    const [isLoading, setisLoading] = useState(false);
+    const [isError, setisError] = useState(false);
+
+    useEffect(() => {
+        setisLoading(true);
+        axios
+        .get('https://www.nugasyuk.my.id/api/murid/matapelajaran/tugas/', { 
+            headers : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`
+            }
+         } )
+        .then(result => {
+            console.log('data API', result.data);
+            // const responseAPI = result.data;
+
+            setDataDetailTugas(result.data.tugas);
+            setisLoading(false);
+        })
+        .catch(err => {
+            console.log('terjadi kesalahan: ', err)
+            setisError(true);
+            setisLoading(false);
+        })
+    }, [])
+
+    // if (!dataTugas) return <h3>Loading...</h3>;
+
+    if (isLoading)
+     return <div id="load">
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+                <div>.</div>
+            </div>;
+    else if (dataDetailTugas && !isError)
+
     return(
         <div>
             <aside>
@@ -94,11 +131,11 @@ function PageKonseling(){
                     <Icon icon="uiw:date" width="18"/>
                     Jadwal KBM
                 </li>
-                <li onClick={() => navigate('/murid/pagemapel')}>
+                <li className='active' onClick={() => navigate('/murid/pagemapel')}>
                     <Icon icon="fluent-mdl2:education" width="18"/>
                     Mata Pelajaran
                 </li>
-                <li className='active' onClick={() => navigate('/murid/pagekonseling')}>
+                <li onClick={() => navigate('/murid/pagekonseling')}>
                     <Icon icon="ph:apple-podcasts-logo-duotone" width="18"/>
                     Konseling
                 </li>
@@ -107,139 +144,43 @@ function PageKonseling(){
             <div className="container-content">
                 <NavbarMurid text={navText}/>
                 <div className="main">
-                    <div className="con-content-counseling">
-                        <div className="content-counseling-left">
-                            <div className="header-counseling">
-                                <div className="head-left">
-                                    <h1 className="intro-head-counseling">
-                                        Halo <span className="name-student">Wira</span>
-                                    </h1>
-                                    <p className="desc-head-counseling">
-                                        Selamat datang di nugasyuk, anda bisa memonitoring tugas tugas anak anda.
-                                    </p>
+                {dataDetailTugas && dataDetailTugas.map((detailTugas => (
+                    <div className="con-content-detail-task">
+                        <div className="content-detail-task">
+                            <div className="content-detail-task-left">
+                                <div className="icon-detail-task">
+                                    <Icon icon="uiw:time-o" width="30"/>
+                                </div>
+                                <div className="desc-material">
+                                    <p className="name-task ">Reading</p>
+                                    <p className="teacher">Budiono, S.Pd</p>
                                 </div>
                             </div>
-                        </div>
-                        <div className="header-counseling-right">
-                            <img src={CardChat} alt="" className="card-chat-counseling" />
-                            <div className="content-card-chat-bk">
-                                <div className="card-chat-bk-left">
-                                    <p className="title-chat-bk">Jika ada yang ingin ditanyakan kepada guru BK melalui chat</p>
-                                    <button className="btn-chat-bk">
-                                    <Icon icon="ph:chat-circle-dots" width="20"/>
-                                        Hubungi BK
-                                    </button>
-                                </div>
+                            <div className="content-detail-task-right">
+                                <p className="date-upload">8 Mar 2023</p>
                             </div>
                         </div>
-                    </div>
+                        <p className='desc-content-detail-task'>
+                            {detailTugas.soal}
+                        </p>
+                        <p className="task-deadline-time">Deadline : <span>10 Mar 2023</span></p>
+                        <div className="submition-task">
+                            <p className="title-submition">
+                                Pengumpulan Tugas
+                            </p>
+                            <div className="file-task">
 
-                    <div className="con-content-counseling-bottom">
-                        <div className="content-counseling-left">
-                            <div className="history-counseling">
-                                <div className="head-history-counseling">
-                                    <p className="title-history-counseling">
-                                        Janji Konseling
-                                    </p>
-                                    <Icon icon="ic:round-navigate-next"  className="navigate-next-icon" width={30} style={{ cursor: "pointer" }} onClick={() => navigate('/murid/pagekonseling/riwayatkonseling')}/>
-                                </div>
-                                <div className="card-counseling">
-                                    <div className="teacher-bk">
-                                        <img src={ProfilBk} alt="" className="img-bk" />
-                                        <div className="name-teacher-bk">
-                                            <p>Sumijah, S.Pd</p>
-                                        </div>
-                                    </div>
-                                    <div className="information-counseling">
-                                        <div className="date-counseling">
-                                            <Icon icon="uiw:date" width="15" style={{color: "#2A93D5"}}/>
-                                            <p>Kam, 2 April 2023</p>
-                                        </div>
-                                        <div className="information-counseling-bottom">
-                                            <div className="time-counseling">
-                                                <Icon icon="material-symbols:nest-clock-farsight-analog-outline-rounded" width="15" style={{color: "#2A93D5"}}/>
-                                                <p>Jam 4</p>
-                                            </div>
-                                            <div className="location-counseling">
-                                                <p>Ruang BK</p>
-                                                <Icon icon="material-symbols:location-on-outline-rounded"  width="15" style={{color: "#797979"}}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                        <div className="header-counseling-right">
-                            <img src={CardCounseling} alt="" className="card-chat-counseling" />
-                            <div className="content-card-chat-bk">
-                                <div className="card-chat-bk-left">
-                                    <p className="title-promise-bk">Buat janji bertemu dengan guru BK jika anda ingin bimbingan konseling secara langsung.</p>
-                                    <button className="btn-promise-bk" onClick={() => navigate('/murid/pagekonseling/buatjanji')}>
-                                    <Icon icon="uiw:date" width="20"/>
-                                        Buat Janji
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* <div className="content-konseling">
-                        <div className="header-konseling">
-                            <div className="head-left">
-                                <h1 className="intro-head-konseling">Halo <span className="name-murid">Wira</span></h1>
-                                <p className="desc-head-konseling" style={{width:"550px"}}>
-                                    Apakah anda ingin bimbingan konseling atau ada hal yang ingin ditanyakan kepada guru BK?
-                                </p>
-                            </div>
-                        </div>
-                        <div className="card-hubungi-bk">
-                            <div className="head-left">
-                                <p className="desc-head-hubungi-bk" style={{width:"350px"}}>
-                                    Jika ada yang ingin ditanyakan kepada guru BK melalui chat
-                                </p>
-                                <div className="img-hubungi-bk">
-                                    <img src={ImgHubBk} alt="" />
-                                </div>
-                                <button className='btn-hub-bk'>
-                                    <Icon icon="ph:chat-circle-dots" width="20"/>
-                                <p>Hubungi BK</p>
+                            <button className='btn-add-task'>
+                                <Icon icon="ic:round-plus" width="20"></Icon>
+                                <p>Tambah</p>
                             </button>
-                            </div>
-                        </div>
-                        <div className="history-janji-bk">
-                            <div className="head-left">
-                               
-                            </div>
-                        </div>
-                        <div className="card-janji-bk">
-                            <div className="head-left">
-                                <p className="desc-head-hubungi-bk" style={{width:"350px"}}>
-                                    Jika ada yang ingin ditanyakan kepada guru BK melalui chat
-                                </p>
-                                <div className="img-janji-bk">
-                                    <img src={ImgJanji} alt="" />
-                                </div>
-                                <button className='btn-janji-bk'>
-                                    <Icon icon="uiw:date" width="20"/>
-                                <p>Buat Janji</p>
+                            <button className='btn-submit-task'>
+                                <p>Kirim</p>
                             </button>
-                            </div>
                         </div>
-                    </div> */}
-                </div>
-            </div>
-            
-            <div className="popup-logout" id="popup-logout">
-                <div className="detail-logout">
-                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeLogoutPopup}/>
-                    <div className="image-logout">
-                        <img src={ImgLogout} alt="" className="img-logout" />
                     </div>
-                    <p className="desc-logout">Anda yakin ingin keluar?</p>
-                    <div className="con-btn-logout">
-                        <button type="button" className="btn-batal">Batal</button>
-                        <button type="button" className="btn-keluar">Keluar</button>
-                    </div>
+                )))}
                 </div>
             </div>
 
@@ -275,7 +216,7 @@ function PageKonseling(){
             <div className="detail-profile">
                 <div className='content-detail'>
                     <div className="navbar-detail">
-                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
+                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer", color: "#4b4b4b"}} onClick={closeDetail}/>
                     <h2>Profil</h2>
                     </div>
                     <div className="detail-image-profile">
@@ -361,4 +302,4 @@ function PageKonseling(){
     );
 }
 
-export default PageKonseling
+export default DetailTask;

@@ -12,6 +12,114 @@
     box-sizing: border-box;
 }
 
+nav {
+    position: fixed;
+    width: 100%;
+    height: max-content;
+    background: #ffffff;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 50px;
+}
+
+nav .navbar h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    /* line-height: 45px; */
+    color: #2A93D5;
+}
+
+nav .btn-notification {
+    transform: translateX(-250px);
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: #D8F0FF;
+    color: var(--color-aksen);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+nav .btn-notification:hover{
+    background: var(--color-aksen);
+    color: var(--color-primer);
+    transition: ease-in 0.5s;
+}
+
+.nav-right{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
+}
+
+/* header */
+.header-dashboard-home-student {
+    background: var(--color-aksen);
+    width: 100%;
+    height: 300px;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    /* padding: 87px 0 87px 70px; */
+    display: flex;
+}
+
+.head-left-home-student {
+    display: flex;
+    flex-direction: column;
+    max-width: 475px;
+    margin-top: 88px;
+    margin-left: 70px;
+}
+
+.intro-head-student {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    /* line-height: 45px; */
+    color: #FFFFFF;
+}
+
+.student-name{
+    background: var(--color-primer);
+    padding: 3px 14px;
+    color: var(--color-aksen);
+    border-radius: 10px;
+}
+
+.desc-head-home-student {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    /* line-height: 150%; */
+    color: #FFFFFF;
+    margin-top: 15px;
+}
+
+.head-right-home-student{
+    z-index: 6;
+    /* background: #58AFE5; */
+}
+
+.head-right-home-student{
+    background: #58AFE5;
+    height: 299px;
+    border-radius: 300px 20px 20px 300px;
+}
+/* end header */
+
+
 /* content */
 .con-content{
     display: grid;
@@ -96,6 +204,14 @@
     box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
 }
 
+.text-status-task{
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 500;
+    color: #4B4B4B;
+    margin-bottom: 15px;
+}
+
 .indiecator-left{
     display: flex;
     align-items: center;
@@ -138,15 +254,20 @@
 
 
 /* page konseling */
-.content-konseling{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+/* content counseling top */
+.con-content-counseling{
+    display: flex;
+    width: 100%;
     gap: 20px;
 }
 
-.header-konseling {
+.content-counseling-left{
+    width: 100%;
+}
+
+.header-counseling {
     background: var(--color-primer);
-    width: 720px;
+    width: 100%;
     border: 1px solid #E3E3E3;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
     border-radius: 20px;
@@ -154,7 +275,7 @@
     display: flex;
 }
 
-.intro-head-konseling {
+.intro-head-counseling {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
@@ -163,14 +284,14 @@
     color: var(--color-aksen);
 }
 
-.name-murid {
+.name-student {
     background: var(--color-aksen);
     padding: 3px 14px;
     color: var(--color-primer);
     border-radius: 10px;
 }
 
-.desc-head-konseling {
+.desc-head-counseling {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -180,81 +301,182 @@
     margin-top: 15px;
 }
 
-.card-hubungi-bk{
-    background: #C762F7;
-    width: 100%;
-    border-radius: 20px;
-    padding: 30px 0 25px 25px;
-    display: flex; 
+.content-card-chat-bk {
+    display: flex;
+    /* justify-content: space-between; */
+    /* transform: translateY(-300%); */
+    position: absolute;
+    top: 0;
+    padding-left: 30px;
 }
 
-.desc-head-hubungi-bk{
+.card-chat-bk-left {
+    margin-top: 150px;
+    gap: 100px;
+}
+
+.title-chat-bk {
     font-family: 'Poppins';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 20px;
-    /* line-height: 150%; */
-    color: #fff;
-    margin-top: 15px;
+    width: 300px;
+    color: var(--color-primer);
 }
 
-.img-hubungi-bk img{
-    width: 250px;
-    z-index: 1;
-}
-
-.btn-hub-bk{
+.btn-chat-bk{
     display: flex;
     background: var(--color-primer);
     color: #C762F7;
     border: none;
     padding: 13px 35px;
     width: 200px;
-    font-weight: 600;
+    font-weight: 500;
     height: 50px;
-    cursor: pointer;
     align-items: center;
+    font-size: 15px;
+    justify-content: center;
     border-radius: 10px;
     gap: 10px;
     z-index: 5;
+    margin-top: 88px;
+    float: right;
+    cursor: pointer;
+}
+/* end content counseling top */
+
+/* content counseling bottom */
+.con-content-counseling-bottom{
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    margin-top: 30px;
 }
 
-.btn-janji-bk{
+.history-counseling {
+    background: var(--color-primer);
+    width: 100%;
+    border: 1px solid #E3E3E3;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.head-history-counseling{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-counseling{
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    margin-top: 30px;
+    padding: 15px;
+}
+
+.teacher-bk{
+    display: flex;
+    align-items: center;
+}
+
+.name-teacher-bk{
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    color: #4b4b4b;
+    margin-left: 10px;
+}
+
+.navigate-next-icon{
+    float: right;
+    justify-content: space-between;
+    color: var(--color-aksen);
+}
+
+.information-counseling-bottom{
+    display: flex;
+    justify-content: space-between;
+}
+
+.information-counseling{
+    margin-top: 15px;
+    font-family: 'Poppins';
+}
+
+.date-counseling{
+    display: flex;
+    align-items: center;
+}
+
+.time-counseling{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.location-counseling{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.date-counseling p{
+    font-size: 12px;
+    color: var(--color-aksen);
+    margin-left: 5px;
+}
+
+.time-counseling p{
+    font-size: 12px;
+    color: var(--color-aksen);
+    margin-left: 5px;
+}
+
+.location-counseling p{
+    font-size: 12px;
+    color: #797979;
+    margin-left: 5px;
+}
+
+.title-promise-bk{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    width: 670px;
+    margin-top: 320px;
+    color: var(--color-primer);
+}
+
+.btn-promise-bk{
     display: flex;
     background: var(--color-primer);
     color: #FA79A2;
     border: none;
     padding: 13px 35px;
     width: 200px;
-    font-weight: 600;
+    font-weight: 500;
     height: 50px;
     cursor: pointer;
     align-items: center;
+    font-size: 15px;
+    justify-content: center;
     border-radius: 10px;
     gap: 10px;
     z-index: 5;
+    margin-top: 88px;
+    margin-left: 470px;
+    float: right;
 }
 
-.card-janji-bk{
-    background: #FA79A2;
-    width: 100%;
-    border-radius: 20px;
-    padding: 30px 0 25px 25px;
-    display: flex; 
+.title-history-counseling {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    /* line-height: 45px; */
+    color: #4b4b4b;
 }
-
-.history-janji-bk{
-    background: var(--color-primer);
-    width: 350px;
-    border: 1px solid #E3E3E3;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 20px;
-    padding: 87px 0 87px 70px;
-    display: flex;
-}
-
-.img-janji-bk{
-    width: 200px;
-    z-index: 1;
-}
+/* end contetn counseling bottom */
 /* end page konseling */
