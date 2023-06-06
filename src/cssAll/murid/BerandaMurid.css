@@ -107,15 +107,10 @@ nav .btn-notification:hover{
     margin-top: 15px;
 }
 
-.head-right-home-student{
-    z-index: 6;
-    /* background: #58AFE5; */
-}
-
-.head-right-home-student{
-    background: #58AFE5;
+.head-right-home-student img{
+    margin-left: 204px;
+    border-radius: 0 18px 18px 0;
     height: 299px;
-    border-radius: 300px 20px 20px 300px;
 }
 /* end header */
 

@@ -7,6 +7,8 @@ import ImgProfil from "../assets/profil-murid.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
+import AssetsHead from "../assets/assets-header.svg";
+import GifHead from "../assets/119593-agenda.gif";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -171,7 +173,8 @@ function BerandaMurid() {
               </div>
               <div className="head-right-home-student">
                 <div className="reactangle-1">
-                  {/* <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut, iure esse rem minima necessitatibus omnis eveniet doloremque reiciendis aliquam magni?</p> */}
+                  <img src={AssetsHead} alt="" />
+                  {/* <img className="gif-head" src={GifHead} alt="" /> */}
                 </div>
               </div>
             </div>
@@ -179,7 +182,7 @@ function BerandaMurid() {
             <div className="con-content">
               <div
                 className="content-indiecator"
-                style={{ background: "#2AB6D5" }}
+                style={{ background: "#2AB6D5", cursor: "pointer" }}
               >
                 <div
                   className="icon-indie"
@@ -197,7 +200,7 @@ function BerandaMurid() {
 
               <div
                 className="content-indiecator"
-                style={{ background: "#585CC4" }}
+                style={{ background: "#585CC4", cursor: "pointer" }}
               >
                 <div
                   className="icon-indie"
@@ -215,7 +218,7 @@ function BerandaMurid() {
 
               <div
                 className="content-indiecator"
-                style={{ background: "#B462D0" }}
+                style={{ background: "#B462D0", cursor: "pointer" }}
               >
                 <div
                   className="icon-indie"

@@ -215,7 +215,7 @@ function JadwalKBM() {
 
   const saveToken = sessionStorage.getItem("token");
 
-  const [dataJadwal, setDataJadwal] = useState([]);
+  // const [dataJadwal, setDataJadwal] = useState([]);
   const [dataAPIJadwal, setDataAPIJadwal] = useState([]);
 
   const [isLoading, setisLoading] = useState(false);
@@ -223,7 +223,7 @@ function JadwalKBM() {
   const { id } = useParams();
 
   useEffect(() => {
-    getDetailJadwal();
+    // getDetailJadwal();
     getDataJadwal();
   }, [id]);
 
@@ -250,30 +250,28 @@ function JadwalKBM() {
       });
   }
 
-  function getDetailJadwal() {
-    setisLoading(true);
-    axios
-      .get("https://www.nugasyuk.my.id/api/murid/jadwal/" + id, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((result) => {
-        console.log("data API", result.data);
-        // const responseAPI = result.data;
+  // function getDetailJadwal() {
+  //   setisLoading(true);
+  //   axios
+  //     .get("https://www.nugasyuk.my.id/api/murid/jadwal/" + id, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${saveToken}`,
+  //       },
+  //     })
+  //     .then((result) => {
+  //       console.log("data API", result.data);
+  //       // const responseAPI = result.data;
 
-        setDataJadwal(result.data.data);
-        setisLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setisError(true);
-        setisLoading(false);
-      });
-  }
-
-  // if (!dataTugas) return <h3>Loading...</h3>;
+  //       setDataJadwal(result.data.data);
+  //       setisLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log("terjadi kesalahan: ", err);
+  //       setisError(true);
+  //       setisLoading(false);
+  //     });
+  // }
 
   if (isLoading)
     return (
@@ -284,7 +282,8 @@ function JadwalKBM() {
         <div>.</div>
       </div>
     );
-  else if ((dataJadwal, dataAPIJadwal && !isError))
+  else if (dataAPIJadwal && !isError)
+  
     return (
       <div>
         <aside>
@@ -328,38 +327,32 @@ function JadwalKBM() {
               <div className="con-card-jadwalKBM">
                 {dataAPIJadwal &&
                   dataAPIJadwal.map((listJadwal) => (
-                    <Link
-                      className="link-navigate"
-                      to={showDetailKbm + listJadwal.id}
-                    >
-                      <div className="cardJadwalKbm" key={listJadwal.id}>
-                        <div className="titleJadwalKbm">
-                          <p>Jadwal KBM</p>
-                          <h1>{listJadwal.hari}</h1>
+                    <div className="cardJadwalKbm" key={listJadwal.id}>
+                      <div className="titleJadwalKbm">
+                        <p>Jadwal KBM</p>
+                        <h1>{listJadwal.hari}</h1>
+                      </div>
+                      <div className="bottomjadwalKbm">
+                        <div className="conImgGuru-Kbm">
+                          <div className="imgGuru-Kbm">
+                            <img src="" alt="" className="imageGuru-Kbm" />
+                          </div>
                         </div>
-                        <div className="bottomjadwalKbm">
-                          <div className="conImgGuru-Kbm">
-                            <div className="imgGuru-Kbm">
-                              <img src="" alt="" className="imageGuru-Kbm" />
-                            </div>
-                          </div>
-                          <div className="btnDetail-Kbm">
-                            <Icon
-                              icon="ic:round-navigate-next"
-                              width="30"
-                              className="iconDetail-Kbm"
-                              onClick={showDetailKbm}
-                            />
-                          </div>
+                        <div className="btnDetail-Kbm">
+                          <Icon
+                            icon="ic:round-navigate-next"
+                            width="30"
+                            className="iconDetail-Kbm"
+                            onClick={showDetailKbm}
+                          />
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   ))}
               </div>
             </div>
           </div>
         </div>
-        
 
         <div className="popup-kbm">
           <div className="detail-popup-kbm">
@@ -374,24 +367,21 @@ function JadwalKBM() {
               <h2 className="day-schedule">Senin</h2>
             </div>
             <div className="con-popup-kbm">
-              {dataJadwal &&
-                dataJadwal.map((detailJadwal) => (
-                  <div className="popup-card-kbm">
-                    <div className="test1">
-                      <img src={ImgProfil} alt="" className="image-card-kbm" />
-                      <div className="mapel-card-kbm">
-                        <p>{detailJadwal.nama_mapel}</p>
-                        <p className="guruPengampu">{detailJadwal.nama_guru}</p>
-                      </div>
-                    </div>
-                    <div className="test2">
-                      <div className="jamMengajar">
-                        <span>{detailJadwal.waktu_mulai}</span> -{" "}
-                        <span>{detailJadwal.waktu_selesai}</span>
-                      </div>
-                    </div>
+              <div className="popup-card-kbm">
+                <div className="test1">
+                  <img src={ImgProfil} alt="" className="image-card-kbm" />
+                  <div className="mapel-card-kbm">
+                    <p>okeh</p>
+                    <p className="guruPengampu">Joko Arianto</p>
                   </div>
-                ))}
+                </div>
+                <div className="test2">
+                  <div className="jamMengajar">
+                    <span>07.00</span>
+                    <span>11.00</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
