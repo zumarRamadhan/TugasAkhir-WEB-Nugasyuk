@@ -127,29 +127,31 @@ function MatapelajaranMateri(){
                             <p className="name-teacher-2">Budiono, S.Pd</p>
                         </div>
                     </div>
-                    <div className="switch-container">
-                        <button id='btn-materiKbm' className={activeContent === "detailMateriKbm" ? "activeDetailKbm" : ""} onClick={showMateri} >
-                            Materi
-                        </button>
-                        <button id='btn-tugasKbm' className={activeContent === "detailTugasKbm" ? "activeDetailKbm" : ""} onClick={showTugas} >
-                            Tugas
-                        </button>
-                    </div>
-                    <div className='dropdown-task'>
-                        <select id='tugas' name='tugas'>
-                            <option value="semua" selected>-- Semua Tugas --</option>
-                            <option value="tugas">Tugas selesai dalam deaadline</option>
-                            <option value="tugas">Tugas selesai lewat deadline</option>
-                            <option value="tugas">Tugas belum selesai dalam deadline</option>
-                            <option value="tugas">Tugas belum selesai lewat deadline</option>
-                        </select>
-
-                        <form className='search-box'>
-                            <input type='text' placeholder='Cari...'/>
-                            <button type='submit'>
-                                <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                    <div className="con-switch-subject">
+                        <div className="switch-container">
+                            <button id='btn-materiKbm' className={activeContent === "detailMateriKbm" ? "activeDetailKbm" : ""} onClick={showMateri} >
+                                Materi
                             </button>
-                        </form>
+                            <button id='btn-tugasKbm' className={activeContent === "detailTugasKbm" ? "activeDetailKbm" : ""} onClick={showTugas} >
+                                Tugas
+                            </button>
+                        </div>
+                        <div className='dropdown-task'>
+                            <select id='tugas' name='tugas'>
+                                <option value="semua" selected>-- Semua Tugas --</option>
+                                <option value="tugas">Tugas selesai dalam deaadline</option>
+                                <option value="tugas">Tugas selesai lewat deadline</option>
+                                <option value="tugas">Tugas belum selesai dalam deadline</option>
+                                <option value="tugas">Tugas belum selesai lewat deadline</option>
+                            </select>
+
+                            <form className='search-box'>
+                                <input type='text' placeholder='Cari...'/>
+                                <button type='submit'>
+                                    <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
                     <div className="con-material">

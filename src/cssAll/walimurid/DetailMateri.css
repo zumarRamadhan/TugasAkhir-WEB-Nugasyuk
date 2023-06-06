@@ -93,3 +93,9 @@
     color: var(--color-primer);
     /* transition-delay: 0.9s; */
 }
+
+.con-switch-subject{
+    display: flex;
+    gap: 15px;
+    /* justify-content: space-between; */
+}
