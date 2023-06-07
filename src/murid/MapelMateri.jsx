@@ -224,15 +224,14 @@ function MapelMateri() {
                 </div>
               ))}
 
-            <div className="dropdown-task">
+            <div className="dropdown-task-murid">
               <div className="switch-container">
                 <button
                   id="btn-materiKbm"
                   className={
                     activeContent === "material-kbm" ? "activeDetailKbm" : ""
                   }
-                  onClick={showMaterial}
-                >
+                  onClick={showMaterial}>
                   Materi
                 </button>
                 <button
@@ -240,8 +239,7 @@ function MapelMateri() {
                   className={
                     activeContent === "task-kbm" ? "activeDetailKbm" : ""
                   }
-                  onClick={showTask}
-                >
+                  onClick={showTask}>
                   Tugas
                 </button>
               </div>

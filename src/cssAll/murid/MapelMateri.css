@@ -70,11 +70,12 @@
   color: #ffffff;
 }
 
-.switch-container {
+.dropdown-task-murid .switch-container {
   width: max-content;
   display: flex;
   gap: 2px;
-  margin-bottom: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
   padding: 5px;
   border-radius: 10px;
   background-color: var(--color-sekunder);
@@ -230,4 +231,11 @@
   .material-name {
     font-size: 15px;
   }
+}
+
+.dropdown-task-murid{
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 30px;
 }
