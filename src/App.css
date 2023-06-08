@@ -792,6 +792,8 @@ nav .navbar img {
 .image-detailGuru {
     width: 100%;
     height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
     border-radius: 100%;
 }
 

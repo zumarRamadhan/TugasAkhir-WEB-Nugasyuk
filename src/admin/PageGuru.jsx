@@ -196,9 +196,9 @@ function BerandaGuru() {
           (value &&
             value.email &&
             value.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (value &&
-            value.niy &&
-            value.niy.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          // (value &&
+          //   value.niy &&
+          //   value.niy.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (value &&
             value.status_mapel &&
             value.status_mapel
@@ -340,7 +340,12 @@ function BerandaGuru() {
                     {renderData.map((item, index) => (
                       <tr key={index} style={{ cursor: "pointer" }}>
                         <td className="tdImg">
-                          <img src={foto2} alt="" />
+                          <div className="img-td">
+                            <img
+                              src={`https://www.nugasyuk.my.id/public/${item.foto_profile}`}
+                              alt={item.foto_profile}
+                            />
+                          </div>  
                         </td>
                         <td>{item.nama_guru}</td>
                         <td>{item.email}</td>
@@ -402,26 +407,39 @@ function BerandaGuru() {
             </div>
             <div className="con-popup-detailGuru">
               <div className="img-detailGuru">
-                <img src={ImgDetail} alt="" className="image-detailGuru" />
+                <img
+                  src={`https://www.nugasyuk.my.id/public/${detailGuru.foto_profile}`}
+                  alt="foto profile ${detailGuru.foto_profile}"
+                  className="image-detailGuru"
+                />
               </div>
               <h3>Nama :</h3>
               <p className="nama-detailGuru">{detailGuru.nama_guru}</p>
               <h3>Email :</h3>
               <p className="email-detailGuru">{detailGuru.email}</p>
               <h3>Nomor Telp :</h3>
-              <p className="nomor-detailGuru">{detailGuru.telp}</p>
+              <p className="nomor-detailGuru">{detailGuru.nomor_tlp}</p>
               <h3>NIY :</h3>
               <p className="niy-detailGuru">{detailGuru.niy}</p>
               <h3>Alamat :</h3>
               <p className="alamat-detailGuru">{detailGuru.alamat}</p>
               <h3>Mengajar :</h3>
-              <p className="mengajar-detailGuru">
-                {detailGuru.detail?.map((item) => item.nama_mapel)}
-              </p>
-              <h3>Kode :</h3>
-              <p className="kode-detailGuru">{detailGuru.kode}</p>
-              <h3>Mengajar Kelas :</h3>
               <div className="con-mengajar-detailGuru">
+                {detailGuru.detail?.map((item) => (
+                  <p className="mengajar-detailGuru">
+                    {item.nama_mapel}
+                  </p>
+                ))}
+              </div>
+              <h3>Kode :</h3>
+              <div className="con-kode-detailGuru">
+                {detailGuru.detail?.map((item) => (
+                  <p className="kode-detailGuru">{item.kode_guru}</p>
+                ))}
+              </div>
+              
+              <h3>Mengajar Kelas :</h3>
+              <div className="con-mengajarkelas-detailGuru">
                 {detailGuru.detail?.map((item) => (
                   <p className="mengajarKelas-detailGuru">
                     {item.tingkat_ke +
