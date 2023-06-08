@@ -76,7 +76,7 @@ function BerandaAdmin() {
   const saveToken = sessionStorage.getItem("token");
 
   const [dataBerandaAdmin, setDataBerandaAdmin] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
   const [isError, setisError] = useState(false);
 
   useEffect(() => {

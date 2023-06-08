@@ -692,10 +692,7 @@ nav .navbar img {
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    /* margin-left: 134px; */
     color: #2A93D5;
-    /* margin-bottom: 20px; */
-    /* line-height: 30px; */
 }
 
 .inputGuru {
@@ -739,30 +736,6 @@ nav .navbar img {
 
 /* pop up detailGuru */
 
-/* pop up detailGuru */
-
-/* #popup-detailGuru {
-    top: 0;
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    z-index: 200;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    animation-fill-mode: forwards;
-}
-
-.detail-detailGuru {
-    background: #FFFFFF;
-    border-radius: 20px;
-    width: 480px;
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-} */
-
 .popup-detailGuru {
     top: 0;
     left: 0;
@@ -774,10 +747,12 @@ nav .navbar img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .detail-popup-detailGuru {
-    /* width: 547px; */
+    width: 547px;
+    display: none;
     max-width: 450px;
     background: #ffffff;
     border-radius: 20px;
@@ -789,8 +764,8 @@ nav .navbar img {
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin: 20px 0px 30px 30px;
+    /* gap: 20px; */
+    margin: 20px 30px 30px 30px;
     height: 460px;
 }
 
@@ -805,10 +780,7 @@ nav .navbar img {
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    /* margin-left: 134px; */
     color: #2A93D5;
-    /* margin-bottom: 20px; */
-    /* line-height: 30px; */
 }
 
 .img-detailGuru {
@@ -823,7 +795,7 @@ nav .navbar img {
     border-radius: 100%;
 }
 
-.content-detail-detailGuru h3 {
+.con-popup-detailGuru h3 {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -833,7 +805,7 @@ nav .navbar img {
     color: #797979;
 }
 
-.content-detail-detailGuru p {
+.con-popup-detailGuru p {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
@@ -843,7 +815,7 @@ nav .navbar img {
     color: #4B4B4B;
 }
 
-.content-detail-detailGuru .con-kode-detailGuru, .content-detail-detailGuru .con-mengajar-detailGuru, .content-detail-detailGuru .con-mengajarkelas-detailGuru{
+.con-popup-detailGuru .con-kode-detailGuru, .con-popup-detailGuru .con-mengajar-detailGuru, .con-popup-detailGuru .con-mengajarkelas-detailGuru{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     /* flex-direction: column; */
@@ -852,7 +824,7 @@ nav .navbar img {
     margin-bottom: 20px;
 }
 
-.content-detail-detailGuru .con-kode-detailGuru p, .content-detail-detailGuru .con-mengajar-detailGuru p, .content-detail-detailGuru .con-mengajarkelas-detailGuru p{
+.con-popup-detailGuru .con-kode-detailGuru p, .con-popup-detailGuru .con-mengajar-detailGuru p, .con-popup-detailGuru .con-mengajarkelas-detailGuru p{
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
