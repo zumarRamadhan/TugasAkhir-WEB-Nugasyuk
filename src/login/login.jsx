@@ -1,16 +1,19 @@
 import '../login/login.css'
-import React, { useState } from 'react';
+import React, { useState, useEffect, props } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import greenLoginIcon from '../assets/73782-education.gif';
-// import greenLoginIcon from '../assets/login-animation.gif';
 import userIcon from '../assets/user-icon.svg';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import { useNavigate } from 'react-router-dom';
+// import { createBrowserHistory } from 'history';
+// import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 function Login (){
+  const location = useLocation();
   const navigate = useNavigate();
 
   const [passwordShown, setPasswordShown] = useState(false);
@@ -18,6 +21,72 @@ function Login (){
   function togglePassword() {
     setPasswordShown(!passwordShown);
   }
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  // const history = useHistory();
+
+  const handleEmail = (e) => {
+    console.log(e.target.value)
+    setEmail(e.target.value)
+  }
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value)
+  }
+
+  const [isLoading, setisLoading] = useState(false);
+  const [isError, setisError] = useState(false);
+
+  // const {isUserLoggedIn, userAuthentication} = props
+
+  const login = (e) => {
+    e.preventDefault()
+    console.log("mengirim data")
+    axios.post('https://www.nugasyuk.my.id/api/login', {
+      email: email,
+      password: password
+    })
+    .then((response) => {
+        console.log(response.data)
+        // props.userAuthentication()
+        console.log(response.data)
+        sessionStorage.setItem('token', response.data.token)
+        // alert('login Berhasil')
+        setisLoading(true);
+        if (response.data.kelas_id !== undefined) 
+          return window.location.replace('murid/berandamurid')
+
+         else if (response.data.mapel_id !== undefined)
+          return window.location.replace('guru/berandaguru')
+          
+         else if (response.data.siswa_id !== undefined)
+          return window.location.replace('waliMurid/berandawalimurid')
+          
+        else 
+          return window.location.replace('admin/berandaadmin')
+        
+       
+        // props.history.push('murid/berandamurid')
+    })
+    .catch((err) => {
+        console.log("terjadi kesalahan : ", err)
+        alert('login gagal')
+        console.log(err.response)
+        setisLoading(false);
+        // alert(err.response.data.error.message)
+    })
+  }
+
+  if (isLoading)
+    return (
+      <div id="load">
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+      </div>
+    );
 
   return ( 
     <div className="container-login">
@@ -32,24 +101,36 @@ function Login (){
         <div className="con-desc">
           <p className="desc-form-login">Masukkan akun anda terlebih dahulu untuk masuk!</p>
         </div>
-        <form className="form-login">
+        <form className="form-login" onSubmit={login}>
           <div className="con-form-username">
             <img src={userIcon} className="icon-input" />
-            <input type="text" id="username" placeholder="email" className="input-username" />
+            <input type="text" 
+              id="email"
+              name='email'
+              placeholder="email"
+              className="input-username"
+              value={email}
+              onChange={handleEmail}
+              required
+             />
           </div>
           <div className="con-form-password">
             <img src={passIcon} className="icon-input" />
             <input
               type={passwordShown ? "text" : "password"}
               id="password"
+              name='password'
               placeholder="password"
               className="input-password"
+              value={password}
+              onChange={handlePassword}
+              required
             />
             <button type="button" onClick={togglePassword} className="btn-mata">
               <img src={mataIcon} className="icon-mata" />
             </button>
           </div>
-          <button type="submit" className="btn-login" href="" onClick={() => navigate('/admin/berandaadmin')}>
+          <button type="submit" value="Login" className="btn-login">
             MASUK
           </button>
         </form>
