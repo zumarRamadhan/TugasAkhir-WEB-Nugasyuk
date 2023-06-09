@@ -44,6 +44,26 @@ function BerandaGuru() {
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
   };
 
+  const handleDelete = () => {
+    axios
+    .delete(`https://www.nugasyuk.my.id/api/admin/guru/${selected}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        // Penanganan ketika penghapusan berhasil
+        console.log("Data berhasil dihapus");
+        // Refresh halaman atau ambil ulang data setelah penghapusan
+        window.location.reload();
+      })
+      .catch((error) => {
+        // Penanganan ketika terjadi kesalahan saat menghapus data
+        console.log("Terjadi kesalahan saat menghapus data:", error);
+      });
+  };
+
   const closeDeletePopup = () => {
     const popupDelete = document.querySelector("#popup-Delete");
     setTimeout(() => (popupDelete.style.display = "none"), 250);
@@ -352,7 +372,7 @@ function BerandaGuru() {
                         <td>{item.niy}</td>
                         <td>
                           <div className="pengampu">
-                            {item.status_mapel.toUpperCase()}
+                            {item.status_mapel}
                           </div>
                         </td>
                         <td>
@@ -493,7 +513,7 @@ function BerandaGuru() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-delete">
+              <button type="button" className="btn-delete" onClick={handleDelete}>
                 Hapus
               </button>
             </div>

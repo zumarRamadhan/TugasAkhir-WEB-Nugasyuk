@@ -292,3 +292,9 @@ option[selected] {
     object-fit: cover;
     border-radius: 5px;
 }
+
+.error{
+    color: red;
+    font-size: 15px;
+    /* display: none; */
+}
