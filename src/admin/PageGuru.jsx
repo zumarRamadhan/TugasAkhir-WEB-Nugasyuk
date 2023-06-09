@@ -46,7 +46,7 @@ function BerandaGuru() {
 
   const handleDelete = () => {
     axios
-    .delete(`https://www.nugasyuk.my.id/api/admin/guru/${selected}`, {
+      .delete(`https://www.nugasyuk.my.id/api/admin/guru/${selected}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -249,6 +249,12 @@ function BerandaGuru() {
         <div>.</div>
         <div>.</div>
         <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
       </div>
     );
   } else if (dataTabelGuru && !isError)
@@ -365,14 +371,14 @@ function BerandaGuru() {
                               src={`https://www.nugasyuk.my.id/public/${item.foto_profile}`}
                               alt={item.foto_profile}
                             />
-                          </div>  
+                          </div>
                         </td>
                         <td>{item.nama_guru}</td>
                         <td>{item.email}</td>
                         <td>{item.niy}</td>
                         <td>
                           <div className="pengampu">
-                            {item.status_mapel}
+                            {item.status_mapel.toUpperCase()}
                           </div>
                         </td>
                         <td>
@@ -446,9 +452,7 @@ function BerandaGuru() {
               <h3>Mengajar :</h3>
               <div className="con-mengajar-detailGuru">
                 {detailGuru.detail?.map((item) => (
-                  <p className="mengajar-detailGuru">
-                    {item.nama_mapel}
-                  </p>
+                  <p className="mengajar-detailGuru">{item.nama_mapel}</p>
                 ))}
               </div>
               <h3>Kode :</h3>
@@ -457,7 +461,7 @@ function BerandaGuru() {
                   <p className="kode-detailGuru">{item.kode_guru}</p>
                 ))}
               </div>
-              
+
               <h3>Mengajar Kelas :</h3>
               <div className="con-mengajarkelas-detailGuru">
                 {detailGuru.detail?.map((item) => (
@@ -513,7 +517,11 @@ function BerandaGuru() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-delete" onClick={handleDelete}>
+              <button
+                type="button"
+                className="btn-delete"
+                onClick={handleDelete}
+              >
                 Hapus
               </button>
             </div>
