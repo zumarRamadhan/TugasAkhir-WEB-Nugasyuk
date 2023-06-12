@@ -62,6 +62,7 @@ function JadwalKBM() {
   const [passwordType, setPasswordType] = useState("password");
   const [passwordTypeNew, setPasswordTypeNew] = useState("password");
   const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
+  const [selectedKbmId, setSelectedKbmId] = useState(null);
 
   function togglePasswordVisibility() {
     setPasswordType(passwordType === "password" ? "text" : "password");
@@ -83,163 +84,32 @@ function JadwalKBM() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showDetailKbm = () => {
+  const showDetailKbm = (id) => {
+    setSelectedKbmId(id);
+    console.log("ID:", id);
     const popupForget = document.querySelector(".popup-kbm");
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
-
-  const valueDataKelas = [
-    {
-      id: 1,
-      kelas: "10",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel1,
-    },
-    {
-      id: 2,
-      kelas: "10",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel2,
-    },
-    {
-      id: 3,
-      kelas: "11",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel3,
-    },
-    {
-      id: 4,
-      kelas: "11",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel4,
-    },
-    {
-      id: 5,
-      kelas: "12",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel5,
-    },
-    {
-      id: 6,
-      kelas: "12",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel6,
-    },
-    {
-      id: 7,
-      kelas: "10",
-      jurusan: "animasi",
-      tingkatan: "1",
-      // assets: cardMapel7,
-    },
-    {
-      id: 8,
-      kelas: "10",
-      jurusan: "animasi",
-      tingkatan: "2",
-      // assets: cardMapel8,
-    },
-    {
-      id: 9,
-      kelas: "11",
-      jurusan: "animasi",
-      tingkatan: "1",
-      // assets: cardMapel9,
-    },
-  ];
-
-  const valueDataGuru = [
-    {
-      id: 1,
-      kodeGuru: "BI1",
-      namaGuru: "Budiono, S.Pd",
-      mapel: "B. Inggris",
-      profileImg: imgCardKbm,
-    },
-    {
-      id: 2,
-      kodeGuru: "OLA1",
-      namaGuru: "Asep, S.Pd",
-      mapel: "Olahraga",
-      profileImg: imgCardKbm,
-    },
-    {
-      id: 3,
-      kodeGuru: "MTK1",
-      namaGuru: "Rini, S.Pd",
-      mapel: "Matematika",
-      profileImg: imgCardKbm,
-    },
-    {
-      id: 4,
-      kodeGuru: "PAI1",
-      namaGuru: "Edi, S.Pd.I",
-      mapel: "PAI",
-      profileImg: imgCardKbm,
-    },
-  ];
-
-  const valueCardKbm = [
-    {
-      id: 1,
-      hari: "Senin",
-    },
-    {
-      id: 2,
-      hari: "Selasa",
-    },
-    {
-      id: 3,
-      hari: "Rabu",
-    },
-    {
-      id: 4,
-      hari: "Kamis",
-    },
-    {
-      id: 5,
-      hari: "Jumat",
-    },
-    {
-      id: 6,
-      hari: "Sabtu",
-    },
-  ];
 
   const saveToken = sessionStorage.getItem("token");
 
   // const [dataJadwal, setDataJadwal] = useState([]);
   const [dataAPIJadwal, setDataAPIJadwal] = useState([]);
 
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
   const [isError, setisError] = useState(false);
-  const { id } = useParams();
 
   useEffect(() => {
-    // getDetailJadwal();
-    getDataJadwal();
-  }, [id]);
-
-  function getDataJadwal() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/jadwal/", {
+      .get("https://www.nugasyuk.my.id/api/murid/jadwal", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },
       })
       .then((result) => {
-        console.log("data API", result.data);
-        // const responseAPI = result.data;
-
         setDataAPIJadwal(result.data.data);
         setisLoading(false);
       })
@@ -248,42 +118,24 @@ function JadwalKBM() {
         setisError(true);
         setisLoading(false);
       });
-  }
+  }, []);
 
-  // function getDetailJadwal() {
-  //   setisLoading(true);
-  //   axios
-  //     .get("https://www.nugasyuk.my.id/api/murid/jadwal/" + id, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       // const responseAPI = result.data;
-
-  //       setDataJadwal(result.data.data);
-  //       setisLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setisError(true);
-  //       setisLoading(false);
-  //     });
-  // }
-
-  if (isLoading)
+  if (isLoading) {
     return (
       <div id="load">
         <div>.</div>
         <div>.</div>
         <div>.</div>
         <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
       </div>
     );
-  else if (dataAPIJadwal && !isError)
-  
+  } else if (dataAPIJadwal && !isError)
     return (
       <div>
         <aside>
@@ -325,36 +177,35 @@ function JadwalKBM() {
           <div className="main">
             <div className="content-jadwalKBM">
               <div className="con-card-jadwalKBM">
-                {dataAPIJadwal &&
-                  dataAPIJadwal.map((listJadwal) => (
-                    <div className="cardJadwalKbm" key={listJadwal.id}>
+              {dataAPIJadwal.map((listJadwal) => (
+                <div className="cardJadwalKbm" key={listJadwal.id}>
                       <div className="titleJadwalKbm">
                         <p>Jadwal KBM</p>
                         <h1>{listJadwal.hari}</h1>
                       </div>
-                      <div className="bottomjadwalKbm">
-                        <div className="conImgGuru-Kbm">
-                          <div className="imgGuru-Kbm">
-                            <img src="" alt="" className="imageGuru-Kbm" />
-                          </div>
-                        </div>
-                        <div className="btnDetail-Kbm">
-                          <Icon
-                            icon="ic:round-navigate-next"
-                            width="30"
-                            className="iconDetail-Kbm"
-                            onClick={showDetailKbm}
-                          />
-                        </div>
+                  <div className="bottomjadwalKbm">
+                    <div className="conImgGuru-Kbm">
+                      <div className="imgGuru-Kbm">
+                        <img src="" alt="" className="imageGuru-Kbm" />
                       </div>
                     </div>
-                  ))}
+                    <div className="btnDetail-Kbm">
+                      <Icon
+                        icon="ic:round-navigate-next"
+                        width="30"
+                        className="iconDetail-Kbm"
+                        onClick={() => showDetailKbm(listJadwal.id)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="popup-kbm">
+        {/* <div className="popup-kbm">
           <div className="detail-popup-kbm">
             <div className="nav-popup-kbm">
               <Icon
@@ -384,7 +235,38 @@ function JadwalKBM() {
               </div>
             </div>
           </div>
+        </div> */}
+        <div className="popup-kbm" style={{ display: selectedKbmId ? 'flex' : 'none' }}>
+          <div className="detail-popup-kbm">
+            <div className="nav-popup-kbm">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer", color: "#4b4b4b" }}
+                className="btn-close"
+                onClick={closeDetailKbm}
+              />
+              <h2 className="day-schedule">Senin</h2>
+            </div>
+            <div className="con-popup-kbm">
+              <div className="popup-card-kbm">
+                <div className="test1">
+                  <img src={ImgProfil} alt="" className="image-card-kbm" />
+                  <div className="mapel-card-kbm">
+                    <p>okeh</p>
+                    <p className="guruPengampu">Joko Arianto</p>
+                  </div>
+                </div>
+                <div className="test2">
+                  <div className="jamMengajar">
+                    <span>07.00</span> - <span>11.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
 
         <div className="popup-logout" id="popup-logout">
           <div className="detail-logout">

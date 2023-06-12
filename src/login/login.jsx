@@ -1,18 +1,17 @@
-import '../login/login.css'
-import React, { useState, useEffect, props } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Icon } from '@iconify/react';
-import greenLoginIcon from '../assets/73782-education.gif';
-import userIcon from '../assets/user-icon.svg';
-import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import passIcon from '../assets/pass-icon.svg';
-import mataIcon from '../assets/icon-mata.svg';
+import "../login/login.css";
+import React, { useState, useEffect, props } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import greenLoginIcon from "../assets/73782-education.gif";
+import userIcon from "../assets/user-icon.svg";
+import IconNugasyuk from "../assets/IconNugasyuk.svg";
+import passIcon from "../assets/pass-icon.svg";
+import mataIcon from "../assets/icon-mata.svg";
 // import { createBrowserHistory } from 'history';
 // import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from "axios";
 
-
-function Login (){
+function Login() {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -22,18 +21,18 @@ function Login (){
     setPasswordShown(!passwordShown);
   }
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // const history = useHistory();
 
   const handleEmail = (e) => {
-    console.log(e.target.value)
-    setEmail(e.target.value)
-  }
+    console.log(e.target.value);
+    setEmail(e.target.value);
+  };
 
   const handlePassword = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
 
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
@@ -41,30 +40,38 @@ function Login (){
   // const {isUserLoggedIn, userAuthentication} = props
 
   const login = (e) => {
-    e.preventDefault()
-    console.log("mengirim data")
-    axios.post('https://www.nugasyuk.my.id/api/login', {
-      email: email,
-      password: password
-    })
-    .then((response) => {
-        console.log(response.data)
+    e.preventDefault();
+    console.log("mengirim data");
+    axios
+      .post("https://www.nugasyuk.my.id/api/login", {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response.data);
         // props.userAuthentication()
-        console.log(response.data)
-        sessionStorage.setItem('token', response.data.token)
+        console.log(response.data);
+        sessionStorage.setItem("token", response.data.token);
         // alert('login Berhasil')
         setisLoading(true);
-        window.location.replace('murid/berandamurid')
+        if (response.data.kelas_id !== undefined)
+          return window.location.replace("murid/berandamurid");
+        else if (response.data.mapel_id !== undefined)
+          return window.location.replace("guru/berandaguru");
+        else if (response.data.siswa_id !== undefined)
+          return window.location.replace("waliMurid/berandawalimurid");
+        else return window.location.replace("admin/berandaadmin");
+
         // props.history.push('murid/berandamurid')
-    })
-    .catch((err) => {
-        console.log("terjadi kesalahan : ", err)
-        alert('login gagal')
-        console.log(err.response)
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan : ", err);
+        alert("login gagal");
+        console.log(err.response);
         setisLoading(false);
         // alert(err.response.data.error.message)
-    })
-  }
+      });
+  };
 
   if (isLoading)
     return (
@@ -76,7 +83,7 @@ function Login (){
       </div>
     );
 
-  return ( 
+  return (
     <div className="container-login">
       <div className="image-login">
         <img src={greenLoginIcon} alt="" className="img-login" />
@@ -87,27 +94,30 @@ function Login (){
           nugasyuk
         </h1>
         <div className="con-desc">
-          <p className="desc-form-login">Masukkan akun anda terlebih dahulu untuk masuk!</p>
+          <p className="desc-form-login">
+            Masukkan akun anda terlebih dahulu untuk masuk!
+          </p>
         </div>
         <form className="form-login" onSubmit={login}>
           <div className="con-form-username">
             <img src={userIcon} className="icon-input" />
-            <input type="text" 
+            <input
+              type="text"
               id="email"
-              name='email'
+              name="email"
               placeholder="email"
               className="input-username"
               value={email}
               onChange={handleEmail}
               required
-             />
+            />
           </div>
           <div className="con-form-password">
             <img src={passIcon} className="icon-input" />
             <input
               type={passwordShown ? "text" : "password"}
               id="password"
-              name='password'
+              name="password"
               placeholder="password"
               className="input-password"
               value={password}
