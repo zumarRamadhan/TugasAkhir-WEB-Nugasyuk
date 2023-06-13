@@ -121,6 +121,23 @@ function BerandaGuru() {
     const popupKode = document.querySelector("#popup-Kode");
     popupKode.style.display = "flex";
     popupKode.style.animation = "slide-down 0.3s ease-in-out";
+    axios
+      .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        setDetailGuru(responseAPI.data);
+        // setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        // setIsError(true);
+        // setIsLoading(false);
+      });
   };
 
   const closeKodePopup = () => {
@@ -183,6 +200,95 @@ function BerandaGuru() {
   const [filteredData, setFilteredData] = useState([]);
   const [filterValue, setFilterValue] = useState("all");
 
+  // start kodeGuru
+
+  const [formKode, setFormKode] = useState({
+    kode_guru: "",
+    nama_mapel: "",
+    status_mapel: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const handleChanges = (e) => {
+    const { name, value } = e.target;
+    setFormKode((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formKode);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    if (!data.kode_guru) {
+      errors.kode_guru = "Kode Guru harus diisi";
+    }
+
+    if (!data.nama_mapel) {
+      errors.nama_mapel = "Nama Mapel harus diisi";
+    }
+
+    if (!data.status_mapel) {
+      errors.status_mapel = "Harus memilih status mapel";
+    }
+
+    return errors;
+  };
+
+  useEffect(() => {
+    if (isSubmitting) {
+      const formData = new FormData();
+      formData.append("kode_guru", formKode.kode_guru);
+      formData.append("nama_mapel", formKode.nama_mapel);
+      formData.append("status_mapel", formKode.status_mapel);
+
+      axios
+        .post(
+          `https://www.nugasyuk.my.id/api/admin/kode/${selected}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${saveToken}`,
+            },
+          }
+        )
+        .then((result) => {
+          console.log("Data berhasil ditambahkan");
+          // Lakukan tindakan refresh window
+          window.location.reload();
+          
+          navigate("/admin/pageguru");
+
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setFormKode({
+            kode_guru: "",
+            nama_mapel: "",
+            status_mapel: "",
+          });
+
+          setIsSubmitting(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat menambahkan data:", error);
+          setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
+          setIsSubmitting(false);
+        });
+    }
+  }, [isSubmitting, formKode]);
+
+  // end kodeGuru
   useEffect(() => {
     axios
       .get("https://www.nugasyuk.my.id/api/admin/guru", {
@@ -470,21 +576,21 @@ function BerandaGuru() {
               <p className="alamat-detailGuru">{detailGuru.alamat}</p>
               <h3>Mengajar :</h3>
               <div className="con-mengajar-detailGuru">
-                {detailGuru.mengajar?.map((item) => (
-                  <p className="mengajar-detailGuru">{item.nama_mapel}</p>
+                {detailGuru.mengajar?.map((item, index) => (
+                  <p key={index} className="mengajar-detailGuru">{item.nama_mapel}</p>
                 ))}
               </div>
               <h3>Kode :</h3>
               <div className="con-kode-detailGuru">
-                {detailGuru.kode?.map((item) => (
-                  <p className="kode-detailGuru">{item.kode_guru}</p>
+                {detailGuru.kode?.map((item, index) => (
+                  <p key={index} className="kode-detailGuru">{item.kode_guru}</p>
                 ))}
               </div>
 
               <h3>Mengajar Kelas :</h3>
               <div className="con-mengajarkelas-detailGuru">
-                {detailGuru.mengajar_kelas?.map((item) => (
-                  <p className="mengajarKelas-detailGuru">
+                {detailGuru.mengajar_kelas?.map((item, index) => (
+                  <p key={index} className="mengajarKelas-detailGuru">
                     {item.tingkat_ke +
                       " " +
                       item.nama_jurusan.toUpperCase() +
@@ -553,7 +659,7 @@ function BerandaGuru() {
           </div>
         </div>
 
-        <div className="popup-Kode" id="popup-Kode">
+        {/* <div className="popup-Kode" id="popup-Kode">
           <form action="" className="detail-Kode">
             <div className="navbar-detail-Kode">
               <Icon
@@ -596,6 +702,95 @@ function BerandaGuru() {
                   bk
                 </label>
               </div>
+            </div>
+            <button type="submit" className="btn-sumbitKode">
+              Tambah
+            </button>
+          </form>
+        </div> */}
+
+        <div className="popup-Kode" id="popup-Kode">
+          <form onSubmit={handleSubmit} className="detail-Kode">
+            <div className="navbar-detail-Kode">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeKodePopup}
+              />
+              <h2>Tambah Kode Guru</h2>
+              <div className="divKosong"></div>
+            </div>
+            <p className="judul-form">Nama Guru</p>
+            <input
+              type="text"
+              id=""
+              value={detailGuru.nama_guru}
+              disabled
+              readOnly
+              className="inputGuru"
+            />
+            <p className="judul-form">Kode Guru</p>
+            <input
+              type="text"
+              id="inputKode"
+              name="kode_guru"
+              className="inputGuru"
+              value={formKode.kode_guru}
+              onChange={handleChanges}
+            />
+            {errors.kode_guru && (
+              <span className="error">{errors.kode_guru}</span>
+            )}
+            <p className="judul-form">Mata Pelajaran</p>
+            <input
+              type="text"
+              id="inputMapel"
+              name="nama_mapel"
+              className="inputGuru"
+              value={formKode.nama_mapel}
+              onChange={handleChanges}
+            />
+            {errors.nama_mapel && (
+              <span className="error">{errors.nama_mapel}</span>
+            )}
+            <p className="judul-form">Status Mata Pelajaran</p>
+            <div className="switch-inputKode">
+              <div className="con-radio">
+                <label>
+                  <input
+                    type="radio"
+                    name="status_mapel"
+                    value="produktif"
+                    checked={formKode.status_mapel === "produktif"}
+                    onChange={handleChanges}
+                  />
+                  produktif
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="status_mapel"
+                    value="normadaf"
+                    checked={formKode.status_mapel === "normadaf"}
+                    onChange={handleChanges}
+                  />
+                  normadaf
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="status_mapel"
+                    value="bk"
+                    checked={formKode.status_mapel === "bk"}
+                    onChange={handleChanges}
+                  />
+                  bk
+                </label>
+              </div>
+              {errors.status_mapel && (
+                <span className="error">{errors.status_mapel}</span>
+              )}
             </div>
             <button type="submit" className="btn-sumbitKode">
               Tambah
