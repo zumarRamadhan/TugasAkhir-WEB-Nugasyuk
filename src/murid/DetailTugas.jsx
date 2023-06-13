@@ -34,7 +34,9 @@ function DetailTask() {
         setDataDetailTugas(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => 
+      console.error(error));
+      setisLoading(false);
   }
 
   if (isLoading)
@@ -47,6 +49,7 @@ function DetailTask() {
       </div>
     );
   else if (dataDetailTugas && !isError)
+
     return (
       <div>
         <aside>
