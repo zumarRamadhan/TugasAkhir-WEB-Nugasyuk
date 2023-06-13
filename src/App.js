@@ -14,6 +14,7 @@ import AddAssets from './admin/AddAssets';
 import FormAddJadwalKbm from './admin/formAddJadwalKbm';
 import FormAddMurid from './admin/FormAddMurid';
 import FormAddGuru from './admin/FormAddGuru';
+import EditFormAddGuru from './admin/EditFormAddGuru';
 // end role admin
 // role murid
 import BerandaMurid from './murid/BerandaMurid';
@@ -78,7 +79,8 @@ function App() {
         <Route path="/admin/pageassets/add" element={<AddAssets/>} />
         <Route path="/admin/jadwalkbm/tambah" element={<FormAddJadwalKbm/>} />
         <Route path="/admin/pagemurid/formaddmurid" element={<FormAddMurid/>} />
-        <Route path="/admin/pageguru/formaddguru" element={<FormAddGuru/>} />
+        <Route path="/admin/pageguru/add" element={<FormAddGuru/>} />
+        <Route path="/admin/pageguru/edit" element={<EditFormAddGuru/>} />
         {/* end role admin */}
 
         {/* role murid */}

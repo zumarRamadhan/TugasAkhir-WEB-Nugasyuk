@@ -2,23 +2,19 @@ import "../cssAll/admin/DataGuru.css";
 import { Icon } from "@iconify/react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Sidebar from "../component/Sidebar";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import Navigation from "../component/NavigationBar";
 import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
-import foto2 from "../assets/foto2.png";
 import iconaksi from "../assets/iconaksi.svg";
 import ImgDelete from "../assets/imgDelete.svg";
-import ImgDetail from "../assets/damiDetailGuru.png";
 import axios from "axios";
 
 function BerandaGuru() {
   const navText = "Data Guru";
   const navigate = useNavigate();
-  const [inputKodeGuru, setInputKodeGuru] = useState("crotx");
   const [detailGuru, setDetailGuru] = useState([]);
 
   const closeDetail = () => {
@@ -42,6 +38,23 @@ function BerandaGuru() {
     const popupDelete = document.querySelector("#popup-Delete");
     popupDelete.style.display = "flex";
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+    axios
+      .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        setDetailGuru(responseAPI.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
   };
 
   const handleDelete = () => {
@@ -203,7 +216,7 @@ function BerandaGuru() {
 
   const handleSearch = () => {
     const filteredData = dataTabelGuru.filter((value) => {
-      const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
       const lowerCaseStatusMapel = value.status_mapel
         ? value.status_mapel.toLowerCase()
         : "";
@@ -235,8 +248,11 @@ function BerandaGuru() {
   };
 
   const handleFilterChange = (e) => {
+    // setFilterValue(e.target.value);
+    // jika filter value nya tidak ada maka akan menampilkan data not found
     setFilterValue(e.target.value);
   };
+  console.log("filter value", dataTabelGuru);
 
   const renderData = filteredData.length > 0 ? filteredData : dataTabelGuru;
   const dataNotFound =
@@ -260,7 +276,6 @@ function BerandaGuru() {
   } else if (dataTabelGuru && !isError)
     return (
       <div>
-        {/* <Sidebar/> */}
         <aside>
           <h1
             className="title-form-login"
@@ -308,7 +323,7 @@ function BerandaGuru() {
               <div className="header-guru-left">
                 <button
                   className="btn-add-guru"
-                  onClick={() => navigate("/admin/pageguru/formaddguru")}
+                  onClick={() => navigate("/admin/pageguru/add")}
                 >
                   <Icon icon="ic:round-plus" width="20"></Icon>
                   <p>Tambah Data</p>
@@ -330,7 +345,7 @@ function BerandaGuru() {
                     value={searchQuery}
                     onChange={handleChange}
                   />
-                  <button type="submit">
+                  <button disabled="disabled">
                     <Icon
                       icon="material-symbols:search-rounded"
                       width="20"
@@ -377,9 +392,7 @@ function BerandaGuru() {
                         <td>{item.email}</td>
                         <td>{item.niy}</td>
                         <td>
-                          <div className="pengampu">
-                            {item.status_mapel.toUpperCase()}
-                          </div>
+                          <div className="pengampu">{item.status_mapel}</div>
                         </td>
                         <td>
                           <img
@@ -399,7 +412,13 @@ function BerandaGuru() {
                                 <a onClick={showDetailPopup}>Detail</a>
                               </li>
                               <li>
-                                <a href="#">Edit</a>
+                                <a
+                                  onClick={() =>
+                                    navigate("/admin/pageguru/edit")
+                                  }
+                                >
+                                  Edit
+                                </a>
                               </li>
                               <li>
                                 <a onClick={showDeletePopup}>Hapus</a>
@@ -451,20 +470,20 @@ function BerandaGuru() {
               <p className="alamat-detailGuru">{detailGuru.alamat}</p>
               <h3>Mengajar :</h3>
               <div className="con-mengajar-detailGuru">
-                {detailGuru.detail?.map((item) => (
+                {detailGuru.mengajar?.map((item) => (
                   <p className="mengajar-detailGuru">{item.nama_mapel}</p>
                 ))}
               </div>
               <h3>Kode :</h3>
               <div className="con-kode-detailGuru">
-                {detailGuru.detail?.map((item) => (
+                {detailGuru.kode?.map((item) => (
                   <p className="kode-detailGuru">{item.kode_guru}</p>
                 ))}
               </div>
 
               <h3>Mengajar Kelas :</h3>
               <div className="con-mengajarkelas-detailGuru">
-                {detailGuru.detail?.map((item) => (
+                {detailGuru.mengajar_kelas?.map((item) => (
                   <p className="mengajarKelas-detailGuru">
                     {item.tingkat_ke +
                       " " +
@@ -513,8 +532,14 @@ function BerandaGuru() {
               <img src={ImgDelete} alt="" className="img-Delete" />
             </div>
             <p className="desc-Delete">Anda yakin ingin menghapus?</p>
+            {/* memanggil nama sesuai data yang di pilih */}
+            <p className="desc-Delete">{detailGuru.nama_guru}</p>
             <div className="con-btn-Delete">
-              <button type="button" className="btn-batal">
+              <button
+                type="button"
+                className="btn-batal"
+                onClick={closeDeletePopup}
+              >
                 Batal
               </button>
               <button
@@ -550,16 +575,28 @@ function BerandaGuru() {
               className="inputGuru"
             />
             <p className="judul-form">Kode Guru</p>
-            <input
-              type="text"
-              value={inputKodeGuru}
-              onChange={(e) => setInputKodeGuru(e.target.value)}
-              id="inputKode"
-              className="inputGuru"
-            />
+            <input type="text" id="inputKode" className="inputGuru" />
             <p className="judul-form">Mata Pelajaran</p>
             <input type="text" id="inputMapel" className="inputGuru" />
 
+            <p className="judul-form">Status Mata Pelajaran</p>
+
+            <div className="switch-inputKode">
+              <div className="con-radio">
+                <label>
+                  <input type="radio" name="jawaban" value="produktif" />
+                  produktif
+                </label>
+                <label>
+                  <input type="radio" name="jawaban" value="normadaf" />
+                  normadaf
+                </label>
+                <label>
+                  <input type="radio" name="jawaban" value="bk" />
+                  bk
+                </label>
+              </div>
+            </div>
             <button type="submit" className="btn-sumbitKode">
               Tambah
             </button>

@@ -10,8 +10,8 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import axios from "axios";
 
-function FormAddGuru() {
-  const navText = "Tambah Data";
+function EditFormAddGuru() {
+  const navText = "Edit Data";
   const navigate = useNavigate();
 
   const closeDetail = () => {
@@ -82,7 +82,7 @@ function FormAddGuru() {
     nomorTlp: "",
     alamat: "",
     password: "",
-    role: "",
+    role: "1",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -125,7 +125,6 @@ function FormAddGuru() {
             alamat: "",
             password: "",
             konfirmasiPassword: "",
-            role: "",
           });
 
           setIsSubmitting(false);
@@ -182,10 +181,6 @@ function FormAddGuru() {
 
     if (!data.alamat.trim()) {
       errors.alamat = "Alamat harus diisi";
-    }
-
-    if (!data.role.trim()) {
-      errors.role = "Harus memilih role";
     }
 
     if (!data.password.trim()) {
@@ -339,35 +334,6 @@ function FormAddGuru() {
                 {errors.alamat && (
                   <span className="error">{errors.alamat}</span>
                 )}
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">Status Guru</div>
-                <div className="switch-inputKode">
-                  <div className="con-radio">
-                    <label>
-                      <input
-                        type="radio"
-                        name="role"
-                        value="1"
-                        checked={formData.role === "1"}
-                        onChange={handleChange}
-                      />
-                      Guru Biasa
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="role"
-                        value="2"
-                        checked={formData.role === "2"}
-                        onChange={handleChange}
-                      />
-                      Guru BK
-                    </label>
-                  </div>
-                </div>
-                {errors.role && <span className="error">{errors.role}</span>}
               </div>
 
               <div className="con-formKbm">
@@ -548,4 +514,4 @@ function FormAddGuru() {
   );
 }
 
-export default FormAddGuru;
+export default EditFormAddGuru;

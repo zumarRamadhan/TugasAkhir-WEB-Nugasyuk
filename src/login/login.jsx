@@ -1,20 +1,15 @@
 import '../login/login.css'
-import React, { useState, useEffect, props } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Icon } from '@iconify/react';
 import greenLoginIcon from '../assets/73782-education.gif';
 import userIcon from '../assets/user-icon.svg';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-// import { createBrowserHistory } from 'history';
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
 function Login (){
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const [passwordShown, setPasswordShown] = useState(false);
 
@@ -24,7 +19,6 @@ function Login (){
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  // const history = useHistory();
 
   const handleEmail = (e) => {
     console.log(e.target.value)
@@ -38,8 +32,6 @@ function Login (){
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
 
-  // const {isUserLoggedIn, userAuthentication} = props
-
   const login = (e) => {
     e.preventDefault()
     console.log("mengirim data")
@@ -49,32 +41,27 @@ function Login (){
     })
     .then((response) => {
         console.log(response.data)
-        // props.userAuthentication()
         console.log(response.data)
         sessionStorage.setItem('token', response.data.token)
-        // alert('login Berhasil')
         setisLoading(true);
         if (response.data.kelas_id !== undefined) 
-          return window.location.replace('murid/berandamurid')
+          return window.location.replace('/murid/berandamurid')
 
          else if (response.data.mapel_id !== undefined)
-          return window.location.replace('guru/berandaguru')
+          return window.location.replace('/guru/berandaguru')
           
          else if (response.data.siswa_id !== undefined)
-          return window.location.replace('waliMurid/berandawalimurid')
+          return window.location.replace('/waliMurid/berandawalimurid')
           
         else 
-          return window.location.replace('admin/berandaadmin')
-        
-       
-        // props.history.push('murid/berandamurid')
+          return window.location.replace('/admin/berandaadmin')
+
     })
     .catch((err) => {
         console.log("terjadi kesalahan : ", err)
         alert('login gagal')
         console.log(err.response)
         setisLoading(false);
-        // alert(err.response.data.error.message)
     })
   }
 
