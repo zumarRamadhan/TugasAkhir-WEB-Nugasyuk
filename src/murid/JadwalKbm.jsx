@@ -14,6 +14,7 @@ import axios from "axios";
 
 function JadwalKBM() {
   const navigate = useNavigate();
+  const [detailJadwal, setDetailJadwal] = useState([]);
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -90,6 +91,23 @@ function JadwalKBM() {
     const popupForget = document.querySelector(".popup-kbm");
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
+
+    axios
+      .get("https://www.nugasyuk.my.id/api/murid/jadwal/" + id, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        setDetailJadwal(result.data);
+        setisLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setisError(true);
+        setisLoading(false);
+      });
   };
 
   const saveToken = sessionStorage.getItem("token");
@@ -177,28 +195,28 @@ function JadwalKBM() {
           <div className="main">
             <div className="content-jadwalKBM">
               <div className="con-card-jadwalKBM">
-              {dataAPIJadwal.map((listJadwal) => (
-                <div className="cardJadwalKbm" key={listJadwal.id}>
-                      <div className="titleJadwalKbm">
-                        <p>Jadwal KBM</p>
-                        <h1>{listJadwal.hari}</h1>
-                      </div>
-                  <div className="bottomjadwalKbm">
-                    <div className="conImgGuru-Kbm">
-                      <div className="imgGuru-Kbm">
-                        <img src="" alt="" className="imageGuru-Kbm" />
-                      </div>
+                {dataAPIJadwal.map((listJadwal) => (
+                  <div className="cardJadwalKbm" key={listJadwal.id}>
+                    <div className="titleJadwalKbm">
+                      <p>Jadwal KBM</p>
+                      <h1>{listJadwal.hari}</h1>
                     </div>
-                    <div className="btnDetail-Kbm">
-                      <Icon
-                        icon="ic:round-navigate-next"
-                        width="30"
-                        className="iconDetail-Kbm"
-                        onClick={() => showDetailKbm(listJadwal.id)}
-                      />
+                    <div className="bottomjadwalKbm">
+                      <div className="conImgGuru-Kbm">
+                        <div className="imgGuru-Kbm">
+                          <img src="" alt="" className="imageGuru-Kbm" />
+                        </div>
+                      </div>
+                      <div className="btnDetail-Kbm">
+                        <Icon
+                          icon="ic:round-navigate-next"
+                          width="30"
+                          className="iconDetail-Kbm"
+                          onClick={() => showDetailKbm(listJadwal.id)}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
                 ))}
               </div>
             </div>
@@ -236,7 +254,10 @@ function JadwalKBM() {
             </div>
           </div>
         </div> */}
-        <div className="popup-kbm" style={{ display: selectedKbmId ? 'flex' : 'none' }}>
+        <div
+          className="popup-kbm"
+          style={{ display: selectedKbmId ? "flex" : "none" }}
+        >
           <div className="detail-popup-kbm">
             <div className="nav-popup-kbm">
               <Icon
@@ -246,27 +267,29 @@ function JadwalKBM() {
                 className="btn-close"
                 onClick={closeDetailKbm}
               />
-              <h2 className="day-schedule">Senin</h2>
+              <h2 className="day-schedule">{detailJadwal.hari}</h2>
             </div>
             <div className="con-popup-kbm">
-              <div className="popup-card-kbm">
-                <div className="test1">
-                  <img src={ImgProfil} alt="" className="image-card-kbm" />
-                  <div className="mapel-card-kbm">
-                    <p>okeh</p>
-                    <p className="guruPengampu">Joko Arianto</p>
+              {detailJadwal.data?.map((jadwalDetail) => (
+                <div className="popup-card-kbm">
+                  <div className="test1">
+                    <img src={ImgProfil} alt="" className="image-card-kbm" />
+                    <div className="mapel-card-kbm">
+                      <p>{jadwalDetail.nama_mapel}</p>
+                      <p className="guruPengampu">{jadwalDetail.nama_guru}</p>
+                    </div>
+                  </div>
+                  <div className="test2">
+                    <div className="jamMengajar">
+                      <span>{jadwalDetail.waktu_mulai}</span> -{" "}
+                      <span>{jadwalDetail.waktu_selesai}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="test2">
-                  <div className="jamMengajar">
-                    <span>07.00</span> - <span>11.00</span>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
-
 
         <div className="popup-logout" id="popup-logout">
           <div className="detail-logout">

@@ -23,7 +23,7 @@ function NavbarMurid(props) {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/profil", {
+      .get("https://www.nugasyuk.my.id/api/murid/profile", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -31,9 +31,10 @@ function NavbarMurid(props) {
       })
       .then((result) => {
         console.log("data API", result.data);
-        // const responseAPI = result.data;
+        const responseAPI = result.data;
 
-        setDataNavbar(result.data.data);
+        setDataNavbar(responseAPI.data);
+        // setisLoading(false);
       })
       .catch((err) => {
         console.log("terjadi kesalahan: ", err);
@@ -44,15 +45,18 @@ function NavbarMurid(props) {
       <div>
         <nav>
           <div className="navbar">
+            {/* <h2>{dataNavbar}</h2> */}
             <h1>{textNavigasi}</h1>
             <div className="nav-right">
+              {dataNavbar.map((navData) =>
               <div className="img-profile" style={{ cursor: "pointer" }}>
                 <img
-                  src={`https://www.nugasyuk.my.id/public/${dataNavbar.foto_profile}`}
-                  alt="img-profile"
+                  src={`https://www.nugasyuk.my.id/public/${navData.foto_profile}`}
+                  alt={dataNavbar.foto_profile}
                   onClick={showDetail}
                 />
               </div>
+              )}
               <div
                 className="btn-notification"
                 style={{ cursor: "pointer" }}
