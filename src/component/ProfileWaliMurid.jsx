@@ -71,6 +71,11 @@ function DetailWaliMurid() {
     );
   }
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  };
+
   const saveToken = sessionStorage.getItem("token");
 
   const [dataProfileOrtu, setDataProfileOrtu] = useState([]);
@@ -114,7 +119,7 @@ function DetailWaliMurid() {
               <h2>Profil</h2>
             </div>
             <div className="detail-image-profile">
-              <img src={ImgProfil} alt="" className="detail-img-profile" />
+              <img src={`https://www.nugasyuk.my.id/public/${profileOrtu.foto_profile}`} alt="" className="detail-img-profile" />
             </div>
             <p className="judul-detail">Email</p>
             <p className="value-detail">{profileOrtu.email}</p>
@@ -127,7 +132,7 @@ function DetailWaliMurid() {
             <p className="judul-detail">Kelas</p>
             <p className="value-detail">11 PPLG 1</p>
             <p className="judul-detail">NIS</p>
-            <p className="value-detail">04449</p>
+            <p className="value-detail">{profileOrtu.nis}</p>
           </div>
           <div className="con-btn-detail-profile">
             <button
@@ -162,10 +167,10 @@ function DetailWaliMurid() {
             </div>
             <p className="desc-logout">Anda yakin ingin keluar?</p>
             <div className="con-btn-logout">
-              <button type="button" className="btn-batal">
+              <button type="button" className="btn-batal" onClick={closeLogoutPopup}>
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>

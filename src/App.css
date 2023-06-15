@@ -247,6 +247,11 @@ nav .navbar img {
     color: #FF3F3F;
 }
 
+.logout:hover{
+    background-color: #FF3F3F;
+    color: #fff;
+}
+
 /*  */
 
 .detail-notif {

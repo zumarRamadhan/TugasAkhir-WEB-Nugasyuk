@@ -52,7 +52,6 @@ function Login (){
         // props.userAuthentication()
         console.log(response.data)
         sessionStorage.setItem('token', response.data.token)
-        // alert('login Berhasil')
         setisLoading(true);
         if (response.data.kelas_id !== undefined) 
           return window.location.replace('murid/berandamurid')
@@ -65,7 +64,6 @@ function Login (){
           
         else 
           return window.location.replace('admin/berandaadmin')
-        
        
         // props.history.push('murid/berandamurid')
     })

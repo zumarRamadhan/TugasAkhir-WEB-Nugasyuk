@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { useNavigate, Link } from "react-router-dom";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarWaliMurid from "../component/NavbarWaliMurid";
-import cardMapel7 from "../assets/cardAssets/cardMapel7.svg";
+import cardMapel8 from "../assets/cardAssets/cardMapel8.svg";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DetailOrtu from "../component/ProfileWaliMurid";
@@ -50,6 +50,7 @@ function PageMapel() {
       </div>
     );
   else if (dataListMapel && !isError)
+
     return (
       <div>
         <aside>
@@ -98,10 +99,11 @@ function PageMapel() {
                       style={{ cursor: "pointer" }}
                     >
                       <img
-                        src={cardMapel7}
+                        src={cardMapel8}
                         alt=""
                         className="image-card-mapel"
-                        onClick={() => navigate('/walimurid/pagemapel/mapelmateri/${id}')}
+                        onClick={() => navigate('/walimurid/pagemapel/mapelmateri/'+listMapel.id)}
+                        id="123"
                       />
                       <div className="content-card-mapel">
                         <div className="card-mapel-left">
