@@ -36,8 +36,10 @@ function BerandaGuru() {
   };
 
   const showDeletePopup = () => {
-    const popupDelete = document.querySelector("#popup-Delete");
-    popupDelete.style.display = "flex";
+    const background = document.querySelector("#popup-Delete");
+    background.style.display = "flex";
+    const popupDelete = document.querySelector(".detail-Delete");
+    popupDelete.style.display = "block";
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
     axios
       .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
@@ -79,7 +81,10 @@ function BerandaGuru() {
   };
 
   const closeDeletePopup = () => {
-    const popupDelete = document.querySelector("#popup-Delete");
+    const background = document.querySelector("#popup-Delete");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const popupDelete = document.querySelector(".detail-Delete");
     setTimeout(() => (popupDelete.style.display = "none"), 250);
     popupDelete.style.animation = "slide-up 0.3s ease-in-out";
   };
@@ -87,9 +92,9 @@ function BerandaGuru() {
   const showDetailPopup = () => {
     const background = document.querySelector(".popup-detailGuru");
     background.style.display = "flex";
-    const popupDelete = document.querySelector(".detail-popup-detailGuru");
-    popupDelete.style.display = "block";
-    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+    const popupDetail = document.querySelector(".detail-popup-detailGuru");
+    popupDetail.style.display = "block";
+    popupDetail.style.animation = "slide-down 0.3s ease-in-out";
     axios
       .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
         headers: {
@@ -113,14 +118,16 @@ function BerandaGuru() {
     const background = document.querySelector(".popup-detailGuru");
     setTimeout(() => (background.style.display = "none"), 300);
     // background.style.display = "none";
-    const popupDelete = document.querySelector(".detail-popup-detailGuru");
-    setTimeout(() => (popupDelete.style.display = "none"), 250);
-    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
+    const popupDetail = document.querySelector(".detail-popup-detailGuru");
+    setTimeout(() => (popupDetail.style.display = "none"), 250);
+    popupDetail.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const showKodePopup = () => {
-    const popupKode = document.querySelector("#popup-Kode");
-    popupKode.style.display = "flex";
+    const background = document.querySelector("#popup-Kode");
+    background.style.display = "flex";
+    const popupKode = document.querySelector(".detail-Kode");
+    popupKode.style.display = "block";
     popupKode.style.animation = "slide-down 0.3s ease-in-out";
     axios
       .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
@@ -142,7 +149,10 @@ function BerandaGuru() {
   };
 
   const closeKodePopup = () => {
-    const popupKode = document.querySelector("#popup-Kode");
+    const background = document.querySelector("#popup-Kode");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const popupKode = document.querySelector(".detail-Kode");
     setTimeout(() => (popupKode.style.display = "none"), 250);
     popupKode.style.animation = "slide-up 0.3s ease-in-out";
     // jika di close maka #inpurKode dan #inputMapel akan di clear
@@ -362,9 +372,9 @@ function BerandaGuru() {
           (value &&
             value.email &&
             value.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          // (value &&
-          //   value.niy &&
-          //   value.niy.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.niy &&
+            value.niy.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (value &&
             value.status_mapel &&
             value.status_mapel

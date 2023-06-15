@@ -157,6 +157,11 @@ function FormAddGuru() {
 
   const validateForm = (data) => {
     let errors = {};
+
+    // jika file lebih dari 2MB maka muncul error
+    if (data.file.size > 3000000) {
+      errors.file = "Ukuran file tidak boleh lebih dari 3MB";
+    }
     
     if (!data.file) {
       errors.file = "Foto harus diisi";

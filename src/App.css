@@ -576,6 +576,7 @@ nav .navbar img {
     justify-content: center;
     align-items: center;
     animation-fill-mode: forwards;
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .img-Delete {
@@ -587,7 +588,7 @@ nav .navbar img {
     background: #FFFFFF;
     border-radius: 20px;
     width: 480px;
-    display: flex;
+    display: none;
     flex-direction: column;
     padding: 30px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
@@ -670,13 +671,14 @@ nav .navbar img {
     justify-content: center;
     align-items: center;
     animation-fill-mode: forwards;
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .detail-Kode {
     background: #FFFFFF;
     border-radius: 20px;
     width: 480px;
-    display: flex;
+    display: none;
     flex-direction: column;
     padding: 30px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
