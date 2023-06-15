@@ -78,14 +78,14 @@ function EditFormAddGuru() {
 
   const [guruData, setGuruData] = useState(null);
   const [formData, setFormData] = useState({
-    file: "",
+    // file: "",
     nama: "",
     niy: "",
     email: "",
     nomorTlp: "",
     alamat: "",
     password: "",
-    role: "",
+    konfirmasiPassword: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
@@ -100,14 +100,14 @@ function EditFormAddGuru() {
       .then((response) => {
         setGuruData(response.data.data);
         setFormData({
-          file: response.data.data.foto_profile,
+          // file: response.data.data.foto_profile,
           nama: response.data.data.nama_guru,
           niy: response.data.data.niy,
           email: response.data.data.email,
           nomorTlp: response.data.data.nomor_tlp,
           alamat: response.data.data.alamat,
           password: "",
-          role: response.data.data.role,
+          konfirmasiPassword: "",
         });
       })
       .catch((error) => {
@@ -160,12 +160,17 @@ function EditFormAddGuru() {
     if (!data.alamat.trim()) {
       errors.alamat = "Alamat harus diisi";
     }
+    // password harus lebih dari 8 karakter
 
-    if (isSubmitting && !data.password.trim()) {
-      errors.password = "Password harus diisi";
+    if (data.password.trim().length < 8) {
+      errors.password = "Password harus lebih dari 8 karakter";
     }
 
-    if (isSubmitting && data.password !== data.konfirmasiPassword) {
+    if (!data.password.trim()) {
+      errors.password = "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
+    }
+
+    if (data.password !== data.konfirmasiPassword) {
       errors.konfirmasiPassword = "Password tidak cocok";
     }
 
@@ -180,9 +185,9 @@ function EditFormAddGuru() {
       form.append("niy", formData.niy);
       form.append("alamat", formData.alamat);
       form.append("nomor_tlp", formData.nomorTlp);
-      form.append("role", formData.role);
-      form.append("foto_profile", formData.file);
+      // form.append("foto_profile", formData.file);
       form.append("password", formData.password || "");
+      form.append("konfirmasi_password", formData.konfirmasiPassword || "");
 
       axios
         .post(`https://www.nugasyuk.my.id/api/admin/guru/${id}`, form, {
@@ -204,32 +209,32 @@ function EditFormAddGuru() {
     }
   }, [isSubmitting, formData, id, saveToken, navigate]);
 
-  function handleFoto(e) {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      setFormData((prevState) => ({
-        ...prevState,
-        file: selectedFile,
-      }));
+  // function handleFoto(e) {
+  //   e.preventDefault();
+  //   if (e.target.files && e.target.files[0]) {
+  //     const selectedFile = e.target.files[0];
+  //     setFormData((prevState) => ({
+  //       ...prevState,
+  //       file: selectedFile,
+  //     }));
 
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const previewImage = document.getElementById("previewImage");
-        previewImage.src = e.target.result;
-      };
-      reader.readAsDataURL(selectedFile);
-    }
-  }
+  //     const reader = new FileReader();
+  //     reader.onload = function (e) {
+  //       const previewImage = document.getElementById("previewImage");
+  //       previewImage.src = e.target.result;
+  //     };
+  //     reader.readAsDataURL(selectedFile);
+  //   }
+  // }
 
-  useEffect(() => {
-    // Mengatur pratinjau gambar dari data API
-    if (formData) {
-      const previewImage = document.getElementById("previewImage");
-      previewImage.src = `https://www.nugasyuk.my.id/public/${guruData?.foto_profile}`;
-      console.log(formData.file);
-    }
-  }, [formData]);
+  // useEffect(() => {
+  //   // Mengatur pratinjau gambar dari data API
+  //   if (formData) {
+  //     const previewImage = document.getElementById("previewImage");
+  //     previewImage.src = `https://www.nugasyuk.my.id/public/${guruData?.foto_profile}`;
+  //     console.log(formData.file);
+  //   }
+  // }, [formData]);
 
   return (
     <div>
@@ -278,7 +283,7 @@ function EditFormAddGuru() {
         <div className="main">
           <div className="content-formKbm">
             <form onSubmit={handleSubmit} className="container-formKbm">
-              <div className="con-formKbm">
+              {/* <div className="con-formKbm">
                 <div className="title-formKbm">Profi</div>
                 <input
                   type="file"
@@ -290,7 +295,7 @@ function EditFormAddGuru() {
                   onChange={handleFoto}
                 />
                 <img id="previewImage" src={formData.file} alt="Pratinjau" />
-              </div>
+              </div> */}
 
               <div className="con-formKbm">
                 <div className="title-formKbm">Nama</div>
@@ -364,35 +369,6 @@ function EditFormAddGuru() {
                 {errors.alamat && (
                   <span className="error">{errors.alamat}</span>
                 )}
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">Status Guru</div>
-                <div className="switch-inputKode">
-                  <div className="con-radio">
-                    <label>
-                      <input
-                        type="radio"
-                        name="role"
-                        value="1"
-                        checked={formData.role === "1"}
-                        onChange={handleChange}
-                      />
-                      Guru Biasa
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="role"
-                        value="2"
-                        checked={formData.role === "2"}
-                        onChange={handleChange}
-                      />
-                      Guru BK
-                    </label>
-                  </div>
-                </div>
-                {errors.role && <span className="error">{errors.role}</span>}
               </div>
 
               <div className="con-formKbm">

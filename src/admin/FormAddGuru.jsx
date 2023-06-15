@@ -75,7 +75,7 @@ function FormAddGuru() {
 
   const [formData, setFormData] = useState({
     // Inisialisasi nilai awal untuk setiap field formulir
-    file: null,
+    file: "",
     nama: "",
     niy: "",
     email: "",
@@ -90,7 +90,7 @@ function FormAddGuru() {
 
   useEffect(() => {
     if (isSubmitting) {
-      console.log(formData.file);
+      // console.log(formData.file);
 
       const form = new FormData();
       form.append("nama_guru", formData.nama);
@@ -117,7 +117,7 @@ function FormAddGuru() {
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
           setFormData({
             // Set nilai awal untuk setiap field formulir
-            file: null,
+            file: "",
             nama: "",
             niy: "",
             email: "",
@@ -157,6 +157,10 @@ function FormAddGuru() {
 
   const validateForm = (data) => {
     let errors = {};
+    
+    if (!data.file) {
+      errors.file = "Foto harus diisi";
+    }
 
     if (!data.nama.trim()) {
       errors.nama = "Nama harus diisi";
@@ -188,6 +192,10 @@ function FormAddGuru() {
       errors.role = "Harus memilih role";
     }
 
+    if (data.password.trim().length < 8) {
+      errors.password = "Password harus lebih dari 8 karakter";
+    }
+
     if (!data.password.trim()) {
       errors.password = "Password harus diisi";
     }
@@ -202,12 +210,30 @@ function FormAddGuru() {
   function handleFoto(e) {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
       setFormData((prevState) => ({
         ...prevState,
-        file: e.target.files[0],
+        file: selectedFile,
       }));
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const previewImage = document.getElementById("previewImage");
+        previewImage.src = e.target.result;
+      };
+      reader.readAsDataURL(selectedFile);
     }
   }
+
+  // useEffect(() => {
+  //   // Mengatur pratinjau gambar dari data API
+  //   if (formData) {
+  //     const previewImage = document.getElementById("previewImage");
+  //     previewImage.src = `https://www.nugasyuk.my.id/public/${formData?.foto_profile}`;
+  //     // console.log(formData.file);
+  //   }
+  // }, [formData]);
+
   return (
     <div>
       <aside>
@@ -255,16 +281,19 @@ function FormAddGuru() {
         <div className="main">
           <div className="content-formKbm">
             <form onSubmit={handleSubmit} className="container-formKbm">
-              <div className="con-formKbm">
+            <div className="con-formKbm">
                 <div className="title-formKbm">Profi</div>
                 <input
                   type="file"
                   id="file"
                   name="file"
                   className="input-formKbm"
-                  //   accept=".jpg, .png, .jpeg"
+                  // value={formData.file}
+                  accept=".jpg, .png, .jpeg"
                   onChange={handleFoto}
                 />
+                {errors.file && <span className="error">{errors.file}</span>}
+                <img id="previewImage" src={formData.file} alt="Pilih foto, dan foto akan muncul di sini" />
               </div>
 
               <div className="con-formKbm">
