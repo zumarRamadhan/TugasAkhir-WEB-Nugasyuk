@@ -80,7 +80,7 @@ function App() {
         <Route path="/admin/jadwalkbm/tambah" element={<FormAddJadwalKbm/>} />
         <Route path="/admin/pagemurid/formaddmurid" element={<FormAddMurid/>} />
         <Route path="/admin/pageguru/add" element={<FormAddGuru/>} />
-        <Route path="/admin/pageguru/edit" element={<EditFormAddGuru/>} />
+        <Route path="/admin/pageguru/edit/:id" element={<EditFormAddGuru/>} />
         {/* end role admin */}
 
         {/* role murid */}

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "../cssAll/admin/FormAddMurid.css";
 import Navigation from "../component/NavigationBar";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams, useHistory } from "react-router-dom";
 import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
@@ -14,6 +14,7 @@ function EditFormAddGuru() {
   const navText = "Edit Data";
   const navigate = useNavigate();
 
+  // console.log(guruData);
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
     detailProfile.style.transform = "translateX(350px)";
@@ -71,71 +72,48 @@ function EditFormAddGuru() {
     );
   }
 
+  const { id } = useParams();
+  // const history = useNavigate();
   const saveToken = sessionStorage.getItem("token");
 
+  const [guruData, setGuruData] = useState(null);
   const [formData, setFormData] = useState({
-    // Inisialisasi nilai awal untuk setiap field formulir
-    file: null,
+    file: "",
     nama: "",
     niy: "",
     email: "",
     nomorTlp: "",
     alamat: "",
     password: "",
-    role: "1",
+    role: "",
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (isSubmitting) {
-      console.log(formData.file);
-
-      const form = new FormData();
-      form.append("nama_guru", formData.nama);
-      form.append("email", formData.email);
-      form.append("password", formData.password);
-      form.append("niy", formData.niy);
-      form.append("alamat", formData.alamat);
-      form.append("nomor_tlp", formData.nomorTlp);
-      form.append("role", formData.role);
-      form.append("foto_profile", formData.file);
-
-      axios
-        .post("https://www.nugasyuk.my.id/api/admin/guru", form, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${saveToken}`,
-          },
-        })
-        .then((result) => {
-          console.log("Data berhasil ditambahkan");
-          // Lakukan tindakan yang diperlukan setelah menambahkan data
-          navigate("/admin/pageguru");
-
-          // Kosongkan formulir atau perbarui variabel state jika diperlukan
-          setFormData({
-            // Set nilai awal untuk setiap field formulir
-            file: null,
-            nama: "",
-            niy: "",
-            email: "",
-            nomorTlp: "",
-            alamat: "",
-            password: "",
-            konfirmasiPassword: "",
-          });
-
-          setIsSubmitting(false);
-        })
-        .catch((error) => {
-          console.error("Terjadi kesalahan saat menambahkan data:", error);
-          setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
-          setIsSubmitting(false);
+    axios
+      .get(`https://www.nugasyuk.my.id/api/admin/guru/${id}`, {
+        headers: {
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        setGuruData(response.data.data);
+        setFormData({
+          file: response.data.data.foto_profile,
+          nama: response.data.data.nama_guru,
+          niy: response.data.data.niy,
+          email: response.data.data.email,
+          nomorTlp: response.data.data.nomor_tlp,
+          alamat: response.data.data.alamat,
+          password: "",
+          role: response.data.data.role,
         });
-    }
-  }, [isSubmitting, formData]);
+      })
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data guru:", error);
+      });
+  }, [id, saveToken]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -183,26 +161,76 @@ function EditFormAddGuru() {
       errors.alamat = "Alamat harus diisi";
     }
 
-    if (!data.password.trim()) {
+    if (isSubmitting && !data.password.trim()) {
       errors.password = "Password harus diisi";
     }
 
-    if (data.password !== data.konfirmasiPassword) {
+    if (isSubmitting && data.password !== data.konfirmasiPassword) {
       errors.konfirmasiPassword = "Password tidak cocok";
     }
 
     return errors;
   };
 
+  useEffect(() => {
+    if (isSubmitting) {
+      const form = new FormData();
+      form.append("nama_guru", formData.nama);
+      form.append("email", formData.email);
+      form.append("niy", formData.niy);
+      form.append("alamat", formData.alamat);
+      form.append("nomor_tlp", formData.nomorTlp);
+      form.append("role", formData.role);
+      form.append("foto_profile", formData.file);
+      form.append("password", formData.password || "");
+
+      axios
+        .post(`https://www.nugasyuk.my.id/api/admin/guru/${id}`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+          },
+        })
+        .then((result) => {
+          console.log("Data berhasil diperbarui");
+          console.log(result);
+          navigate("/admin/pageguru");
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat memperbarui data:", error);
+          setErrors({ submit: "Terjadi kesalahan saat memperbarui data" });
+          setIsSubmitting(false);
+        });
+    }
+  }, [isSubmitting, formData, id, saveToken, navigate]);
+
   function handleFoto(e) {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
       setFormData((prevState) => ({
         ...prevState,
-        file: e.target.files[0],
+        file: selectedFile,
       }));
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const previewImage = document.getElementById("previewImage");
+        previewImage.src = e.target.result;
+      };
+      reader.readAsDataURL(selectedFile);
     }
   }
+
+  useEffect(() => {
+    // Mengatur pratinjau gambar dari data API
+    if (formData) {
+      const previewImage = document.getElementById("previewImage");
+      previewImage.src = `https://www.nugasyuk.my.id/public/${guruData?.foto_profile}`;
+      console.log(formData.file);
+    }
+  }, [formData]);
+
   return (
     <div>
       <aside>
@@ -257,9 +285,11 @@ function EditFormAddGuru() {
                   id="file"
                   name="file"
                   className="input-formKbm"
-                  //   accept=".jpg, .png, .jpeg"
+                  // value={formData.file}
+                  accept=".jpg, .png, .jpeg"
                   onChange={handleFoto}
                 />
+                <img id="previewImage" src={formData.file} alt="Pratinjau" />
               </div>
 
               <div className="con-formKbm">
@@ -268,7 +298,7 @@ function EditFormAddGuru() {
                   type="text"
                   id="nama"
                   name="nama"
-                  value={formData.nama_guru}
+                  value={formData.nama}
                   onChange={handleChange}
                   className="input-formKbm"
                   placeholder="Tambahkan nama guru"
@@ -334,6 +364,35 @@ function EditFormAddGuru() {
                 {errors.alamat && (
                   <span className="error">{errors.alamat}</span>
                 )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Status Guru</div>
+                <div className="switch-inputKode">
+                  <div className="con-radio">
+                    <label>
+                      <input
+                        type="radio"
+                        name="role"
+                        value="1"
+                        checked={formData.role === "1"}
+                        onChange={handleChange}
+                      />
+                      Guru Biasa
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="role"
+                        value="2"
+                        checked={formData.role === "2"}
+                        onChange={handleChange}
+                      />
+                      Guru BK
+                    </label>
+                  </div>
+                </div>
+                {errors.role && <span className="error">{errors.role}</span>}
               </div>
 
               <div className="con-formKbm">

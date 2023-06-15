@@ -11,6 +11,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import iconaksi from "../assets/iconaksi.svg";
 import ImgDelete from "../assets/imgDelete.svg";
 import axios from "axios";
+// import { useHistory } from "react-router-dom";
 
 function BerandaGuru() {
   const navText = "Data Guru";
@@ -199,6 +200,32 @@ function BerandaGuru() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [filterValue, setFilterValue] = useState("all");
+  const [guruData, setGuruData] = useState({});
+
+  // const navigate = useNavigate();
+
+  // const handleEditClick = (id) => {
+  //   setSelected(id);
+  //   navigate(`/admin/pageguru/edit?id=${id}`);
+  // };
+
+  const handleEditClick = (id) => {
+    // Ambil data guru dari API berdasarkan id
+    
+
+    // pindah ke halaman form edit
+    navigate(`/admin/pageguru/edit/${id}`);
+    console.log(guruData);
+  };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(navigate.search);
+    const id = searchParams.get("id");
+
+    if (id) {
+      setSelected(id);
+    }
+  }, [navigate.search]);
 
   // start kodeGuru
 
@@ -268,7 +295,7 @@ function BerandaGuru() {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan refresh window
           window.location.reload();
-          
+
           navigate("/admin/pageguru");
 
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
@@ -497,9 +524,15 @@ function BerandaGuru() {
                         <td>{item.nama_guru}</td>
                         <td>{item.email}</td>
                         <td>{item.niy}</td>
+
                         <td>
-                          <div className="pengampu">{item.status_mapel}</div>
+                          <div className="pengampu">
+                            {item.status_mapel
+                              ? item.status_mapel.toUpperCase()
+                              : "-"}
+                          </div>
                         </td>
+
                         <td>
                           <img
                             src={iconaksi}
@@ -518,11 +551,7 @@ function BerandaGuru() {
                                 <a onClick={showDetailPopup}>Detail</a>
                               </li>
                               <li>
-                                <a
-                                  onClick={() =>
-                                    navigate("/admin/pageguru/edit")
-                                  }
-                                >
+                                <a onClick={() => handleEditClick(item.id)}>
                                   Edit
                                 </a>
                               </li>
@@ -577,13 +606,17 @@ function BerandaGuru() {
               <h3>Mengajar :</h3>
               <div className="con-mengajar-detailGuru">
                 {detailGuru.mengajar?.map((item, index) => (
-                  <p key={index} className="mengajar-detailGuru">{item.nama_mapel}</p>
+                  <p key={index} className="mengajar-detailGuru">
+                    {item.nama_mapel}
+                  </p>
                 ))}
               </div>
               <h3>Kode :</h3>
               <div className="con-kode-detailGuru">
                 {detailGuru.kode?.map((item, index) => (
-                  <p key={index} className="kode-detailGuru">{item.kode_guru}</p>
+                  <p key={index} className="kode-detailGuru">
+                    {item.kode_guru}
+                  </p>
                 ))}
               </div>
 

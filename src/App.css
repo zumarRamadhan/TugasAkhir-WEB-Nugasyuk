@@ -820,6 +820,7 @@ nav .navbar img {
 .con-popup-detailGuru .con-kode-detailGuru, .con-popup-detailGuru .con-mengajar-detailGuru, .con-popup-detailGuru .con-mengajarkelas-detailGuru{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
     /* flex-direction: column; */
     gap: 15px;
     width: min-content;

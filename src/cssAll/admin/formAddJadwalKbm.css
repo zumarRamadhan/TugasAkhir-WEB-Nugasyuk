@@ -57,3 +57,12 @@
 .con-btn-form button:hover {
     background: #1D77AF;
 }
+
+#previewImage{
+    margin-top: 10px;
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
