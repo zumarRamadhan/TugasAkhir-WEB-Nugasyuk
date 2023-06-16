@@ -90,7 +90,7 @@ function PageMapel() {
           <NavbarWaliMurid navigasiOrtu={"Mata Pelajaran"} />
           <main className="main">
             <div className="content-mapel">
-              <div className="con-card-mapel">
+              <div className="con-card-mapel-ortu">
                 {dataListMapel &&
                   dataListMapel.map((listMapel) => (
                     <div
@@ -99,7 +99,7 @@ function PageMapel() {
                       style={{ cursor: "pointer" }}
                     >
                       <img
-                        src={cardMapel8}
+                        src={`https://www.nugasyuk.my.id/public/${listMapel.file_asset}`}
                         alt=""
                         className="image-card-mapel"
                         onClick={() => navigate('/walimurid/pagemapel/mapelmateri/'+listMapel.id)}

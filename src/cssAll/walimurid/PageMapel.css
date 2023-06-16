@@ -2,10 +2,11 @@
     margin-top: 30px;
 }
 
-.con-card-mapel {
+.con-card-mapel-ortu {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    margin-bottom: 100px;
 }
 
 @media only screen and (max-width: 1240px) {

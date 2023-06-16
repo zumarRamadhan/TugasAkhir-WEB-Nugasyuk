@@ -127,10 +127,6 @@ function DetailWaliMurid() {
             <p className="value-detail">{profileOrtu.nama}</p>
             <p className="judul-detail">Orang Tua Dari</p>
             <p className="value-detail">{profileOrtu.nama_siswa}</p>
-            <p className="judul-detail">Jurusan</p>
-            <p className="value-detail">PPLG</p>
-            <p className="judul-detail">Kelas</p>
-            <p className="value-detail">11 PPLG 1</p>
             <p className="judul-detail">NIS</p>
             <p className="value-detail">{profileOrtu.nis}</p>
           </div>

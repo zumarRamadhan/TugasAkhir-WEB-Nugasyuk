@@ -44,8 +44,6 @@ function PageTugas() {
         setisLoading(false);
       });
   }, []);
-  // console.log(dataTugas);
-  // if (!dataTugas) return <h3>Loading...</h3>;
 
   if (isLoading)
     return (
@@ -57,6 +55,7 @@ function PageTugas() {
       </div>
     );
   else if (dataListTugas && !isError)
+
     return (
       <div>
         <aside>

@@ -125,7 +125,7 @@ function PageMapel() {
           <NavbarOrtu navigasiOrtu={"Jadwal KBM 11 PPLG 1"} />
           <div className="main">
             <div className="content-jadwalKBM">
-              <div className="con-card-jadwalKBM">
+              <div className="con-card-jadwalKBM-ortu">
                 {dataListJadwal.map((listJadwal) => (
                   <div className="cardJadwalKbm" key={listJadwal.id} onClick={() => showDetailKbm(listJadwal.id)} style={{cursor: 'pointer'}}>
                     <div className="titleJadwalKbm">
