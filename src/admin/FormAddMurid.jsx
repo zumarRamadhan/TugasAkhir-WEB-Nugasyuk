@@ -1,381 +1,654 @@
-import { Icon } from '@iconify/react';
-import { useState } from 'react';
-import '../cssAll/admin/FormAddMurid.css';
-import Sidebar from "../component/Sidebar";
+import { Icon } from "@iconify/react";
+import { useState, useEffect } from "react";
+import "../cssAll/admin/FormAddMurid.css";
 import Navigation from "../component/NavigationBar";
-import Kalam from "../assets/murid-kalam.png";
-import Wira from "../assets/murid-wira.svg";
-import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import { useNavigate, Link } from 'react-router-dom';
-import ImgProfil from '../assets/img-profil.svg';
+import IconNugasyuk from "../assets/IconNugasyuk.svg";
+import { useNavigate, Link } from "react-router-dom";
+import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
-import passIcon from '../assets/pass-icon.svg';
-import mataIcon from '../assets/icon-mata.svg';
-import foto8 from '../assets/foto8.png';
-import foto9 from '../assets/foto9.png';
-import foto10 from '../assets/foto10.png';
-import foto11 from '../assets/foto11.png';
-import foto12 from '../assets/foto12.png';
-import foto13 from '../assets/foto13.png';
-import foto14 from '../assets/foto14.png';
-import iconaksi from '../assets/iconaksi.svg';
+import passIcon from "../assets/pass-icon.svg";
+import mataIcon from "../assets/icon-mata.svg";
+import axios from "axios";
 
 function FormAddMurid() {
-    const navText = "Tambah Data";
-    const navigate = useNavigate();
+  const navText = "Tambah Data";
+  const navigate = useNavigate();
 
-    const closeDetail = () => {
-        const detailProfile = document.querySelector('.detail-profile');
-        detailProfile.style.transform = 'translateX(350px)';
-    }
+  const closeDetail = () => {
+    const detailProfile = document.querySelector(".detail-profile");
+    detailProfile.style.transform = "translateX(350px)";
+  };
 
-    const showLogoutPopup = () => {
-        const popupLogout = document.querySelector('#popup-logout');
-        popupLogout.style.display = 'flex';
-        popupLogout.style.animation = 'slide-down 0.3s ease-in-out';
-    }
+  const showLogoutPopup = () => {
+    const popupLogout = document.querySelector("#popup-logout");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
 
-    const closeLogoutPopup = () => {
-        const popupLogout = document.querySelector('#popup-logout');
-        setTimeout(() => popupLogout.style.display = "none", 250);
-        popupLogout.style.animation = 'slide-up 0.3s ease-in-out';
-    }
+  const closeLogoutPopup = () => {
+    const popupLogout = document.querySelector("#popup-logout");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
 
-    const showForgetPopup = () => {
-        const popupForget = document.querySelector('#popup-forget');
-        popupForget.style.display = 'flex';
-        popupForget.style.animation = 'slide-down 0.3s ease-in-out';
-    }
+  const showForgetPopup = () => {
+    const popupForget = document.querySelector("#popup-forget");
+    popupForget.style.display = "flex";
+    popupForget.style.animation = "slide-down 0.3s ease-in-out";
+  };
 
-    const closeForgetPopupAndClearInput = () => {
-        const popupForget = document.querySelector('#popup-forget');
-        setTimeout(() => popupForget.style.display = "none", 250);
-        popupForget.style.animation = 'slide-up 0.3s ease-in-out';
-        const clearpassword = document.querySelector('#password', '#newPassword', '#confirmPassword');
-        clearpassword.value = "";
-        const clearpasswordNew = document.querySelector('#newPassword');
-        clearpasswordNew.value = "";
-        const clearpasswordConfirm = document.querySelector('#confirmPassword');
-        clearpasswordConfirm.value = "";
-    }
-
-    const [passwordType, setPasswordType] = useState("password");
-    const [passwordTypeNew, setPasswordTypeNew] = useState("password");
-    const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
-
-    function togglePasswordVisibility() {
-        setPasswordType(passwordType === "password" ? "text" : "password");
-    }
-
-    function togglePasswordVisibilityNew() {
-        setPasswordTypeNew(passwordTypeNew === "password" ? "text" : "password");
-    }
-
-    function togglePasswordVisibilityConfirm() {
-        setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
-    }
-
-    const valueDataKelas = [
-        {
-            id: 1,
-            kelas: '10',
-            jurusan: 'pplg',
-            tingkatan: '1',
-            // assets: cardMapel1,
-        },
-        {
-            id: 2,
-            kelas: "10",
-            jurusan: "pplg",
-            tingkatan: "2",
-            // assets: cardMapel2,
-        },
-        {
-            id: 3,
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "1",
-            // assets: cardMapel3,
-        },
-        {
-            id: 4,
-            kelas: "11",
-            jurusan: "pplg",
-            tingkatan: "2",
-            // assets: cardMapel4,
-        },
-        {
-            id: 5,
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "1",
-            // assets: cardMapel5,
-        },
-        {
-            id: 6,
-            kelas: "12",
-            jurusan: "pplg",
-            tingkatan: "2",
-            // assets: cardMapel6,
-        },
-        {
-            id: 7,
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "1",
-            // assets: cardMapel7,
-        },
-        {
-            id: 8,
-            kelas: "10",
-            jurusan: "animasi",
-            tingkatan: "2",
-            // assets: cardMapel8,
-        },
-        {
-            id: 9,
-            kelas: "11",
-            jurusan: "animasi",
-            tingkatan: "1",
-            // assets: cardMapel9,
-        },
-    ];
-
-    const valueDataGuru = [
-        {
-            id: 1,
-            kodeGuru: "BI1",
-            namaGuru: "Budiono, S.Pd",
-            mapel: "B. Inggris",
-            // profileImg: imgCardKbm,
-        },
-        {
-            id: 2,
-            kodeGuru: "OLA1",
-            namaGuru: "Asep, S.Pd",
-            mapel: "Olahraga",
-            // profileImg: imgCardKbm,
-        },
-        {
-            id: 3,
-            kodeGuru: "MTK1",
-            namaGuru: "Rini, S.Pd",
-            mapel: "Matematika",
-            // profileImg: imgCardKbm,
-        },
-        {   
-            id: 4,
-            kodeGuru: "PAI1",
-            namaGuru: "Edi, S.Pd.I",
-            mapel: "PAI",
-            // profileImg: imgCardKbm,
-        },
-    ]
-
-    const dataHari = [
-        {
-            id: 1,
-            hari: "Senin",
-        },
-        {
-            id: 2,
-            hari: "Selasa",
-        },
-        {
-            id: 3,
-            hari: "Rabu",
-        },
-        {
-            id: 4,
-            hari: "Kamis",
-        },
-        {
-            id: 5,
-            hari: "Jumat",
-        },
-        {
-            id: 6,
-            hari: "Sabtu",
-        },
-    ]
-
-    const dataJamPelajaran = [ 
-        {
-            id: 1,
-            jamKe: 1,
-            lamajam: 40,
-        },
-        {
-            id: 2,
-            jamKe: 2,
-            lamajam: 40,
-        },
-        {
-            id: 3,
-            jamKe: 3,
-            lamajam: 40,
-        },
-        {
-            id: 4,
-            jamKe: 4,
-            lamajam: 40,
-        },
-        {
-            id: 5,
-            jamKe: 5,
-            lamajam: 40,
-        },
-        {
-            id: 6,
-            jamKe: 6,
-            lamajam: 40,
-        },
-        {
-            id: 7,
-            jamKe: 7,
-            lamajam: 40,
-        },
-        {
-            id: 8,
-            jamKe: 8,
-            lamajam: 40,
-        },
-        {
-            id: 9,
-            jamKe: 9,
-            lamajam: 40,
-        },
-        {
-            id: 10,
-            jamKe: 10,
-            lamajam: 40,
-        },
-        {
-            id: 11,
-            jamKe: 11,
-            lamajam: 40,
-        },
-        {
-            id: 12,
-            jamKe: 12,
-            lamajam: 40,
-        },
-        {
-            id: 13,
-            jamKe: 13,
-            lamajam: 40,
-        },
-        {
-            id: 14,
-            jamKe: 14,
-            lamajam: 40,
-        },
-    ]
-
-    return (
-        <div>
-            <aside>
-                <h1 className="title-form-login" onClick={() => navigate('/admin/berandaadmin')} style={{ cursor: "pointer" }}>
-                    <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-                    nugasyuk
-                </h1>
-                <ul>
-                    <li onClick={() => navigate('/admin/berandaadmin')}>
-                        <Icon icon="iconoir:home-simple" width="20" />
-                        Beranda
-                    </li>
-                    <li onClick={() => navigate('/admin/pageguru')} >
-                        <Icon icon="la:chalkboard-teacher" width="20" />
-                        Guru
-                    </li>
-                    <li className='active' onClick={() => navigate('/admin/pagemurid')}>
-                        <Icon icon="ph:student" width="20" />
-                        Murid
-                    </li>
-                    <li onClick={() => navigate('/admin/pagekelas')}>
-                        <Icon icon="fluent:class-24-regular" width="20" />
-                        Kelas
-                    </li>
-                    <li onClick={() => navigate('/admin/matapelajaran')}>
-                        <Icon icon="fluent-mdl2:education" width="20" />
-                        Mata Pelajaran
-                    </li>
-                    <li onClick={() => navigate('/admin/jadwalkbm')}>
-                        <Icon icon="uiw:date" width="20" />
-                        Jadwal KBM
-                    </li>
-                    <li onClick={() => navigate('/admin/pageassets')}>
-                        <Icon icon="ic:outline-file-copy" width="20" />
-                        Assets
-                    </li>
-                </ul>
-            </aside>
-            <div className="container-content">
-                <Navigation text={navText} />
-                <div className="main">
-                    <div className="content-formKbm">
-                        <form action="" className="container-formKbm">
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Profil</div>
-                                <input type="file" className="input-formKbm" placeholder='' />
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Nama</div>
-                                <input type="text" className="input-formKbm" placeholder='nama' />
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Kelas</div>
-                                <input type="text" className="input-formKbm" placeholder='kelas' />
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">NIS</div>
-                                <input type="text" className="input-formKbm" placeholder='nomor induk siswa' />
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Email Murid</div>
-                                <input type="text" className="input-formKbm" placeholder='example@smkrus.sch.id' />
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Email Wali Murid</div>
-                                <input type="text" className="input-formKbm" placeholder='example@smkrus.sch.id ' />
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Password Murid </div>
-                                <input type="password" className="input-formKbm" placeholder='*******'/>
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Konfirmasi Password Murid </div>
-                                <input type="password" className="input-formKbm" placeholder='*******'/>
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Password wali Murid </div>
-                                <input type="password" className="input-formKbm" placeholder='*******'/>
-                            </div>
-
-                            <div className="con-formKbm">
-                                <div className="title-formKbm">Konfirmasi Password wali Murid </div>
-                                <input type="password" className="input-formKbm" placeholder='*******'/>
-                            </div>
-
-                            
-
-                            <div className="con-btn-form">
-                                <button type="submin" className="btn-form" style={{ cursor: "pointer" }}>Simpan perubahan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+  const closeForgetPopupAndClearInput = () => {
+    const popupForget = document.querySelector("#popup-forget");
+    setTimeout(() => (popupForget.style.display = "none"), 250);
+    popupForget.style.animation = "slide-up 0.3s ease-in-out";
+    const clearpassword = document.querySelector(
+      "#password",
+      "#newPassword",
+      "#confirmPassword"
     );
+    clearpassword.value = "";
+    const clearpasswordNew = document.querySelector("#newPassword");
+    clearpasswordNew.value = "";
+    const clearpasswordConfirm = document.querySelector("#confirmPassword");
+    clearpasswordConfirm.value = "";
+  };
+
+  const [passwordType, setPasswordType] = useState("password");
+  const [passwordTypeNew, setPasswordTypeNew] = useState("password");
+  const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
+
+  function togglePasswordVisibility() {
+    setPasswordType(passwordType === "password" ? "text" : "password");
+  }
+
+  function togglePasswordVisibilityNew() {
+    setPasswordTypeNew(passwordTypeNew === "password" ? "text" : "password");
+  }
+
+  function togglePasswordVisibilityConfirm() {
+    setPasswordTypeConfirm(
+      passwordTypeConfirm === "password" ? "text" : "password"
+    );
+  }
+
+  const saveToken = sessionStorage.getItem("token");
+
+  const [formData, setFormData] = useState({
+    // Inisialisasi nilai awal untuk setiap field formulir
+    file: "",
+    namaMurid: "",
+    namaPanggilan: "",
+    namaWaliMurid: "",
+    nis: "",
+    alamat: "",
+    email: "",
+    email_wali_murid: "",
+    nomorTlp: "",
+    password: "",
+    password_wali_murid: "",
+    kelas: "3",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (isSubmitting) {
+      // console.log(formData.file);
+
+      const form = new FormData();
+      form.append("foto_profile", formData.file);
+      form.append("nama_siswa", formData.namaMurid);
+      form.append("nama_panggilan", formData.namaPanggilan);
+      form.append("nama", formData.namaWaliMurid);
+      form.append("nis", formData.nis);
+      form.append("alamat", formData.alamat);
+      form.append("email", formData.email);
+      form.append("email_wali", formData.email_wali_murid);
+      form.append("password", formData.password);
+      form.append("password_wali", formData.password_wali_murid);
+      form.append("nomor_tlp", formData.nomorTlp);
+      form.append("kelas_id", formData.kelas);
+
+      axios
+        .post("https://www.nugasyuk.my.id/api/admin/murid", form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+          },
+        })
+        .then((result) => {
+          console.log("Data berhasil ditambahkan");
+          // Lakukan tindakan yang diperlukan setelah menambahkan data
+          navigate("/admin/pagemurid");
+
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setFormData({
+            // Set nilai awal untuk setiap field formulir
+            file: "",
+            namaMurid: "",
+            namaWaliMurid: "",
+            namaPanggilan: "",
+            nis: "",
+            alamat: "",
+            email: "",
+            email_wali_murid: "",
+            nomorTlp: "",
+            password: "",
+            konfirmasiPassword: "",
+            password_wali_murid: "",
+            konfirmasiPassword_wali_murid: "",
+            kelas: "",
+          });
+          setIsSubmitting(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat menambahkan data:", error);
+          setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
+          setIsSubmitting(false);
+        });
+    }
+  }, [isSubmitting, formData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    // jika file lebih dari 2MB maka muncul error
+    if (data.file.size > 3000000) {
+      errors.file = "Ukuran file tidak boleh lebih dari 3MB";
+    }
+
+    if (!data.file) {
+      errors.file = "Foto harus diisi";
+    }
+
+    if (!data.namaMurid.trim()) {
+      errors.namaMurid = "Nama siswa harus diisi";
+    }
+
+    if (!data.namaPanggilan.trim()) {
+      errors.namaPanggilan = "Nama panggilan harus diisi";
+    }
+
+    if (!data.namaWaliMurid.trim()) {
+      errors.namaWaliMurid = "Nama wali murid harus diisi";
+    }
+
+    if (!data.nis.trim()) {
+      errors.nis = "NIS harus diisi";
+    } else if (!/^\d+$/.test(data.nis)) {
+      errors.nis = "NIS hanya boleh berisi angka";
+    }
+
+    if (!data.alamat.trim()) {
+      errors.alamat = "Alamat harus diisi";
+    }
+
+    if (!data.email.trim()) {
+      errors.email = "Email harus diisi";
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      errors.email = "Email tidak valid";
+    }
+
+    if (!data.email_wali_murid.trim()) {
+      errors.email_wali_murid = "Email wali murid harus diisi";
+    } else if (!/\S+@\S+\.\S+/.test(data.email_wali_murid)) {
+      errors.email_wali_murid = "Email tidak valid";
+    }
+
+    if (!data.kelas.trim()) {
+        errors.kelas = "Silahkan pilih kelas";
+      }
+
+    if (data.password.trim().length < 8) {
+      errors.password = "Password harus lebih dari 8 karakter";
+    }
+
+    if (!data.password.trim()) {
+      errors.password = "Password harus diisi";
+    }
+
+    if (data.password !== data.konfirmasiPassword) {
+      errors.konfirmasiPassword = "Password tidak cocok";
+    }
+
+    if (data.password_wali_murid.trim().length < 8) {
+        errors.password_wali_murid = "Password harus lebih dari 8 karakter";
+      }
+  
+      if (!data.password_wali_murid.trim()) {
+        errors.password_wali_murid = "Password harus diisi";
+      }
+
+    if (data.password_wali_murid !== data.konfirmasiPassword_wali_murid) {
+      errors.konfirmasiPassword_wali_murid = "Password tidak cocok";
+    }
+
+    return errors;
+  };
+
+  function handleFoto(e) {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      setFormData((prevState) => ({
+        ...prevState,
+        file: selectedFile,
+      }));
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const previewImage = document.getElementById("previewImage");
+        previewImage.src = e.target.result;
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  }
+
+  // useEffect(() => {
+  //   // Mengatur pratinjau gambar dari data API
+  //   if (formData) {
+  //     const previewImage = document.getElementById("previewImage");
+  //     previewImage.src = `https://www.nugasyuk.my.id/public/${formData?.foto_profile}`;
+  //     // console.log(formData.file);
+  //   }
+  // }, [formData]);
+
+  return (
+    <div>
+      <aside>
+        <h1
+          className="title-form-login"
+          onClick={() => navigate("/admin/berandaadmin")}
+          style={{ cursor: "pointer" }}
+        >
+          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+          nugasyuk
+        </h1>
+        <ul>
+          <li onClick={() => navigate("/admin/berandaadmin")}>
+            <Icon icon="iconoir:home-simple" width="20" />
+            Beranda
+          </li>
+          <li onClick={() => navigate("/admin/pageguru")}>
+            <Icon icon="la:chalkboard-teacher" width="20" />
+            Guru
+          </li>
+          <li className="active" onClick={() => navigate("/admin/pagemurid")}>
+            <Icon icon="ph:student" width="20" />
+            Murid
+          </li>
+          <li onClick={() => navigate("/admin/pagekelas")}>
+            <Icon icon="fluent:class-24-regular" width="20" />
+            Kelas
+          </li>
+          <li onClick={() => navigate("/admin/matapelajaran")}>
+            <Icon icon="fluent-mdl2:education" width="20" />
+            Mata Pelajaran
+          </li>
+          <li onClick={() => navigate("/admin/jadwalkbm")}>
+            <Icon icon="uiw:date" width="20" />
+            Jadwal KBM
+          </li>
+          <li onClick={() => navigate("/admin/pageassets")}>
+            <Icon icon="ic:outline-file-copy" width="20" />
+            Assets
+          </li>
+        </ul>
+      </aside>
+      <div className="container-content">
+        <Navigation text={navText} />
+        <div className="main">
+          <div className="content-formKbm">
+            <form onSubmit={handleSubmit} className="container-formKbm">
+              <div className="con-formKbm">
+                <div className="title-formKbm">Profi</div>
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  className="input-formKbm"
+                  // value={formData.file}
+                  accept=".jpg, .png, .jpeg"
+                  onChange={handleFoto}
+                />
+                {errors.file && <span className="error">{errors.file}</span>}
+                <img
+                  id="previewImage"
+                  src={formData.file}
+                  alt="Pilih foto, dan foto akan muncul di sini"
+                />
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Nama Siswa</div>
+                <input
+                  type="text"
+                  id="namaMurid"
+                  name="namaMurid"
+                  value={formData.namaMurid}
+                  onChange={handleChange}
+                  className="input-formKbm"
+                  placeholder="Tambahkan nama siswa"
+                />
+                {errors.namaMurid && (
+                  <span className="error">{errors.namaMurid}</span>
+                )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Nama Panggilan</div>
+                <input
+                  type="text"
+                  id="namaPanggilan"
+                  name="namaPanggilan"
+                  value={formData.namaPanggilan}
+                  onChange={handleChange}
+                  className="input-formKbm"
+                  placeholder="Tambahkan nama panggilan"
+                />
+                {errors.namaPanggilan && (
+                  <span className="error">{errors.namaPanggilan}</span>
+                )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Nama Walimurid</div>
+                <input
+                  type="text"
+                  id="namaWaliMurid"
+                  name="namaWaliMurid"
+                  value={formData.namaWaliMurid}
+                  onChange={handleChange}
+                  className="input-formKbm"
+                  placeholder="Tambahkan nama walimurid"
+                />
+                {errors.namaWaliMurid && (
+                  <span className="error">{errors.namaWaliMurid}</span>
+                )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">NIS</div>
+                <input
+                  type="text"
+                  id="nis"
+                  name="nis"
+                  value={formData.nis}
+                  onChange={handleChange}
+                  className="input-formKbm"
+                  placeholder="Tambahkan niy guru"
+                />
+                {errors.nis && <span className="error">{errors.nis}</span>}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Alamat</div>
+                <input
+                  type="text"
+                  id="alamat"
+                  name="alamat"
+                  value={formData.alamat}
+                  onChange={handleChange}
+                  className="input-formKbm"
+                  placeholder="Tambahkan alamat siswa"
+                />
+                {errors.alamat && <span className="error">{errors.alamat}</span>}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Email</div>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="input-formKbm"
+                  placeholder="example@smkrus.schid"
+                />
+                {errors.email && <span className="error">{errors.email}</span>}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Email Walimurid</div>
+                <input
+                  type="text"
+                  id="email_wali_murid"
+                  name="email_wali_murid"
+                  value={formData.email_wali_murid}
+                  onChange={handleChange}
+                  className="input-formKbm"
+                  placeholder="example@smkrus.schid"
+                />
+                {errors.email_wali_murid && <span className="error">{errors.email_wali_murid}</span>}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Password Siswa</div>
+                <input
+                  type="password"
+                  className="input-formKbm"
+                  placeholder="*******"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+                {errors.password && (
+                  <span className="error">{errors.password}</span>
+                )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Konfirmasi Password Siswa</div>
+                <input
+                  type="password"
+                  className="input-formKbm"
+                  placeholder="*******"
+                  id="konfirmasiPassword"
+                  name="konfirmasiPassword"
+                  value={formData.konfirmasiPassword}
+                  onChange={handleChange}
+                />
+                {errors.konfirmasiPassword && (
+                  <span className="error">{errors.konfirmasiPassword}</span>
+                )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Password Walimurid</div>
+                <input
+                  type="password"
+                  className="input-formKbm"
+                  placeholder="*******"
+                  id="password_wali_murid"
+                  name="password_wali_murid"
+                  value={formData.password_wali_murid}
+                  onChange={handleChange}
+                />
+                {errors.password_wali_murid && (
+                  <span className="error">{errors.password_wali_murid}</span>
+                )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Konfirmasi Password Walimurid</div>
+                <input
+                  type="password"
+                  className="input-formKbm"
+                  placeholder="*******"
+                  id="konfirmasiPassword_wali_murid"
+                  name="konfirmasiPassword_wali_murid"
+                  value={formData.konfirmasiPassword_wali_murid}
+                  onChange={handleChange}
+                />
+                {errors.konfirmasiPassword_wali_murid && (
+                  <span className="error">{errors.konfirmasiPassword_wali_murid}</span>
+                )}
+              </div>
+
+              <div className="con-btn-form">
+                <button
+                  type="submit"
+                  className="btn-form"
+                  style={{ cursor: "pointer" }}
+                >
+                  Simpan perubahan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div className="popup-logout" id="popup-logout">
+        <div className="detail-logout">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeLogoutPopup}
+          />
+          <div className="image-logout">
+            <img src={ImgLogout} alt="" className="img-logout" />
+          </div>
+          <p className="desc-logout">Anda yakin ingin keluar?</p>
+          <div className="con-btn-logout">
+            <button type="button" className="btn-batal">
+              Batal
+            </button>
+            <button type="button" className="btn-keluar">
+              Keluar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="popup-forget" id="popup-forget">
+        <form action="" className="detail-forget-password">
+          <div className="navbar-detail-forget">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeForgetPopupAndClearInput}
+            />
+            <h2>Ganti Password</h2>
+          </div>
+          <p className="judul-form">Sandi lama</p>
+          <div className="con-form-password">
+            <img src={passIcon} alt="" />
+            <input
+              type={passwordType}
+              id="password"
+              placeholder="*********"
+              className="input-password"
+            />
+            <button
+              type="button"
+              className="btn-mata"
+              onClick={togglePasswordVisibility}
+            >
+              <img src={mataIcon} alt="" />
+            </button>
+          </div>
+          <p className="judul-form">Sandi baru</p>
+          <div className="con-form-password">
+            <img src={passIcon} alt="" />
+            <input
+              type={passwordTypeNew}
+              id="newPassword"
+              placeholder="*********"
+              className="input-password"
+            />
+            <button
+              type="button"
+              className="btn-mata"
+              onClick={togglePasswordVisibilityNew}
+            >
+              <img src={mataIcon} alt="" />
+            </button>
+          </div>
+          <p className="judul-form">Konfirmasi sandi baru</p>
+          <div className="con-form-password">
+            <img src={passIcon} alt="" />
+            <input
+              type={passwordTypeConfirm}
+              id="confirmPassword"
+              placeholder="*********"
+              className="input-password"
+            />
+            <button
+              type="button"
+              className="btn-mata"
+              onClick={togglePasswordVisibilityConfirm}
+            >
+              <img src={mataIcon} alt="" />
+            </button>
+          </div>
+
+          <button type="submit" className="btn-simpan">
+            Simpan sandi baru
+          </button>
+        </form>
+      </div>
+
+      <div className="detail-profile">
+        <div className="content-detail">
+          <div className="navbar-detail">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeDetail}
+            />
+            <h2>Profil</h2>
+          </div>
+          <div className="detail-image-profile">
+            <img src={ImgProfil} alt="" className="detail-img-profile" />
+          </div>
+          <p className="judul-detail">Email</p>
+          <p className="value-detail">erikayanti@smkrus.sch.id</p>
+          <p className="judul-detail">Nama</p>
+          <p className="value-detail">Erika Yanti, S.Pd</p>
+          <p className="judul-detail">Devisi</p>
+          <p className="value-detail">Admin</p>
+        </div>
+        <div className="con-btn-detail-profile">
+          <button
+            className="forget-password"
+            id="btn-forget-pass"
+            onClick={showForgetPopup}
+          >
+            <Icon icon="material-symbols:key-outline-rounded" width="30" />
+            <p>Ganti Password</p>
+          </button>
+          <button className="logout" id="btn-logout" onClick={showLogoutPopup}>
+            <Icon icon="material-symbols:logout-rounded" width="30" />
+            <p>Logout</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default FormAddMurid
+export default FormAddMurid;

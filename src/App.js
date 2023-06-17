@@ -78,7 +78,7 @@ function App() {
         <Route path="/admin/pageassets" element={<PageAssets/>} />
         <Route path="/admin/pageassets/add" element={<AddAssets/>} />
         <Route path="/admin/jadwalkbm/tambah" element={<FormAddJadwalKbm/>} />
-        <Route path="/admin/pagemurid/formaddmurid" element={<FormAddMurid/>} />
+        <Route path="/admin/pagemurid/add" element={<FormAddMurid/>} />
         <Route path="/admin/pageguru/add" element={<FormAddGuru/>} />
         <Route path="/admin/pageguru/edit/:id" element={<EditFormAddGuru/>} />
         {/* end role admin */}
