@@ -14,9 +14,12 @@ import AddAssets from './admin/AddAssets';
 import FormAddJadwalKbm from './admin/formAddJadwalKbm';
 import FormAddMurid from './admin/FormAddMurid';
 import FormAddGuru from './admin/FormAddGuru';
+import FormAddKelas from './admin/FormAddKelas';
 import EditFormAddGuru from './admin/EditFormAddGuru';
 import EditFormAddMurid from './admin/EditFormAddMurid';
+import EditFormAddKelas from './admin/EditFormAddKelas';
 // end role admin
+
 // role murid
 import BerandaMurid from './murid/BerandaMurid';
 import PageTugas from './murid/PageTugas';
@@ -29,6 +32,7 @@ import DetailTask from './murid/DetailTugas';
 import HistoryCounseling from './murid/RiwayatKonseling';
 import PageBuatJanji from './murid/PageBuatJanji';
 // end role murid
+
 // role guru
 import BerandaGuru from './guru/BerandaGuru';
 
@@ -46,6 +50,7 @@ import DetailMenunggu from './guru/DetailMenunggu';
 
 import Jadwal from './guru/JadwalKbm';
 // end role guru
+
 // role wali murid
 import BerandaWaliMurid from './waliMurid/BerandaWaliMurid';
 import PageTugasWaliMurid from './waliMurid/PageTugas';
@@ -81,8 +86,10 @@ function App() {
         <Route path="/admin/jadwalkbm/tambah" element={<FormAddJadwalKbm/>} />
         <Route path="/admin/pagemurid/add" element={<FormAddMurid/>} />
         <Route path="/admin/pageguru/add" element={<FormAddGuru/>} />
+        <Route path="/admin/pagekelas/add" element={<FormAddKelas/>} />
         <Route path="/admin/pageguru/edit/:id" element={<EditFormAddGuru/>} />
         <Route path="/admin/pagemurid/edit/:id" element={<EditFormAddMurid/>} />
+        <Route path="/admin/pagekelas/edit/:id" element={<EditFormAddKelas/>} />
         {/* end role admin */}
 
         {/* role murid */}

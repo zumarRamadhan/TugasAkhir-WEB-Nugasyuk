@@ -118,7 +118,7 @@ function EditFormAddMurid() {
           konfirmasiPassword: "",
           password_wali_murid: "",
           konfirmasiPassword_wali_murid: "",
-          kelas: response.data.data.kelas,
+          kelas: response.data.data.kelas_id,
         });
       })
       .catch((error) => {
