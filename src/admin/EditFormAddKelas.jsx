@@ -119,21 +119,21 @@ function EditFormAddKelas() {
       form.append("wali_kelas", formData.waliKelas);
 
       axios
-        .post("https://www.nugasyuk.my.id/api/admin/kelas", form, {
+        .post(`https://www.nugasyuk.my.id/api/admin/kelas/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
           },
         })
         .then((result) => {
-          console.log("Data berhasil ditambahkan");
+          console.log("Data berhasil diperbarui");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
           navigate("/admin/pagekelas");
         //   setIsSubmitting(false);
         })
         .catch((error) => {
-          console.error("Terjadi kesalahan saat menambahkan data:", error);
-          setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
+          console.error("Terjadi kesalahan saat memperbarui data:", error);
+          setErrors({ submit: "Terjadi kesalahan saat memperbarui data" });
           setIsSubmitting(false);
         });
     }
