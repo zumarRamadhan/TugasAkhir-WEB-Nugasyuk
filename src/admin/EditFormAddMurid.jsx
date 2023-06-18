@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import "../cssAll/admin/FormAddMurid.css";
 import Navigation from "../component/NavigationBar";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import axios from "axios";
 
-function FormAddMurid() {
+function EditFormAddMurid() {
   const navText = "Tambah Data";
   const navigate = useNavigate();
 
@@ -70,12 +70,13 @@ function FormAddMurid() {
       passwordTypeConfirm === "password" ? "text" : "password"
     );
   }
-
+  const { id } = useParams();
   const saveToken = sessionStorage.getItem("token");
 
+  const [muridData, setMuridData] = useState(null);
   const [formData, setFormData] = useState({
     // Inisialisasi nilai awal untuk setiap field formulir
-    file: "",
+    // file: "",
     namaMurid: "",
     namaPanggilan: "",
     namaWaliMurid: "",
@@ -83,9 +84,11 @@ function FormAddMurid() {
     alamat: "",
     email: "",
     email_wali_murid: "",
-    nomorTlp: "",
+    // nomorTlp: "",
     password: "",
+    konfirmasiPassword: "",
     password_wali_murid: "",
+    konfirmasiPassword_wali_murid: "",
     kelas: "",
   });
 
@@ -93,91 +96,47 @@ function FormAddMurid() {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (isSubmitting) {
-      // console.log(formData.file);
-
-      const form = new FormData();
-      form.append("foto_profile", formData.file);
-      form.append("nama_siswa", formData.namaMurid);
-      form.append("nama_panggilan", formData.namaPanggilan);
-      form.append("nama", formData.namaWaliMurid);
-      form.append("nis", formData.nis);
-      form.append("alamat", formData.alamat);
-      form.append("email", formData.email);
-      form.append("email_wali", formData.email_wali_murid);
-      form.append("password", formData.password);
-      form.append("password_wali", formData.password_wali_murid);
-      form.append("nomor_tlp", formData.nomorTlp);
-      form.append("kelas_id", formData.kelas);
-
-      axios
-        .post("https://www.nugasyuk.my.id/api/admin/murid", form, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${saveToken}`,
-          },
-        })
-        .then((result) => {
-          console.log("Data berhasil ditambahkan");
-          // Lakukan tindakan yang diperlukan setelah menambahkan data
-          navigate("/admin/pagemurid");
-
-          // Kosongkan formulir atau perbarui variabel state jika diperlukan
-          setFormData({
-            // Set nilai awal untuk setiap field formulir
-            file: "",
-            namaMurid: "",
-            namaWaliMurid: "",
-            namaPanggilan: "",
-            nis: "",
-            alamat: "",
-            email: "",
-            email_wali_murid: "",
-            nomorTlp: "",
-            password: "",
-            konfirmasiPassword: "",
-            password_wali_murid: "",
-            konfirmasiPassword_wali_murid: "",
-            kelas: "",
-          });
-          setIsSubmitting(false);
-        })
-        .catch((error) => {
-          console.error("Terjadi kesalahan saat menambahkan data:", error);
-          setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
-          setIsSubmitting(false);
+    // console.log(formData.email_wali_murid);
+    axios
+      .get(`https://www.nugasyuk.my.id/api/admin/murid/${id}`, {
+        headers: {
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        setMuridData(response.data.data);
+        setFormData({
+          // file: response.data.data.foto_profile,
+          namaMurid: response.data.data.nama_siswa,
+          namaPanggilan: response.data.data.nama_panggilan,
+          namaWaliMurid: response.data.data.nama_wali_murid,
+          nis: response.data.data.nis,
+          email: response.data.data.email,
+          email_wali_murid: response.data.data.email_wali_murid,
+          alamat: response.data.data.alamat,
+          password: "",
+          konfirmasiPassword: "",
+          password_wali_murid: "",
+          konfirmasiPassword_wali_murid: "",
+          kelas: response.data.data.kelas,
         });
-    }
-  }, [isSubmitting, formData]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm(formData);
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-      setIsSubmitting(true);
-    }
-  };
+      })
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data guru:", error);
+      });
+  }, [id, saveToken]);
 
   const validateForm = (data) => {
     let errors = {};
 
     // jika file lebih dari 2MB maka muncul error
-    if (data.file.size > 3000000) {
-      errors.file = "Ukuran file tidak boleh lebih dari 3MB";
-    }
+    // if (data.file.size > 3000000) {
+    //   errors.file = "Ukuran file tidak boleh lebih dari 3MB";
+    // }
 
-    if (!data.file) {
-      errors.file = "Foto harus diisi";
-    }
+    // if (!data.file) {
+    //   errors.file = "Foto harus diisi";
+    // }
 
     if (!data.namaMurid.trim()) {
       errors.namaMurid = "Nama siswa harus diisi";
@@ -187,9 +146,9 @@ function FormAddMurid() {
       errors.namaPanggilan = "Nama panggilan harus diisi";
     }
 
-    if (!data.namaWaliMurid.trim()) {
-      errors.namaWaliMurid = "Nama wali murid harus diisi";
-    }
+    // if (!data.namaWaliMurid.trim()) {
+    //   errors.namaWaliMurid = "Nama wali murid harus diisi";
+    // }
 
     if (!data.nis.trim()) {
       errors.nis = "NIS harus diisi";
@@ -222,7 +181,8 @@ function FormAddMurid() {
     }
 
     if (!data.password.trim()) {
-      errors.password = "Password harus diisi";
+      errors.password =
+        "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
     }
 
     if (data.password !== data.konfirmasiPassword) {
@@ -234,7 +194,8 @@ function FormAddMurid() {
     }
 
     if (!data.password_wali_murid.trim()) {
-      errors.password_wali_murid = "Password harus diisi";
+      errors.password_wali_murid =
+        "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
     }
 
     if (data.password_wali_murid !== data.konfirmasiPassword_wali_murid) {
@@ -244,23 +205,49 @@ function FormAddMurid() {
     return errors;
   };
 
-  function handleFoto(e) {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      setFormData((prevState) => ({
-        ...prevState,
-        file: selectedFile,
-      }));
+  //   console.log();
 
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const previewImage = document.getElementById("previewImage");
-        previewImage.src = e.target.result;
-      };
-      reader.readAsDataURL(selectedFile);
+  useEffect(() => {
+    if (isSubmitting) {
+      const form = new FormData();
+      //   form.append("foto_profile", formData.file);
+      form.append("nama_siswa", formData.namaMurid);
+      form.append("nama_panggilan", formData.namaPanggilan);
+      form.append("nama", formData.namaWaliMurid);
+      form.append("nis", formData.nis);
+      form.append("alamat", formData.alamat);
+      form.append("email", formData.email);
+      form.append("email_wali", formData.email_wali_murid);
+      form.append("password", formData.password || "");
+      form.append("konfirmasiPassword", formData.konfirmasiPassword || "");
+      form.append("password_wali", formData.password_wali_murid);
+      form.append(
+        "konfirmasiPassword_wali",
+        formData.konfirmasiPassword_wali_murid || ""
+      );
+      //   form.append("nomor_tlp", formData.nomorTlp);
+      form.append("kelas_id", formData.kelas || "");
+
+      axios
+        .post(`https://www.nugasyuk.my.id/api/admin/murid/${id}`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+          },
+        })
+        .then((result) => {
+          console.log("Data berhasil diperbarui");
+          // Lakukan tindakan yang diperlukan setelah menambahkan data
+          navigate("/admin/pagemurid");
+          //   setIsSubmitting(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat memperbarui data:", error);
+          setErrors({ submit: "Terjadi kesalahan saat memperbarui data" });
+          setIsSubmitting(false);
+        });
     }
-  }
+  }, [isSubmitting, formData, id, saveToken, navigate]);
 
   const [dataKelas, setDataKelas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -290,27 +277,24 @@ function FormAddMurid() {
         setIsLoading(false);
       });
   }, []);
-  // useState(() => {
-  //   axios
-  //     .get("https://www.nugasyuk.my.id/api/admin/kelas", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       const responseAPI = result.data;
 
-  //       setDataKelas(responseAPI.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setIsError(true);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+    }
+  };
+
   if (isLoading) {
     return (
       <div id="load">
@@ -374,7 +358,7 @@ function FormAddMurid() {
           <div className="main">
             <div className="content-formKbm">
               <form onSubmit={handleSubmit} className="container-formKbm">
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Profi</div>
                   <input
                     type="file"
@@ -391,7 +375,7 @@ function FormAddMurid() {
                     src={formData.file}
                     alt="Pilih foto, dan foto akan muncul di sini"
                   />
-                </div>
+                </div> */}
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Nama Siswa</div>
@@ -586,7 +570,7 @@ function FormAddMurid() {
                     type="password"
                     className="input-formKbm"
                     placeholder="*******"
-                    id="konfirmasiPassword_wali_murid"
+                    id="konfirmasiPassword_wali"
                     name="konfirmasiPassword_wali_murid"
                     value={formData.konfirmasiPassword_wali_murid}
                     onChange={handleChange}
@@ -748,4 +732,4 @@ function FormAddMurid() {
     );
 }
 
-export default FormAddMurid;
+export default EditFormAddMurid;
