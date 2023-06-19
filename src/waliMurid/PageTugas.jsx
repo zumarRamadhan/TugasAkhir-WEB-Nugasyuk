@@ -9,8 +9,8 @@ import mataIcon from "../assets/icon-mata.svg";
 import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-walimurid.svg";
 import axios from "axios";
-import DetailOrtu from '../component/ProfileWaliMurid';
-import NotifOrtu from '../component/NotifOrtu';
+import DetailOrtu from "../component/ProfileWaliMurid";
+import NotifOrtu from "../component/NotifOrtu";
 
 function PageTugas() {
   const navigate = useNavigate();
@@ -18,9 +18,58 @@ function PageTugas() {
   const saveToken = sessionStorage.getItem("token");
 
   const [dataListTugas, setDataListTugas] = useState([]);
-
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
+  const [active, setActive] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterValue, setFilterValue] = useState("all");
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchQuery, filterValue]);
+
+  const handleSearch = () => {
+    const filteredData = dataListTugas.filter((value) => {
+      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      const lowerCaseStatusMapel = value.status
+        ? value.status.toLowerCase()
+        : "";
+
+      return (
+        (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
+        ((value &&
+          value.soal &&
+          value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.nama_guru &&
+            value.nama_guru.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.status &&
+            value.status
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())))
+      );
+    });
+
+    setFilteredData(filteredData);
+  };
+
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    // setFilterValue(e.target.value);
+    // jika filter value nya tidak ada maka akan menampilkan data not found
+    setFilterValue(e.target.value);
+  };
+  console.log("filter value", dataListTugas);
+
+  const renderData = filteredData.length > 0 ? filteredData : dataListTugas;
+  const dataNotFound =
+    searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
   useEffect(() => {
     setisLoading(true);
@@ -55,7 +104,6 @@ function PageTugas() {
       </div>
     );
   else if (dataListTugas && !isError)
-
     return (
       <div>
         <aside>
@@ -96,31 +144,46 @@ function PageTugas() {
           <div className="main">
             <div className="header-task">
               <div className="header-task-left">
-                <select id="task" name="task">
-                  <option value="semua" selected>
+                <select
+                  id="task"
+                  name="task"
+                  value={filterValue}
+                  onChange={handleFilterChange}
+                >
+                  <option value="all" selected>
                     -- Semua Tugas --
                   </option>
-                  <option value="task">Tugas selesai dalam deadline</option>
-                  <option value="task">Tugas selesai lewat deadline</option>
-                  <option value="task">
+                  <option value="selesai">Tugas selesai dalam deadline</option>
+                  <option value="selesai">Tugas selesai lewat deadline</option>
+                  <option value="belum_selesai">
                     Tugas belum selesai dalam deadline
                   </option>
-                  <option value="task">
+                  <option value="belum_selesai">
                     Tugas belum selesai lewat deadline
                   </option>
-                  <option value="task">Menunggu konfirmasi guru</option>
+                  <option value="menunggu">Menunggu konfirmasi guru</option>
                 </select>
 
-                <select id="task" name="task">
+                <select
+                  id="task"
+                  name="task"
+                  value={filterValue}
+                  onChange={handleFilterChange}
+                >
                   <option value="task" selected>
                     -- Semua Mapel --
                   </option>
-                  <option value="task">Produktif</option>
-                  <option value="task">Normadaf</option>
+                  <option value="produktif">Produktif</option>
+                  <option value="normadaf">Normadaf</option>
                 </select>
 
-                <form className="search-box">
-                  <input type="text" placeholder="Cari..." />
+                <form className="search-box" onSubmit={handleSearch}>
+                  <input
+                    type="text"
+                    placeholder="Cari..."
+                    value={searchQuery}
+                    onChange={handleChange}
+                  />
                   <button type="submit">
                     <Icon
                       icon="material-symbols:search-rounded"
@@ -130,18 +193,22 @@ function PageTugas() {
                 </form>
               </div>
             </div>
+            {dataNotFound ? (
+              <div className="dataNotFound">
+                <h2>Data Tidak Ditemukan</h2>
+              </div>
+            ) : (
             <div className="content-task">
-              {dataListTugas &&
-                dataListTugas.map((listTugas) => (
+              {renderData.map((listTugas) => (
                   <Link
                     className="link-navigate"
-                    to={"/murid/detailtugas/" + listTugas.id}
+                    to={"/walimurid/detailtugas/" + listTugas.id}
                   >
                     <div
                       className="card-task"
                       style={{ cursor: "pointer" }}
                       key={listTugas.id}
-                      onClick={() => navigate("/murid/detailtugas/${id}")}
+                      onClick={() => navigate("/walimurid/detailtugas/${id}")}
                       id="123"
                     >
                       <div className="indiecator-left">
@@ -182,13 +249,13 @@ function PageTugas() {
                   </Link>
                 ))}
             </div>
+            )}
           </div>
         </div>
 
-        <DetailOrtu/>
+        <DetailOrtu />
 
-        <NotifOrtu/>
-        
+        <NotifOrtu />
       </div>
     );
 }

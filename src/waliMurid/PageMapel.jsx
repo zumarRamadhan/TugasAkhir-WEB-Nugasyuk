@@ -15,10 +15,12 @@ function PageMapel() {
   const saveToken = sessionStorage.getItem("token");
 
   const [dataListMapel, setDataListMapel] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
   const [isError, setisError] = useState(false);
 
   useEffect(() => {
+    setisLoading(true);
+    console.log(setisLoading);
     axios
       .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran", {
         headers: {
@@ -40,93 +42,100 @@ function PageMapel() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataListMapel && !isError)
-
-    return (
-      <div>
-        <aside>
-          <h1
-            className="title-form-login"
-            onClick={() => navigate("/walimurid/berandawalimurid")}
+  return (
+    <div>
+      <aside>
+        <h1
+          className="title-form-login"
+          onClick={() => navigate("/walimurid/berandawalimurid")}
+        >
+          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+          nugasyuk
+        </h1>
+        <ul>
+          <li onClick={() => navigate("/walimurid/berandawalimurid")}>
+            <Icon icon="iconoir:home-simple" width="20" />
+            Beranda
+          </li>
+          <li onClick={() => navigate("/walimurid/pagetugas")}>
+            <Icon
+              icon="fluent:clipboard-bullet-list-rtl-20-regular"
+              width="25"
+            />
+            Tugas
+          </li>
+          <li onClick={() => navigate("/walimurid/pagekbm")}>
+            <Icon icon="uiw:date" width="18" />
+            Jadwal KBM
+          </li>
+          <li
+            className="active"
+            onClick={() => navigate("/walimurid/pagemapel")}
           >
-            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-            nugasyuk
-          </h1>
-          <ul>
-            <li onClick={() => navigate("/walimurid/berandawalimurid")}>
-              <Icon icon="iconoir:home-simple" width="20" />
-              Beranda
-            </li>
-            <li onClick={() => navigate("/walimurid/pagetugas")}>
-              <Icon
-                icon="fluent:clipboard-bullet-list-rtl-20-regular"
-                width="25"
-              />
-              Tugas
-            </li>
-            <li onClick={() => navigate("/walimurid/pagekbm")}>
-              <Icon icon="uiw:date" width="18" />
-              Jadwal KBM
-            </li>
-            <li
-              className="active"
-              onClick={() => navigate("/walimurid/pagemapel")}
-            >
-              <Icon icon="fluent-mdl2:education" width="18" />
-              Mata Pelajaran
-            </li>
-          </ul>
-        </aside>
-        <div className="container-content">
-          <NavbarWaliMurid navigasiOrtu={"Mata Pelajaran"} />
-          <main className="main">
+            <Icon icon="fluent-mdl2:education" width="18" />
+            Mata Pelajaran
+          </li>
+        </ul>
+      </aside>
+      <div className="container-content">
+        <NavbarWaliMurid navigasiOrtu={"Mata Pelajaran"} />
+        <main className="main">
+          {isLoading ? (
             <div className="content-mapel">
               <div className="con-card-mapel-ortu">
-                {dataListMapel &&
-                  dataListMapel.map((listMapel) => (
-                    <div
-                      className="card-mapel"
-                      key={listMapel.id}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <img
-                        src={`https://www.nugasyuk.my.id/public/${listMapel.file_asset}`}
-                        alt=""
-                        className="image-card-mapel"
-                        onClick={() => navigate('/walimurid/pagemapel/mapelmateri/'+listMapel.id)}
-                        id="123"
-                      />
-                      <div className="content-card-mapel">
-                        <div className="card-mapel-left">
-                          <p className="mata-pelajaran">
-                            {listMapel.nama_mapel}
-                          </p>
-                          <p className="nama-guru-mapel">
-                            {listMapel.nama_guru}
-                          </p>
-                        </div>
-                        {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
-                      </div>
+                {dataListMapel.map((_, index) => (
+                  <div className="card loading-mapel" key={index}>
+                    <div className="image"></div>
+                    <div className="content">
+                      {/* <h4></h4> */}
+                      <div className="description"></div>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </div>
             </div>
-          </main>
-        </div>
-        <DetailOrtu />
-
-        <NotifOrtu />
+          ) : (
+            <div className="content-mapel">
+              <div className="con-card-mapel-ortu">
+                {dataListMapel.map((listMapel) => (
+                  <div
+                    className="card-mapel"
+                    key={listMapel.id}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img
+                      src={`https://www.nugasyuk.my.id/public/${listMapel.file_asset}`}
+                      alt=""
+                      className="image-card-mapel"
+                      onClick={() =>
+                        navigate(
+                          "/walimurid/pagemapel/mapelmateri/" + listMapel.id
+                        )
+                      }
+                      id="123"
+                    />
+                    <div className="content-card-mapel">
+                      <div className="card-mapel-left">
+                        <p className="mata-pelajaran">
+                          {listMapel.nama_mapel}
+                        </p>
+                        <p className="nama-guru-mapel">
+                          {listMapel.nama_guru}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </main>
       </div>
-    );
+
+      <DetailOrtu />
+      <NotifOrtu />
+    </div>
+  );
 }
 
 export default PageMapel;

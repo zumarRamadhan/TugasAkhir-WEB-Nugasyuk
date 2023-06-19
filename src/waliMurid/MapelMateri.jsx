@@ -138,7 +138,7 @@ function PageMapel() {
                     className="content-subject"
                     style={{
                       background:
-                        "linear-gradient(to bottom right, #8287F8, #555AD3)",
+                        `linear-gradient(${detailMapel.color})`,
                     }}
                   >
                     <div className="content-subject-left">
@@ -146,13 +146,13 @@ function PageMapel() {
                       <p className="name-teacher">{detailMapel.nama_guru}</p>
                     </div>
                     <img
-                      src={AssetsBinggris}
+                      src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
                       alt=""
                       className="img-assets-subject"
                     />
                   </div>
                   <div className="content-subject-2">
-                    <img src={imgGuru} alt="" className="img-subject-2" />
+                    <img src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`} alt="" className="img-subject-2" />
                     <p className="name-teacher-2">{detailMapel.nama_guru}</p>
                   </div>
                 </div>

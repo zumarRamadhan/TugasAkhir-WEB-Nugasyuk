@@ -25,7 +25,7 @@ function DetailTugasOrtu() {
 
   function getDetail() {
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran/tugas/" + id, {
+      .get("https://www.nugasyuk.my.id/api/ortu/tugas/" + id, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
         },
@@ -52,37 +52,36 @@ function DetailTugasOrtu() {
 
     return (
       <div>
-        <aside>
+       <aside>
           <h1
             className="title-form-login"
-            onClick={() => navigate("/murid/berandamurid")}
+            onClick={() => navigate("/walimurid/berandawalimurid")}
           >
             <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
             nugasyuk
           </h1>
           <ul>
-            <li onClick={() => navigate("/murid/berandamurid")}>
+            <li onClick={() => navigate("/walimurid/berandawalimurid")}>
               <Icon icon="iconoir:home-simple" width="20" />
               Beranda
             </li>
-            <li onClick={() => navigate("/murid/pagetugas")}>
+            <li
+              className="active"
+              onClick={() => navigate("/walimurid/pagetugas")}
+            >
               <Icon
                 icon="fluent:clipboard-bullet-list-rtl-20-regular"
                 width="25"
               />
               Tugas
             </li>
-            <li onClick={() => navigate("/murid/pagekbm")}>
+            <li onClick={() => navigate("/walimurid/pagekbm")}>
               <Icon icon="uiw:date" width="18" />
               Jadwal KBM
             </li>
-            <li className="active" onClick={() => navigate("/murid/pagemapel")}>
+            <li onClick={() => navigate("/walimurid/pagemapel")}>
               <Icon icon="fluent-mdl2:education" width="18" />
               Mata Pelajaran
-            </li>
-            <li onClick={() => navigate("/murid/pagekonseling")}>
-              <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
-              Konseling
             </li>
           </ul>
         </aside>
@@ -112,17 +111,6 @@ function DetailTugasOrtu() {
                   <p className="task-deadline-time">
                     Deadline : <span>{detailTugas.deadline}</span>
                   </p>
-                  <div className="submition-task">
-                    <p className="title-submition">Pengumpulan Tugas</p>
-                    <div className="file-task"></div>
-                    <button className="btn-add-task">
-                      <Icon icon="ic:round-plus" width="20"></Icon>
-                      <p>Tambah</p>
-                    </button>
-                    <button className="btn-submit-task">
-                      <p>Kirim</p>
-                    </button>
-                  </div>
                 </div>
               ))}
           </div>

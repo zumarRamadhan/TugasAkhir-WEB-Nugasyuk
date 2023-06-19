@@ -25,7 +25,8 @@ function PageMapel() {
     const popupForget = document.querySelector(".popup-kbm");
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
-
+    setisLoading(true);
+    console.log(setisLoading);
     axios
       .get("https://www.nugasyuk.my.id/api/ortu/jadwal/" + id, {
         headers: {
@@ -35,7 +36,7 @@ function PageMapel() {
       })
       .then((result) => {
         setDetailJadwal(result.data);
-        setisLoading(false);
+        setisLoading(true);
       })
       .catch((err) => {
         console.log("terjadi kesalahan: ", err);
@@ -71,22 +72,6 @@ function PageMapel() {
       });
   }, []);
 
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataListJadwal && !isError)
     return (
       <div>
         <aside>
@@ -158,7 +143,7 @@ function PageMapel() {
             </div>
           </div>
         </div>
-
+        
         <div
           className="popup-kbm"
           style={{ display: selectedKbmId ? "flex" : "none" }}
@@ -174,6 +159,19 @@ function PageMapel() {
               />
               <h2 className="day-schedule">{detailJadwal.hari}</h2>
             </div>
+            {isLoading ? (
+               <div className="con-popup-kbm">
+                {detailJadwal.map((_, index) => (
+                  <div className="card loading" key={index}>
+                    <div className="image"></div>
+                    <div className="content">
+                      <h4></h4>
+                      <div className="description"></div>
+                    </div>
+                  </div>
+                ))}
+             </div>
+            ) : (
             <div className="con-popup-kbm">
               {detailJadwal.data?.map((jadwalDetail) => (
                 <div className="popup-card-kbm">
@@ -197,6 +195,7 @@ function PageMapel() {
                 </div>
               ))}
             </div>
+            )}
           </div>
         </div>
 
