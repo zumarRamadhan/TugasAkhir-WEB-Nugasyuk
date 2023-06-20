@@ -234,22 +234,23 @@ function FormAddKelas() {
   //       setIsLoading(false);
   //     });
   // }, []);
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataGuru && !isError)
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // } else
+   if (dataGuru && !isError)
     return (
       <div>
         <aside>
@@ -358,7 +359,14 @@ function FormAddKelas() {
                 </div>
 
                 <div className="con-formKbm">
-                  <div className="title-formKbm">Kelas</div>
+                  <div className="title-formKbm">Wali Kelas</div>
+                  {isLoading ? (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  ) : (
                   <select
                     name="waliKelas"
                     id="kelas"
@@ -373,6 +381,7 @@ function FormAddKelas() {
                       <option value={guru.id}>{guru.nama_guru}</option>
                     ))}
                   </select>
+                  )}
                   {errors.waliKelas && ( //change
                     <span className="error">{errors.waliKelas}</span>
                   )}

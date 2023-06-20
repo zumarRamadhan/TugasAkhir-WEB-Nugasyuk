@@ -249,22 +249,23 @@ function EditFormAddKelas() {
   //       setIsLoading(false);
   //     });
   // }, []);
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataGuru && !isError)
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // } else
+   if (dataGuru && !isError)
     return (
       <div>
         <aside>
@@ -314,6 +315,7 @@ function EditFormAddKelas() {
               <form onSubmit={handleSubmit} className="container-formKbm">
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
+                  {formData && formData.tingkatKe ? (
                   <select
                     name="tingkatKe"
                     id="tingkatKe"
@@ -328,6 +330,13 @@ function EditFormAddKelas() {
                     <option value="2">11</option>
                     <option value="3">12</option>
                   </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.tingkatKe && (
                     <span className="error">{errors.tingkatKe}</span>
                   )}
@@ -335,6 +344,7 @@ function EditFormAddKelas() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Jurusan</div>
+                  {formData && formData.namaJurusan ? (
                   <select
                     name="namaJurusan"
                     id="namaJurusan"
@@ -351,6 +361,13 @@ function EditFormAddKelas() {
                     <option value="4">DG</option>
                     <option value="5">Teknik Grafika</option>
                   </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.namaJurusan && (
                     <span className="error">{errors.namaJurusan}</span>
                   )}
@@ -358,6 +375,7 @@ function EditFormAddKelas() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Tingkat</div>
+                  {formData && formData.namaKelas ? (
                   <input
                     type="text"
                     id="namaKelas"
@@ -367,6 +385,13 @@ function EditFormAddKelas() {
                     className="input-formKbm"
                     placeholder="Contoh : (1/2/3...) / (A/B/C...)"
                   />
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.namaKelas && (
                     <span className="error">{errors.namaKelas}</span>
                   )}
@@ -374,6 +399,7 @@ function EditFormAddKelas() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
+                  {formData && formData.waliKelas ? (
                   <select
                     name="waliKelas"
                     id="kelas"
@@ -388,6 +414,13 @@ function EditFormAddKelas() {
                       <option value={guru.id}>{guru.nama_guru}</option>
                     ))}
                   </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.waliKelas && ( //change
                     <span className="error">{errors.waliKelas}</span>
                   )}

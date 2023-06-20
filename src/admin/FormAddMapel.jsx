@@ -265,22 +265,23 @@ function FormAddMapel() {
   //       setIsLoading(false);
   //     });
   // }, []);
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataKode && dataKelas && dataAsset && !isError)
+  //   if (isLoading) {
+  //     return (
+  //       <div id="load">
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //       </div>
+  //     );
+  //   } else if (dataKode && dataKelas && dataAsset && !isError)
+  if (dataKode && dataKelas && dataAsset && !isError)
     return (
       <div>
         <aside>
@@ -333,20 +334,28 @@ function FormAddMapel() {
               <form onSubmit={handleSubmit} className="container-formKbm">
                 <div className="con-formKbm">
                   <div className="title-formKbm">Asset Card</div>
-                  <select
-                    name="assetId"
-                    id="tingkatKe"
-                    value={formData.assetId}
-                    onChange={handleChange}
-                    className="selectClass"
-                  >
-                    <option value="" selected disabled>
-                      Pilih Asset
-                    </option>
-                    {dataAsset.map((asset) => (
-                      <option value={asset.id}>{asset.file_asset}</option>
-                    ))}
-                  </select>
+                  {isLoading ? (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  ) : (
+                    <select
+                      name="assetId"
+                      id="tingkatKe"
+                      value={formData.assetId}
+                      onChange={handleChange}
+                      className="selectClass"
+                    >
+                      <option value="" selected disabled>
+                        Pilih Asset
+                      </option>
+                      {dataAsset.map((asset) => (
+                        <option value={asset.id}>{asset.file_asset}</option>
+                      ))}
+                    </select>
+                  )}
                   {errors.assetId && (
                     <span className="error">{errors.assetId}</span>
                   )}
@@ -354,26 +363,34 @@ function FormAddMapel() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
-                  <select
-                    name="kelasId"
-                    id="kelasId"
-                    value={formData.kelasId}
-                    onChange={handleChange}
-                    className="selectClass"
-                  >
-                    <option value="" selected disabled>
-                      Pilih Kelas
-                    </option>
-                    {dataKelas.map((kelas) => (
-                      <option value={kelas.id}>
-                        {kelas.tingkat_ke +
-                          " " +
-                          kelas.nama_jurusan.toUpperCase() +
-                          " " +
-                          kelas.nama_kelas}
+                  {isLoading ? (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  ) : (
+                    <select
+                      name="kelasId"
+                      id="kelasId"
+                      value={formData.kelasId}
+                      onChange={handleChange}
+                      className="selectClass"
+                    >
+                      <option value="" selected disabled>
+                        Pilih Kelas
                       </option>
-                    ))}
-                  </select>
+                      {dataKelas.map((kelas) => (
+                        <option value={kelas.id}>
+                          {kelas.tingkat_ke +
+                            " " +
+                            kelas.nama_jurusan.toUpperCase() +
+                            " " +
+                            kelas.nama_kelas}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                   {errors.kelasId && (
                     <span className="error">{errors.kelasId}</span>
                   )}
@@ -381,22 +398,32 @@ function FormAddMapel() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kode Guru</div>
-                  <select
-                    name="kodeId"
-                    id="kelas"
-                    className="selectClass"
-                    value={formData.kodeId}
-                    onChange={handleChange}
-                  >
-                    <option value="" selected disabled>
-                      Pilih Kode Guru
-                    </option>
-                    {dataKode.map((kelas) =>
-                      kelas.kode_guru.map((guru) => (
-                        <option value={guru.id}>{guru.kode_guru} // {kelas.nama_guru}</option>
-                      ))
-                    )}
-                  </select>
+                  {isLoading ? (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  ) : (
+                    <select
+                      name="kodeId"
+                      id="kelas"
+                      className="selectClass"
+                      value={formData.kodeId}
+                      onChange={handleChange}
+                    >
+                      <option value="" selected disabled>
+                        Pilih Kode Guru
+                      </option>
+                      {dataKode.map((kelas) =>
+                        kelas.kode_guru.map((guru) => (
+                          <option value={guru.id}>
+                            {guru.kode_guru} // {kelas.nama_guru}
+                          </option>
+                        ))
+                      )}
+                    </select>
+                  )}
                   {errors.kodeId && ( //change
                     <span className="error">{errors.kodeId}</span>
                   )}

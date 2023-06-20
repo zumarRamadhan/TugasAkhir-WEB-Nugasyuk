@@ -88,6 +88,9 @@ function Pagekelas() {
     const popupDelete = document.querySelector(".detail-Delete");
     popupDelete.style.display = "block";
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDetailKelas(null);
+
     axios
       .get("https://www.nugasyuk.my.id/api/admin/kelas/" + selected, {
         headers: {
@@ -450,7 +453,7 @@ function Pagekelas() {
                 detailKelas.nama_kelas}
             </p>
             ) : (
-              <p className="desc-Delete">Data Sedang Dalam Proses...</p>
+              <p className="desc-Delete">Tunggu Sebentar,Data Sedang Dalam Proses...</p>
             )}
             <div className="con-btn-Delete">
               <button

@@ -10,6 +10,7 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import iconaksi from "../assets/iconaksi.svg";
 import ImgDelete from "../assets/imgDelete.svg";
+import vektorProfile from "../assets/vektorProfile.svg";
 import axios from "axios";
 
 function DataMurid() {
@@ -23,6 +24,9 @@ function DataMurid() {
     const popupDetail = document.querySelector(".detail-popup-detailMurid");
     popupDetail.style.display = "block";
     popupDetail.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDetailMurid(null);
+
     axios
       .get("https://www.nugasyuk.my.id/api/admin/murid/" + selected, {
         headers: {
@@ -74,6 +78,9 @@ function DataMurid() {
     const popupDelete = document.querySelector(".detail-Delete");
     popupDelete.style.display = "block";
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDetailMurid(null);
+
     axios
       .get("https://www.nugasyuk.my.id/api/admin/murid/" + selected, {
         headers: {
@@ -405,7 +412,9 @@ function DataMurid() {
                         <td>{item.email}</td>
                         <td>{item.nis}</td>
                         <td>
-                          <div className="jurusan">{item.nama_jurusan.toUpperCase()}</div>
+                          <div className="jurusan">
+                            {item.nama_jurusan.toUpperCase()}
+                          </div>
                         </td>
                         <td>
                           <img
@@ -453,29 +462,51 @@ function DataMurid() {
                 style={{ cursor: "pointer" }}
                 onClick={closeDetailPopup}
               />
-              <h2>{detailMurid.nama_panggilan}</h2>
+              {detailMurid && detailMurid.nama_panggilan ? (
+                <h2>{detailMurid.nama_panggilan}</h2>
+              ) : (
+                <h2>Loading...</h2>
+              )}
               <div className="divKosong"></div>
             </div>
             <div className="con-popup-detailMurid">
               <div className="img-detailMurid">
-                <img
-                  src={`https://www.nugasyuk.my.id/public/${detailMurid.foto_profile}`}
-                  alt="foto profile ${detailMurid.foto_profile}"
-                  className="image-detailMurid"
-                />
+                {detailMurid && detailMurid.foto_profile ? (
+                  <img
+                    src={`https://www.nugasyuk.my.id/public/${detailMurid.foto_profile}`}
+                    alt="foto profile ${detailMurid.foto_profile}"
+                    className="image-detailMurid"
+                  />
+                ) : (
+                  <img
+                    src={vektorProfile}
+                    alt="foto profile ${detailMurid.foto_profile}"
+                    className="image-detailMurid"
+                  />
+                )}
               </div>
               <h3>Nama :</h3>
-              <p className="nama-detailMurid">{detailMurid.nama_siswa}</p>
+              {detailMurid && detailMurid.nama_siswa ? (
+                <p className="nama-detailMurid">{detailMurid.nama_siswa}</p>
+              ) : (
+                <p className="nama-detailMurid">Data Sedang Dalam Proses...</p>
+              )}
               <h3>Nama Panggilan :</h3>
-              <p className="nama-detailMurid">{detailMurid.nama_panggilan}</p>
+              {detailMurid && detailMurid.nama_panggilan ? (
+                <p className="nama-detailMurid">{detailMurid.nama_panggilan}</p>
+              ) : (
+                <p className="nama-detailMurid">Data Sedang Dalam Proses...</p>
+              )}
               <h3>Jurusan :</h3>
               {detailMurid && detailMurid.jurusan ? (
-              <p className="jurusan-detailMurid">
-                {detailMurid.jurusan.toUpperCase()}
-              </p>
-            ) : (
-                <p className="jurusan-detailMurid">Data Sedang Dalam Proses...</p>
-                )}
+                <p className="jurusan-detailMurid">
+                  {detailMurid.jurusan.toUpperCase()}
+                </p>
+              ) : (
+                <p className="jurusan-detailMurid">
+                  Data Sedang Dalam Proses...
+                </p>
+              )}
               <h3>Kelas :</h3>
               {detailMurid && detailMurid.jurusan ? (
                 <p className="kelas-detailMurid">
@@ -489,15 +520,33 @@ function DataMurid() {
                 <p className="kelas-detailMurid">Data Sedang Dalam Proses...</p>
               )}
               <h3>Email :</h3>
-              <p className="email-detailMurid">{detailMurid.email}</p>
+              {detailMurid && detailMurid.email ? (
+                <p className="email-detailMurid">{detailMurid.email}</p>
+              ) : (
+                <p className="email-detailMurid">Data Sedang Dalam Proses...</p>
+              )}
               <h3>Email Orang Tua:</h3>
-              <p className="email-detailMurid">
-                {detailMurid.email_wali_murid}
-              </p>
+              {detailMurid && detailMurid.email_wali_murid ? (
+                <p className="email-detailMurid">
+                  {detailMurid.email_wali_murid}
+                </p>
+              ) : (
+                <p className="email-detailMurid">Data Sedang Dalam Proses...</p>
+              )}
               <h3>NIS :</h3>
-              <p className="niy-detailMurid">{detailMurid.nis}</p>
+              {detailMurid && detailMurid.nis ? (
+                <p className="niy-detailMurid">{detailMurid.nis}</p>
+              ) : (
+                <p className="niy-detailMurid">Data Sedang Dalam Proses...</p>
+              )}
               <h3>Alamat :</h3>
-              <p className="alamat-detailMurid">{detailMurid.alamat}</p>
+              {detailMurid && detailMurid.alamat ? (
+                <p className="alamat-detailMurid">{detailMurid.alamat}</p>
+              ) : (
+                <p className="alamat-detailMurid">
+                  Data Sedang Dalam Proses...
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -538,7 +587,13 @@ function DataMurid() {
             </div>
             <p className="desc-Delete">Anda yakin ingin menghapus?</p>
             {/* memanggil nama sesuai data yang di pilih */}
-            <p className="desc-Delete">{detailMurid.nama_siswa}</p>
+            {detailMurid && detailMurid.nama_siswa ? (
+              <p className="desc-Delete">{detailMurid.nama_siswa}</p>
+            ) : (
+              <p className="desc-Delete">
+                Tunggu Sebentar,Data Sedang Dalam Proses...
+              </p>
+            )}
             <div className="con-btn-Delete">
               <button
                 type="button"

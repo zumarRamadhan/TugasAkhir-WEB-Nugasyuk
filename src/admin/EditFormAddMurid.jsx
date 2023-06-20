@@ -122,21 +122,12 @@ function EditFormAddMurid() {
         });
       })
       .catch((error) => {
-        console.error("Terjadi kesalahan saat mengambil data guru:", error);
+        console.error("Terjadi kesalahan saat mengambil data murid:", error);
       });
   }, [id, saveToken]);
 
   const validateForm = (data) => {
     let errors = {};
-
-    // jika file lebih dari 2MB maka muncul error
-    // if (data.file.size > 3000000) {
-    //   errors.file = "Ukuran file tidak boleh lebih dari 3MB";
-    // }
-
-    // if (!data.file) {
-    //   errors.file = "Foto harus diisi";
-    // }
 
     if (!data.namaMurid.trim()) {
       errors.namaMurid = "Nama siswa harus diisi";
@@ -146,9 +137,9 @@ function EditFormAddMurid() {
       errors.namaPanggilan = "Nama panggilan harus diisi";
     }
 
-    // if (!data.namaWaliMurid.trim()) {
-    //   errors.namaWaliMurid = "Nama wali murid harus diisi";
-    // }
+    if (!data.namaWaliMurid.trim()) {
+      errors.namaWaliMurid = "Nama wali murid harus diisi";
+    }
 
     if (!data.nis.trim()) {
       errors.nis = "NIS harus diisi";
@@ -172,7 +163,7 @@ function EditFormAddMurid() {
       errors.email_wali_murid = "Email tidak valid";
     }
 
-    if (!data.kelas.trim()) {
+    if (!data.kelas.toString().trim()) {
       errors.kelas = "Silahkan pilih kelas";
     }
 
@@ -295,22 +286,23 @@ function EditFormAddMurid() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataKelas && !isError)
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // } else
+  if (dataKelas && !isError)
     return (
       <div>
         <aside>
@@ -379,15 +371,23 @@ function EditFormAddMurid() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Nama Siswa</div>
-                  <input
-                    type="text"
-                    id="namaMurid"
-                    name="namaMurid"
-                    value={formData.namaMurid}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan nama siswa"
-                  />
+                  {formData && formData.namaMurid ? (
+                    <input
+                      type="text"
+                      id="namaMurid"
+                      name="namaMurid"
+                      value={formData.namaMurid}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan nama siswa"
+                    />
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.namaMurid && (
                     <span className="error">{errors.namaMurid}</span>
                   )}
@@ -395,15 +395,23 @@ function EditFormAddMurid() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Nama Panggilan</div>
-                  <input
-                    type="text"
-                    id="namaPanggilan"
-                    name="namaPanggilan"
-                    value={formData.namaPanggilan}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan nama panggilan"
-                  />
+                  {formData && formData.namaPanggilan ? (
+                    <input
+                      type="text"
+                      id="namaPanggilan"
+                      name="namaPanggilan"
+                      value={formData.namaPanggilan}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan nama panggilan"
+                    />
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.namaPanggilan && (
                     <span className="error">{errors.namaPanggilan}</span>
                   )}
@@ -411,6 +419,7 @@ function EditFormAddMurid() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Nama Walimurid</div>
+                  {formData && formData.namaWaliMurid ? (
                   <input
                     type="text"
                     id="namaWaliMurid"
@@ -420,6 +429,13 @@ function EditFormAddMurid() {
                     className="input-formKbm"
                     placeholder="Tambahkan nama walimurid"
                   />
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.namaWaliMurid && (
                     <span className="error">{errors.namaWaliMurid}</span>
                   )}
@@ -427,6 +443,7 @@ function EditFormAddMurid() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
+                  {formData && formData.kelas ? (
                   <select
                     name="kelas"
                     id="kelas"
@@ -447,6 +464,13 @@ function EditFormAddMurid() {
                       </option>
                     ))}
                   </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.kelas && ( //change
                     <span className="error">{errors.kelas}</span>
                   )}
@@ -454,6 +478,7 @@ function EditFormAddMurid() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">NIS</div>
+                  {formData && formData.nis ? (
                   <input
                     type="text"
                     id="nis"
@@ -463,11 +488,19 @@ function EditFormAddMurid() {
                     className="input-formKbm"
                     placeholder="Tambahkan niy guru"
                   />
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.nis && <span className="error">{errors.nis}</span>}
                 </div>
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Alamat</div>
+                  {formData && formData.alamat ? (
                   <input
                     type="text"
                     id="alamat"
@@ -477,6 +510,13 @@ function EditFormAddMurid() {
                     className="input-formKbm"
                     placeholder="Tambahkan alamat siswa"
                   />
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.alamat && (
                     <span className="error">{errors.alamat}</span>
                   )}
@@ -484,6 +524,7 @@ function EditFormAddMurid() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Email</div>
+                  {formData && formData.email ? (
                   <input
                     type="text"
                     id="email"
@@ -493,6 +534,13 @@ function EditFormAddMurid() {
                     className="input-formKbm"
                     placeholder="example@smkrus.schid"
                   />
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.email && (
                     <span className="error">{errors.email}</span>
                   )}
@@ -500,6 +548,7 @@ function EditFormAddMurid() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Email Walimurid</div>
+                  {formData && formData.email_wali_murid ? (
                   <input
                     type="text"
                     id="email_wali_murid"
@@ -509,6 +558,13 @@ function EditFormAddMurid() {
                     className="input-formKbm"
                     placeholder="example@smkrus.schid"
                   />
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
                   {errors.email_wali_murid && (
                     <span className="error">{errors.email_wali_murid}</span>
                   )}

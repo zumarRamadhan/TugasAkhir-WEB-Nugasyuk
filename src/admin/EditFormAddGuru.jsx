@@ -87,7 +87,7 @@ function EditFormAddGuru() {
     password: "",
     konfirmasiPassword: "",
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -168,7 +168,8 @@ function EditFormAddGuru() {
     }
 
     if (!data.password.trim()) {
-      errors.password = "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
+      errors.password =
+        "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
     }
 
     if (data.password !== data.konfirmasiPassword) {
@@ -236,7 +237,7 @@ function EditFormAddGuru() {
   //     console.log(formData.file);
   //   }
   // }, [formData]);
-
+  
   return (
     <div>
       <aside>
@@ -300,20 +301,32 @@ function EditFormAddGuru() {
 
               <div className="con-formKbm">
                 <div className="title-formKbm">Nama</div>
-                <input
-                  type="text"
-                  id="nama"
-                  name="nama"
-                  value={formData.nama}
-                  onChange={handleChange}
-                  className="input-formKbm"
-                  placeholder="Tambahkan nama guru"
-                />
+                {formData && formData.nama ? (
+                  <input
+                    type="text"
+                    id="nama"
+                    name="nama"
+                    value={formData.nama}
+                    onChange={handleChange}
+                    className="input-formKbm"
+                    placeholder="Tambahkan nama guru"
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    id="nama"
+                    name="nama"
+                    value="Data Sedang Dalam Proses..."
+                    onChange={handleChange}
+                    className="input-formKbm"
+                  />
+                )}
                 {errors.nama && <span className="error">{errors.nama}</span>}
               </div>
 
               <div className="con-formKbm">
                 <div className="title-formKbm">NIY</div>
+                {formData && formData.niy ? (
                 <input
                   type="text"
                   id="niy"
@@ -323,11 +336,22 @@ function EditFormAddGuru() {
                   className="input-formKbm"
                   placeholder="Tambahkan niy guru"
                 />
+                ) : (
+                  <input
+                    type="text"
+                    id="niy"
+                    name="niy"
+                    value="Data Sedang Dalam Proses..."
+                    onChange={handleChange}
+                    className="input-formKbm"
+                  />
+                )}
                 {errors.niy && <span className="error">{errors.niy}</span>}
               </div>
 
               <div className="con-formKbm">
                 <div className="title-formKbm">Email</div>
+                {formData && formData.email ? (
                 <input
                   type="text"
                   id="email"
@@ -337,11 +361,22 @@ function EditFormAddGuru() {
                   className="input-formKbm"
                   placeholder="example@smkrus.schid"
                 />
+                ) : (
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    value="Data Sedang Dalam Proses..."
+                    onChange={handleChange}
+                    className="input-formKbm"
+                  />
+                )}
                 {errors.email && <span className="error">{errors.email}</span>}
               </div>
 
               <div className="con-formKbm">
                 <div className="title-formKbm">Nomor Tlp</div>
+                {formData && formData.nomorTlp ? (
                 <input
                   type="text"
                   className="input-formKbm"
@@ -351,6 +386,16 @@ function EditFormAddGuru() {
                   value={formData.nomorTlp}
                   onChange={handleChange}
                 />
+                ) : (
+                  <input
+                    type="text"
+                    className="input-formKbm"
+                    id="nomorTlp"
+                    name="nomorTlp"
+                    value="Data Sedang Dalam Proses..."
+                    onChange={handleChange}
+                  />
+                )}
                 {errors.nomorTlp && (
                   <span className="error">{errors.nomorTlp}</span>
                 )}
@@ -358,6 +403,7 @@ function EditFormAddGuru() {
 
               <div className="con-formKbm">
                 <div className="title-formKbm">Alamat</div>
+                {formData && formData.alamat ? (
                 <input
                   type="text"
                   id="alamat"
@@ -367,6 +413,16 @@ function EditFormAddGuru() {
                   className="input-formKbm"
                   placeholder="Tambahkan alamat guru"
                 />
+                ) : (
+                  <input
+                    type="text"
+                    id="alamat"
+                    name="alamat"
+                    value="Data Sedang Dalam Proses..."
+                    onChange={handleChange}
+                    className="input-formKbm"
+                  />
+                )}
                 {errors.alamat && (
                   <span className="error">{errors.alamat}</span>
                 )}

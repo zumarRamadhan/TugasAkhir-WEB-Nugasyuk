@@ -15,6 +15,7 @@ function MataPelajaran() {
   const navText = "Mata Pelajaran";
   const navigate = useNavigate();
   const [detailMapel, setDetailMapel] = useState([]);
+  // const source = axios.CancelToken.source();
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -34,12 +35,15 @@ function MataPelajaran() {
   };
 
   const showDeletePopup = (id) => {
-    setCurrentMapel(id)
+    setCurrentMapel(id);
     const background = document.querySelector("#popup-Delete");
     background.style.display = "flex";
     const popupDelete = document.querySelector(".detail-Delete");
     popupDelete.style.display = "block";
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDetailMapel(null);
+
     axios
       .get("https://www.nugasyuk.my.id/api/admin/mapel/" + currentHover, {
         headers: {
@@ -82,7 +86,6 @@ function MataPelajaran() {
   const closeDeletePopup = () => {
     const background = document.querySelector("#popup-Delete");
     setTimeout(() => (background.style.display = "none"), 300);
-    // background.style.display = "none";
     const popupDelete = document.querySelector(".detail-Delete");
     setTimeout(() => (popupDelete.style.display = "none"), 250);
     popupDelete.style.animation = "slide-up 0.3s ease-in-out";
@@ -365,7 +368,7 @@ function MataPelajaran() {
                   {currentHover === data.id && (
                     <div className="hover-card-mapel">
                       <div className="con-btn-card-mapel">
-                        <button className="btn-edit-mapel">
+                        <button className="btn-edit-mapel" onClick={() => handleEditClick(data.id)}>
                           <Icon
                             icon="material-symbols:edit-outline-rounded"
                             width="20"
@@ -424,7 +427,11 @@ function MataPelajaran() {
             </div>
             <p className="desc-Delete">Anda yakin ingin menghapus?</p>
             {/* memanggil nama sesuai data yang di pilih */}
+            {detailMapel && detailMapel.nama_mapel && detailMapel.nama_guru ? (
             <p className="desc-Delete">{detailMapel.nama_mapel} // {detailMapel.nama_guru}</p>
+            ) : (
+              <p className="desc-Delete">Tunggu Sebentar,Data Sedang Dalam Proses...</p>
+            )}
             <div className="con-btn-Delete">
               <button
                 type="button"

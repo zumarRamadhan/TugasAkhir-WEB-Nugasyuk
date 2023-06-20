@@ -10,6 +10,7 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import iconaksi from "../assets/iconaksi.svg";
 import ImgDelete from "../assets/imgDelete.svg";
+import vektorProfile from "../assets/vektorProfile.svg";
 import axios from "axios";
 // import { useHistory } from "react-router-dom";
 
@@ -41,6 +42,9 @@ function BerandaGuru() {
     const popupDelete = document.querySelector(".detail-Delete");
     popupDelete.style.display = "block";
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDetailGuru(null);
+
     axios
       .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
         headers: {
@@ -95,6 +99,9 @@ function BerandaGuru() {
     const popupDetail = document.querySelector(".detail-popup-detailGuru");
     popupDetail.style.display = "block";
     popupDetail.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDetailGuru(null);
+
     axios
       .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
         headers: {
@@ -129,6 +136,9 @@ function BerandaGuru() {
     const popupKode = document.querySelector(".detail-Kode");
     popupKode.style.display = "block";
     popupKode.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDetailGuru(null);
+
     axios
       .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
         headers: {
@@ -221,7 +231,6 @@ function BerandaGuru() {
 
   const handleEditClick = (id) => {
     // Ambil data guru dari API berdasarkan id
-    
 
     // pindah ke halaman form edit
     navigate(`/admin/pageguru/edit/${id}`);
@@ -592,56 +601,110 @@ function BerandaGuru() {
                 style={{ cursor: "pointer" }}
                 onClick={closeDetailPopup}
               />
-              <h2>{detailGuru.nama_guru}</h2>
+              {detailGuru && detailGuru.nama_guru ? (
+                <h2>{detailGuru.nama_guru}</h2>
+              ) : (
+                <h2>Loading...</h2>
+              )}
               <div className="divKosong"></div>
             </div>
             <div className="con-popup-detailGuru">
               <div className="img-detailGuru">
-                <img
-                  src={`https://www.nugasyuk.my.id/public/${detailGuru.foto_profile}`}
-                  alt="foto profile ${detailGuru.foto_profile}"
-                  className="image-detailGuru"
-                />
+                {detailGuru && detailGuru.foto_profile ? (
+                  <img
+                    src={`https://www.nugasyuk.my.id/public/${detailGuru.foto_profile}`}
+                    alt="foto profile ${detailGuru.foto_profile}"
+                    className="image-detailGuru"
+                  />
+                ) : (
+                  <img
+                    src={vektorProfile}
+                    alt="foto profile ${detailGuru.foto_profile}"
+                    className="image-detailGuru"
+                  />
+                )}
               </div>
               <h3>Nama :</h3>
-              <p className="nama-detailGuru">{detailGuru.nama_guru}</p>
+              {detailGuru && detailGuru.nama_guru ? (
+                <p className="nama-detailGuru">{detailGuru.nama_guru}</p>
+              ) : (
+                <p className="nama-detailGuru">Data Sedang Dalam Proses...</p>
+              )}
               <h3>Email :</h3>
-              <p className="email-detailGuru">{detailGuru.email}</p>
+              {detailGuru && detailGuru.email ? (
+                <p className="email-detailGuru">{detailGuru.email}</p>
+              ) : (
+                <p className="email-detailGuru">Data Sedang Dalam Proses...</p>
+              )}
               <h3>Nomor Telp :</h3>
-              <p className="nomor-detailGuru">{detailGuru.nomor_tlp}</p>
+              {detailGuru && detailGuru.nomor_tlp ? (
+                <p className="nomor-detailGuru">{detailGuru.nomor_tlp}</p>
+              ) : (
+                <p className="nomor-detailGuru">Data Sedang Dalam Proses...</p>
+              )}
               <h3>NIY :</h3>
-              <p className="niy-detailGuru">{detailGuru.niy}</p>
+              {detailGuru && detailGuru.niy ? (
+                <p className="niy-detailGuru">{detailGuru.niy}</p>
+              ) : (
+                <p className="niy-detailGuru">Data Sedang Dalam Proses...</p>
+              )}
               <h3>Alamat :</h3>
-              <p className="alamat-detailGuru">{detailGuru.alamat}</p>
+              {detailGuru && detailGuru.alamat ? (
+                <p className="alamat-detailGuru">{detailGuru.alamat}</p>
+              ) : (
+                <p className="alamat-detailGuru">Data Sedang Dalam Proses...</p>
+              )}
               <h3>Mengajar :</h3>
-              <div className="con-mengajar-detailGuru">
-                {detailGuru.mengajar?.map((item, index) => (
-                  <p key={index} className="mengajar-detailGuru">
-                    {item.nama_mapel}
+              {detailGuru && detailGuru.mengajar ? (
+                <div className="con-mengajar-detailGuru">
+                  {detailGuru.mengajar?.map((item, index) => (
+                    <p key={index} className="mengajar-detailGuru">
+                      {item.nama_mapel}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <div className="con-mengajar-detailGuru">
+                  <p className="mengajar-detailGuru">
+                    Data Sedang Dalam Proses...
                   </p>
-                ))}
-              </div>
+                </div>
+              )}
               <h3>Kode :</h3>
-              <div className="con-kode-detailGuru">
-                {detailGuru.kode?.map((item, index) => (
-                  <p key={index} className="kode-detailGuru">
-                    {item.kode_guru}
-                  </p>
-                ))}
-              </div>
+              {detailGuru && detailGuru.kode ? (
+                <div className="con-kode-detailGuru">
+                  {detailGuru.kode?.map((item, index) => (
+                    <p key={index} className="kode-detailGuru">
+                      {item.kode_guru}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <div className="con-kode-detailGuru">
+                  <p className="kode-detailGuru">Data Sedang Dalam Proses...</p>
+                </div>
+              )}
 
               <h3>Mengajar Kelas :</h3>
-              <div className="con-mengajarkelas-detailGuru">
-                {detailGuru.mengajar_kelas?.map((item, index) => (
-                  <p key={index} className="mengajarKelas-detailGuru">
-                    {item.tingkat_ke +
-                      " " +
-                      item.nama_jurusan.toUpperCase() +
-                      " " +
-                      item.nama_kelas}
+              {detailGuru && detailGuru.mengajar_kelas ? (
+                <div className="con-mengajarkelas-detailGuru">
+                  {detailGuru.mengajar_kelas?.map((item, index) => (
+                    <p key={index} className="mengajarKelas-detailGuru">
+                      {item.tingkat_ke +
+                        " " +
+                        item.nama_jurusan.toUpperCase() +
+                        " " +
+                        item.nama_kelas}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <div className="con-mengajarkelas-detailGuru">
+                  <p className="mengajarKelas-detailGuru">
+                    Data Sedang Dalam Proses...
                   </p>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -682,7 +745,13 @@ function BerandaGuru() {
             </div>
             <p className="desc-Delete">Anda yakin ingin menghapus?</p>
             {/* memanggil nama sesuai data yang di pilih */}
-            <p className="desc-Delete">{detailGuru.nama_guru}</p>
+            {detailGuru && detailGuru.nama_guru ? (
+              <p className="desc-Delete">{detailGuru.nama_guru}</p>
+            ) : (
+              <p className="desc-Delete">
+                Tunggu Sebentar,Data Sedang Dalam Proses...
+              </p>
+            )}
             <div className="con-btn-Delete">
               <button
                 type="button"
@@ -765,14 +834,25 @@ function BerandaGuru() {
               <div className="divKosong"></div>
             </div>
             <p className="judul-form">Nama Guru</p>
-            <input
-              type="text"
-              id=""
-              value={detailGuru.nama_guru}
-              disabled
-              readOnly
-              className="inputGuru"
-            />
+            {detailGuru && detailGuru.nama_guru ? (
+              <input
+                type="text"
+                id=""
+                value={detailGuru.nama_guru}
+                disabled
+                readOnly
+                className="inputGuru"
+              />
+            ) : (
+              <input
+                type="text"
+                id=""
+                value="Data Sedang Dalam Proses..."
+                disabled
+                readOnly
+                className="inputGuru"
+              />
+            )}
             <p className="judul-form">Kode Guru</p>
             <input
               type="text"

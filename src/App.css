@@ -787,11 +787,11 @@ nav .navbar img {
 
 .img-detailGuru {
     margin: 0 auto;
-    max-width: 200px;
-
+    max-width: 150px;
 }
 
 .image-detailGuru {
+    min-width: 150px;
     width: 100%;
     height: auto;
     aspect-ratio: 1/1;
@@ -898,11 +898,11 @@ nav .navbar img {
 
 .img-detailMurid {
     margin: 0 auto;
-    max-width: 200px;
-
+    max-width: 150px;
 }
 
 .image-detailMurid {
+    min-width: 150px;
     width: 100%;
     height: auto;
     aspect-ratio: 1/1;

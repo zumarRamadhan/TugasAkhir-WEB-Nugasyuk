@@ -311,22 +311,23 @@ function FormAddMurid() {
   //       setIsLoading(false);
   //     });
   // }, []);
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataKelas && !isError)
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // } else
+  if (dataKelas && !isError)
     return (
       <div>
         <aside>
@@ -443,26 +444,34 @@ function FormAddMurid() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
-                  <select
-                    name="kelas"
-                    id="kelas"
-                    className="selectClass"
-                    value={formData.kelas}
-                    onChange={handleChange}
-                  >
-                    <option value="" selected disabled>
-                      Pilih Kelas
-                    </option>
-                    {dataKelas.map((kelas) => (
-                      <option value={kelas.id}>
-                        {kelas.tingkat_ke +
-                          " " +
-                          kelas.nama_jurusan.toUpperCase() +
-                          " " +
-                          kelas.nama_kelas}
+                  {isLoading ? (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  ) : (
+                    <select
+                      name="kelas"
+                      id="kelas"
+                      className="selectClass"
+                      value={formData.kelas}
+                      onChange={handleChange}
+                    >
+                      <option value="" selected disabled>
+                        Pilih Kelas
                       </option>
-                    ))}
-                  </select>
+                      {dataKelas.map((kelas) => (
+                        <option value={kelas.id}>
+                          {kelas.tingkat_ke +
+                            " " +
+                            kelas.nama_jurusan.toUpperCase() +
+                            " " +
+                            kelas.nama_kelas}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                   {errors.kelas && ( //change
                     <span className="error">{errors.kelas}</span>
                   )}
