@@ -72,6 +72,17 @@ function PageMapel() {
       });
   }, []);
 
+  if (isLoading)
+    return (
+      <div id="load">
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+      </div>
+    );
+  else if (dataListJadwal && !isError)
+
     return (
       <div>
         <aside>

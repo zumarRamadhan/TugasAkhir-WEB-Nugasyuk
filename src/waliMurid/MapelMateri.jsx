@@ -88,9 +88,11 @@ function PageMapel() {
         <div>.</div>
         <div>.</div>
         <div>.</div>
+        <div>.</div>
       </div>
     );
   else if (dataMapelDetail && !isError)
+
     return (
       <div>
         <aside>
@@ -137,8 +139,7 @@ function PageMapel() {
                   <div
                     className="content-subject"
                     style={{
-                      background:
-                        `linear-gradient(${detailMapel.color})`,
+                      background: `linear-gradient(${detailMapel.color})`,
                     }}
                   >
                     <div className="content-subject-left">
@@ -152,7 +153,11 @@ function PageMapel() {
                     />
                   </div>
                   <div className="content-subject-2">
-                    <img src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`} alt="" className="img-subject-2" />
+                    <img
+                      src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
+                      alt=""
+                      className="img-subject-2"
+                    />
                     <p className="name-teacher-2">{detailMapel.nama_guru}</p>
                   </div>
                 </div>
@@ -197,9 +202,13 @@ function PageMapel() {
                 display: activeContent === "material-kbm" ? "block" : "none",
               }}
             >
-              {dataListMateri &&
-                dataListMateri.map((dataMateri) => (
-                  <div className="card-material" style={{ cursor: "pointer" }} key={dataMateri.id}>
+              {dataListMateri.map((dataMateri) => (
+                  <div
+                    className="card-material"
+                    style={{ cursor: "pointer" }}
+                    key={dataMateri.id}
+                    onClick={() => navigate("/walimurid/pagemapel/mapelmateri/detailmateri/" + dataMateri.id)}
+                  >
                     <div className="indiecator-left">
                       <div
                         className="icon-indie"
@@ -239,7 +248,12 @@ function PageMapel() {
             >
               {dataListTugas &&
                 dataListTugas.map((dataTugas) => (
-                  <div className="card-material" style={{ cursor: "pointer" }} key={dataTugas.id}>
+                  <div
+                    className="card-material"
+                    style={{ cursor: "pointer" }}
+                    key={dataTugas.id}
+                    onClick={() => navigate("/walimurid/detailtugas/" + dataTugas.id)}
+                  >
                     <div className="indiecator-left">
                       <div
                         className="icon-indie"

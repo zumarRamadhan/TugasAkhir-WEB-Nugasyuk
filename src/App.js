@@ -84,7 +84,7 @@ function App() {
         <Route path='/walimurid/pagekbm' element={<PageJadwalWaliMurid/>}/>
         <Route path='/walimurid/pagemapel/mapelmateri/:id' element={<MapelMateri/>}/>
         <Route path='/walimurid/pagemapel/mapeltugas' element={<MapelTugas/>}/>
-        <Route path='/walimurid/pagemapel/mapelmateri/detailmateri' element={<DetailMaterial/>}/>
+        <Route path='/walimurid/pagemapel/mapelmateri/detailmateri/:id' element={<DetailMaterial/>}/>
         <Route path='/walimurid/detailtugas/:id' element={<DetailTugasOrtu/>}/>
         {/* end role wali murid */}
         {/* role bk */}

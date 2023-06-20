@@ -195,7 +195,7 @@ function PageTugas() {
             </div>
             {dataNotFound ? (
               <div className="dataNotFound">
-                <h2>Data Tidak Ditemukan</h2>
+                <p className="text-notfound">Data Tidak Ditemukan</p>
               </div>
             ) : (
             <div className="content-task">
