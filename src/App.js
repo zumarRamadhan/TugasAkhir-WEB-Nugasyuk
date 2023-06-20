@@ -15,9 +15,11 @@ import FormAddJadwalKbm from './admin/formAddJadwalKbm';
 import FormAddMurid from './admin/FormAddMurid';
 import FormAddGuru from './admin/FormAddGuru';
 import FormAddKelas from './admin/FormAddKelas';
+import FormAddMapel from './admin/FormAddMapel';
 import EditFormAddGuru from './admin/EditFormAddGuru';
 import EditFormAddMurid from './admin/EditFormAddMurid';
 import EditFormAddKelas from './admin/EditFormAddKelas';
+import EditFormAddMapel from './admin/EditFormAddMapel';
 // end role admin
 
 // role murid
@@ -87,9 +89,11 @@ function App() {
         <Route path="/admin/pagemurid/add" element={<FormAddMurid/>} />
         <Route path="/admin/pageguru/add" element={<FormAddGuru/>} />
         <Route path="/admin/pagekelas/add" element={<FormAddKelas/>} />
+        <Route path="/admin/matapelajaran/add" element={<FormAddMapel/>} />
         <Route path="/admin/pageguru/edit/:id" element={<EditFormAddGuru/>} />
         <Route path="/admin/pagemurid/edit/:id" element={<EditFormAddMurid/>} />
         <Route path="/admin/pagekelas/edit/:id" element={<EditFormAddKelas/>} />
+        <Route path="/admin/matapelajaran/edit/:id" element={<EditFormAddMapel/>} />
         {/* end role admin */}
 
         {/* role murid */}

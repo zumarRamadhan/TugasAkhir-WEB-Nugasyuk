@@ -92,9 +92,59 @@
 }
 
 .con-card-mapel {
+    /* position: relative; */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+}
+
+.hover-card-mapel{
+    cursor: pointer;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 1;
+    transition: 0.5s;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hover-card-mapel .con-btn-card-mapel{
+    display: flex;
+    gap: 15px;
+}
+
+.hover-card-mapel .con-btn-card-mapel .btn-edit-mapel{
+    background: #FFF625;
+}
+
+.hover-card-mapel .con-btn-card-mapel .btn-edit-mapel:hover{
+    background: #959514;
+}
+
+.hover-card-mapel .con-btn-card-mapel .btn-delete-mapel{
+    background: #BC2525;
+    color: #fff;
+}
+
+.hover-card-mapel .con-btn-card-mapel .btn-delete-mapel:hover{
+    background: #7F1B1B;
+}
+
+.hover-card-mapel .con-btn-card-mapel button{
+    border: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    /* padding: 13px; */
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 1240px) {
@@ -152,7 +202,7 @@
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
-    font-size: px;
+    font-size: 20px;
     color: var(--color-primer);
 }
 
