@@ -40,6 +40,7 @@
 
 .content-jadwalKBM {
     margin-top: 30px;
+    margin-bottom: 100px;
 }
 
 .con-card-jadwalKBM {
@@ -69,6 +70,7 @@
     height: 350px;
     border-radius: 20px;
     color: var(--color-primer);
+    cursor: pointer;
 }
 
 .cardJadwalKbm:nth-child(1) {

@@ -9,7 +9,8 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Shimmer } from "react-shimmer";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import ProfileSiswa from '../component/ProfileSiswa';
 import NotifSiswa from '../component/NotifSiswa';
 
@@ -22,6 +23,56 @@ function PageTugas() {
 
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
+  const [active, setActive] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterValue, setFilterValue] = useState("all");
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchQuery, filterValue]);
+
+  const handleSearch = () => {
+    const filteredData = dataTugas.filter((value) => {
+      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      const lowerCaseStatusMapel = value.status
+        ? value.status.toLowerCase()
+        : "";
+
+      return (
+        (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
+        ((value &&
+          value.soal &&
+          value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.nama_guru &&
+            value.nama_guru.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.status &&
+            value.status
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())))
+      );
+    });
+
+    setFilteredData(filteredData);
+  };
+
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    // setFilterValue(e.target.value);
+    // jika filter value nya tidak ada maka akan menampilkan data not found
+    setFilterValue(e.target.value);
+  };
+  console.log("filter value", dataTugas);
+
+  const renderData = filteredData.length > 0 ? filteredData : dataTugas;
+  const dataNotFound =
+    searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
   useEffect(() => {
     setisLoading(true);
@@ -101,29 +152,47 @@ function PageTugas() {
           <div className="main">
             <div className="header-task-student">
               <div className="header-task-student-left">
-                <select id="guru" name="guru">
-                  <option value="semua" selected>
+              <select
+                  id="task"
+                  name="task"
+                  value={filterValue}
+                  onChange={handleFilterChange}
+                >
+                  <option value="all" selected>
                     -- Semua Tugas --
                   </option>
-                  <option value="task">Tugas selesai dalam deadline</option>
-                  <option value="nonproduktif">
-                    Tugas selesai lewat deadline
+                  <option value="selesai">Tugas selesai dalam deadline</option>
+                  <option value="selesai">Tugas selesai lewat deadline</option>
+                  <option value="belum_selesai">
+                    Tugas belum selesai dalam deadline
                   </option>
-                  <option value="bk">Tugas belum selesai dalam deadline</option>
-                  <option value="bk">Tugas belum selesai lewat deadline</option>
-                  <option value="bk">Menunggu konfirmasi guru</option>
+                  <option value="belum_selesai">
+                    Tugas belum selesai lewat deadline
+                  </option>
+                  <option value="menunggu">Menunggu konfirmasi guru</option>
                 </select>
 
-                <select id="guru" name="guru">
-                  <option value="semua" selected>
+                
+                <select
+                  id="task"
+                  name="task"
+                  value={filterValue}
+                  onChange={handleFilterChange}
+                >
+                  <option value="task" selected>
                     -- Semua Mapel --
                   </option>
                   <option value="produktif">Produktif</option>
-                  <option value="nonproduktif">Normadaf</option>
+                  <option value="normadaf">Normadaf</option>
                 </select>
 
-                <form className="search-box">
-                  <input type="text" placeholder="Cari..." />
+                <form className="search-box" onSubmit={handleSearch}>
+                  <input
+                    type="text"
+                    placeholder="Cari..."
+                    value={searchQuery}
+                    onChange={handleChange}
+                  />
                   <button type="submit">
                     <Icon
                       icon="material-symbols:search-rounded"
@@ -134,9 +203,13 @@ function PageTugas() {
               </div>
             </div>
 
+            {dataNotFound ? (
+              <div className="dataNotFound">
+                <p className="text-notfound">Data Tidak Ditemukan</p>
+              </div>
+            ) : (
             <div className="content-task">
-              {dataTugas &&
-                dataTugas.map((listTugas) => (
+              {renderData.map((listTugas) => (
                   <Link
                     className="link-navigate"
                     to={"/murid/detailtugas/" + listTugas.id}
@@ -186,6 +259,7 @@ function PageTugas() {
                   </Link>
                 ))}
             </div>
+            )}
           </div>
         </div>
 

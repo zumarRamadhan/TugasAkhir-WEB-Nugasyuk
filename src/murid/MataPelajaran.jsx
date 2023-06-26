@@ -109,7 +109,7 @@ function PageMapel() {
                         id="123"
                       >
                         <img
-                          src={cardMapel8}
+                          src={`https://www.nugasyuk.my.id/public/${listMapel.file_asset}`}
                           alt=""
                           className="image-card-mapel"
                         />

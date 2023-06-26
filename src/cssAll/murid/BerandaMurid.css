@@ -333,7 +333,7 @@ nav .btn-notification:hover{
     justify-content: center;
     border-radius: 10px;
     gap: 10px;
-    z-index: 5;
+    z-index: 8;
     margin-top: 88px;
     float: right;
     cursor: pointer;

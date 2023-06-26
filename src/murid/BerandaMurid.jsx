@@ -11,6 +11,8 @@ import AssetsHead from "../assets/assets-header.svg";
 import GifHead from "../assets/119593-agenda.gif";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from '../component/NotifSiswa';
 
@@ -101,7 +103,7 @@ function BerandaMurid() {
               <div className="head-left-home-student">
                 <h1 className="intro-head-student">
                   Halo{" "}
-                  <span className="student-name">{dataBerandaMurid.nama}</span>
+                  <span className="student-name">{dataBerandaMurid.nama || <Skeleton width={40}/>}</span>
                 </h1>
                 <p
                   className="desc-head-home-student"

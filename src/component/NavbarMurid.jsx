@@ -3,6 +3,8 @@ import ImgProfil from "../assets/profil-murid.svg";
 import { Icon } from "@iconify/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function NavbarMurid(props) {
   const showDetail = () => {
@@ -51,7 +53,7 @@ function NavbarMurid(props) {
               {dataNavbar.map((navData) =>
               <div className="img-profile" style={{ cursor: "pointer" }}>
                 <img
-                  src={`https://www.nugasyuk.my.id/public/${navData.foto_profile}`}
+                  src={`https://www.nugasyuk.my.id/public/${navData.foto_profile || <Skeleton circle/>}`}
                   alt={dataNavbar.foto_profile}
                   onClick={showDetail}
                 />

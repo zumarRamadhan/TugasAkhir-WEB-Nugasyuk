@@ -2,6 +2,8 @@ import "../App.css";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarMurid from "../component/NavbarMurid";
 import ImgProfil from "../assets/profil-murid.svg";
@@ -73,6 +75,11 @@ function DetailProfileSiswa() {
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  };
+
   useEffect(() => {
     axios
       .get("https://www.nugasyuk.my.id/api/murid/profile", {
@@ -124,7 +131,7 @@ function DetailProfileSiswa() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>
@@ -215,18 +222,18 @@ function DetailProfileSiswa() {
               <div className="detail-image-profile">
                 <img src={`https://www.nugasyuk.my.id/public/${profileSiswa.foto_profile}`} alt="" className="detail-img-profile" />
               </div>
-              <p className="judul-detail">Email</p>
-              <p className="value-detail">{profileSiswa.email}</p>
-              <p className="judul-detail">Nama Pengguna</p>
-              <p className="value-detail">{profileSiswa.nama_panggilan}</p>
-              <p className="judul-detail">Nama</p>
-              <p className="value-detail">{profileSiswa.nama_siswa}</p>
-              <p className="judul-detail">Jurusan</p>
-              <p className="value-detail">{profileSiswa.nama_jurusan}</p>
-              <p className="judul-detail">Kelas</p>
-              <p className="value-detail">{profileSiswa.tingkat_ke}</p>
-              <p className="judul-detail">NIS</p>
-              <p className="value-detail">04449</p>
+                <p className="judul-detail">Email</p>
+                <p className="value-detail">{profileSiswa.email}</p>
+                <p className="judul-detail">Nama Pengguna</p>
+                <p className="value-detail">{profileSiswa.nama_panggilan}</p>
+                <p className="judul-detail">Nama</p>
+                <p className="value-detail">{profileSiswa.nama_siswa}</p>
+                <p className="judul-detail">Jurusan</p>
+                <p className="value-detail">{profileSiswa.nama_jurusan}</p>
+                <p className="judul-detail">Kelas</p>
+                <p className="value-detail">{profileSiswa.tingkat_ke}</p>
+                <p className="judul-detail">NIS</p>
+                <p className="value-detail">{profileSiswa.nis}</p>
             </div>
             <div className="con-btn-detail-profile">
               <button

@@ -138,8 +138,7 @@ function MapelMateri() {
                   <div
                     className="content-subject"
                     style={{
-                      background:
-                        "linear-gradient(to bottom right, #8287F8, #555AD3)",
+                      background: `linear-gradient(${detailMapel.color})`,
                     }}
                   >
                     <div className="content-subject-left">
@@ -147,13 +146,17 @@ function MapelMateri() {
                       <p className="name-teacher">{detailMapel.nama_guru}</p>
                     </div>
                     <img
-                      src={AssetsBinggris}
+                      src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
                       alt=""
                       className="img-assets-subject"
                     />
                   </div>
                   <div className="content-subject-2">
-                    <img src={imgGuru} alt="" className="img-subject-2" />
+                    <img
+                      src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
+                      alt=""
+                      className="img-subject-2"
+                    />
                     <p className="name-teacher-2">{detailMapel.nama_guru}</p>
                   </div>
                 </div>
@@ -200,7 +203,7 @@ function MapelMateri() {
             >
               {dataMaterial &&
                 dataMaterial.map((apiMateri) => (
-                  <div className="card-material" style={{ cursor: "pointer" }}>
+                  <div className="card-material" style={{ cursor: "pointer" }} onClick={() => navigate("/murid/pagemapel/mapelmateri/detailmateri/" + apiMateri.id)}>
                     <div className="indiecator-left">
                       <div
                         className="icon-indie"
@@ -238,7 +241,7 @@ function MapelMateri() {
             >
               {dataTask &&
                 dataTask.map((apiTugas) => (
-                  <div className="card-material" style={{ cursor: "pointer" }}>
+                  <div className="card-material" style={{ cursor: "pointer" }}  onClick={() => navigate("/murid/detailtugas/" + apiTugas.id)}>
                     <div className="indiecator-left">
                       <div
                         className="icon-indie"
@@ -252,13 +255,13 @@ function MapelMateri() {
                       </div>
                       <div className="desc-indie">
                         <p className="material-name">{apiTugas.nama_tugas}</p>
-                        <p className="teacher-name">Joko Arianto</p>
+                        <p className="teacher-name">{apiTugas.nama_guru}</p>
                       </div>
                     </div>
                     <div className="indiecator-right">
                       <p className="time-upload">{apiTugas.date}</p>
                       <p className="deadline-time" style={{ color: "#2A93D5" }}>
-                        Deadline : <span>25-6-2023</span>
+                        Deadline : <span>{apiTugas.deadline}</span>
                       </p>
                       <Icon
                         icon="ic:round-navigate-next"

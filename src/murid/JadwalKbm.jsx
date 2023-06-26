@@ -16,10 +16,6 @@ import axios from "axios";
 function JadwalKBM() {
   const navigate = useNavigate();
   const [detailJadwal, setDetailJadwal] = useState([]);
-
-  const [passwordType, setPasswordType] = useState("password");
-  const [passwordTypeNew, setPasswordTypeNew] = useState("password");
-  const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
   const [selectedKbmId, setSelectedKbmId] = useState(null);
 
   const closeDetailKbm = () => {
@@ -56,8 +52,7 @@ function JadwalKBM() {
   const saveToken = sessionStorage.getItem("token");
 
   // const [dataJadwal, setDataJadwal] = useState([]);
-  const [dataAPIJadwal, setDataAPIJadwal] = useState([]);
-
+  const [dataListJadwal, setDataListJadwal] = useState([]);
   const [isLoading, setisLoading] = useState(true);
   const [isError, setisError] = useState(false);
 
@@ -71,7 +66,7 @@ function JadwalKBM() {
         },
       })
       .then((result) => {
-        setDataAPIJadwal(result.data.data);
+        setDataListJadwal(result.data.data);
         setisLoading(false);
       })
       .catch((err) => {
@@ -96,7 +91,8 @@ function JadwalKBM() {
         <div>.</div>
       </div>
     );
-  } else if (dataAPIJadwal && !isError)
+  } else if (dataListJadwal && !isError)
+
     return (
       <div>
         <aside>
@@ -138,18 +134,22 @@ function JadwalKBM() {
           <div className="main">
             <div className="content-jadwalKBM">
               <div className="con-card-jadwalKBM">
-                {dataAPIJadwal.map((listJadwal) => (
-                  <div className="cardJadwalKbm" key={listJadwal.id}>
+                {dataListJadwal.map((listJadwal) => (
+                  <div className="cardJadwalKbm" key={listJadwal.$id} onClick={() => showDetailKbm(listJadwal.id)}>
                     <div className="titleJadwalKbm">
                       <p>Jadwal KBM</p>
                       <h1>{listJadwal.hari}</h1>
                     </div>
                     <div className="bottomjadwalKbm">
                       <div className="conImgGuru-Kbm">
-                        {detailJadwal.data?.map((items) => (
-                        <div className="imgGuru-Kbm">
-                          <img src={`https://www.nugasyuk.my.id/public/${items.foto_profile}`} alt="" className="imageGuru-Kbm" />
-                        </div>
+                        {listJadwal.detail.map((items) => (
+                          <div className="imgGuru-Kbm">
+                            <img
+                              src={`https://www.nugasyuk.my.id/public/${items.foto_profile}`}
+                              alt=""
+                              className="imageGuru-Kbm"
+                            />
+                          </div>
                         ))}
                       </div>
                       <div className="btnDetail-Kbm">
@@ -187,7 +187,11 @@ function JadwalKBM() {
               {detailJadwal.data?.map((jadwalDetail) => (
                 <div className="popup-card-kbm">
                   <div className="test1">
-                    <img src={`https://www.nugasyuk.my.id/public/${jadwalDetail.foto_profile}`} alt="" className="image-card-kbm" />
+                    <img
+                      src={`https://www.nugasyuk.my.id/public/${jadwalDetail.foto_profile}`}
+                      alt=""
+                      className="image-card-kbm"
+                    />
                     <div className="mapel-card-kbm">
                       <p>{jadwalDetail.nama_mapel}</p>
                       <p className="guruPengampu">{jadwalDetail.nama_guru}</p>

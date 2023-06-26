@@ -25,7 +25,7 @@ function DetailTask() {
 
   function getDetail() {
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/matapelajaran/tugas/" + id, {
+      .get("https://www.nugasyuk.my.id/api/murid/tugas/" + id, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
         },
