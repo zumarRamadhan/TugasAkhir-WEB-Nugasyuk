@@ -25,7 +25,7 @@ function PageMapel() {
     const popupForget = document.querySelector(".popup-kbm");
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
-    setisLoading(true);
+    setisLoading(false);
     console.log(setisLoading);
     axios
       .get("https://www.nugasyuk.my.id/api/ortu/jadwal/" + id, {
@@ -36,7 +36,7 @@ function PageMapel() {
       })
       .then((result) => {
         setDetailJadwal(result.data);
-        setisLoading(true);
+        setisLoading(false);
       })
       .catch((err) => {
         console.log("terjadi kesalahan: ", err);
@@ -72,16 +72,16 @@ function PageMapel() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataListJadwal && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // else if (dataListJadwal && !isError)
 
     return (
       <div>
