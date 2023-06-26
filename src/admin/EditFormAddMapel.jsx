@@ -116,7 +116,7 @@ function EditFormAddMapel() {
       form.append("asset_id", formData.assetId);
 
       axios
-        .post("https://www.nugasyuk.my.id/api/admin/mapel", form, {
+        .post(`https://www.nugasyuk.my.id/api/admin/mapel/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
