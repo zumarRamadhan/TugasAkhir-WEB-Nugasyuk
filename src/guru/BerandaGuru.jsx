@@ -1,260 +1,351 @@
-import '../cssAll/guru/BerandaGuru.css';
-import { Icon } from '@iconify/react';
-import { useNavigate, Link } from 'react-router-dom';
-import IconNugasyuk from '../assets/IconNugasyuk.svg';
-import NavbarGuru from '../component/NavbarGuru';
+import "../cssAll/guru/BerandaGuru.css";
+import { Icon } from "@iconify/react";
+import { useNavigate, Link } from "react-router-dom";
+import IconNugasyuk from "../assets/IconNugasyuk.svg";
+import NavbarGuru from "../component/NavbarGuru";
 import ImgLogout from "../assets/68582-log-out.gif";
-import passIcon from '../assets/pass-icon.svg';
-import mataIcon from '../assets/icon-mata.svg';
+import passIcon from "../assets/pass-icon.svg";
+import mataIcon from "../assets/icon-mata.svg";
 import { useState, useEffect } from "react";
-import ImgProfil from '../assets/profil-guru.svg';
+import ImgProfil from "../assets/profil-guru.svg";
+import axios from "axios";
 
-function BerandaGuru(){
-    const navText = "Beranda";
-    const navigate = useNavigate();
+function BerandaGuru() {
+  const navText = "Beranda";
+  const navigate = useNavigate();
 
-    const closeDetail = () => {
-        const detailProfile = document.querySelector('.detail-profile');
-        detailProfile.style.transform = 'translateX(350px)';
-    }
-    
-    const showLogoutPopup = () => {
-        const popupLogout = document.querySelector('#popup-logout');
-        popupLogout.style.display = 'flex';
-        popupLogout.style.animation = 'slide-down 0.3s ease-in-out';
-    }
-    
-    const closeLogoutPopup = () => {
-        const popupLogout = document.querySelector('#popup-logout');
-        setTimeout(() => popupLogout.style.display = "none", 250);
-        popupLogout.style.animation = 'slide-up 0.3s ease-in-out';
-    }
-    
-    const showForgetPopup = () => {
-        const popupForget = document.querySelector('#popup-forget');
-        popupForget.style.display = 'flex';
-        popupForget.style.animation = 'slide-down 0.3s ease-in-out';
-    }
+  const closeDetail = () => {
+    const detailProfile = document.querySelector(".detail-profile");
+    detailProfile.style.transform = "translateX(350px)";
+  };
 
-    const closeForgetPopupAndClearInput = () => {
-        const popupForget = document.querySelector('#popup-forget');
-        setTimeout(() => popupForget.style.display = "none", 250);
-        popupForget.style.animation = 'slide-up 0.3s ease-in-out';
-        const clearpassword = document.querySelector('#password', '#newPassword', '#confirmPassword');
-        clearpassword.value = "";
-        const clearpasswordNew = document.querySelector('#newPassword');
-        clearpasswordNew.value = "";
-        const clearpasswordConfirm = document.querySelector('#confirmPassword');
-        clearpasswordConfirm.value = "";
-    }
+  const showLogoutPopup = () => {
+    const popupLogout = document.querySelector("#popup-logout");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
 
-    const [passwordType, setPasswordType] = useState("password");
-    const [passwordTypeNew, setPasswordTypeNew] = useState("password");
-    const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
+  const closeLogoutPopup = () => {
+    const popupLogout = document.querySelector("#popup-logout");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
 
-    function togglePasswordVisibility() {
-        setPasswordType(passwordType === "password" ? "text" : "password");
-    }
+  const showForgetPopup = () => {
+    const popupForget = document.querySelector("#popup-forget");
+    popupForget.style.display = "flex";
+    popupForget.style.animation = "slide-down 0.3s ease-in-out";
+  };
 
-    function togglePasswordVisibilityNew() {
-        setPasswordTypeNew(passwordTypeNew === "password" ? "text" : "password");
-    }
+  const closeForgetPopupAndClearInput = () => {
+    const popupForget = document.querySelector("#popup-forget");
+    setTimeout(() => (popupForget.style.display = "none"), 250);
+    popupForget.style.animation = "slide-up 0.3s ease-in-out";
+    const clearpassword = document.querySelector(
+      "#password",
+      "#newPassword",
+      "#confirmPassword"
+    );
+    clearpassword.value = "";
+    const clearpasswordNew = document.querySelector("#newPassword");
+    clearpasswordNew.value = "";
+    const clearpasswordConfirm = document.querySelector("#confirmPassword");
+    clearpasswordConfirm.value = "";
+  };
 
-    function togglePasswordVisibilityConfirm() {
-        setPasswordTypeConfirm(passwordTypeConfirm === "password" ? "text" : "password");
-    }
+  const [passwordType, setPasswordType] = useState("password");
+  const [passwordTypeNew, setPasswordTypeNew] = useState("password");
+  const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
 
-    // const savedItem = sessionStorage.getItem("token");
-    
-    // const token = JSON.parse(savedItem)
+  function togglePasswordVisibility() {
+    setPasswordType(passwordType === "password" ? "text" : "password");
+  }
 
-    // const [guru, setUsers] = useState([])
+  function togglePasswordVisibilityNew() {
+    setPasswordTypeNew(passwordTypeNew === "password" ? "text" : "password");
+  }
 
-    // const fetchGuruData = () => {
-    //     fetch("https://amanah-furniture.site/api/dataguru", {
-    //         method: "GET",
-    //         headers: {
-    //         "Content-Type": "application/json",
-    //         'Origin': 'https://amanah-furniture.site/api/dataguru',
-    //         Authorization: `Bearer ${token}`,
-    //         },
-    //     })
-    //       .then(response => {
-    //         return response.json()
-    //       })
-    //       .then(data => {
-    //         setUsers(data)
-    //       })
-    //   }
+  function togglePasswordVisibilityConfirm() {
+    setPasswordTypeConfirm(
+      passwordTypeConfirm === "password" ? "text" : "password"
+    );
+  }
 
-    //   useEffect(() => {
-    //     fetchGuruData()
-    //   }, [])
+  const saveToken = sessionStorage.getItem("token");
 
-    // const logoutClick = () =>{
-    //     fetch("https://amanah-furniture.site/api/logout", {
-    //             method: "GET",
-    //             headers: {
-    //             "Content-Type": "application/json",
-    //             Authorization: `Bearer ${token}`,
-    //             },
-    //         })
+  const [dataBerandaGuru, setDataBerandaGuru] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
+  const [isError, setisError] = useState(false);
 
-    //         sessionStorage.removeItem('token');
-    //         window.location.replace('/login')
-    // }
+  useEffect(() => {
+    axios
+      .get("https://www.nugasyuk.my.id/api/guru/dataguru", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        console.log("data API", result.data);
+        const responseAPI = result.data;
 
-    return(
-        <div>
-            <aside>
-            <h1 className="title-form-login" onClick={() => navigate('/guru/berandaguru')}>
-                <img src={IconNugasyuk} alt="" className="icon-nugasyuk"/>
-                nugasyuk
-            </h1>
-            <ul>
-                <li className='active' onClick={() => navigate('/guru/berandaguru')}>
-                    <Icon icon="iconoir:home-simple" width="20" />
-                    Beranda
-                </li>
-                <li onClick={() => navigate('/guru/pagekbm')} >
-                    <Icon icon="ph:chalkboard-teacher" width="20" />
-                    KBM
-                </li>
-                <li onClick={() => navigate('/guru/pagepengumpulan')}>
-                    <Icon icon="uiw:date" width="18"/>
-                    Pengumpulan
-                </li>
-                <li onClick={() => navigate('/guru/pagejadwalkbm')}>
-                    <Icon icon="fluent-mdl2:education" width="18"/>
-                    Jadwal KBM
-                </li>
-            </ul>
-            </aside>
-            <div className="container-content">
-                <NavbarGuru text={navText}/>
-                <main className='main'>
-                    <div className="header-dashboard">
-                        <div className="head-left">
-                            <h1 className="intro-head">Halo <span className="name-admin">{"guru.nama_guru"}</span></h1>
-                            <p className="desc-head" style={{width:"550px"}}> Selamat datang di nugasyuk, anda bisa memonitoring siswa, memberikan materi dan tugas.</p>
-                        </div>
-                        <div className="head-right">
-                            <div className="kotak1"></div>
-                        </div>
-                    </div>
-
-                    <div className="con-content">
-                        <div className="content-indiecator" style={{ background: "#2AD5A2" }}>
-                            <div className="icon-indie" style={{ color: "#2AD5A2" }}>
-                                <Icon icon="fluent:class-24-regular" width="40" />
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Kelas Yang Diajar</p>
-                                <p className="value-indie">
-                                <span>{"guru.jumlah_kelas"}</span> Kelas
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div className="content-indiecator" style={{ background: "#2A93D5" }}>
-                            <div className="icon-indie" style={{ color: "#2A93D5" }}>
-                                <Icon icon="ri:book-line" width="40"/>
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Materi Yang Diberikan</p>
-                                <p className="value-indie">
-                                <span>{"guru.jumlah_materi"}</span> Materi
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="content-indiecator" style={{ background: "#FF71A4" }}>
-                            <div className="icon-indie" style={{ color: "#FF71A4" }}>
-                                <Icon icon="tabler:clipboard-text" width="40" />
-                            </div>
-                            <div className="desc-indie">
-                                <p className="title-indie">Jumlah Tugas Yang Diberikan</p>
-                                <p className="value-indie">
-                                <span>{"guru.jumlah_tugas"}</span> Tugas
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </main>
+        setDataBerandaGuru(responseAPI.data);
+        setisLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setisError(true);
+        setisLoading(false);
+      });
+  }, []);
+    if (isLoading)
+    return (
+      <div id="load">
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+        <div>.</div>
+      </div>
+    );
+  else if (dataBerandaGuru && !isError)
+    return (
+      <div>
+        <aside>
+          <h1
+            className="title-form-login"
+            onClick={() => navigate("/guru/berandaguru")}
+          >
+            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+            nugasyuk
+          </h1>
+          <ul>
+            <li
+              className="active"
+              onClick={() => navigate("/guru/berandaguru")}
+            >
+              <Icon icon="iconoir:home-simple" width="20" />
+              Beranda
+            </li>
+            <li onClick={() => navigate("/guru/pagekbm")}>
+              <Icon icon="ph:chalkboard-teacher" width="20" />
+              KBM
+            </li>
+            <li onClick={() => navigate("/guru/pagepengumpulan")}>
+              <Icon icon="uiw:date" width="18" />
+              Pengumpulan
+            </li>
+            <li onClick={() => navigate("/guru/pagejadwalkbm")}>
+              <Icon icon="fluent-mdl2:education" width="18" />
+              Jadwal KBM
+            </li>
+          </ul>
+        </aside>
+        <div className="container-content">
+          <NavbarGuru text={navText} />
+          <main className="main">
+            <div className="header-dashboard">
+              <div className="head-left">
+                <h1 className="intro-head">
+                  Halo <span className="name-admin">{dataBerandaGuru.nama_guru}</span>
+                </h1>
+                <p className="desc-head" style={{ width: "550px" }}>
+                  {dataBerandaGuru.nama_guru}
+                  Selamat datang di nugasyuk, anda bisa memonitoring siswa,
+                  memberikan materi dan tugas.
+                </p>
+              </div>
+              <div className="head-right">
+                <div className="kotak1"></div>
+              </div>
             </div>
 
-            <div className="popup-logout" id="popup-logout">
-                <div className="detail-logout">
-                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeLogoutPopup}/>
-                    <div className="image-logout">
-                        <img src={ImgLogout} alt="" className="img-logout" />
-                    </div>
-                    <p className="desc-logout">Anda yakin ingin keluar?</p>
-                    <div className="con-btn-logout">
-                        <button type="button" className="btn-batal">Batal</button>
-                        <button type="button" onClick={"logoutClick"} className="btn-keluar">Keluar</button>
-                    </div>
+            <div className="con-content">
+              <div
+                className="content-indiecator"
+                style={{ background: "#2AD5A2" }}
+              >
+                <div className="icon-indie" style={{ color: "#2AD5A2" }}>
+                  <Icon icon="fluent:class-24-regular" width="40" />
                 </div>
-            </div>
-
-            <div className="popup-forget" id="popup-forget">
-                <form action="" className="detail-forget-password">
-                    <div className="navbar-detail-forget">
-                        <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeForgetPopupAndClearInput}/>
-                        <h2>Ganti Password</h2>
-                    </div>
-                    <p className="judul-form">Sandi lama</p>
-                    <div className="con-form-password">
-                        <img src={passIcon} alt=""/>
-                        <input type={passwordType} id="password" placeholder="*********" className="input-password"/>
-                        <button type="button" className="btn-mata" onClick={togglePasswordVisibility}><img src={mataIcon} alt=""/></button>
-                    </div>
-                    <p className="judul-form">Sandi baru</p>
-                    <div className="con-form-password">
-                        <img src={passIcon} alt=""/>
-                        <input type={passwordTypeNew} id="newPassword" placeholder="*********" className="input-password"/>
-                        <button type="button" className="btn-mata" onClick={togglePasswordVisibilityNew}><img src={mataIcon} alt=""/></button>
-                    </div>
-                    <p className="judul-form">Konfirmasi sandi baru</p>
-                    <div className="con-form-password">
-                        <img src={passIcon} alt=""/>
-                        <input type={passwordTypeConfirm} id="confirmPassword" placeholder="*********" className="input-password"/>
-                        <button type="button" className="btn-mata" onClick={togglePasswordVisibilityConfirm}><img src={mataIcon} alt=""/></button>
-                    </div>
-
-                    <button type="submit" className="btn-simpan">Simpan sandi baru</button>
-                </form>
-            </div>
-
-            <div className="detail-profile">
-                <div className='content-detail'>
-                    <div className="navbar-detail">
-                    <Icon icon="radix-icons:cross-circled" width="30" style={{cursor: "pointer"}} onClick={closeDetail}/>
-                    <h2>Profil</h2>
-                    </div>
-                    <div className="detail-image-profile">
-                        <img src={ImgProfil} alt="" className="detail-img-profile" />
-                    </div>
-                    <p className="judul-detail">Email</p>
-                    <p className="value-detail">budiono@smkrus.sch.id</p>
-                    <p className="judul-detail">Nama</p>
-                    <p className="value-detail">Budiono, S.Pd</p>
-                    <p className="judul-detail">Pengampu</p>
-                    <p className="value-detail">Bahasa Inggris</p>
+                <div className="desc-indie">
+                  <p className="title-indie">Jumlah Kelas Yang Diajar</p>
+                  <p className="value-indie">
+                    <span>{dataBerandaGuru.jumlah_kelas}</span> Kelas
+                  </p>
                 </div>
-                <div className="con-btn-detail-profile">
-                    <button className="forget-password" id="btn-forget-pass" onClick={showForgetPopup}>
-                        <Icon icon="material-symbols:key-outline-rounded" width="30" />
-                        <p>Ganti Password</p>
-                    </button>
-                    <button className="logout" id="btn-logout" onClick={showLogoutPopup}>
-                        <Icon icon="material-symbols:logout-rounded" width="30" />
-                        <p>Logout</p>
-                    </button>
+              </div>
+
+              <div
+                className="content-indiecator"
+                style={{ background: "#2A93D5" }}
+              >
+                <div className="icon-indie" style={{ color: "#2A93D5" }}>
+                  <Icon icon="ri:book-line" width="40" />
                 </div>
+                <div className="desc-indie">
+                  <p className="title-indie">Jumlah Materi Yang Diberikan</p>
+                  <p className="value-indie">
+                    <span>{dataBerandaGuru.jumlah_materi}</span> Materi
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="content-indiecator"
+                style={{ background: "#FF71A4" }}
+              >
+                <div className="icon-indie" style={{ color: "#FF71A4" }}>
+                  <Icon icon="tabler:clipboard-text" width="40" />
+                </div>
+                <div className="desc-indie">
+                  <p className="title-indie">Jumlah Tugas Yang Diberikan</p>
+                  <p className="value-indie">
+                    <span>{dataBerandaGuru.jumlah_tugas}</span> Tugas
+                  </p>
+                </div>
+              </div>
             </div>
+          </main>
         </div>
+
+        <div className="popup-logout" id="popup-logout">
+          <div className="detail-logout">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeLogoutPopup}
+            />
+            <div className="image-logout">
+              <img src={ImgLogout} alt="" className="img-logout" />
+            </div>
+            <p className="desc-logout">Anda yakin ingin keluar?</p>
+            <div className="con-btn-logout">
+              <button type="button" className="btn-batal">
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={"logoutClick"}
+                className="btn-keluar"
+              >
+                Keluar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="popup-forget" id="popup-forget">
+          <form action="" className="detail-forget-password">
+            <div className="navbar-detail-forget">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeForgetPopupAndClearInput}
+              />
+              <h2>Ganti Password</h2>
+            </div>
+            <p className="judul-form">Sandi lama</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordType}
+                id="password"
+                placeholder="*********"
+                className="input-password"
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibility}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            <p className="judul-form">Sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeNew}
+                id="newPassword"
+                placeholder="*********"
+                className="input-password"
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityNew}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            <p className="judul-form">Konfirmasi sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeConfirm}
+                id="confirmPassword"
+                placeholder="*********"
+                className="input-password"
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityConfirm}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+
+            <button type="submit" className="btn-simpan">
+              Simpan sandi baru
+            </button>
+          </form>
+        </div>
+
+        <div className="detail-profile">
+          <div className="content-detail">
+            <div className="navbar-detail">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeDetail}
+              />
+              <h2>Profil</h2>
+            </div>
+            <div className="detail-image-profile">
+              <img src={ImgProfil} alt="" className="detail-img-profile" />
+            </div>
+            <p className="judul-detail">Email</p>
+            <p className="value-detail">budiono@smkrus.sch.id</p>
+            <p className="judul-detail">Nama</p>
+            <p className="value-detail">Budiono, S.Pd</p>
+            <p className="judul-detail">Pengampu</p>
+            <p className="value-detail">Bahasa Inggris</p>
+          </div>
+          <div className="con-btn-detail-profile">
+            <button
+              className="forget-password"
+              id="btn-forget-pass"
+              onClick={showForgetPopup}
+            >
+              <Icon icon="material-symbols:key-outline-rounded" width="30" />
+              <p>Ganti Password</p>
+            </button>
+            <button
+              className="logout"
+              id="btn-logout"
+              onClick={showLogoutPopup}
+            >
+              <Icon icon="material-symbols:logout-rounded" width="30" />
+              <p>Logout</p>
+            </button>
+          </div>
+        </div>
+      </div>
     );
 }
 
-export default BerandaGuru
+export default BerandaGuru;
