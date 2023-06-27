@@ -15,6 +15,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from '../component/NotifSiswa';
+import CardSkeletonBeranda from "../componentSkeleton/CardSkeletonBeranda";
 
 function BerandaMurid() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function BerandaMurid() {
   const [isError, setisError] = useState(false);
 
   useEffect(() => {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/murid/datamurid", {
         headers: {
@@ -47,16 +49,16 @@ function BerandaMurid() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataBerandaMurid && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // else if (dataBerandaMurid && !isError)
     return (
       <div>
         <aside>
@@ -122,6 +124,7 @@ function BerandaMurid() {
             </div>
 
             <div className="con-content">
+              {isLoading && <CardSkeletonBeranda/>}
               <div
                 className="content-indiecator"
                 style={{ background: "#2AB6D5", cursor: "pointer" }}
