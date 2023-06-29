@@ -68,6 +68,41 @@
     color: var(--color-primer);
 }
 
+.cardJadwalKbm-skeleton {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    width: 100%;
+    height: 350px;
+    border-radius: 20px;
+    color: var(--color-primer);
+    background: #f5f5f5;
+    /* Warna latar belakang skeleton */
+    background-image: linear-gradient(90deg,
+            #f5f5f5 25%,
+            #e8e8e8 37%,
+            #f5f5f5 63%);
+    /* Animasi gradien skeleton */
+    background-size: 200% 100%;
+    /* Ukuran gradien skeleton */
+    animation: skeleton-loading 1.5s infinite linear;
+    /* Animasi skeleton berjalan selamanya */
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: -200% 0;
+        /* Mulai dari posisi luar layar */
+    }
+
+    100% {
+        background-position: 200% 0;
+        /* Pindah ke posisi luar layar sebaliknya */
+    }
+}
+
+
 .cardJadwalKbm:nth-child(1) {
     background: linear-gradient(180deg, #2A93D5 0%, #2785C0 100%);
 }
@@ -238,6 +273,7 @@
 
 .test2 {
     display: flex;
+    align-items: center;
     gap: 50px;
 }
 
