@@ -123,7 +123,7 @@ function BerandaMurid() {
               </div>
             </div>
 
-          <div className="con-content">
+            <div className="con-content">
             {dataBerandaMurid && dataBerandaMurid.jumlah_siswa ? (
               <div
                 className="content-indiecator"
@@ -142,46 +142,57 @@ function BerandaMurid() {
                   </p>
                 </div>
               </div>
-
+            ) : (
+              <CardSkeletonBeranda />
+            )}
+            
+            {dataBerandaMurid && dataBerandaMurid.jumlah_mapel ? (
+            <div
+              className="content-indiecator"
+              style={{ background: "#585CC4", cursor: "pointer" }}
+            >
               <div
-                className="content-indiecator"
-                style={{ background: "#585CC4", cursor: "pointer" }}
+                className="icon-indie"
+                style={{ color: "#585CC4", background: "#fff" }}
               >
-                <div
-                  className="icon-indie"
-                  style={{ color: "#585CC4", background: "#fff" }}
-                >
-                  <Icon icon="fluent-mdl2:education" width="40" />
-                </div>
-                <div className="desc-indie">
-                  <p className="title-indie">Jumlah Mapel</p>
-                  <p className="value-indie">
-                    <span>{dataBerandaMurid.jumlah_mapel}</span> Mata Pelajaran
-                  </p>
-                </div>
+                <Icon icon="fluent-mdl2:education" width="40" />
               </div>
-
-              <div
-                className="content-indiecator"
-                style={{ background: "#B462D0", cursor: "pointer" }}
-              >
-                <div
-                  className="icon-indie"
-                  style={{ color: "#B462D0", background: "#fff" }}
-                >
-                  <Icon
-                    icon="material-symbols:person-outline-rounded"
-                    width="40"
-                  />
-                </div>
-                <div className="desc-indie">
-                  <p className="title-indie">Wali Kelas</p>
-                  <p className="value-indie">
-                    <span>{dataBerandaMurid.wali_kelas}</span>
-                  </p>
-                </div>
+              <div className="desc-indie">
+                <p className="title-indie">Jumlah Mapel</p>
+                <p className="value-indie">
+                  <span>{dataBerandaMurid.jumlah_mapel}</span> Mata Pelajaran
+                </p>
               </div>
             </div>
+            ) : (
+              <CardSkeletonBeranda />
+            )}
+
+            {dataBerandaMurid && dataBerandaMurid.wali_kelas ? (
+            <div
+              className="content-indiecator"
+              style={{ background: "#B462D0", cursor: "pointer" }}
+            >
+              <div
+                className="icon-indie"
+                style={{ color: "#B462D0", background: "#fff" }}
+              >
+                <Icon
+                  icon="material-symbols:person-outline-rounded"
+                  width="40"
+                />
+              </div>
+              <div className="desc-indie">
+                <p className="title-indie">Wali Kelas</p>
+                <p className="value-indie">
+                  <span>{dataBerandaMurid.wali_kelas}</span>
+                </p>
+              </div>
+            </div>
+            ) : (
+              <CardSkeletonBeranda />
+            )}
+          </div>
 
             {/* content information */}
             <div className="con-content-information">
