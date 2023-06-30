@@ -82,6 +82,7 @@ nav .btn-notification:hover{
 }
 
 .intro-head-student {
+    display: flex;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
@@ -93,6 +94,7 @@ nav .btn-notification:hover{
 .student-name{
     background: var(--color-primer);
     padding: 3px 14px;
+    margin-left: 15px;
     color: var(--color-aksen);
     border-radius: 10px;
 }

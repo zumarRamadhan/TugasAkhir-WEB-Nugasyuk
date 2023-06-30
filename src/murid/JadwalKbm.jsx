@@ -9,9 +9,11 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import imgCardKbm from "../assets/guru-karman.svg";
 import { useState, useEffect } from "react";
-import ProfileSiswa from '../component/ProfileSiswa';
+import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
 import axios from "axios";
+import CardSkeletonJadwal from "../componentSkeleton/CardSkeletonJadwal";
+import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 
 function JadwalKBM() {
   const navigate = useNavigate();
@@ -76,66 +78,79 @@ function JadwalKBM() {
       });
   }, []);
 
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataListJadwal && !isError)
-
-    return (
-      <div>
-        <aside>
-          <h1
-            className="title-form-login"
-            onClick={() => navigate("/murid/berandamurid")}
-          >
-            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-            nugasyuk
-          </h1>
-          <ul>
-            <li onClick={() => navigate("/murid/berandamurid")}>
-              <Icon icon="iconoir:home-simple" width="20" />
-              Beranda
-            </li>
-            <li onClick={() => navigate("/murid/pagetugas")}>
-              <Icon
-                icon="fluent:clipboard-bullet-list-rtl-20-regular"
-                width="25"
-              />
-              Tugas
-            </li>
-            <li className="active" onClick={() => navigate("/murid/pagekbm")}>
-              <Icon icon="uiw:date" width="18" />
-              Jadwal KBM
-            </li>
-            <li onClick={() => navigate("/murid/pagemapel")}>
-              <Icon icon="fluent-mdl2:education" width="18" />
-              Mata Pelajaran
-            </li>
-            <li onClick={() => navigate("/murid/pagekonseling")}>
-              <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
-              Konseling
-            </li>
-          </ul>
-        </aside>
-        <div className="container-content">
-          <NavbarMurid textNavigasi={"Jadwal KBM 11 PPLG 1"} />
-          <div className="main">
-            <div className="content-jadwalKBM">
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // } else if (dataListJadwal && !isError)
+  return (
+    <div>
+      <aside>
+        <h1
+          className="title-form-login"
+          onClick={() => navigate("/murid/berandamurid")}
+        >
+          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+          nugasyuk
+        </h1>
+        <ul>
+          <li onClick={() => navigate("/murid/berandamurid")}>
+            <Icon icon="iconoir:home-simple" width="20" />
+            Beranda
+          </li>
+          <li onClick={() => navigate("/murid/pagetugas")}>
+            <Icon
+              icon="fluent:clipboard-bullet-list-rtl-20-regular"
+              width="25"
+            />
+            Tugas
+          </li>
+          <li className="active" onClick={() => navigate("/murid/pagekbm")}>
+            <Icon icon="uiw:date" width="18" />
+            Jadwal KBM
+          </li>
+          <li onClick={() => navigate("/murid/pagemapel")}>
+            <Icon icon="fluent-mdl2:education" width="18" />
+            Mata Pelajaran
+          </li>
+          <li onClick={() => navigate("/murid/pagekonseling")}>
+            <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
+            Konseling
+          </li>
+        </ul>
+      </aside>
+      <div className="container-content">
+        <NavbarMurid textNavigasi={"Jadwal KBM 11 PPLG 1"} />
+        <div className="main">
+          <div className="content-jadwalKBM">
+            {isLoading ? (
+              <div className="con-card-jadwalKBM">
+                <CardSkeletonJadwal />
+                <CardSkeletonJadwal />
+                <CardSkeletonJadwal />
+                <CardSkeletonJadwal />
+                <CardSkeletonJadwal />
+                <CardSkeletonJadwal />
+              </div>
+            ) : (
               <div className="con-card-jadwalKBM">
                 {dataListJadwal.map((listJadwal) => (
-                  <div className="cardJadwalKbm" key={listJadwal.$id} onClick={() => showDetailKbm(listJadwal.id)}>
+                  <div
+                    className="cardJadwalKbm"
+                    key={listJadwal.$id}
+                    onClick={() => showDetailKbm(listJadwal.id)}
+                  >
                     <div className="titleJadwalKbm">
                       <p>Jadwal KBM</p>
                       <h1>{listJadwal.hari}</h1>
@@ -164,25 +179,32 @@ function JadwalKBM() {
                   </div>
                 ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
+      </div>
 
-        <div
-          className="popup-kbm"
-          style={{ display: selectedKbmId ? "flex" : "none" }}
-        >
-          <div className="detail-popup-kbm">
-            <div className="nav-popup-kbm">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer", color: "#4b4b4b" }}
-                className="btn-close"
-                onClick={closeDetailKbm}
-              />
-              <h2 className="day-schedule">{detailJadwal.hari}</h2>
+      <div
+        className="popup-kbm"
+        style={{ display: selectedKbmId ? "flex" : "none" }}
+      >
+        <div className="detail-popup-kbm">
+          <div className="nav-popup-kbm">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer", color: "#4b4b4b" }}
+              className="btn-close"
+              onClick={closeDetailKbm}
+            />
+
+            <h2 className="day-schedule">{detailJadwal.hari}</h2>
+          </div>
+          {isLoading ? (
+            <div className="con-popup-kbm">
+              <CardSkeletonListTask />
             </div>
+          ) : (
             <div className="con-popup-kbm">
               {detailJadwal.data?.map((jadwalDetail) => (
                 <div className="popup-card-kbm">
@@ -206,14 +228,15 @@ function JadwalKBM() {
                 </div>
               ))}
             </div>
-          </div>
+          )}
         </div>
-
-        <ProfileSiswa/>
-
-        <NotifSiswa/>
       </div>
-    );
+
+      <ProfileSiswa />
+
+      <NotifSiswa />
+    </div>
+  );
 }
 
 export default JadwalKBM;

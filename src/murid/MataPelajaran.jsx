@@ -8,6 +8,7 @@ import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import CardSkeletonMapel from "../componentSkeleton/CardSkeletonMapel";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -40,16 +41,16 @@ function PageMapel() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataMapel && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // else if (dataMapel && !isError)
     return (
       <div>
         {/* <Sidebar/> */}
@@ -92,42 +93,56 @@ function PageMapel() {
           <Navigation textNavigasi={"Mata Pelajaran"} />
           <main className="main">
             <div className="content-mapel">
-              <div className="con-card-mapel">
-                {dataMapel &&
-                  dataMapel.map((listMapel) => (
-                    <Link
-                      className="link-navigate"
-                      to={"/murid/pagemapel/mapelmateri/" + listMapel.id}
-                    >
-                      <div
-                        className="card-mapel"
-                        key={listMapel.id}
-                        style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          navigate("/murid/pagemapel/mapelmateri/${id}")
-                        }
-                        id="123"
+              {isLoading ? (
+                <div className="con-card-mapel">
+                  <CardSkeletonMapel/>
+                  <CardSkeletonMapel/>
+                  <CardSkeletonMapel/>
+                  <CardSkeletonMapel/>
+                  <CardSkeletonMapel/>
+                  <CardSkeletonMapel/>
+                  <CardSkeletonMapel/>
+                  <CardSkeletonMapel/>
+                  <CardSkeletonMapel/>
+                </div>
+              ) : (
+                <div className="con-card-mapel">
+                  {dataMapel &&
+                    dataMapel.map((listMapel) => (
+                      <Link
+                        className="link-navigate"
+                        to={"/murid/pagemapel/mapelmateri/" + listMapel.id}
                       >
-                        <img
-                          src={`https://www.nugasyuk.my.id/public/${listMapel.file_asset}`}
-                          alt=""
-                          className="image-card-mapel"
-                        />
-                        <div className="content-card-mapel">
-                          <div className="card-mapel-left">
-                            <p className="mata-pelajaran">
-                              {listMapel.nama_mapel}
-                            </p>
-                            <p className="nama-guru-mapel">
-                              {listMapel.nama_guru}
-                            </p>
+                        <div
+                          className="card-mapel"
+                          key={listMapel.id}
+                          style={{ cursor: "pointer" }}
+                          onClick={() =>
+                            navigate("/murid/pagemapel/mapelmateri/${id}")
+                          }
+                          id="123"
+                        >
+                          <img
+                            src={`https://www.nugasyuk.my.id/public/${listMapel.file_asset}`}
+                            alt=""
+                            className="image-card-mapel"
+                          />
+                          <div className="content-card-mapel">
+                            <div className="card-mapel-left">
+                              <p className="mata-pelajaran">
+                                {listMapel.nama_mapel}
+                              </p>
+                              <p className="nama-guru-mapel">
+                                {listMapel.nama_guru}
+                              </p>
+                            </div>
+                            {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
                           </div>
-                          {/* <div className="kelas-mapel">{`${data.kelas} ${data.jurusan.toUpperCase()} ${data.tingkatan}`}</div> */}
                         </div>
-                      </div>
-                    </Link>
-                  ))}
-              </div>
+                      </Link>
+                    ))}
+                </div>
+              )}
             </div>
           </main>
         </div>

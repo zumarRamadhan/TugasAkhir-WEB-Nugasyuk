@@ -9,10 +9,11 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import ProfileSiswa from '../component/ProfileSiswa';
-import NotifSiswa from '../component/NotifSiswa';
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import ProfileSiswa from "../component/ProfileSiswa";
+import NotifSiswa from "../component/NotifSiswa";
+import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 
 function PageTugas() {
   const navigate = useNavigate();
@@ -47,12 +48,12 @@ function PageTugas() {
           value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (value &&
             value.nama_guru &&
-            value.nama_guru.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            value.nama_guru
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())) ||
           (value &&
             value.status &&
-            value.status
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase())))
+            value.status.toLowerCase().includes(searchQuery.toLowerCase())))
       );
     });
 
@@ -99,121 +100,124 @@ function PageTugas() {
   // console.log(dataTugas);
   // if (!dataTugas) return <h3>Loading...</h3>;
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataTugas && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // else if (dataTugas && !isError)
 
-  
-    return (
-      <div>
-        <aside>
-          <h1
-            className="title-form-login"
-            onClick={() => navigate("/murid/berandamurid")}
-          >
-            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-            nugasyuk
-          </h1>
-          <ul>
-            <li onClick={() => navigate("/murid/berandamurid")}>
-              <Icon icon="iconoir:home-simple" width="20" />
-              Beranda
-            </li>
-            <li className="active" onClick={() => navigate("/murid/pagetugas")}>
-              <Icon
-                icon="fluent:clipboard-bullet-list-rtl-20-regular"
-                width="25"
-              />
-              Tugas
-            </li>
-            <li onClick={() => navigate("/murid/pagekbm")}>
-              <Icon icon="uiw:date" width="18" />
-              Jadwal KBM
-            </li>
-            <li onClick={() => navigate("/murid/pagemapel")}>
-              <Icon icon="fluent-mdl2:education" width="18" />
-              Mata Pelajaran
-            </li>
-            <li onClick={() => navigate("/murid/pagekonseling")}>
-              <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
-              Konseling
-            </li>
-          </ul>
-        </aside>
-        <div className="container-content">
-          <NavbarMurid textNavigasi={'Tugas'} />
-          <div className="main">
-            <div className="header-task-student">
-              <div className="header-task-student-left">
+  return (
+    <div>
+      <aside>
+        <h1
+          className="title-form-login"
+          onClick={() => navigate("/murid/berandamurid")}
+        >
+          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+          nugasyuk
+        </h1>
+        <ul>
+          <li onClick={() => navigate("/murid/berandamurid")}>
+            <Icon icon="iconoir:home-simple" width="20" />
+            Beranda
+          </li>
+          <li className="active" onClick={() => navigate("/murid/pagetugas")}>
+            <Icon
+              icon="fluent:clipboard-bullet-list-rtl-20-regular"
+              width="25"
+            />
+            Tugas
+          </li>
+          <li onClick={() => navigate("/murid/pagekbm")}>
+            <Icon icon="uiw:date" width="18" />
+            Jadwal KBM
+          </li>
+          <li onClick={() => navigate("/murid/pagemapel")}>
+            <Icon icon="fluent-mdl2:education" width="18" />
+            Mata Pelajaran
+          </li>
+          <li onClick={() => navigate("/murid/pagekonseling")}>
+            <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
+            Konseling
+          </li>
+        </ul>
+      </aside>
+      <div className="container-content">
+        <NavbarMurid textNavigasi={"Tugas"} />
+        <div className="main">
+          <div className="header-task-student">
+            <div className="header-task-student-left">
               <select
-                  id="task"
-                  name="task"
-                  value={filterValue}
-                  onChange={handleFilterChange}
-                >
-                  <option value="all" selected>
-                    -- Semua Tugas --
-                  </option>
-                  <option value="selesai">Tugas selesai dalam deadline</option>
-                  <option value="selesai">Tugas selesai lewat deadline</option>
-                  <option value="belum_selesai">
-                    Tugas belum selesai dalam deadline
-                  </option>
-                  <option value="belum_selesai">
-                    Tugas belum selesai lewat deadline
-                  </option>
-                  <option value="menunggu">Menunggu konfirmasi guru</option>
-                </select>
+                id="task"
+                name="task"
+                value={filterValue}
+                onChange={handleFilterChange}
+              >
+                <option value="all" selected>
+                  -- Semua Tugas --
+                </option>
+                <option value="selesai">Tugas selesai dalam deadline</option>
+                <option value="selesai">Tugas selesai lewat deadline</option>
+                <option value="belum_selesai">
+                  Tugas belum selesai dalam deadline
+                </option>
+                <option value="belum_selesai">
+                  Tugas belum selesai lewat deadline
+                </option>
+                <option value="menunggu">Menunggu konfirmasi guru</option>
+              </select>
 
-                
-                <select
-                  id="task"
-                  name="task"
-                  value={filterValue}
-                  onChange={handleFilterChange}
-                >
-                  <option value="task" selected>
-                    -- Semua Mapel --
-                  </option>
-                  <option value="produktif">Produktif</option>
-                  <option value="normadaf">Normadaf</option>
-                </select>
+              <select
+                id="task"
+                name="task"
+                value={filterValue}
+                onChange={handleFilterChange}
+              >
+                <option value="task" selected>
+                  -- Semua Mapel --
+                </option>
+                <option value="produktif">Produktif</option>
+                <option value="normadaf">Normadaf</option>
+              </select>
 
-                <form className="search-box" onSubmit={handleSearch}>
-                  <input
-                    type="text"
-                    placeholder="Cari..."
-                    value={searchQuery}
-                    onChange={handleChange}
-                  />
-                  <button type="submit">
-                    <Icon
-                      icon="material-symbols:search-rounded"
-                      width="20"
-                    ></Icon>
-                  </button>
-                </form>
-              </div>
+              <form className="search-box" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Cari..."
+                  value={searchQuery}
+                  onChange={handleChange}
+                />
+                <button type="submit">
+                  <Icon
+                    icon="material-symbols:search-rounded"
+                    width="20"
+                  ></Icon>
+                </button>
+              </form>
             </div>
+          </div>
 
-            {dataNotFound ? (
-              <div className="dataNotFound">
-                <p className="text-notfound">Data Tidak Ditemukan</p>
-              </div>
-            ) : (
+          {dataNotFound ? (
+            <div className="dataNotFound">
+              <p className="text-notfound">Data Tidak Ditemukan</p>
+            </div>
+          ) : (
             <div className="content-task">
               {renderData.map((listTugas) => (
-                  <Link
-                    className="link-navigate"
-                    to={"/murid/detailtugas/" + listTugas.id}
-                  >
+                <Link
+                  className="link-navigate"
+                  to={"/murid/detailtugas/" + listTugas.id}
+                >
+                  {isLoading ? (
+                    <div className="card-task">
+                      <CardSkeletonListTask />
+                    </div>
+                  ) : (
                     <div
                       className="card-task"
                       style={{ cursor: "pointer" }}
@@ -256,22 +260,22 @@ function PageTugas() {
                         />
                       </div>
                     </div>
-                  </Link>
-                ))}
+                  )}
+                </Link>
+              ))}
             </div>
-            )}
-          </div>
+          )}
         </div>
-
-        <ProfileSiswa/>
-
-        <NotifSiswa/>
-        
       </div>
-    );
-  else {
-    return <h1>Something Went Wrong</h1>;
-  }
+
+      <ProfileSiswa />
+
+      <NotifSiswa />
+    </div>
+  );
+  // else {
+  //   return <h1>Something Went Wrong</h1>;
+  // }
 }
 
 export default PageTugas;

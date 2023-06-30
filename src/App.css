@@ -613,12 +613,3 @@ nav .navbar img {
     color: #FF3F3F;
 }
 /* end data notfound */
-
-/* card skeleton beranda */
-.card-skeleton-beranda{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    width: 350px;
-}
-/* end card skeleton beranda */
