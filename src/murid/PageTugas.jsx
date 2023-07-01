@@ -213,54 +213,45 @@ function PageTugas() {
                   className="link-navigate"
                   to={"/murid/detailtugas/" + listTugas.id}
                 >
-                  {isLoading ? (
-                    <div className="card-task">
-                      <CardSkeletonListTask />
-                    </div>
-                  ) : (
-                    <div
-                      className="card-task"
-                      style={{ cursor: "pointer" }}
-                      key={listTugas.id}
-                      onClick={() => navigate("/murid/detailtugas/${id}")}
-                      id="123"
-                    >
-                      <div className="indiecator-left">
-                        <div
-                          className="icon-indie-information"
-                          style={{ background: "#DDDDDD" }}
-                        >
-                          <Icon
-                            icon="uiw:time-o"
-                            width="30"
-                            style={{ color: "#797979" }}
-                          />
-                        </div>
-                        <div className="desc-indie">
-                          <p className="title-indie-information">
-                            {listTugas.soal}
-                          </p>
-                          <p className="value-indie-information">
-                            {listTugas.nama_guru}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="indiecator-right">
-                        <p className="time-upload">{listTugas.date}</p>
-                        <p
-                          className="deadline-time"
-                          style={{ color: "#2A93D5" }}
-                        >
-                          Deadline : <span>{listTugas.deadline}</span>
-                        </p>
+                  <div
+                    className="card-task"
+                    style={{ cursor: "pointer" }}
+                    key={listTugas.id}
+                    onClick={() => navigate("/murid/detailtugas/${id}")}
+                    id="123"
+                  >
+                    <div className="indiecator-left">
+                      <div
+                        className="icon-indie-information"
+                        style={{ background: "#DDDDDD" }}
+                      >
                         <Icon
-                          icon="ic:round-navigate-next"
+                          icon="uiw:time-o"
                           width="30"
-                          className="icon-navigate"
+                          style={{ color: "#797979" }}
                         />
                       </div>
+                      <div className="desc-indie">
+                        <p className="title-indie-information">
+                          {listTugas.soal}
+                        </p>
+                        <p className="value-indie-information">
+                          {listTugas.nama_guru}
+                        </p>
+                      </div>
                     </div>
-                  )}
+                    <div className="indiecator-right">
+                      <p className="time-upload">{listTugas.date}</p>
+                      <p className="deadline-time" style={{ color: "#2A93D5" }}>
+                        Deadline : <span>{listTugas.deadline}</span>
+                      </p>
+                      <Icon
+                        icon="ic:round-navigate-next"
+                        width="30"
+                        className="icon-navigate"
+                      />
+                    </div>
+                  </div>
                 </Link>
               ))}
             </div>

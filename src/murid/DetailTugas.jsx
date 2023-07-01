@@ -4,9 +4,10 @@ import { Icon } from "@iconify/react";
 import { useState, useEffect } from "react";
 import NavbarMurid from "../component/NavbarMurid";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
-import ProfileSiswa from '../component/ProfileSiswa';
-import NotifSiswa from '../component/NotifSiswa';
+import ProfileSiswa from "../component/ProfileSiswa";
+import NotifSiswa from "../component/NotifSiswa";
 import axios from "axios";
+import CardSkeletonDetailTugas from "../componentSkeleton/CardSkeletonDetailTugas";
 
 function DetailTask() {
   const navigate = useNavigate();
@@ -34,9 +35,8 @@ function DetailTask() {
         setDataDetailTugas(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => 
-      console.error(error));
-      setisLoading(false);
+      .catch((error) => console.error(error));
+    setisLoading(false);
   }
 
   if (isLoading)
@@ -49,7 +49,6 @@ function DetailTask() {
       </div>
     );
   else if (dataDetailTugas && !isError)
-
     return (
       <div>
         <aside>

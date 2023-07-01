@@ -9,6 +9,8 @@ import imgGuru from "../assets/profil-guru.svg";
 import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
 import axios from "axios";
+import CardSkeletonDetailTugas from "../componentSkeleton/CardSkeletonDetailTugas";
+import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 
 function MapelMateri() {
   const navigate = useNavigate();
@@ -54,6 +56,7 @@ function MapelMateri() {
   }
 
   function dataMateri() {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/murid/matapelajaran/materi/" + id, {
         headers: {
@@ -68,6 +71,7 @@ function MapelMateri() {
   }
 
   function dataTugas() {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/murid/matapelajaran/tugas/" + id, {
         headers: {
@@ -81,120 +85,123 @@ function MapelMateri() {
       .catch((error) => console.error(error));
   }
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataDetailMapel && !isError)
-    return (
-      <div>
-        <aside>
-          <h1
-            className="title-form-login"
-            onClick={() => navigate("/murid/berandamurid")}
-          >
-            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-            nugasyuk
-          </h1>
-          <ul>
-            <li onClick={() => navigate("/murid/berandamurid")}>
-              <Icon icon="iconoir:home-simple" width="20" />
-              Beranda
-            </li>
-            <li onClick={() => navigate("/murid/pagetugas")}>
-              <Icon
-                icon="fluent:clipboard-bullet-list-rtl-20-regular"
-                width="25"
-              />
-              Tugas
-            </li>
-            <li onClick={() => navigate("/murid/pagekbm")}>
-              <Icon icon="uiw:date" width="18" />
-              Jadwal KBM
-            </li>
-            <li className="active" onClick={() => navigate("/murid/pagemapel")}>
-              <Icon icon="fluent-mdl2:education" width="18" />
-              Mata Pelajaran
-            </li>
-            <li onClick={() => navigate("/murid/pagekonseling")}>
-              <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
-              Konseling
-            </li>
-          </ul>
-        </aside>
-        <div className="container-content">
-          {dataDetailMapel.map((detailMapel) => (
-            <NavbarMurid textNavigasi={detailMapel.nama_mapel} />
-          ))}
-          <div className="main">
-            {dataDetailMapel &&
-              dataDetailMapel.map((detailMapel) => (
-                <div className="con-content-subject">
-                  <div
-                    className="content-subject"
-                    style={{
-                      background: `linear-gradient(${detailMapel.color})`,
-                    }}
-                  >
-                    <div className="content-subject-left">
-                      <p className="name-subject">{detailMapel.nama_mapel}</p>
-                      <p className="name-teacher">{detailMapel.nama_guru}</p>
-                    </div>
-                    <img
-                      src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
-                      alt=""
-                      className="img-assets-subject"
-                    />
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // else if (dataDetailMapel && !isError)
+  return (
+    <div>
+      <aside>
+        <h1
+          className="title-form-login"
+          onClick={() => navigate("/murid/berandamurid")}
+        >
+          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+          nugasyuk
+        </h1>
+        <ul>
+          <li onClick={() => navigate("/murid/berandamurid")}>
+            <Icon icon="iconoir:home-simple" width="20" />
+            Beranda
+          </li>
+          <li onClick={() => navigate("/murid/pagetugas")}>
+            <Icon
+              icon="fluent:clipboard-bullet-list-rtl-20-regular"
+              width="25"
+            />
+            Tugas
+          </li>
+          <li onClick={() => navigate("/murid/pagekbm")}>
+            <Icon icon="uiw:date" width="18" />
+            Jadwal KBM
+          </li>
+          <li className="active" onClick={() => navigate("/murid/pagemapel")}>
+            <Icon icon="fluent-mdl2:education" width="18" />
+            Mata Pelajaran
+          </li>
+          <li onClick={() => navigate("/murid/pagekonseling")}>
+            <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
+            Konseling
+          </li>
+        </ul>
+      </aside>
+      <div className="container-content">
+        {dataDetailMapel.map((detailMapel) => (
+          <NavbarMurid textNavigasi={detailMapel.nama_mapel} />
+        ))}
+        <div className="main">
+          {dataDetailMapel &&
+            dataDetailMapel.map((detailMapel) => (
+              <div className="con-content-subject">
+                <div
+                  className="content-subject"
+                  style={{
+                    background: `linear-gradient(${detailMapel.color})`,
+                  }}
+                >
+                  <div className="content-subject-left">
+                    <p className="name-subject">{detailMapel.nama_mapel}</p>
+                    <p className="name-teacher">{detailMapel.nama_guru}</p>
                   </div>
-                  <div className="content-subject-2">
-                    <img
-                      src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
-                      alt=""
-                      className="img-subject-2"
-                    />
-                    <p className="name-teacher-2">{detailMapel.nama_guru}</p>
-                  </div>
+                  <img
+                    src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
+                    alt=""
+                    className="img-assets-subject"
+                  />
                 </div>
-              ))}
-
-            <div className="dropdown-task">
-              <div className="switch-container">
-                <button
-                  id="btn-materiKbm"
-                  className={
-                    activeContent === "material-kbm" ? "activeDetailKbm" : ""
-                  }
-                  onClick={showMaterial}
-                >
-                  Materi
-                </button>
-                <button
-                  id="btn-tugasKbm"
-                  className={
-                    activeContent === "task-kbm" ? "activeDetailKbm" : ""
-                  }
-                  onClick={showTask}
-                >
-                  Tugas
-                </button>
+                <div className="content-subject-2">
+                  <img
+                    src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
+                    alt=""
+                    className="img-subject-2"
+                  />
+                  <p className="name-teacher-2">{detailMapel.nama_guru}</p>
+                </div>
               </div>
+            ))}
 
-              <form className="search-box">
-                <input type="text" placeholder="Cari..." />
-                <button type="submit">
-                  <Icon
-                    icon="material-symbols:search-rounded"
-                    width="20"
-                  ></Icon>
-                </button>
-              </form>
+          <div className="dropdown-task">
+            <div className="switch-container">
+              <button
+                id="btn-materiKbm"
+                className={
+                  activeContent === "material-kbm" ? "activeDetailKbm" : ""
+                }
+                onClick={showMaterial}
+              >
+                Materi
+              </button>
+              <button
+                id="btn-tugasKbm"
+                className={
+                  activeContent === "task-kbm" ? "activeDetailKbm" : ""
+                }
+                onClick={showTask}
+              >
+                Tugas
+              </button>
             </div>
 
+            <form className="search-box">
+              <input type="text" placeholder="Cari..." />
+              <button type="submit">
+                <Icon icon="material-symbols:search-rounded" width="20"></Icon>
+              </button>
+            </form>
+          </div>
+
+          {isLoading ? (
+            <div className="con-material material-kbm">
+              <CardSkeletonListTask />
+              <CardSkeletonListTask />
+            </div>
+          ) : (
             <div
               className="con-material material-kbm"
               style={{
@@ -203,7 +210,16 @@ function MapelMateri() {
             >
               {dataMaterial &&
                 dataMaterial.map((apiMateri) => (
-                  <div className="card-material" style={{ cursor: "pointer" }} onClick={() => navigate("/murid/pagemapel/mapelmateri/detailmateri/" + apiMateri.id)}>
+                  <div
+                    className="card-material"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(
+                        "/murid/pagemapel/mapelmateri/detailmateri/" +
+                          apiMateri.id
+                      )
+                    }
+                  >
                     <div className="indiecator-left">
                       <div
                         className="icon-indie"
@@ -231,8 +247,14 @@ function MapelMateri() {
                   </div>
                 ))}
             </div>
+          )}
 
-            {/* tugas */}
+          {/* tugas */}
+          {isLoading ? (
+            <div className="con-material taskKbm">
+              <CardSkeletonListTask />
+            </div>
+          ) : (
             <div
               className="con-material taskKbm"
               style={{
@@ -241,7 +263,13 @@ function MapelMateri() {
             >
               {dataTask &&
                 dataTask.map((apiTugas) => (
-                  <div className="card-material" style={{ cursor: "pointer" }}  onClick={() => navigate("/murid/detailtugas/" + apiTugas.id)}>
+                  <div
+                    className="card-material"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigate("/murid/detailtugas/" + apiTugas.id)
+                    }
+                  >
                     <div className="indiecator-left">
                       <div
                         className="icon-indie"
@@ -272,13 +300,14 @@ function MapelMateri() {
                   </div>
                 ))}
             </div>
-          </div>
+          )}
         </div>
-        <ProfileSiswa />
-
-        <NotifSiswa />
       </div>
-    );
+      <ProfileSiswa />
+
+      <NotifSiswa />
+    </div>
+  );
 }
 
 export default MapelMateri;
