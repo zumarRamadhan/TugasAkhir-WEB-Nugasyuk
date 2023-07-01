@@ -11,6 +11,9 @@ import ImgProfil from "../assets/profil-walimurid.svg";
 import axios from "axios";
 import DetailOrtu from '../component/ProfileWaliMurid';
 import NotifOrtu from '../component/NotifOrtu';
+import NameWaliMurid from "../componentSkeleton/NameWaliMurid";
+import CardSkeletonBeranda from "../componentSkeleton/CardSkeletonBeranda";
+import CardSkeletonBerandaInfo from "../componentSkeleton/CardSkeletonBerandaInformation";
 
 function BerandaWaliMurid() {
   const navigate = useNavigate();
@@ -22,6 +25,7 @@ function BerandaWaliMurid() {
   const [isError, setisError] = useState(false);
 
   useEffect(() => {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/ortu/dataortu", {
         headers: {
@@ -43,16 +47,16 @@ function BerandaWaliMurid() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataBerandaWaliMurid && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // else if (dataBerandaWaliMurid && !isError)
   
     return (
       <div>
@@ -96,9 +100,13 @@ function BerandaWaliMurid() {
               <div className="head-left">
                 <h1 className="intro-head">
                   Halo
+                  {dataBerandaWaliMurid && dataBerandaWaliMurid.nama ? (
                   <span className="walimurid-name">
                     {dataBerandaWaliMurid.nama}
                   </span>
+                  ) : (
+                    <NameWaliMurid/>
+                  )}
                 </h1>
                 <p className="desc-head">
                   Selamat datang di nugasyuk, anda bisa memonitoring tugas tugas
@@ -111,6 +119,7 @@ function BerandaWaliMurid() {
             </div>
 
             <div className="con-content">
+              {dataBerandaWaliMurid && dataBerandaWaliMurid.jumlah_siswa ? (
               <div
                 className="content-indiecator"
                 style={{ background: "#2AB6D5" }}
@@ -128,6 +137,11 @@ function BerandaWaliMurid() {
                   </p>
                 </div>
               </div>
+              ) : (
+                <CardSkeletonBerandaInfo/>
+              )}
+
+              {dataBerandaWaliMurid && dataBerandaWaliMurid.jumlah_mapel ? (
               <div
                 className="content-indiecator"
                 style={{ background: "#585CC4" }}
@@ -145,6 +159,11 @@ function BerandaWaliMurid() {
                   </p>
                 </div>
               </div>
+              ) : (
+                <CardSkeletonBerandaInfo/>
+              )}
+
+              {dataBerandaWaliMurid && dataBerandaWaliMurid.wali_kelas ? (
               <div
                 className="content-indiecator"
                 style={{ background: "#B462D0" }}
@@ -165,12 +184,16 @@ function BerandaWaliMurid() {
                   </p>
                 </div>
               </div>
+              ) : (
+                <CardSkeletonBerandaInfo/>
+              )}
             </div>
 
             {/* content information */}
             <div className="con-content-information">
               <div className="content-status-task">
                 <p className="text-status-task">Belum Selesai Dalam Deadline</p>
+                {/* {dataBerandaWaliMurid && dataBerandaWaliMurid} */}
                 <div
                   className="content-indiecator-information"
                   style={{ background: "#fff", cursor: "pointer" }}
