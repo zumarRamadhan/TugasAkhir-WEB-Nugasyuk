@@ -20,6 +20,39 @@
     margin-top: 30px;
 }
 
+.card-pageKbm-Guru-skeleton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    width: 100%;
+    min-height: 102.5px;
+    color: var(--color-primer);
+    background: #f5f5f5;
+    /* Warna latar belakang skeleton */
+    background-image: linear-gradient(90deg,
+            #f5f5f5 25%,
+            #e8e8e8 37%,
+            #f5f5f5 63%);
+    /* Animasi gradien skeleton */
+    background-size: 200% 100%;
+    /* Ukuran gradien skeleton */
+    animation: skeleton-loading 1.5s infinite linear;
+    /* Animasi skeleton berjalan selamanya */
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: -200% 0;
+        /* Mulai dari posisi luar layar */
+    }
+
+    100% {
+        background-position: 200% 0;
+        /* Pindah ke posisi luar layar sebaliknya */
+    }
+}
+
 .card-pageKbm-Guru {
     display: flex;
     justify-content: space-between;
