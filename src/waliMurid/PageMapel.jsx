@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import DetailOrtu from "../component/ProfileWaliMurid";
 import NotifOrtu from "../component/NotifOrtu";
+import CardSkeletonMapel from "../componentSkeleton/CardSkeletonMapel";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ function PageMapel() {
 
   useEffect(() => {
     setisLoading(true);
-    console.log(setisLoading);
     axios
       .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran", {
         headers: {
@@ -80,22 +80,20 @@ function PageMapel() {
       <div className="container-content">
         <NavbarWaliMurid navigasiOrtu={"Mata Pelajaran"} />
         <main className="main">
-          {isLoading ? (
-            <div className="content-mapel">
+          <div className="content-mapel">
+            {isLoading ? (
               <div className="con-card-mapel-ortu">
-                {dataListMapel.map((_, index) => (
-                  <div className="card loading-mapel" key={index}>
-                    <div className="image"></div>
-                    <div className="content">
-                      {/* <h4></h4> */}
-                      <div className="description"></div>
-                    </div>
-                  </div>
-                ))}
+                <CardSkeletonMapel />
+                <CardSkeletonMapel />
+                <CardSkeletonMapel />
+                <CardSkeletonMapel />
+                <CardSkeletonMapel />
+                <CardSkeletonMapel />
+                <CardSkeletonMapel />
+                <CardSkeletonMapel />
+                <CardSkeletonMapel />
               </div>
-            </div>
-          ) : (
-            <div className="content-mapel">
+            ) : (
               <div className="con-card-mapel-ortu">
                 {dataListMapel.map((listMapel) => (
                   <div
@@ -116,19 +114,15 @@ function PageMapel() {
                     />
                     <div className="content-card-mapel">
                       <div className="card-mapel-left">
-                        <p className="mata-pelajaran">
-                          {listMapel.nama_mapel}
-                        </p>
-                        <p className="nama-guru-mapel">
-                          {listMapel.nama_guru}
-                        </p>
+                        <p className="mata-pelajaran">{listMapel.nama_mapel}</p>
+                        <p className="nama-guru-mapel">{listMapel.nama_guru}</p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </main>
       </div>
 

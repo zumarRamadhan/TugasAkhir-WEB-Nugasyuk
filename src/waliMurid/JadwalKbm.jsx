@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import ProfileSiswa from "../component/ProfileWaliMurid";
 import NotifSiswa from "../component/NotifOrtu";
 import axios from "axios";
+import CardSkeletonJadwal from "../componentSkeleton/CardSkeletonJadwal";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -121,6 +122,16 @@ function PageMapel() {
           <NavbarOrtu navigasiOrtu={"Jadwal KBM 11 PPLG 1"} />
           <div className="main">
             <div className="content-jadwalKBM">
+              {isLoading ? (
+                <div className="con-card-jadwalKBM-ortu">
+                  <CardSkeletonJadwal/>
+                  <CardSkeletonJadwal/>
+                  <CardSkeletonJadwal/>
+                  <CardSkeletonJadwal/>
+                  <CardSkeletonJadwal/>
+                  <CardSkeletonJadwal/>
+                </div>
+              ) : (
               <div className="con-card-jadwalKBM-ortu">
                 {dataListJadwal.map((listJadwal) => (
                   <div className="cardJadwalKbm" key={listJadwal.id} onClick={() => showDetailKbm(listJadwal.id)} style={{cursor: 'pointer'}}>
@@ -151,6 +162,7 @@ function PageMapel() {
                   </div>
                 ))}
               </div>
+              )}
             </div>
           </div>
         </div>

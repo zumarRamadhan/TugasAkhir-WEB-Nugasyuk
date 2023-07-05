@@ -11,6 +11,7 @@ import ImgProfil from "../assets/profil-walimurid.svg";
 import axios from "axios";
 import DetailOrtu from "../component/ProfileWaliMurid";
 import NotifOrtu from "../component/NotifOrtu";
+import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 
 function PageTugas() {
   const navigate = useNavigate();
@@ -94,16 +95,16 @@ function PageTugas() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataListTugas && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // else if (dataListTugas && !isError)
     return (
       <div>
         <aside>
@@ -193,9 +194,13 @@ function PageTugas() {
                 </form>
               </div>
             </div>
-            {dataNotFound ? (
-              <div className="dataNotFound">
-                <p className="text-notfound">Data Tidak Ditemukan</p>
+            {isLoading ? (
+              <div className="content-task">
+                {/* <p className="text-notfound">Data Tidak Ditemukan</p> */}
+                <CardSkeletonListTask/>
+                <CardSkeletonListTask/>
+                <CardSkeletonListTask/>
+                <CardSkeletonListTask/>
               </div>
             ) : (
             <div className="content-task">

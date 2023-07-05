@@ -4,9 +4,12 @@ import { Icon } from "@iconify/react";
 import { useState, useEffect } from "react";
 import NavbarWaliMurid from "../component/NavbarWaliMurid";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
-import DetailOrtu from '../component/ProfileWaliMurid';
-import NotifOrtu from '../component/NotifOrtu';
+import DetailOrtu from "../component/ProfileWaliMurid";
+import NotifOrtu from "../component/NotifOrtu";
 import axios from "axios";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
 
 function DetailTugasOrtu() {
   const navigate = useNavigate();
@@ -24,6 +27,7 @@ function DetailTugasOrtu() {
   }, [id]);
 
   function getDetail() {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/ortu/tugas/" + id, {
         headers: {
@@ -34,61 +38,68 @@ function DetailTugasOrtu() {
         setDataDetailTugas(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => 
-      console.error(error));
-      setisLoading(false);
+      .catch((error) => console.error(error));
+    setisError(true);
+    setisLoading(false);
   }
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataDetailTugas && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // else if (dataDetailTugas && !isError)
 
-    return (
-      <div>
-       <aside>
-          <h1
-            className="title-form-login"
-            onClick={() => navigate("/walimurid/berandawalimurid")}
+  return (
+    <div>
+      <aside>
+        <h1
+          className="title-form-login"
+          onClick={() => navigate("/walimurid/berandawalimurid")}
+        >
+          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+          nugasyuk
+        </h1>
+        <ul>
+          <li onClick={() => navigate("/walimurid/berandawalimurid")}>
+            <Icon icon="iconoir:home-simple" width="20" />
+            Beranda
+          </li>
+          <li
+            className="active"
+            onClick={() => navigate("/walimurid/pagetugas")}
           >
-            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-            nugasyuk
-          </h1>
-          <ul>
-            <li onClick={() => navigate("/walimurid/berandawalimurid")}>
-              <Icon icon="iconoir:home-simple" width="20" />
-              Beranda
-            </li>
-            <li
-              className="active"
-              onClick={() => navigate("/walimurid/pagetugas")}
-            >
-              <Icon
-                icon="fluent:clipboard-bullet-list-rtl-20-regular"
-                width="25"
-              />
-              Tugas
-            </li>
-            <li onClick={() => navigate("/walimurid/pagekbm")}>
-              <Icon icon="uiw:date" width="18" />
-              Jadwal KBM
-            </li>
-            <li onClick={() => navigate("/walimurid/pagemapel")}>
-              <Icon icon="fluent-mdl2:education" width="18" />
-              Mata Pelajaran
-            </li>
-          </ul>
-        </aside>
-        <div className="container-content">
-          {dataDetailTugas.map((detailTugas) => (
-            <NavbarWaliMurid navigasiOrtu={detailTugas.nama_mapel} />
-          ))}
+            <Icon
+              icon="fluent:clipboard-bullet-list-rtl-20-regular"
+              width="25"
+            />
+            Tugas
+          </li>
+          <li onClick={() => navigate("/walimurid/pagekbm")}>
+            <Icon icon="uiw:date" width="18" />
+            Jadwal KBM
+          </li>
+          <li onClick={() => navigate("/walimurid/pagemapel")}>
+            <Icon icon="fluent-mdl2:education" width="18" />
+            Mata Pelajaran
+          </li>
+        </ul>
+      </aside>
+      <div className="container-content">
+        {dataDetailTugas.map((detailTugas) => (
+          <NavbarWaliMurid
+            navigasiOrtu={detailTugas.nama_mapel || <Skeleton />}
+          />
+        ))}
+        {isLoading ? (
+          <div className="content-detail-task">
+            <SkeletonDetailTask />
+          </div>
+        ) : (
           <div className="main">
             {dataDetailTugas &&
               dataDetailTugas.map((detailTugas) => (
@@ -114,13 +125,14 @@ function DetailTugasOrtu() {
                 </div>
               ))}
           </div>
-        </div>
-
-        <DetailOrtu />
-
-        <NotifOrtu />
+        )}
       </div>
-    );
+
+      <DetailOrtu />
+
+      <NotifOrtu />
+    </div>
+  );
 }
 
 export default DetailTugasOrtu;
