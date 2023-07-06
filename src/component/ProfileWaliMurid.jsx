@@ -7,6 +7,9 @@ import ImgProfil from "../assets/profil-walimurid.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonProfile from "../componentSkeleton/SkeletonProfile";
 
 function DetailWaliMurid() {
   const closeDetail = () => {
@@ -72,8 +75,8 @@ function DetailWaliMurid() {
   }
 
   const logout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
+    localStorage.removeItem("token");
+    window.location.href = "/login";
   };
 
   const saveToken = sessionStorage.getItem("token");
@@ -83,6 +86,7 @@ function DetailWaliMurid() {
   const [isError, setisError] = useState(false);
 
   useEffect(() => {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/ortu/profile", {
         headers: {
@@ -108,28 +112,36 @@ function DetailWaliMurid() {
     <div>
       {dataProfileOrtu.map((profileOrtu) => (
         <div className="detail-profile" key={profileOrtu.id}>
-          <div className="content-detail">
-            <div className="navbar-detail">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer" }}
-                onClick={closeDetail}
-              />
-              <h2>Profil</h2>
+          {dataProfileOrtu && dataProfileOrtu.nama ? (
+            <div className="content-detail">
+              <div className="navbar-detail">
+                <Icon
+                  icon="radix-icons:cross-circled"
+                  width="30"
+                  style={{ cursor: "pointer" }}
+                  onClick={closeDetail}
+                />
+                <h2>Profil</h2>
+              </div>
+              <div className="detail-image-profile">
+                <img
+                  src={`https://www.nugasyuk.my.id/public/${profileOrtu.foto_profile}`}
+                  alt=""
+                  className="detail-img-profile"
+                />
+              </div>
+              <p className="judul-detail">Email</p>
+              <p className="value-detail">{profileOrtu.email}</p>
+              <p className="judul-detail">Nama</p>
+              <p className="value-detail">{profileOrtu.nama}</p>
+              <p className="judul-detail">Orang Tua Dari</p>
+              <p className="value-detail">{profileOrtu.nama_siswa}</p>
+              <p className="judul-detail">NIS</p>
+              <p className="value-detail">{profileOrtu.nis}</p>
             </div>
-            <div className="detail-image-profile">
-              <img src={`https://www.nugasyuk.my.id/public/${profileOrtu.foto_profile}`} alt="" className="detail-img-profile" />
-            </div>
-            <p className="judul-detail">Email</p>
-            <p className="value-detail">{profileOrtu.email}</p>
-            <p className="judul-detail">Nama</p>
-            <p className="value-detail">{profileOrtu.nama}</p>
-            <p className="judul-detail">Orang Tua Dari</p>
-            <p className="value-detail">{profileOrtu.nama_siswa}</p>
-            <p className="judul-detail">NIS</p>
-            <p className="value-detail">{profileOrtu.nis}</p>
-          </div>
+          ) : (
+            <SkeletonProfile />
+          )}
           <div className="con-btn-detail-profile">
             <button
               className="forget-password"
@@ -151,96 +163,100 @@ function DetailWaliMurid() {
         </div>
       ))}
       <div className="popup-logout" id="popup-logout">
-          <div className="detail-logout">
+        <div className="detail-logout">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeLogoutPopup}
+          />
+          <div className="image-logout">
+            <img src={ImgLogout} alt="" className="img-logout" />
+          </div>
+          <p className="desc-logout">Anda yakin ingin keluar?</p>
+          <div className="con-btn-logout">
+            <button
+              type="button"
+              className="btn-batal"
+              onClick={closeLogoutPopup}
+            >
+              Batal
+            </button>
+            <button type="button" className="btn-keluar" onClick={logout}>
+              Keluar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="popup-forget" id="popup-forget">
+        <form action="" className="detail-forget-password">
+          <div className="navbar-detail-forget">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"
               style={{ cursor: "pointer" }}
-              onClick={closeLogoutPopup}
+              onClick={closeForgetPopupAndClearInput}
             />
-            <div className="image-logout">
-              <img src={ImgLogout} alt="" className="img-logout" />
-            </div>
-            <p className="desc-logout">Anda yakin ingin keluar?</p>
-            <div className="con-btn-logout">
-              <button type="button" className="btn-batal" onClick={closeLogoutPopup}>
-                Batal
-              </button>
-              <button type="button" className="btn-keluar" onClick={logout}>
-                Keluar
-              </button>
-            </div>
+            <h2>Ganti Password</h2>
           </div>
-        </div>
-
-        <div className="popup-forget" id="popup-forget">
-          <form action="" className="detail-forget-password">
-            <div className="navbar-detail-forget">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer" }}
-                onClick={closeForgetPopupAndClearInput}
-              />
-              <h2>Ganti Password</h2>
-            </div>
-            <p className="judul-form">Sandi lama</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordType}
-                id="password"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibility}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-            <p className="judul-form">Sandi baru</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordTypeNew}
-                id="newPassword"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibilityNew}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-            <p className="judul-form">Konfirmasi sandi baru</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordTypeConfirm}
-                id="confirmPassword"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibilityConfirm}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-
-            <button type="submit" className="btn-simpan">
-              Simpan sandi baru
+          <p className="judul-form">Sandi lama</p>
+          <div className="con-form-password">
+            <img src={passIcon} alt="" />
+            <input
+              type={passwordType}
+              id="password"
+              placeholder="*********"
+              className="input-password"
+            />
+            <button
+              type="button"
+              className="btn-mata"
+              onClick={togglePasswordVisibility}
+            >
+              <img src={mataIcon} alt="" />
             </button>
-          </form>
-        </div>
+          </div>
+          <p className="judul-form">Sandi baru</p>
+          <div className="con-form-password">
+            <img src={passIcon} alt="" />
+            <input
+              type={passwordTypeNew}
+              id="newPassword"
+              placeholder="*********"
+              className="input-password"
+            />
+            <button
+              type="button"
+              className="btn-mata"
+              onClick={togglePasswordVisibilityNew}
+            >
+              <img src={mataIcon} alt="" />
+            </button>
+          </div>
+          <p className="judul-form">Konfirmasi sandi baru</p>
+          <div className="con-form-password">
+            <img src={passIcon} alt="" />
+            <input
+              type={passwordTypeConfirm}
+              id="confirmPassword"
+              placeholder="*********"
+              className="input-password"
+            />
+            <button
+              type="button"
+              className="btn-mata"
+              onClick={togglePasswordVisibilityConfirm}
+            >
+              <img src={mataIcon} alt="" />
+            </button>
+          </div>
+
+          <button type="submit" className="btn-simpan">
+            Simpan sandi baru
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
