@@ -8,7 +8,7 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import imgCardKbm from "../assets/guru-karman.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 function JadwalKBM() {
@@ -93,7 +93,7 @@ function JadwalKBM() {
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
 
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/jadwal/1?kelas=1" , {
+      .get("https://www.nugasyuk.my.id/api/admin/jadwal/3?kelas=1" , {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -134,32 +134,18 @@ function JadwalKBM() {
         setIsError(true);
         setIsLoading(false);
       });
-
-      axios
-      .get("https://www.nugasyuk.my.id/api/admin/jadwal?kelas=1", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((result) => {
-        console.log("data API", result.data);
-        const responseAPI = result.data;
-        setDataJadwal(responseAPI.data);
-        setCardLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setIsError(true);
-        setCardLoading(false);
-      });
   }, []);
 
-  function handleSelectChange(event) {
-    const selectedValue = event.target.value;
-    const url = `https://www.nugasyuk.my.id/api/admin/jadwal?kelas=${selectedValue}`;
+  const [selectedValue, setSelectedValue] = useState(1);
 
+  useEffect(() => {
+    fetchData(selectedValue);
+  }, []); // Fetch data on initial component mount
+
+  const fetchData = (selectedValue) => {
+    const url = `https://www.nugasyuk.my.id/api/admin/jadwal?kelas=${selectedValue}`;
     setCardLoading(true);
+    
     axios
       .get(url, {
         headers: {
@@ -170,7 +156,6 @@ function JadwalKBM() {
       .then((result) => {
         console.log("data API", result.data);
         const responseAPI = result.data;
-
         setDataJadwal(responseAPI.data);
         setCardLoading(false);
       })
@@ -179,7 +164,13 @@ function JadwalKBM() {
         setIsError(true);
         setCardLoading(false);
       });
-  }
+  };
+
+  const handleSelectChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedValue(selectedValue);
+    fetchData(selectedValue); // Fetch data again when the select value changes
+  };
 
 //   if (isLoading) {
 //     return (
