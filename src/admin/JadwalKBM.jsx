@@ -16,12 +16,12 @@ function JadwalKBM() {
   const navigate = useNavigate();
   const [detailHariJadwal, setDetailHariJadwal] = useState([]);
   const [detailJadwal, setDetailJadwal] = useState([]);
-
   const saveToken = sessionStorage.getItem("token");
   const [dataKelas, setDataKelas] = useState([]);
   const [dataJadwal, setDataJadwal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCardLoading, setCardLoading] = useState(true);
+  const [isPopupLoading, setPopupLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   const closeDetail = () => {
@@ -87,32 +87,6 @@ function JadwalKBM() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showDetailKbm = () => {
-    const popupForget = document.querySelector(".popup-kbm");
-    popupForget.style.display = "flex";
-    popupForget.style.animation = "slide-down 0.3s ease-in-out";
-
-    axios
-      .get("https://www.nugasyuk.my.id/api/admin/jadwal/3?kelas=1" , {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((result) => {
-        console.log("data API", result.data);
-        const responseAPI = result.data;
-        setDetailHariJadwal(responseAPI.hari);
-        setDetailJadwal(responseAPI.tugas);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setIsError(true);
-        setIsLoading(false);
-      });
-  };
-
   useState(() => {
     // setIsLoading(true);
     axios
@@ -142,10 +116,41 @@ function JadwalKBM() {
     fetchData(selectedValue);
   }, []); // Fetch data on initial component mount
 
+  const showDetailKbm = (id) => {
+    setPopupLoading(true);
+    const popupForget = document.querySelector(".popup-kbm");
+    popupForget.style.display = "flex";
+    popupForget.style.animation = "slide-down 0.3s ease-in-out";
+
+    const url = `https://www.nugasyuk.my.id/api/admin/jadwal/${id}?kelas=${selectedValue}`;
+
+    axios
+      .get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        console.log("data API", result.data);
+        const responseAPI = result.data;
+        setDetailHariJadwal(responseAPI.hari);
+        setDetailJadwal(responseAPI.tugas);
+        setIsLoading(false);
+        setPopupLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(false);
+        setIsLoading(false);
+        setPopupLoading(false);
+      });
+  };
+
   const fetchData = (selectedValue) => {
     const url = `https://www.nugasyuk.my.id/api/admin/jadwal?kelas=${selectedValue}`;
     setCardLoading(true);
-    
+
     axios
       .get(url, {
         headers: {
@@ -172,23 +177,23 @@ function JadwalKBM() {
     fetchData(selectedValue); // Fetch data again when the select value changes
   };
 
-//   if (isLoading) {
-//     return (
-//       <div id="load">
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//       </div>
-//     );
-//   } else
-   if (dataJadwal && dataKelas && !isError)
+  //   if (isLoading) {
+  //     return (
+  //       <div id="load">
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //       </div>
+  //     );
+  //   } else
+  if (dataJadwal && dataKelas && !isError)
     return (
       <div>
         {/* <Sidebar/> */}
@@ -294,7 +299,7 @@ function JadwalKBM() {
                             icon="ic:round-navigate-next"
                             width="30"
                             className="iconDetail-Kbm"
-                            onClick={showDetailKbm}
+                            onClick={() => showDetailKbm(cardKbm.id)}
                           />
                         </div>
                       </div>
@@ -316,44 +321,64 @@ function JadwalKBM() {
                 className="btn-close"
                 onClick={closeDetailKbm}
               />
-              <h2>{detailHariJadwal}</h2>
+              {isPopupLoading ? (
+                <h2>Loading...</h2>
+              ) : (
+                <h2>{detailHariJadwal}</h2>
+              )}
             </div>
-            <div className="con-popup-kbm">
-              {detailJadwal.map((dataGuru) => (
-              <div className="popup-card-kbm">
-                <div className="test1">
-                  <img
-                    src={`https://www.nugasyuk.my.id/public/${dataGuru.foto_profile}`}
-                    alt=""
-                    className="image-card-kbm"
-                  />
-                  <div className="mapel-card-kbm">
-                    <p>{dataGuru.nama_mapel}</p>
-                    <p className="guruPengampu">{dataGuru.nama_guru}</p>
-                  </div>
-                </div>
-                <div className="test2">
-                  <div className="jamMengajar">
-                  <span>{dataGuru.waktu_mulai.substring(0, 5)}</span> - <span>{dataGuru.waktu_selesai.substring(0, 5)}</span>
-                  </div>
-                  <div className="con-btn-card-kbm">
-                    <div
-                      className="btn-edit-card-kbm"
-                      onClick={() => navigate("/admin/jadwalkbm/tambah")}
-                    >
-                      <Icon
-                        icon="material-symbols:edit-outline-rounded"
-                        width="15"
-                      />
-                    </div>
-                    <div className="btn-delete-card-kbm">
-                      <Icon icon="ic:round-delete-outline" />
-                    </div>
-                  </div>
-                </div>
+            {isPopupLoading ? (
+              <div className="con-popup-kbm">
+                <div className="skeleton-popup-card-kbm"></div>
+                <div className="skeleton-popup-card-kbm"></div>
+                <div className="skeleton-popup-card-kbm"></div>
+                <div className="skeleton-popup-card-kbm"></div>
               </div>
-            ))}
-            </div>
+            ) : (
+              <div className="con-popup-kbm">
+                {detailJadwal.length === 0 ? ( // Check if detailJadwal is empty
+                  <div className="popup-card-kbm">
+                    <div className="dataKosong">Data Tidak Ditemukan</div>
+                  </div>
+                ) : (
+                  detailJadwal.map((dataGuru) => (
+                    <div className="popup-card-kbm">
+                      <div className="test1">
+                        <img
+                          src={`https://www.nugasyuk.my.id/public/${dataGuru.foto_profile}`}
+                          alt=""
+                          className="image-card-kbm"
+                        />
+                        <div className="mapel-card-kbm">
+                          <p>{dataGuru.nama_mapel}</p>
+                          <p className="guruPengampu">{dataGuru.nama_guru}</p>
+                        </div>
+                      </div>
+                      <div className="test2">
+                        <div className="jamMengajar">
+                          <span>{dataGuru.waktu_mulai.substring(0, 5)}</span> -{" "}
+                          <span>{dataGuru.waktu_selesai.substring(0, 5)}</span>
+                        </div>
+                        <div className="con-btn-card-kbm">
+                          <div
+                            className="btn-edit-card-kbm"
+                            onClick={() => navigate("/admin/jadwalkbm/tambah")}
+                          >
+                            <Icon
+                              icon="material-symbols:edit-outline-rounded"
+                              width="15"
+                            />
+                          </div>
+                          <div className="btn-delete-card-kbm">
+                            <Icon icon="ic:round-delete-outline" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
           </div>
         </div>
 

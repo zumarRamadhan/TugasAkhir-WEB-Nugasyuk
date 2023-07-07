@@ -261,6 +261,28 @@
     padding: 15px;
 }
 
+.skeleton-popup-card-kbm{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 15vh;
+    border: 1px solid #E3E3E3;
+    border-radius: 10px;
+    padding: 15px;
+    background: #f5f5f5;
+    /* Warna latar belakang skeleton */
+    background-image: linear-gradient(90deg,
+            #f5f5f5 25%,
+            #e8e8e8 37%,
+            #f5f5f5 63%);
+    /* Animasi gradien skeleton */
+    background-size: 200% 100%;
+    /* Ukuran gradien skeleton */
+    animation: skeleton-loading 1.5s infinite linear;
+    /* Animasi skeleton berjalan selamanya */
+}
+
 .image-card-kbm {
     width: 70px;
     border-radius: 100%;
