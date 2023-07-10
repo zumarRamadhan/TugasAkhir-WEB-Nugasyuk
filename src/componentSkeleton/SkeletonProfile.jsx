@@ -12,7 +12,7 @@ function SkeletonProfile(cards) {
   return Array(cards)
     .fill(0)
     .map((_, i) => (
-      <div className="content-detail" key={i}>
+      <div key={i}>
         <div className="navbar-detail">
           <Icon
             icon="radix-icons:cross-circled"
@@ -26,13 +26,13 @@ function SkeletonProfile(cards) {
           <Skeleton circle />
         </div>
         <p className="judul-detail">Email</p>
-        <Skeleton height={40}/>
+        <Skeleton height={30}/>
         <p className="judul-detail">Nama</p>
-        <Skeleton height={40}/>
+        <Skeleton height={30}/>
         <p className="judul-detail">Orang Tua Dari</p>
-        <Skeleton height={40}/>
+        <Skeleton height={30}/>
         <p className="judul-detail">NIS</p>
-        <Skeleton height={40}/>
+        <Skeleton height={30}/>
       </div>
     ));
 }

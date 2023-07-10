@@ -38,9 +38,11 @@ function DetailTugasOrtu() {
         setDataDetailTugas(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => console.error(error));
-    setisError(true);
-    setisLoading(false);
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data", error);
+        setisLoading(false);
+        setisError(true);
+      });
   }
 
   // if (isLoading)
