@@ -7,6 +7,8 @@ import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
 import axios from "axios";
+import SkeletonDetailMateri from "../componentSkeleton/SkeletonDetailMaterial";
+import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
 function DetailMateri() {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ function DetailMateri() {
   const { id } = useParams();
 
   useEffect(() => {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/murid/materi/" + id, {
         headers: {
@@ -33,10 +36,10 @@ function DetailMateri() {
         setDataDetailMateri(responseAPI.data);
         setisLoading(false);
       })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setisError(true);
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data", error);
         setisLoading(false);
+        setisError(true);
       });
   }, []);
 
@@ -243,16 +246,16 @@ function DetailMateri() {
 
   const fileLinkElements = generateFileLinkElements();
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataDetailMateri && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  if (dataDetailMateri && !isError)
     //   end funsi generate file link elements
 
     // Panggil fungsi generateFileLinkElements untuk menghasilkan elemen-elemen yang sesuai
@@ -294,39 +297,53 @@ function DetailMateri() {
           </ul>
         </aside>
         <div className="container-content">
-          {dataDetailMateri.map((detailMateri) => (
-            <NavbarMurid textNavigasi={detailMateri.nama_mapel} />
-          ))}
-          <div className="main">
-            {dataDetailMateri &&
-              dataDetailMateri.map((detailMateri) => (
-                <div className="con-content-material">
-                  <div className="content-material">
-                    <div className="content-material-left">
-                      <div className="icon-material">
-                        <Icon
-                          icon="ri:book-line"
-                          width="40"
-                          style={{ color: "#2A93D5" }}
-                        />
-                      </div>
-                      <div className="desc-material">
-                        <p className="name-material ">
-                          {detailMateri.nama_materi}
-                        </p>
-                        <p className="teacher">{detailMateri.nama_guru}</p>
-                      </div>
-                    </div>
-                    <div className="content-material-right">
-                      <p className="date-upload">
-                        {detailMateri.tanggal_dibuat}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="desc-content-material">{detailMateri.isi}</p>
-                  {fileLinkElements}
-                </div>
+          {isLoading ? (
+            <SkeletonNavbar />
+          ) : (
+            <div>
+              {dataDetailMateri.map((detailMateri) => (
+                <NavbarMurid textNavigasi={detailMateri.nama_mapel} />
               ))}
+            </div>
+          )}
+          <div className="main">
+            {isLoading ? (
+              <SkeletonDetailMateri />
+            ) : (
+              <div>
+                {dataDetailMateri &&
+                  dataDetailMateri.map((detailMateri) => (
+                    <div className="con-content-material">
+                      <div className="content-material">
+                        <div className="content-material-left">
+                          <div className="icon-material">
+                            <Icon
+                              icon="ri:book-line"
+                              width="40"
+                              style={{ color: "#2A93D5" }}
+                            />
+                          </div>
+                          <div className="desc-material">
+                            <p className="name-material ">
+                              {detailMateri.nama_materi}
+                            </p>
+                            <p className="teacher">{detailMateri.nama_guru}</p>
+                          </div>
+                        </div>
+                        <div className="content-material-right">
+                          <p className="date-upload">
+                            {detailMateri.tanggal_dibuat}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="desc-content-material">
+                        {detailMateri.isi}
+                      </p>
+                      {fileLinkElements}
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
 

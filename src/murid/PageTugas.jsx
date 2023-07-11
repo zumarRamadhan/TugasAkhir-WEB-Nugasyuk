@@ -202,58 +202,72 @@ function PageTugas() {
             </div>
           </div>
 
-          {dataNotFound ? (
-            <div className="dataNotFound">
-              <p className="text-notfound">Data Tidak Ditemukan</p>
+          {isLoading ? (
+            <div className="content-task">
+              <CardSkeletonListTask />
+              <CardSkeletonListTask />
+              <CardSkeletonListTask />
+              <CardSkeletonListTask />
             </div>
           ) : (
-            <div className="content-task">
-              {renderData.map((listTugas) => (
-                <Link
-                  className="link-navigate"
-                  to={"/murid/detailtugas/" + listTugas.id}
-                >
-                  <div
-                    className="card-task"
-                    style={{ cursor: "pointer" }}
-                    key={listTugas.id}
-                    onClick={() => navigate("/murid/detailtugas/${id}")}
-                    id="123"
-                  >
-                    <div className="indiecator-left">
+            <div>
+              {dataNotFound ? (
+                <div className="dataNotFound">
+                  <p className="text-notfound">Data Tidak Ditemukan</p>
+                </div>
+              ) : (
+                <div className="content-task">
+                  {renderData.map((listTugas) => (
+                    <Link
+                      className="link-navigate"
+                      to={"/murid/detailtugas/" + listTugas.id}
+                    >
                       <div
-                        className="icon-indie-information"
-                        style={{ background: "#DDDDDD" }}
+                        className="card-task"
+                        style={{ cursor: "pointer" }}
+                        key={listTugas.id}
+                        onClick={() => navigate("/murid/detailtugas/${id}")}
+                        id="123"
                       >
-                        <Icon
-                          icon="uiw:time-o"
-                          width="30"
-                          style={{ color: "#797979" }}
-                        />
+                        <div className="indiecator-left">
+                          <div
+                            className="icon-indie-information"
+                            style={{ background: "#DDDDDD" }}
+                          >
+                            <Icon
+                              icon="uiw:time-o"
+                              width="30"
+                              style={{ color: "#797979" }}
+                            />
+                          </div>
+                          <div className="desc-indie">
+                            <p className="title-indie-information">
+                              {listTugas.soal}
+                            </p>
+                            <p className="value-indie-information">
+                              {listTugas.nama_guru}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="indiecator-right">
+                          <p className="time-upload">{listTugas.date}</p>
+                          <p
+                            className="deadline-time"
+                            style={{ color: "#2A93D5" }}
+                          >
+                            Deadline : <span>{listTugas.deadline}</span>
+                          </p>
+                          <Icon
+                            icon="ic:round-navigate-next"
+                            width="30"
+                            className="icon-navigate"
+                          />
+                        </div>
                       </div>
-                      <div className="desc-indie">
-                        <p className="title-indie-information">
-                          {listTugas.soal}
-                        </p>
-                        <p className="value-indie-information">
-                          {listTugas.nama_guru}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="indiecator-right">
-                      <p className="time-upload">{listTugas.date}</p>
-                      <p className="deadline-time" style={{ color: "#2A93D5" }}>
-                        Deadline : <span>{listTugas.deadline}</span>
-                      </p>
-                      <Icon
-                        icon="ic:round-navigate-next"
-                        width="30"
-                        className="icon-navigate"
-                      />
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

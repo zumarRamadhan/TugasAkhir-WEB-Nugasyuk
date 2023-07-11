@@ -8,6 +8,8 @@ import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
 import axios from "axios";
 import CardSkeletonDetailTugas from "../componentSkeleton/CardSkeletonDetailTugas";
+import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
+import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
 function DetailTask() {
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ function DetailTask() {
   }, [id]);
 
   function getDetail() {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/murid/tugas/" + id, {
         headers: {
@@ -35,20 +38,23 @@ function DetailTask() {
         setDataDetailTugas(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => console.error(error));
-    setisLoading(false);
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data", error);
+        setisLoading(false);
+        setisError(true);
+      });
   }
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataDetailTugas && !isError)
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  if (dataDetailTugas && !isError)
     return (
       <div>
         <aside>
@@ -86,44 +92,61 @@ function DetailTask() {
           </ul>
         </aside>
         <div className="container-content">
-          {dataDetailTugas.map((detailTugas) => (
-            <NavbarMurid textNavigasi={detailTugas.nama_mapel} />
-          ))}
-          <div className="main">
-            {dataDetailTugas &&
-              dataDetailTugas.map((detailTugas) => (
-                <div className="con-content-detail-task">
-                  <div className="content-detail-task">
-                    <div className="content-detail-task-left">
-                      <div className="icon-detail-task">
-                        <Icon icon="uiw:time-o" width="30" />
-                      </div>
-                      <div className="desc-material">
-                        <p className="name-task ">{detailTugas.nama_tugas}</p>
-                        <p className="teacher">{detailTugas.nama_guru}</p>
-                      </div>
-                    </div>
-                    <div className="content-detail-task-right">
-                      <p className="date-upload">{detailTugas.date}</p>
-                    </div>
-                  </div>
-                  <p className="desc-content-detail-task">{detailTugas.soal}</p>
-                  <p className="task-deadline-time">
-                    Deadline : <span>{detailTugas.deadline}</span>
-                  </p>
-                  <div className="submition-task">
-                    <p className="title-submition">Pengumpulan Tugas</p>
-                    <div className="file-task"></div>
-                    <button className="btn-add-task">
-                      <Icon icon="ic:round-plus" width="20"></Icon>
-                      <p>Tambah</p>
-                    </button>
-                    <button className="btn-submit-task">
-                      <p>Kirim</p>
-                    </button>
-                  </div>
-                </div>
+          {isLoading ? (
+            <SkeletonNavbar />
+          ) : (
+            <div>
+              {dataDetailTugas.map((detailTugas) => (
+                <NavbarMurid textNavigasi={detailTugas.nama_mapel} />
               ))}
+            </div>
+          )}
+          
+          <div className="main">
+            {isLoading ? (
+              <SkeletonDetailTask />
+            ) : (
+              <div>
+                {dataDetailTugas &&
+                  dataDetailTugas.map((detailTugas) => (
+                    <div className="con-content-detail-task">
+                      <div className="content-detail-task">
+                        <div className="content-detail-task-left">
+                          <div className="icon-detail-task">
+                            <Icon icon="uiw:time-o" width="30" />
+                          </div>
+                          <div className="desc-material">
+                            <p className="name-task ">
+                              {detailTugas.nama_tugas}
+                            </p>
+                            <p className="teacher">{detailTugas.nama_guru}</p>
+                          </div>
+                        </div>
+                        <div className="content-detail-task-right">
+                          <p className="date-upload">{detailTugas.date}</p>
+                        </div>
+                      </div>
+                      <p className="desc-content-detail-task">
+                        {detailTugas.soal}
+                      </p>
+                      <p className="task-deadline-time">
+                        Deadline : <span>{detailTugas.deadline}</span>
+                      </p>
+                      <div className="submition-task">
+                        <p className="title-submition">Pengumpulan Tugas</p>
+                        <div className="file-task"></div>
+                        <button className="btn-add-task">
+                          <Icon icon="ic:round-plus" width="20"></Icon>
+                          <p>Tambah</p>
+                        </button>
+                        <button className="btn-submit-task">
+                          <p>Kirim</p>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
 

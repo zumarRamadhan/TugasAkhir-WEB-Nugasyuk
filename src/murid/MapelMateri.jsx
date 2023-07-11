@@ -11,6 +11,7 @@ import NotifSiswa from "../component/NotifSiswa";
 import axios from "axios";
 import CardSkeletonDetailTugas from "../componentSkeleton/CardSkeletonDetailTugas";
 import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
+import Skeleton from "react-loading-skeleton";
 
 function MapelMateri() {
   const navigate = useNavigate();
@@ -132,9 +133,15 @@ function MapelMateri() {
         </ul>
       </aside>
       <div className="container-content">
-        {dataDetailMapel.map((detailMapel) => (
-          <NavbarMurid textNavigasi={detailMapel.nama_mapel} />
-        ))}
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <div>
+            {dataDetailMapel.map((detailMapel) => (
+              <NavbarMurid textNavigasi={detailMapel.nama_mapel} />
+            ))}
+          </div>
+        )}
         <div className="main">
           {dataDetailMapel &&
             dataDetailMapel.map((detailMapel) => (
@@ -252,7 +259,7 @@ function MapelMateri() {
           {/* tugas */}
           {isLoading ? (
             <div className="con-material taskKbm">
-              <CardSkeletonListTask />
+              {/* <CardSkeletonListTask /> */}
             </div>
           ) : (
             <div
