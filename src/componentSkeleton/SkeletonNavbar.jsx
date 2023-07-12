@@ -20,16 +20,10 @@ function SkeletonNavbar() {
         <div className="navbar">
           {/* <h2>{dataNavbar}</h2> */}
           <h1>
-            <Skeleton width={100}/>
+            <Skeleton width={100} />
           </h1>
           <div className="nav-right">
-            <div className="img-profile" style={{ cursor: "pointer" }}>
-                <Skeleton style={{
-                    borderRadius: '50px',
-                    width: '50px',
-                    height: '50px'
-                }}/> 
-            </div>
+            <Skeleton circle width={50} height={50} />
 
             <div
               className="btn-notification"

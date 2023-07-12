@@ -12,6 +12,8 @@ import axios from "axios";
 import CardSkeletonDetailTugas from "../componentSkeleton/CardSkeletonDetailTugas";
 import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 import Skeleton from "react-loading-skeleton";
+import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
+import SkeletonMapelMateri from "../componentSkeleton/SkeletonMapelMateri";
 
 function MapelMateri() {
   const navigate = useNavigate();
@@ -31,9 +33,11 @@ function MapelMateri() {
   const [dataDetailMapel, setDataDetailMapel] = useState([]);
   const [dataMaterial, setDataMaterial] = useState([]);
   const [dataTask, setDataTask] = useState([]);
-
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterValue, setFilterValue] = useState("all");
   const { id } = useParams();
 
   useEffect(() => {
@@ -42,7 +46,53 @@ function MapelMateri() {
     dataTugas();
   }, [id]);
 
+  useEffect(() => {
+    handleSearch();
+  }, [searchQuery, filterValue]);
+
+  const handleSearch = () => {
+    const filteredData = dataTask.filter((value) => {
+      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      const lowerCaseStatusMapel = value.status
+        ? value.status.toLowerCase()
+        : "";
+
+      return (
+        (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
+        ((value &&
+          value.soal &&
+          value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.nama_guru &&
+            value.nama_guru
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.status &&
+            value.status.toLowerCase().includes(searchQuery.toLowerCase())))
+      );
+    });
+
+    setFilteredData(filteredData);
+  };
+
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    // setFilterValue(e.target.value);
+    // jika filter value nya tidak ada maka akan menampilkan data not found
+    setFilterValue(e.target.value);
+  };
+  console.log("filter value", dataTugas);
+
+  const renderData = filteredData.length > 0 ? filteredData : dataTugas;
+  const dataNotFound =
+    searchQuery !== "" && filteredData.length === 0 && !isLoading;
+
   function getDetailMapel() {
+    setisLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/murid/matapelajaran/" + id, {
         headers: {
@@ -53,7 +103,11 @@ function MapelMateri() {
         setDataDetailMapel(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setisError(true);
+        setisLoading(false);
+      });
   }
 
   function dataMateri() {
@@ -68,7 +122,11 @@ function MapelMateri() {
         setDataMaterial(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setisError(true);
+        setisLoading(false);
+      });
   }
 
   function dataTugas() {
@@ -83,7 +141,11 @@ function MapelMateri() {
         setDataTask(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setisError(true);
+        setisLoading(false);
+      });
   }
 
   // if (isLoading)
@@ -95,7 +157,7 @@ function MapelMateri() {
   //       <div>.</div>
   //     </div>
   //   );
-  // else if (dataDetailMapel && !isError)
+  // if (dataDetailMapel && !isError)
   return (
     <div>
       <aside>
@@ -134,7 +196,7 @@ function MapelMateri() {
       </aside>
       <div className="container-content">
         {isLoading ? (
-          <Skeleton />
+          <SkeletonNavbar />
         ) : (
           <div>
             {dataDetailMapel.map((detailMapel) => (
@@ -143,35 +205,41 @@ function MapelMateri() {
           </div>
         )}
         <div className="main">
-          {dataDetailMapel &&
-            dataDetailMapel.map((detailMapel) => (
-              <div className="con-content-subject">
-                <div
-                  className="content-subject"
-                  style={{
-                    background: `linear-gradient(${detailMapel.color})`,
-                  }}
-                >
-                  <div className="content-subject-left">
-                    <p className="name-subject">{detailMapel.nama_mapel}</p>
-                    <p className="name-teacher">{detailMapel.nama_guru}</p>
+          {isLoading ? (
+            <SkeletonMapelMateri />
+          ) : (
+            <div>
+              {dataDetailMapel &&
+                dataDetailMapel.map((detailMapel) => (
+                  <div className="con-content-subject">
+                    <div
+                      className="content-subject"
+                      style={{
+                        background: `linear-gradient(${detailMapel.color})`,
+                      }}
+                    >
+                      <div className="content-subject-left">
+                        <p className="name-subject">{detailMapel.nama_mapel}</p>
+                        <p className="name-teacher">{detailMapel.nama_guru}</p>
+                      </div>
+                      <img
+                        src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
+                        alt=""
+                        className="img-assets-subject"
+                      />
+                    </div>
+                    <div className="content-subject-2">
+                      <img
+                        src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
+                        alt=""
+                        className="img-subject-2"
+                      />
+                      <p className="name-teacher-2">{detailMapel.nama_guru}</p>
+                    </div>
                   </div>
-                  <img
-                    src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
-                    alt=""
-                    className="img-assets-subject"
-                  />
-                </div>
-                <div className="content-subject-2">
-                  <img
-                    src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
-                    alt=""
-                    className="img-subject-2"
-                  />
-                  <p className="name-teacher-2">{detailMapel.nama_guru}</p>
-                </div>
-              </div>
-            ))}
+                ))}
+            </div>
+          )}
 
           <div className="dropdown-task">
             <div className="switch-container">
