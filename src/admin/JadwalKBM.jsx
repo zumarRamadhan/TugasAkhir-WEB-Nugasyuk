@@ -65,7 +65,7 @@ function JadwalKBM() {
         setIsLoading(false);
       });
   };
-
+  
   const handleDelete = () => {
     axios
       .delete(`https://www.nugasyuk.my.id/api/admin/jadwal/${selected}`, {
@@ -77,14 +77,18 @@ function JadwalKBM() {
       .then((response) => {
         // Handling successful deletion
         console.log("Data berhasil dihapus");
-        // Refresh page or fetch data again after deletion
-        window.location.reload();
+        // Close the delete popup and detail popup
+        closeDeletePopup();
+        closeDetailKbm();
+        // Fetch the updated data after deletion
+        fetchData(selectedValue);
       })
       .catch((error) => {
         // Handling error when deleting data
         console.log("Terjadi kesalahan saat menghapus data:", error);
       });
   };
+  
 
   const closeDeletePopup = () => {
     const background = document.querySelector("#popup-Delete");
