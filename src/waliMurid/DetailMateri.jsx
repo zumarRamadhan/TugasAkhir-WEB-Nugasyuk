@@ -14,6 +14,7 @@ import DetailOrtu from "../component/ProfileWaliMurid";
 import NotifOrtu from "../component/NotifOrtu";
 import axios from "axios";
 import SkeletonDetailMateri from "../componentSkeleton/SkeletonDetailMaterial";
+import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
 
 function DetaillMaterial() {
   const navigate = useNavigate();
@@ -301,9 +302,15 @@ function DetaillMaterial() {
           </ul>
         </aside>
         <div className="container-content">
-          {dataDetailMateri.map((detailMateri) => (
-            <NavbarWaliMurid navigasiOrtu={detailMateri.nama_mapel} />
-          ))}
+          {isLoading ? (
+            <SkeletonNavbarWali />
+          ) : (
+            <div>
+              {dataDetailMateri.map((detailMateri) => (
+                <NavbarWaliMurid navigasiOrtu={detailMateri.nama_mapel} />
+              ))}
+            </div>
+          )}
 
           <div className="main">
             {isLoading ? (

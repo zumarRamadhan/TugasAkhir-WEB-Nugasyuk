@@ -11,6 +11,7 @@ import NotifOrtu from "../component/NotifOrtu";
 import axios from "axios";
 import SkeletonMapelMateri from "../componentSkeleton/SkeletonMapelMateri";
 import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
+import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -145,58 +146,57 @@ function PageMapel() {
           </ul>
         </aside>
         <div className="container-content">
-          {dataMapelDetail.map((detailMapel) => (
-            <NavbarWaliMurid navigasiOrtu={detailMapel.nama_mapel} />
-          ))}
-          <div className="main">
+          {isLoading ? (
+            <SkeletonNavbarWali />
+          ) : (
             <div>
-              {dataMapelDetail &&
-                dataMapelDetail.map((detailMapel) => (
-                  <div>
-                    {isLoading ? (
-                      <div className="con-content-subject">
-                        <SkeletonMapelMateri />
-                      </div>
-                    ) : (
-                      <div className="con-content-subject" key={detailMapel.id}>
-                        <div>
-                          <div
-                            className="content-subject"
-                            style={{
-                              background: `linear-gradient(${detailMapel.color})`,
-                            }}
-                          >
-                            <div className="content-subject-left">
-                              <p className="name-subject">
-                                {detailMapel.nama_mapel}
-                              </p>
-                              <p className="name-teacher">
-                                {detailMapel.nama_guru}
-                              </p>
-                            </div>
-                            <img
-                              src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
-                              alt=""
-                              className="img-assets-subject"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="content-subject-2">
-                          <img
-                            src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
-                            alt=""
-                            className="img-subject-2"
-                          />
-                          <p className="name-teacher-2">
+              {dataMapelDetail.map((detailMapel) => (
+                <NavbarWaliMurid navigasiOrtu={detailMapel.nama_mapel} />
+              ))}
+            </div>
+          )}
+          <div className="main">
+            {isLoading ? (
+              <SkeletonMapelMateri />
+            ) : (
+              <div>
+                {dataMapelDetail &&
+                  dataMapelDetail.map((detailMapel) => (
+                    <div className="con-content-subject">
+                      <div
+                        className="content-subject"
+                        style={{
+                          background: `linear-gradient(${detailMapel.color})`,
+                        }}
+                      >
+                        <div className="content-subject-left">
+                          <p className="name-subject">
+                            {detailMapel.nama_mapel}
+                          </p>
+                          <p className="name-teacher">
                             {detailMapel.nama_guru}
                           </p>
                         </div>
+                        <img
+                          src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
+                          alt=""
+                          className="img-assets-subject"
+                        />
                       </div>
-                    )}
-                  </div>
-                ))}
-            </div>
+                      <div className="content-subject-2">
+                        <img
+                          src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
+                          alt=""
+                          className="img-subject-2"
+                        />
+                        <p className="name-teacher-2">
+                          {detailMapel.nama_guru}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
 
             <div className="dropdown-task">
               <div className="switch-container-ortu">

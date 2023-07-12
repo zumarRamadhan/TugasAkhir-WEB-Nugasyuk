@@ -10,6 +10,7 @@ import axios from "axios";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
+import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
 
 function DetailTugasOrtu() {
   const navigate = useNavigate();
@@ -91,11 +92,17 @@ function DetailTugasOrtu() {
           </ul>
         </aside>
         <div className="container-content">
-          {dataDetailTugas.map((detailTugas) => (
-            <NavbarWaliMurid
-              navigasiOrtu={detailTugas.nama_mapel || <Skeleton />}
-            />
-          ))}
+          {isLoading ? (
+            <SkeletonNavbarWali />
+          ) : (
+            <div>
+              {dataDetailTugas.map((detailTugas) => (
+                <NavbarWaliMurid
+                  navigasiOrtu={detailTugas.nama_mapel || <Skeleton />}
+                />
+              ))}
+            </div>
+          )}
           <div className="main">
             {isLoading ? (
               <SkeletonDetailTask />
