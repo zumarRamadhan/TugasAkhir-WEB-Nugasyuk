@@ -8,6 +8,7 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import imgCardKbm from "../assets/guru-karman.svg";
+import ImgDelete from "../assets/imgDelete.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -16,6 +17,7 @@ function JadwalKBM() {
   const navigate = useNavigate();
   const [detailHariJadwal, setDetailHariJadwal] = useState([]);
   const [detailJadwal, setDetailJadwal] = useState([]);
+  const [deleteJadwal, setDeleteJadwal] = useState([]);
   const saveToken = sessionStorage.getItem("token");
   const [dataKelas, setDataKelas] = useState([]);
   const [dataJadwal, setDataJadwal] = useState([]);
@@ -23,10 +25,74 @@ function JadwalKBM() {
   const [isCardLoading, setCardLoading] = useState(true);
   const [isPopupLoading, setPopupLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [selected, setSelected] = useState(null);
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
     detailProfile.style.transform = "translateX(350px)";
+  };
+
+  const showDeletePopup = (id) => {
+    setSelected(id);
+    const background = document.querySelector("#popup-Delete");
+    background.style.display = "flex";
+    const popupDelete = document.querySelector(".detail-Delete");
+    popupDelete.style.display = "block";
+    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDeleteJadwal(null);
+
+    axios
+      .get("https://www.nugasyuk.my.id/api/admin/jadwal/data/" + id, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        if (responseAPI.success && responseAPI.data.length > 0) {
+          setDeleteJadwal(responseAPI.data[0]);
+          setIsLoading(false);
+        } else {
+          setIsError(true);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`https://www.nugasyuk.my.id/api/admin/jadwal/${selected}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        // Handling successful deletion
+        console.log("Data berhasil dihapus");
+        // Refresh page or fetch data again after deletion
+        window.location.reload();
+      })
+      .catch((error) => {
+        // Handling error when deleting data
+        console.log("Terjadi kesalahan saat menghapus data:", error);
+      });
+  };
+
+  const closeDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const popupDelete = document.querySelector(".detail-Delete");
+    setTimeout(() => (popupDelete.style.display = "none"), 250);
+    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const showLogoutPopup = () => {
@@ -135,7 +201,7 @@ function JadwalKBM() {
         console.log("data API", result.data);
         const responseAPI = result.data;
         setDetailHariJadwal(responseAPI.hari);
-        setDetailJadwal(responseAPI.tugas);
+        setDetailJadwal(responseAPI.data);
         setIsLoading(false);
         setPopupLoading(false);
       })
@@ -369,7 +435,10 @@ function JadwalKBM() {
                               width="15"
                             />
                           </div>
-                          <div className="btn-delete-card-kbm">
+                          <div
+                            className="btn-delete-card-kbm"
+                            onClick={() => showDeletePopup(dataGuru.id)}
+                          >
                             <Icon icon="ic:round-delete-outline" />
                           </div>
                         </div>
@@ -379,6 +448,47 @@ function JadwalKBM() {
                 )}
               </div>
             )}
+          </div>
+        </div>
+
+        <div className="popup-Delete" id="popup-Delete">
+          <div className="detail-Delete">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeDeletePopup}
+            />
+            <div className="image-Delete">
+              <img src={ImgDelete} alt="" className="img-Delete" />
+            </div>
+            <p className="desc-Delete">Anda yakin ingin menghapus?</p>
+            {/* memanggil nama sesuai data yang di pilih */}
+            {deleteJadwal && deleteJadwal.nama_guru ? (
+              <p className="desc-Delete">
+                {deleteJadwal.nama_guru} // {deleteJadwal.nama_mapel}
+              </p>
+            ) : (
+              <p className="desc-Delete">
+                Tunggu Sebentar,Data Sedang Dalam Proses...
+              </p>
+            )}
+            <div className="con-btn-Delete">
+              <button
+                type="button"
+                className="btn-batal"
+                onClick={closeDeletePopup}
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                className="btn-delete"
+                onClick={handleDelete}
+              >
+                Hapus
+              </button>
+            </div>
           </div>
         </div>
 
