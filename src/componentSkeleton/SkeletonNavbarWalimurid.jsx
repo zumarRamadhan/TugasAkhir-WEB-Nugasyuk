@@ -1,6 +1,6 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import '../App.css';
+import "../App.css";
 import { Icon } from "@iconify/react";
 
 function SkeletonNavbarWali() {
@@ -23,7 +23,9 @@ function SkeletonNavbarWali() {
             <Skeleton width={100} />
           </h1>
           <div className="nav-right">
-            <Skeleton circle width={50} height={50} />
+            <div className="img-profile">
+              <Skeleton circle width={50} height={50} />
+            </div>
 
             <div
               className="btn-notification"

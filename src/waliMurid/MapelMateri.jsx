@@ -31,7 +31,9 @@ function PageMapel() {
   const [dataMapelDetail, setDataMapelDetail] = useState([]);
   const [dataListMateri, setDataListMateri] = useState([]);
   const [dataListTugas, setDataListTugas] = useState([]);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterValue, setFilterValue] = useState("all");
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
   const { id } = useParams();
@@ -41,6 +43,51 @@ function PageMapel() {
     listDataMateri();
     listDataTugas();
   }, [id]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchQuery, filterValue]);
+
+  const handleSearch = () => {
+    const filteredData = dataListMateri.filter((value) => {
+      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      const lowerCaseStatusMapel = value.status
+        ? value.status.toLowerCase()
+        : "";
+
+      return (
+        (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
+        ((value &&
+          value.soal &&
+          value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.nama_guru &&
+            value.nama_guru
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.status &&
+            value.status.toLowerCase().includes(searchQuery.toLowerCase())))
+      );
+    });
+
+    setFilteredData(filteredData);
+  };
+
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    // setFilterValue(e.target.value);
+    // jika filter value nya tidak ada maka akan menampilkan data not found
+    setFilterValue(e.target.value);
+  };
+  console.log("filter value", dataListTugas);
+
+  const renderData = filteredData.length > 0 ? filteredData : dataListTugas;
+  const dataNotFound =
+    searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
   function getDetailMapel() {
     setisLoading(true);
@@ -220,8 +267,13 @@ function PageMapel() {
                 </button>
               </div>
 
-              <form className="search-box">
-                <input type="text" placeholder="Cari..." />
+              <form className="search-box" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Cari..."
+                  value={searchQuery}
+                  onChange={handleChange}
+                />
                 <button type="submit">
                   <Icon
                     icon="material-symbols:search-rounded"
