@@ -10,6 +10,8 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import iconaksi from "../assets/iconaksi.svg";
 import ImgDelete from "../assets/imgDelete.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
 import vektorProfile from "../assets/vektorProfile.svg";
 import axios from "axios";
 
@@ -17,6 +19,7 @@ function DataMurid() {
   const navText = "Data Murid";
   const navigate = useNavigate();
   const [detailMurid, setDetailMurid] = useState([]);
+  const [isShowNotifSucces, setisShowNotifSucces] = useState(false);
 
   const showDetailPopup = () => {
     const background = document.querySelector(".popup-detailMurid");
@@ -72,6 +75,31 @@ function DataMurid() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    window.location.reload();
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
   const showDeletePopup = () => {
     const background = document.querySelector("#popup-Delete");
     background.style.display = "flex";
@@ -112,11 +140,16 @@ function DataMurid() {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus");
         // Refresh halaman atau ambil ulang data setelah penghapusan
-        window.location.reload();
+        // window.location.reload();
+        // setisShowNotifSucces(true);
+        showSuccess();
+        closeDeletePopup();
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailed();
+        closeDeletePopup();
       });
   };
 
@@ -610,6 +643,55 @@ function DataMurid() {
                 Hapus
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* {isShowNotifSucces && ( */}
+          <div id="popup-success">
+            <div className="detail-success">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeSuccess}
+              />
+              <div className="image-success">
+                <img
+                  src={ImgSuccess}
+                  alt="Success"
+                  className="img-success"
+                />
+              </div>
+              <p className="desc-success">Data Berhasil Di Hapus</p>
+              <button
+                className="btn-success"
+                onClick={closeSuccess}
+              >
+                Kembali
+              </button>
+            </div>
+          </div>
+        {/* )} */}
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img
+                src={ImgFailed}
+                alt="Failed"
+                className="img-Failed"
+              />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 
