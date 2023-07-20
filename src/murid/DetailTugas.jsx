@@ -22,9 +22,30 @@ function DetailTask() {
   const [isError, setisError] = useState(false);
   const { id } = useParams();
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleButtonClick = () => {
+    // Pemicu input file ketika tombol diklik
+    document.getElementById("file-input").click();
+  };
+
+  
   useEffect(() => {
     getDetail();
+    // submitTask();
   }, [id]);
+  
+  const [fileTask, setFileTask] = useState({
+    file: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // useEffect(() => {
+  //   if (isSubmitting) {
+  //     fileTask.append('file', FormData.file);
+  //   }
+  // });
 
   function getDetail() {
     setisLoading(true);
@@ -35,8 +56,16 @@ function DetailTask() {
         },
       })
       .then((response) => {
-        setDataDetailTugas(response.data.data);
-        setisLoading(false);
+        // setDataDetailTugas(response.data.data);
+        // setisLoading(false);
+
+        console.log("Data berhasil ditambahkan");
+
+        setFileTask({
+          file: ""
+        })
+
+        setIsSubmitting(false);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengambil data", error);
@@ -44,6 +73,184 @@ function DetailTask() {
         setisError(true);
       });
   }
+
+  
+  // const handleSubmit = (e) => {
+  //   console.log(e.target.value);
+  //   setFile(e.target.value);
+  // };
+  
+  const [file, setFile] = useState({
+    file: ""
+  });
+
+
+  const [errors, setErrors] = useState({});
+
+  // useEffect(() => {
+  //   if (isSubmitting) {
+  //     axios
+  //     .post(`https://www.nugasyuk.my.id/api/murid/tugas/${id}`, file,{
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         Authorization: `Bearer ${saveToken}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       // props.userAuthentication()
+  //       console.log(response.data);
+  //       sessionStorage.setItem("token", response.data.token);
+  //       // alert('login Berhasil')
+  //     })
+  //         .catch((error) => {
+  //       console.error("Terjadi kesalahan saat mengambil data", error);
+  //       setisError({ submit: "Terjadi kesalahan saat menambahkan data"});
+  //       setIsSubmitting(false);
+  //     });
+  //   }
+  // }, [isSubmitting, file]);
+
+  
+    const handleFileUpload = (event) => {
+      const file = event.target.file[0]
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      axios
+      .post(`https://www.nugasyuk.my.id/api/murid/tugas/${id}`, formData,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response)=>{
+        console.log(response)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+    }
+  
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFile((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(file);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    if (!data.file) {
+      errors.file = "File harus diisi"
+    }
+    
+    return errors;
+  }
+
+  // const handleFileInputChange = (e) => {
+  //   setSelectedFile(e.target.files[0]);
+  //   // Lakukan pengolahan berikutnya dengan file yang dipilih
+  // };
+
+
+
+  // const submitTask = (e) => {
+  //   e.preventDefault();
+  //   console.log("mengirim data");
+    
+  // };
+
+  function generateFileIcons(item) {
+    let fileIcon;
+    let fileExtension = "";
+
+    if (item.file) {
+      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
+      switch (fileExtension) {
+        case "pdf":
+          fileIcon = "mdi:file-pdf-box";
+          break;
+        case "docx":
+          fileIcon = "mdi:file-word-box";
+          break;
+        default:
+          fileIcon = "";
+          break;
+      }
+    }
+
+    return (
+      <>
+        {fileExtension && (
+          <>
+            <div className="icon-value-file">
+              <Icon icon={fileIcon} width={45} />
+            </div>
+            <div>
+              <h1 className="title-value-file">{item.file}</h1>
+              <p className="file-detailMenunggu">
+                {fileExtension.toUpperCase()} <span>Klik</span>
+              </p>
+            </div>
+          </>
+        )}
+      </>
+    );
+  }
+
+  function generateFileIcons(item) {
+    let fileIcon;
+    let fileExtension = "";
+
+    if (item.file) {
+      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
+      switch (fileExtension) {
+        case "pdf":
+          fileIcon = "mdi:file-pdf-box";
+          break;
+        case "docx":
+          fileIcon = "mdi:file-word-box";
+          break;
+        default:
+          fileIcon = "";
+          break;
+      }
+    }
+
+    return (
+      <>
+        {fileExtension && (
+          <>
+            <div className="icon-value-file">
+              <Icon icon={fileIcon} width={45} />
+            </div>
+            <div>
+              <h1 className="title-value-file">{item.file}</h1>
+              <p className="file-detailMenunggu">
+                {fileExtension.toUpperCase()} <span>Klik</span>
+              </p>
+            </div>
+          </>
+        )}
+      </>
+    );
+  }
+
+  // const fileLinkElements = generateFileLinkElements();
 
   // if (isLoading)
   //   return (
@@ -101,7 +308,7 @@ function DetailTask() {
               ))}
             </div>
           )}
-          
+
           <div className="main">
             {isLoading ? (
               <SkeletonDetailTask />
@@ -134,14 +341,32 @@ function DetailTask() {
                       </p>
                       <div className="submition-task">
                         <p className="title-submition">Pengumpulan Tugas</p>
-                        <div className="file-task"></div>
-                        <button className="btn-add-task">
-                          <Icon icon="ic:round-plus" width="20"></Icon>
-                          <p>Tambah</p>
-                        </button>
-                        <button className="btn-submit-task">
+                        <div className="file-task">
+                          {selectedFile && <p>{selectedFile.name}</p>}
+                          {/* Tambahkan tampilan preview lainnya sesuai kebutuhan */}
+                        </div>
+                        
+                        <div>
+
+                          
+                          <input
+                            type="file"
+                            id="file-input"
+                            hidden
+                            onChange={handleFileUpload}
+                          />
+                          <button
+                            className="btn-add-task"
+                            onClick={handleButtonClick}
+                          >
+                            <Icon icon="ic:round-plus" width="20" />
+                            <p>Tambah</p>
+                          </button>
+                        </div>
+                        <button className="btn-submit-task" type="submit">
                           <p>Kirim</p>
                         </button>
+                        
                       </div>
                     </div>
                   ))}

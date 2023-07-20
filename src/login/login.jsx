@@ -73,15 +73,15 @@ function Login() {
       });
   };
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
 
   return (
     <div className="container-login">
