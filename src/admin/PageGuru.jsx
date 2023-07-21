@@ -20,7 +20,6 @@ function BerandaGuru() {
   const navText = "Data Guru";
   const navigate = useNavigate();
   const [detailGuru, setDetailGuru] = useState([]);
-  const [isShowNotifSucces, setisShowNotifSucces] = useState(false);
 
   const saveToken = sessionStorage.getItem("token");
 
@@ -73,29 +72,47 @@ function BerandaGuru() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showSuccess = () => {
+  const showSuccessDelete = () => {
     const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showSuccessAddCode = () => {
+    const popupLogout = document.querySelector("#popup-success-addCode");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeSuccess = () => {
     const popupLogout = document.querySelector("#popup-success");
+    const messageCode = document.querySelector("#popup-success-addCode");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
+    setTimeout(() => (messageCode.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    messageCode.style.animation = "slide-up 0.3s ease-in-out";
     window.location.reload();
   };
 
-  const showFailed = () => {
+  const showFailedDelete = () => {
     const popupLogout = document.querySelector("#popup-Failed");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
+  const showFailedAddCode = () => {
+    const popupLogout = document.querySelector("#popup-Failed-addCode");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
   const closeFailed = () => {
-    const popupLogout = document.querySelector("#popup-Failed");
-    setTimeout(() => (popupLogout.style.display = "none"), 250);
-    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    const messageDelete = document.querySelector("#popup-Failed"); 
+    const messageCode = document.querySelector("#popup-Failed-addCode");
+    setTimeout(() => (messageDelete.style.display = "none"), 250);
+    setTimeout(() => (messageCode.style.display = "none"), 250);
+    messageDelete.style.animation = "slide-up 0.3s ease-in-out";
+    messageCode.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const showDeletePopup = () => {
@@ -137,17 +154,13 @@ function BerandaGuru() {
       .then((response) => {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus");
-        // Refresh halaman atau ambil ulang data setelah penghapusan
-        // window.location.reload();
-        // getGuru();
         closeDeletePopup();
-        // setisShowNotifSucces(true);
-        showSuccess();
+        showSuccessDelete();
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
-        showFailed();
+        showFailedDelete();
         closeDeletePopup();
       });
   };
@@ -369,9 +382,10 @@ function BerandaGuru() {
         .then((result) => {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan refresh window
-          window.location.reload();
-
-          navigate("/admin/pageguru");
+          // window.location.reload();
+          showSuccessAddCode();
+          closeKodePopup();
+          // navigate("/admin/pageguru");
 
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
           setFormKode({
@@ -386,6 +400,7 @@ function BerandaGuru() {
           console.error("Terjadi kesalahan saat menambahkan data:", error);
           setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
           setIsSubmitting(false);
+          showFailedAddCode();
         });
     }
   }, [isSubmitting, formKode]);
@@ -921,7 +936,8 @@ function BerandaGuru() {
           </form>
         </div>
 
-        {/* {isShowNotifSucces && ( */}
+        {/* messege delete */}
+
         <div id="popup-success">
           <div className="detail-success">
             <Icon
@@ -943,7 +959,6 @@ function BerandaGuru() {
             </button>
           </div>
         </div>
-        {/* )} */}
 
         <div id="popup-Failed">
           <div className="detail-Failed">
@@ -966,6 +981,56 @@ function BerandaGuru() {
             </button>
           </div>
         </div>
+
+        {/* end messege delete */}
+
+        {/* message add kode */}
+
+        <div id="popup-success-addCode">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Berhasil Menambahkan Kode Guru</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed-addCode">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img
+                src={ImgFailed}
+                alt="Delete Failed"
+                className="img-Failed"
+              />
+            </div>
+            <p className="desc-Failed">Gagal Menambahkan Kode Guru</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        {/* end message add kode */}
 
         <div className="popup-forget" id="popup-forget">
           <form action="" className="detail-forget-password">

@@ -148,48 +148,43 @@
     /* Animasi skeleton berjalan selamanya */
 }
 
-/* .card-AddAssets-left {
-    margin-top: 30px;
-}
-
-.mata-pelajaran {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 30px;
-    color: var(--color-primer);
-}
-
-.nama-guru-AddAssets {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: px;
-    color: var(--color-primer);
-}
-
-.kelas-AddAssets {
-    right: 0;
+.hover-card-AddAssets {
+    cursor: pointer;
     position: absolute;
-    padding: 4px 18px;
-    background: #4B4B4B;
-    height: max-content;
-    border-radius: 0px 7px 0px 10px;
-    color: var(--color-primer);
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 1;
+    transition: 0.5s;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.container-delete {
+.hover-card-AddAssets .con-btn-card-AddAssets {
+    display: flex;
+    gap: 15px;
+}
+
+.hover-card-AddAssets .con-btn-card-AddAssets .btn-delete-AddAssets {
+    background: #BC2525;
+    color: #fff;
+}
+
+.hover-card-AddAssets .con-btn-card-AddAssets .btn-delete-AddAssets:hover {
+    background: #7F1B1B;
+}
+
+.hover-card-AddAssets .con-btn-card-AddAssets button {
+    border: none;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    position: absolute;
-    background: #BC2525;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    z-index: 3;
-} */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    /* padding: 13px; */
+    cursor: pointer;
+}

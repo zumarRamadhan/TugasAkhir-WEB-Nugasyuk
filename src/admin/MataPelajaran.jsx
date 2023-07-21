@@ -8,6 +8,8 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import ImgDelete from "../assets/imgDelete.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif"; 
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -75,11 +77,14 @@ function MataPelajaran() {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus");
         // Refresh halaman atau ambil ulang data setelah penghapusan
-        window.location.reload();
+        // window.location.reload();
+        showSuccess();
+        closeDeletePopup();
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailed();
       });
   };
 
@@ -90,6 +95,35 @@ function MataPelajaran() {
     setTimeout(() => (popupDelete.style.display = "none"), 250);
     popupDelete.style.animation = "slide-up 0.3s ease-in-out";
   };
+
+      // messege
+
+      const showSuccess = () => {
+        const popupLogout = document.querySelector("#popup-success");
+        popupLogout.style.display = "flex";
+        popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+      };
+    
+      const closeSuccess = () => {
+        const popupLogout = document.querySelector("#popup-success");
+        setTimeout(() => (popupLogout.style.display = "none"), 250);
+        popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+        window.location.reload();
+      };
+    
+      const showFailed = () => {
+        const popupLogout = document.querySelector("#popup-Failed");
+        popupLogout.style.display = "flex";
+        popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+      };
+    
+      const closeFailed = () => {
+        const popupLogout = document.querySelector("#popup-Failed");
+        setTimeout(() => (popupLogout.style.display = "none"), 250);
+        popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+      };
+    
+      // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -144,6 +178,7 @@ function MataPelajaran() {
   const [dataMapel, setDataMapel] = useState({});
   const [currentHover, setCurrentHover] = useState(null);
   const [currentMapel, setCurrentMapel] = useState(null);
+  const [isCardLoading, setCardLoading] = useState(true);
 
   const handleEditClick = (id) => {
     // Ambil data guru dari API berdasarkan id
@@ -176,6 +211,7 @@ function MataPelajaran() {
 
         setDataCardMapel(responseAPI.data);
         setIsLoading(false);
+        setCardLoading(false);
       })
       .catch((err) => {
         console.log("terjadi kesalahan: ", err);
@@ -234,22 +270,23 @@ function MataPelajaran() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataCardMapel && !isError)
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // } else
+  if (dataCardMapel && !isError)
     return (
       <div>
         {/* <Sidebar/> */}
@@ -300,10 +337,10 @@ function MataPelajaran() {
         <div className="container-content">
           <Navigation text={navText} />
           <main className="main">
-            <div className="header-mapel">
-              <div className="header-mapel-left">
+            <div className="header-matapelajaran">
+              <div className="header-matapelajaran-left">
                 <button
-                  className="btn-add-mapel"
+                  className="btn-add-matapelajaran"
                   onClick={() => navigate("/admin/matapelajaran/add")}
                 >
                   <Icon icon="ic:round-plus" width="20"></Icon>
@@ -341,16 +378,25 @@ function MataPelajaran() {
               </div>
             </div>
 
-            <div className="content-mapel">
+            <div className="content-matapelajaran">
               {dataNotFound ? (
                 <div className="dataNotFound">
                   <h2>Data Tidak Ditemukan</h2>
                 </div>
+              ) : isCardLoading ? (
+                <div className="con-card-matapelajaran">
+                  <div className="cardAddAssets-skeleton"></div>
+                  <div className="cardAddAssets-skeleton"></div>
+                  <div className="cardAddAssets-skeleton"></div>
+                  <div className="cardAddAssets-skeleton"></div>
+                  <div className="cardAddAssets-skeleton"></div>
+                  <div className="cardAddAssets-skeleton"></div>
+                </div>
               ) : (
-                <div className="con-card-mapel">
+                <div className="con-card-matapelajaran">
                   {renderData.map((data) => (
                     <div
-                      className="card-mapel"
+                      className="card-matapelajaran"
                       key={data.id}
                       onMouseEnter={() => setCurrentHover(data.id)}
                       onMouseLeave={() => setCurrentHover(null)}
@@ -358,24 +404,24 @@ function MataPelajaran() {
                       <img
                         src={`https://www.nugasyuk.my.id/public/${data.file_asset}`}
                         alt=""
-                        className="image-card-mapel"
+                        className="image-card-matapelajaran"
                       />
-                      <div className="content-card-mapel">
-                        <div className="card-mapel-left">
-                          <p className="mata-pelajaran">{data.nama_mapel}</p>
-                          <p className="nama-guru-mapel">{data.nama_guru}</p>
+                      <div className="content-card-matapelajaran">
+                        <div className="card-matapelajaran-left">
+                          <p className="mata-pelajaran-guru">{data.nama_mapel}</p>
+                          <p className="nama-guru-matapelajaran">{data.nama_guru}</p>
                         </div>
-                        <div className="kelas-mapel">{`${
+                        <div className="kelas-matapelajaran">{`${
                           data.tingkat_ke
                         } ${data.nama_jurusan.toUpperCase()} ${
                           data.nama_kelas
                         }`}</div>
                       </div>
                       {currentHover === data.id && (
-                        <div className="hover-card-mapel">
-                          <div className="con-btn-card-mapel">
+                        <div className="hover-card-matapelajaran">
+                          <div className="con-btn-card-matapelajaran">
                             <button
-                              className="btn-edit-mapel"
+                              className="btn-edit-matapelajaran"
                               onClick={() => handleEditClick(data.id)}
                             >
                               <Icon
@@ -384,7 +430,7 @@ function MataPelajaran() {
                               />
                             </button>
                             <button
-                              className="btn-delete-mapel"
+                              className="btn-delete-matapelajaran"
                               onClick={() => showDeletePopup(data.id)}
                             >
                               <Icon
@@ -464,6 +510,50 @@ function MataPelajaran() {
                 Hapus
               </button>
             </div>
+          </div>
+        </div>
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus!!!</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img
+                src={ImgFailed}
+                alt="Delete Failed"
+                className="img-Failed"
+              />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 

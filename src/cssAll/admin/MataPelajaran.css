@@ -7,13 +7,13 @@
     --color-sekunder: #D8F0FF;
 }
 
-.header-mapel {
+.header-matapelajaran {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.btn-add-mapel {
+.btn-add-matapelajaran {
     display: flex;
     background: var(--color-aksen);
     color: var(--color-primer);
@@ -27,16 +27,16 @@
     gap: 5px;
 }
 
-.btn-add-mapel:hover {
+.btn-add-matapelajaran:hover {
     background: #1D77AF;
 }
 
-.header-mapel-left {
+.header-matapelajaran-left {
     display: flex;
     gap: 15px;
 }
 
-.header-mapel .header-mapel-left .btn-add-mapel p {
+.header-matapelajaran .header-matapelajaran-left .btn-add-matapelajaran p {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
@@ -45,7 +45,7 @@
     color: #FFFFFF;
 }
 
-.detail-jumlah-mapel {
+.detail-jumlah-matapelajaran {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
@@ -87,18 +87,47 @@
 
 /*  */
 
-.content-mapel {
+.content-matapelajaran {
     margin-top: 30px;
 }
 
-.con-card-mapel {
-    /* position: relative; */
+.con-card-matapelajaran {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
-.hover-card-mapel{
+@media screen and (max-width: 650px) {
+    .con-card-matapelajaran {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media screen and (min-width: 1020px) {
+    .con-card-matapelajaran {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1180px) {
+    .con-card-matapelajaran {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 1640px) {
+    .con-card-matapelajaran {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (min-width: 2030px) {
+    .con-card-matapelajaran {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.hover-card-matapelajaran {
     cursor: pointer;
     position: absolute;
     background: rgba(0, 0, 0, 0.25);
@@ -113,29 +142,29 @@
     align-items: center;
 }
 
-.hover-card-mapel .con-btn-card-mapel{
+.hover-card-matapelajaran .con-btn-card-matapelajaran {
     display: flex;
     gap: 15px;
 }
 
-.hover-card-mapel .con-btn-card-mapel .btn-edit-mapel{
+.hover-card-matapelajaran .con-btn-card-matapelajaran .btn-edit-matapelajaran {
     background: #FFF625;
 }
 
-.hover-card-mapel .con-btn-card-mapel .btn-edit-mapel:hover{
+.hover-card-matapelajaran .con-btn-card-matapelajaran .btn-edit-matapelajaran:hover {
     background: #959514;
 }
 
-.hover-card-mapel .con-btn-card-mapel .btn-delete-mapel{
+.hover-card-matapelajaran .con-btn-card-matapelajaran .btn-delete-matapelajaran {
     background: #BC2525;
     color: #fff;
 }
 
-.hover-card-mapel .con-btn-card-mapel .btn-delete-mapel:hover{
+.hover-card-matapelajaran .con-btn-card-matapelajaran .btn-delete-matapelajaran:hover {
     background: #7F1B1B;
 }
 
-.hover-card-mapel .con-btn-card-mapel button{
+.hover-card-matapelajaran .con-btn-card-matapelajaran button {
     border: none;
     width: 40px;
     height: 40px;
@@ -147,36 +176,18 @@
     cursor: pointer;
 }
 
-@media only screen and (max-width: 1240px) {
-    .con-card-mapel {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media only screen and (min-width: 1640px) {
-    .con-card-mapel {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media only screen and (min-width: 2030px) {
-    .con-card-mapel {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
-.card-mapel {
+.card-matapelajaran {
     border-radius: 20px;
     max-width: 405px;
     position: relative;
 }
 
-.image-card-mapel {
+.image-card-matapelajaran {
     width: 100%;
     height: auto;
 }
 
-.content-card-mapel {
+.content-card-matapelajaran {
     display: flex;
     /* justify-content: space-between; */
     /* transform: translateY(-300%); */
@@ -186,11 +197,11 @@
     width: 100%;
 }
 
-.card-mapel-left {
+.card-matapelajaran-left {
     margin-top: 30px;
 }
 
-.mata-pelajaran {
+.mata-pelajaran-guru {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
@@ -198,7 +209,7 @@
     color: var(--color-primer);
 }
 
-.nama-guru-mapel {
+.nama-guru-matapelajaran {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
@@ -206,7 +217,7 @@
     color: var(--color-primer);
 }
 
-.kelas-mapel {
+.kelas-matapelajaran {
     right: 0;
     position: absolute;
     padding: 4px 18px;

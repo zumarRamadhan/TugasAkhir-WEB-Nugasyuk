@@ -8,12 +8,15 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import ImgDelete from "../assets/imgDelete.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 function AddAssets() {
   const navText = "Assets";
   const navigate = useNavigate();
+  const [detailAssets, setDetailAssets] = useState([]);
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -31,6 +34,35 @@ function AddAssets() {
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
+
+  // messege
+
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    window.location.reload();
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -77,7 +109,7 @@ function AddAssets() {
   const [isError, setIsError] = useState(false);
   const [currentHover, setCurrentHover] = useState(null);
   const [currentAssets, setCurrentAssets] = useState(null);
-  const [detailAssets, setDetailAssets] = useState(null);
+
   const [dataAssets, setDataAssets] = useState([]);
   const [isCardLoading, setCardLoading] = useState(true);
 
@@ -113,23 +145,23 @@ function AddAssets() {
 
     // setDetailAssets(null);
 
-    // axios
-    //   .get("https://www.nugasyuk.my.id/api/admin/assets/" + currentHover, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${saveToken}`,
-    //     },
-    //   })
-    //   .then((result) => {
-    //     const responseAPI = result.data;
-    //     setDetailAssets(responseAPI.data);
-    //     setIsLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     console.log("terjadi kesalahan: ", err);
-    //     setIsError(true);
-    //     setIsLoading(false);
-    //   });
+    axios
+      .get("https://www.nugasyuk.my.id/api/admin/asset/" + currentHover, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        setDetailAssets(responseAPI.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
   };
 
   const handleDelete = () => {
@@ -144,12 +176,14 @@ function AddAssets() {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus");
         // Refresh halaman atau ambil ulang data setelah penghapusan
-        window.location.reload();
+        // window.location.reload();
+        showSuccess();
         closeDeletePopup();
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailed();
       });
   };
 
@@ -246,10 +280,10 @@ function AddAssets() {
                         className="image-card-AddAssets"
                       />
                       {currentHover === data.id && (
-                        <div className="hover-card-mapel">
-                          <div className="con-btn-card-mapel">
+                        <div className="hover-card-AddAssets">
+                          <div className="con-btn-card-AddAssets">
                             <button
-                              className="btn-delete-mapel"
+                              className="btn-delete-AddAssets"
                               onClick={() => showDeletePopup(data.id)}
                             >
                               <Icon
@@ -303,15 +337,25 @@ function AddAssets() {
               <img src={ImgDelete} alt="" className="img-Delete" />
             </div>
             <p className="desc-Delete">Anda yakin ingin menghapus?</p>
-            {/* {detailMapel && detailMapel.nama_mapel && detailMapel.nama_guru ? (
+            {detailAssets && detailAssets.data && detailAssets.data.length > 0 ? (
               <p className="desc-Delete">
-                {detailMapel.nama_mapel} // {detailMapel.nama_guru}
+                {detailAssets.data.map((subject, index) => (
+                  <span key={subject.id}>
+                    {index > 0 && ", "}
+                    {subject.nama_mapel}
+                  </span>
+                ))}
               </p>
             ) : (
               <p className="desc-Delete">
-                Tunggu Sebentar,Data Sedang Dalam Proses...
+                {detailAssets &&
+                detailAssets.data &&
+                detailAssets.data.length === 0
+                  ? "Assets Tidak Terhubung Dengan Kelas Mata Pelajaran Manapun"
+                  : "Tunggu Sebentar, Data Sedang Dalam Proses..."}
               </p>
-            )} */}
+            )}
+
             <div className="con-btn-Delete">
               <button
                 type="button"
@@ -328,6 +372,46 @@ function AddAssets() {
                 Hapus
               </button>
             </div>
+          </div>
+        </div>
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus!!!</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 
