@@ -29,7 +29,6 @@ function DetailTask() {
     document.getElementById("file-input").click();
   };
 
-  
   useEffect(() => {
     getDetail();
     // submitTask();
@@ -41,31 +40,19 @@ function DetailTask() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // useEffect(() => {
-  //   if (isSubmitting) {
-  //     fileTask.append('file', FormData.file);
-  //   }
-  // });
 
   function getDetail() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/tugas/" + id, {
+      .get(`https://www.nugasyuk.my.id/api/murid/tugas/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
         },
       })
       .then((response) => {
-        // setDataDetailTugas(response.data.data);
-        // setisLoading(false);
+        setDataDetailTugas(response.data.data);
+        setisLoading(false);
 
-        console.log("Data berhasil ditambahkan");
-
-        setFileTask({
-          file: ""
-        })
-
-        setIsSubmitting(false);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengambil data", error);
@@ -73,12 +60,6 @@ function DetailTask() {
         setisError(true);
       });
   }
-
-  
-  // const handleSubmit = (e) => {
-  //   console.log(e.target.value);
-  //   setFile(e.target.value);
-  // };
   
   const [file, setFile] = useState({
     file: ""
@@ -86,34 +67,9 @@ function DetailTask() {
 
 
   const [errors, setErrors] = useState({});
-
-  // useEffect(() => {
-  //   if (isSubmitting) {
-  //     axios
-  //     .post(`https://www.nugasyuk.my.id/api/murid/tugas/${id}`, file,{
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         Authorization: `Bearer ${saveToken}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       // props.userAuthentication()
-  //       console.log(response.data);
-  //       sessionStorage.setItem("token", response.data.token);
-  //       // alert('login Berhasil')
-  //     })
-  //         .catch((error) => {
-  //       console.error("Terjadi kesalahan saat mengambil data", error);
-  //       setisError({ submit: "Terjadi kesalahan saat menambahkan data"});
-  //       setIsSubmitting(false);
-  //     });
-  //   }
-  // }, [isSubmitting, file]);
-
   
     const handleFileUpload = (event) => {
-      const file = event.target.file[0]
+      const file = event.target.files[0]
 
       const formData = new FormData();
       formData.append("file", file);
@@ -126,7 +82,7 @@ function DetailTask() {
         },
       })
       .then((response)=>{
-        console.log(response)
+        console.log(response.data.data)
       })
       .catch((error)=>{
         console.log(error)
@@ -160,19 +116,6 @@ function DetailTask() {
     
     return errors;
   }
-
-  // const handleFileInputChange = (e) => {
-  //   setSelectedFile(e.target.files[0]);
-  //   // Lakukan pengolahan berikutnya dengan file yang dipilih
-  // };
-
-
-
-  // const submitTask = (e) => {
-  //   e.preventDefault();
-  //   console.log("mengirim data");
-    
-  // };
 
   function generateFileIcons(item) {
     let fileIcon;
