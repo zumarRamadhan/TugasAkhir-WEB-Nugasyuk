@@ -257,7 +257,6 @@ nav .navbar img {
 }
 
 /*  */
-
 .detail-notif {
     display: flex;
     flex-direction: column;
@@ -325,6 +324,14 @@ nav .navbar img {
     font-family: 'Poppins';
 }
 
+.yesterday{
+    margin-top: 30px;
+     font-size: 15px;
+    font-weight: 400;
+    color: #797979;
+    font-family: 'Poppins';
+}
+
 .icon-notif{
     width: 60px;
     height: 60px;
@@ -334,6 +341,12 @@ nav .navbar img {
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+}
+
+.content-notif{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .name-notif{

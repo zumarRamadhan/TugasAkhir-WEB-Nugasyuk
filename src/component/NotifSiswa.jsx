@@ -89,7 +89,7 @@ function NotificationSiswa() {
           </div>
           )}
   
-          <p className="day">Kemarin</p>
+          <p className="yesterday">Kemarin</p>
           {tugasKemarin.map((item) => 
             <div className="notif">
             <div className="icon-notif">
