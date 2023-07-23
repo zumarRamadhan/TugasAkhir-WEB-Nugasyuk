@@ -136,6 +136,36 @@ option[selected] {
     border-radius: 10px;
 }
 
+@media screen and (max-width: 600px) {
+    .content-kelas {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1240px) {
+    .content-kelas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1241px) {
+    .content-kelas {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 1650px) {
+    .content-kelas {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (min-width: 1850px) {
+    .content-kelas {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
 .card-kelas {
     display: flex;
     align-items: center;
@@ -145,6 +175,35 @@ option[selected] {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
     border-radius: 20px;
     padding: 10px;
+}
+
+.cardKelas-skeleton {
+    height: 15vh;
+    border-radius: 20px;
+    width: 100%;
+    background: #f5f5f5;
+    /* Warna latar belakang skeleton */
+    background-image: linear-gradient(90deg,
+            #f5f5f5 25%,
+            #e8e8e8 37%,
+            #f5f5f5 63%);
+    /* Animasi gradien skeleton */
+    background-size: 200% 100%;
+    /* Ukuran gradien skeleton */
+    animation: skeleton-loading 1.5s infinite linear;
+    /* Animasi skeleton berjalan selamanya */
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: -200% 0;
+        /* Mulai dari posisi luar layar */
+    }
+
+    100% {
+        background-position: 200% 0;
+        /* Pindah ke posisi luar layar sebaliknya */
+    }
 }
 
 .con-card-right-kelas {
@@ -205,7 +264,7 @@ option[selected] {
 
 .popup-menu-kelas ul li {
     padding-right: 30px;
-    
+
 }
 
 .popup-menu-kelas ul li a {

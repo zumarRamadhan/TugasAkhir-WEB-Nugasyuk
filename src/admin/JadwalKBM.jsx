@@ -8,25 +8,104 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import imgCardKbm from "../assets/guru-karman.svg";
-import { useState } from "react";
+import ImgDelete from "../assets/imgDelete.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-function JadwalKBM() {
+function EditFormAddJadwal() {
   const navText = "Jadwal KBM";
   const navigate = useNavigate();
   const [detailHariJadwal, setDetailHariJadwal] = useState([]);
   const [detailJadwal, setDetailJadwal] = useState([]);
-
+  const [deleteJadwal, setDeleteJadwal] = useState([]);
   const saveToken = sessionStorage.getItem("token");
   const [dataKelas, setDataKelas] = useState([]);
   const [dataJadwal, setDataJadwal] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCardLoading, setCardLoading] = useState(true);
+  const [isPopupLoading, setPopupLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [selected, setSelected] = useState(null);
+
+  const handleEditClick = (id) => {
+    // Ambil data guru dari API berdasarkan id
+
+    // pindah ke halaman form edit
+    navigate(`/admin/jadwalkbm/edit/${id}`);
+    console.log(dataJadwal);
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
     detailProfile.style.transform = "translateX(350px)";
+  };
+
+  const showDeletePopup = (id) => {
+    setSelected(id);
+    const background = document.querySelector("#popup-Delete");
+    background.style.display = "flex";
+    const popupDelete = document.querySelector(".detail-Delete");
+    popupDelete.style.display = "block";
+    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+
+    setDeleteJadwal(null);
+
+    axios
+      .get("https://www.nugasyuk.my.id/api/admin/jadwal/data/" + id, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        if (responseAPI.success && responseAPI.data.length > 0) {
+          setDeleteJadwal(responseAPI.data[0]);
+          setIsLoading(false);
+        } else {
+          setIsError(true);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`https://www.nugasyuk.my.id/api/admin/jadwal/${selected}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        // Handling successful deletion
+        console.log("Data berhasil dihapus");
+        // Close the delete popup and detail popup
+        closeDeletePopup();
+        closeDetailKbm();
+        showSuccess();
+      })
+      .catch((error) => {
+        // Handling error when deleting data
+        console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailed();
+      });
+  };
+
+  const closeDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const popupDelete = document.querySelector(".detail-Delete");
+    setTimeout(() => (popupDelete.style.display = "none"), 250);
+    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const showLogoutPopup = () => {
@@ -40,6 +119,36 @@ function JadwalKBM() {
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
+
+  // messege
+
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    // Fetch the updated data after deletion
+    fetchData(selectedValue);
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -87,34 +196,8 @@ function JadwalKBM() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showDetailKbm = () => {
-    const popupForget = document.querySelector(".popup-kbm");
-    popupForget.style.display = "flex";
-    popupForget.style.animation = "slide-down 0.3s ease-in-out";
-
-    axios
-      .get("https://www.nugasyuk.my.id/api/admin/jadwal/1?kelas=1" , {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((result) => {
-        console.log("data API", result.data);
-        const responseAPI = result.data;
-        setDetailHariJadwal(responseAPI.hari);
-        setDetailJadwal(responseAPI.tugas);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setIsError(true);
-        setIsLoading(false);
-      });
-  };
-
   useState(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/admin/kelas", {
         headers: {
@@ -134,32 +217,22 @@ function JadwalKBM() {
         setIsError(true);
         setIsLoading(false);
       });
-
-      axios
-      .get("https://www.nugasyuk.my.id/api/admin/jadwal?kelas=1", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((result) => {
-        console.log("data API", result.data);
-        const responseAPI = result.data;
-        setDataJadwal(responseAPI.data);
-        setCardLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setIsError(true);
-        setCardLoading(false);
-      });
   }, []);
 
-  function handleSelectChange(event) {
-    const selectedValue = event.target.value;
-    const url = `https://www.nugasyuk.my.id/api/admin/jadwal?kelas=${selectedValue}`;
+  const [selectedValue, setSelectedValue] = useState(1);
 
-    setCardLoading(true);
+  useEffect(() => {
+    fetchData(selectedValue);
+  }, []); // Fetch data on initial component mount
+
+  const showDetailKbm = (id) => {
+    setPopupLoading(true);
+    const popupForget = document.querySelector(".popup-kbm");
+    popupForget.style.display = "flex";
+    popupForget.style.animation = "slide-down 0.3s ease-in-out";
+
+    const url = `https://www.nugasyuk.my.id/api/admin/jadwal/${id}?kelas=${selectedValue}`;
+
     axios
       .get(url, {
         headers: {
@@ -170,7 +243,33 @@ function JadwalKBM() {
       .then((result) => {
         console.log("data API", result.data);
         const responseAPI = result.data;
+        setDetailHariJadwal(responseAPI.hari);
+        setDetailJadwal(responseAPI.data);
+        setIsLoading(false);
+        setPopupLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(false);
+        setIsLoading(false);
+        setPopupLoading(false);
+      });
+  };
 
+  const fetchData = (selectedValue) => {
+    const url = `https://www.nugasyuk.my.id/api/admin/jadwal?kelas=${selectedValue}`;
+    setCardLoading(true);
+
+    axios
+      .get(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        console.log("data API", result.data);
+        const responseAPI = result.data;
         setDataJadwal(responseAPI.data);
         setCardLoading(false);
       })
@@ -179,25 +278,31 @@ function JadwalKBM() {
         setIsError(true);
         setCardLoading(false);
       });
-  }
+  };
 
-//   if (isLoading) {
-//     return (
-//       <div id="load">
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//         <div>.</div>
-//       </div>
-//     );
-//   } else
-   if (dataJadwal && dataKelas && !isError)
+  const handleSelectChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedValue(selectedValue);
+    fetchData(selectedValue); // Fetch data again when the select value changes
+  };
+
+  //   if (isLoading) {
+  //     return (
+  //       <div id="load">
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //         <div>.</div>
+  //       </div>
+  //     );
+  //   } else
+  if (dataJadwal && dataKelas && !isError)
     return (
       <div>
         {/* <Sidebar/> */}
@@ -303,7 +408,7 @@ function JadwalKBM() {
                             icon="ic:round-navigate-next"
                             width="30"
                             className="iconDetail-Kbm"
-                            onClick={showDetailKbm}
+                            onClick={() => showDetailKbm(cardKbm.id)}
                           />
                         </div>
                       </div>
@@ -325,43 +430,107 @@ function JadwalKBM() {
                 className="btn-close"
                 onClick={closeDetailKbm}
               />
-              <h2>{detailHariJadwal}</h2>
+              {isPopupLoading ? (
+                <h2>Loading...</h2>
+              ) : (
+                <h2>{detailHariJadwal}</h2>
+              )}
             </div>
-            <div className="con-popup-kbm">
-              {detailJadwal.map((dataGuru) => (
-              <div className="popup-card-kbm">
-                <div className="test1">
-                  <img
-                    src={`https://www.nugasyuk.my.id/public/${dataGuru.foto_profile}`}
-                    alt=""
-                    className="image-card-kbm"
-                  />
-                  <div className="mapel-card-kbm">
-                    <p>{dataGuru.nama_mapel}</p>
-                    <p className="guruPengampu">{dataGuru.nama_guru}</p>
-                  </div>
-                </div>
-                <div className="test2">
-                  <div className="jamMengajar">
-                  <span>{dataGuru.waktu_mulai.substring(0, 5)}</span> - <span>{dataGuru.waktu_selesai.substring(0, 5)}</span>
-                  </div>
-                  <div className="con-btn-card-kbm">
-                    <div
-                      className="btn-edit-card-kbm"
-                      onClick={() => navigate("/admin/jadwalkbm/tambah")}
-                    >
-                      <Icon
-                        icon="material-symbols:edit-outline-rounded"
-                        width="15"
-                      />
-                    </div>
-                    <div className="btn-delete-card-kbm">
-                      <Icon icon="ic:round-delete-outline" />
-                    </div>
-                  </div>
-                </div>
+            {isPopupLoading ? (
+              <div className="con-popup-kbm">
+                <div className="skeleton-popup-card-kbm"></div>
+                <div className="skeleton-popup-card-kbm"></div>
+                <div className="skeleton-popup-card-kbm"></div>
+                <div className="skeleton-popup-card-kbm"></div>
               </div>
-            ))}
+            ) : (
+              <div className="con-popup-kbm">
+                {detailJadwal.length === 0 ? ( // Check if detailJadwal is empty
+                  <div className="popup-card-kbm">
+                    <div className="dataKosong">Data Tidak Ditemukan</div>
+                  </div>
+                ) : (
+                  detailJadwal.map((dataGuru) => (
+                    <div className="popup-card-kbm">
+                      <div className="test1">
+                        <img
+                          src={`https://www.nugasyuk.my.id/public/${dataGuru.foto_profile}`}
+                          alt=""
+                          className="image-card-kbm"
+                        />
+                        <div className="mapel-card-kbm">
+                          <p>{dataGuru.nama_mapel}</p>
+                          <p className="guruPengampu">{dataGuru.nama_guru}</p>
+                        </div>
+                      </div>
+                      <div className="test2">
+                        <div className="jamMengajar">
+                          <span>{dataGuru.waktu_mulai.substring(0, 5)}</span> -{" "}
+                          <span>{dataGuru.waktu_selesai.substring(0, 5)}</span>
+                        </div>
+                        <div className="con-btn-card-kbm">
+                          <div
+                            className="btn-edit-card-kbm"
+                            onClick={() => handleEditClick(dataGuru.id)}
+                          >
+                            <Icon
+                              icon="material-symbols:edit-outline-rounded"
+                              width="15"
+                            />
+                          </div>
+                          <div
+                            className="btn-delete-card-kbm"
+                            onClick={() => showDeletePopup(dataGuru.id)}
+                          >
+                            <Icon icon="ic:round-delete-outline" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="popup-Delete" id="popup-Delete">
+          <div className="detail-Delete">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeDeletePopup}
+            />
+            <div className="image-Delete">
+              <img src={ImgDelete} alt="" className="img-Delete" />
+            </div>
+            <p className="desc-Delete">Anda yakin ingin menghapus?</p>
+            {/* memanggil nama sesuai data yang di pilih */}
+            {deleteJadwal && deleteJadwal.nama_guru ? (
+              <p className="desc-Delete">
+                {deleteJadwal.nama_guru} // {deleteJadwal.nama_mapel}
+              </p>
+            ) : (
+              <p className="desc-Delete">
+                Tunggu Sebentar,Data Sedang Dalam Proses...
+              </p>
+            )}
+            <div className="con-btn-Delete">
+              <button
+                type="button"
+                className="btn-batal"
+                onClick={closeDeletePopup}
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                className="btn-delete"
+                onClick={handleDelete}
+              >
+                Hapus
+              </button>
             </div>
           </div>
         </div>
@@ -386,6 +555,46 @@ function JadwalKBM() {
                 Keluar
               </button>
             </div>
+          </div>
+        </div>
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus!!!</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 
@@ -502,4 +711,4 @@ function JadwalKBM() {
     );
 }
 
-export default JadwalKBM;
+export default EditFormAddJadwal;

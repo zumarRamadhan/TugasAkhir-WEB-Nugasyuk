@@ -16,6 +16,8 @@ import FormAddMurid from './admin/FormAddMurid';
 import FormAddGuru from './admin/FormAddGuru';
 import FormAddKelas from './admin/FormAddKelas';
 import FormAddMapel from './admin/FormAddMapel';
+import FormAddAssets from './admin/FormAddAssets';
+import EditFormAddJadwal from './admin/EditFormAddJadwalKbm';
 import EditFormAddGuru from './admin/EditFormAddGuru';
 import EditFormAddMurid from './admin/EditFormAddMurid';
 import EditFormAddKelas from './admin/EditFormAddKelas';
@@ -84,12 +86,14 @@ function App() {
         <Route path="/admin/matapelajaran" element={<MataPelajaran/>} />
         <Route path="/admin/jadwalkbm" element={<JadwalKBM/>} />
         <Route path="/admin/pageassets" element={<PageAssets/>} />
-        <Route path="/admin/pageassets/add" element={<AddAssets/>} />
+        <Route path="/admin/pageassets/list" element={<AddAssets/>} />
         <Route path="/admin/jadwalkbm/tambah" element={<FormAddJadwalKbm/>} />
         <Route path="/admin/pagemurid/add" element={<FormAddMurid/>} />
         <Route path="/admin/pageguru/add" element={<FormAddGuru/>} />
         <Route path="/admin/pagekelas/add" element={<FormAddKelas/>} />
         <Route path="/admin/matapelajaran/add" element={<FormAddMapel/>} />
+        <Route path="/admin/pageassets/list/add" element={<FormAddAssets/>} />
+        <Route path="/admin/jadwalkbm/edit/:id" element={<EditFormAddJadwal/>} />
         <Route path="/admin/pageguru/edit/:id" element={<EditFormAddGuru/>} />
         <Route path="/admin/pagemurid/edit/:id" element={<EditFormAddMurid/>} />
         <Route path="/admin/pagekelas/edit/:id" element={<EditFormAddKelas/>} />

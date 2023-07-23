@@ -10,6 +10,8 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import iconaksi from "../assets/iconaksi.svg";
 import ImgDelete from "../assets/imgDelete.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
 import vektorProfile from "../assets/vektorProfile.svg";
 import axios from "axios";
 // import { useHistory } from "react-router-dom";
@@ -18,6 +20,40 @@ function BerandaGuru() {
   const navText = "Data Guru";
   const navigate = useNavigate();
   const [detailGuru, setDetailGuru] = useState([]);
+
+  const saveToken = sessionStorage.getItem("token");
+
+  const [dataTabelGuru, setDataTabelGuru] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [active, setActive] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterValue, setFilterValue] = useState("all");
+  const [guruData, setGuruData] = useState({});
+
+  function getGuru() {
+    axios
+      .get("https://www.nugasyuk.my.id/api/admin/guru", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        console.log("data API", result.data);
+        const responseAPI = result.data;
+
+        setDataTabelGuru(responseAPI.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  }
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -34,6 +70,49 @@ function BerandaGuru() {
     const popupLogout = document.querySelector("#popup-logout");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showSuccessDelete = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showSuccessAddCode = () => {
+    const popupLogout = document.querySelector("#popup-success-addCode");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    const messageCode = document.querySelector("#popup-success-addCode");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    setTimeout(() => (messageCode.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    messageCode.style.animation = "slide-up 0.3s ease-in-out";
+    window.location.reload();
+  };
+
+  const showFailedDelete = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showFailedAddCode = () => {
+    const popupLogout = document.querySelector("#popup-Failed-addCode");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const messageDelete = document.querySelector("#popup-Failed"); 
+    const messageCode = document.querySelector("#popup-Failed-addCode");
+    setTimeout(() => (messageDelete.style.display = "none"), 250);
+    setTimeout(() => (messageCode.style.display = "none"), 250);
+    messageDelete.style.animation = "slide-up 0.3s ease-in-out";
+    messageCode.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const showDeletePopup = () => {
@@ -75,12 +154,14 @@ function BerandaGuru() {
       .then((response) => {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus");
-        // Refresh halaman atau ambil ulang data setelah penghapusan
-        window.location.reload();
+        closeDeletePopup();
+        showSuccessDelete();
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailedDelete();
+        closeDeletePopup();
       });
   };
 
@@ -210,18 +291,6 @@ function BerandaGuru() {
     );
   }
 
-  const saveToken = sessionStorage.getItem("token");
-
-  const [dataTabelGuru, setDataTabelGuru] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [active, setActive] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-  const [filterValue, setFilterValue] = useState("all");
-  const [guruData, setGuruData] = useState({});
-
   // const navigate = useNavigate();
 
   // const handleEditClick = (id) => {
@@ -313,9 +382,10 @@ function BerandaGuru() {
         .then((result) => {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan refresh window
-          window.location.reload();
-
-          navigate("/admin/pageguru");
+          // window.location.reload();
+          showSuccessAddCode();
+          closeKodePopup();
+          // navigate("/admin/pageguru");
 
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
           setFormKode({
@@ -330,31 +400,15 @@ function BerandaGuru() {
           console.error("Terjadi kesalahan saat menambahkan data:", error);
           setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
           setIsSubmitting(false);
+          showFailedAddCode();
         });
     }
   }, [isSubmitting, formKode]);
 
   // end kodeGuru
-  useEffect(() => {
-    axios
-      .get("https://www.nugasyuk.my.id/api/admin/guru", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((result) => {
-        console.log("data API", result.data);
-        const responseAPI = result.data;
 
-        setDataTabelGuru(responseAPI.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setIsError(true);
-        setIsLoading(false);
-      });
+  useEffect(() => {
+    getGuru();
   }, []);
 
   useEffect(() => {
@@ -410,22 +464,23 @@ function BerandaGuru() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataTabelGuru && !isError)
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // } else
+  if (dataTabelGuru && !isError)
     return (
       <div>
         <aside>
@@ -662,6 +717,9 @@ function BerandaGuru() {
                       {item.nama_mapel}
                     </p>
                   ))}
+                  {detailGuru.mengajar.length === 0 && (
+                    <p className="mengajar-detailGuru">Data Kosong</p>
+                  )}
                 </div>
               ) : (
                 <div className="con-mengajar-detailGuru">
@@ -670,6 +728,7 @@ function BerandaGuru() {
                   </p>
                 </div>
               )}
+
               <h3>Kode :</h3>
               {detailGuru && detailGuru.kode ? (
                 <div className="con-kode-detailGuru">
@@ -678,6 +737,9 @@ function BerandaGuru() {
                       {item.kode_guru}
                     </p>
                   ))}
+                  {detailGuru.kode.length === 0 && (
+                    <p className="kode-detailGuru">Data Kosong</p>
+                  )}
                 </div>
               ) : (
                 <div className="con-kode-detailGuru">
@@ -697,6 +759,9 @@ function BerandaGuru() {
                         item.nama_kelas}
                     </p>
                   ))}
+                  {detailGuru.mengajar_kelas.length === 0 && (
+                    <p className="mengajarKelas-detailGuru">Data Kosong</p>
+                  )}
                 </div>
               ) : (
                 <div className="con-mengajarkelas-detailGuru">
@@ -770,56 +835,6 @@ function BerandaGuru() {
             </div>
           </div>
         </div>
-
-        {/* <div className="popup-Kode" id="popup-Kode">
-          <form action="" className="detail-Kode">
-            <div className="navbar-detail-Kode">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer" }}
-                onClick={closeKodePopup}
-              />
-              <h2>Tambah Kode Guru</h2>
-              <div className="divKosong"></div>
-            </div>
-            <p className="judul-form">Nama Guru</p>
-            <input
-              type="text"
-              id=""
-              value=""
-              disabled
-              readonly
-              className="inputGuru"
-            />
-            <p className="judul-form">Kode Guru</p>
-            <input type="text" id="inputKode" className="inputGuru" />
-            <p className="judul-form">Mata Pelajaran</p>
-            <input type="text" id="inputMapel" className="inputGuru" />
-
-            <p className="judul-form">Status Mata Pelajaran</p>
-
-            <div className="switch-inputKode">
-              <div className="con-radio">
-                <label>
-                  <input type="radio" name="jawaban" value="produktif" />
-                  produktif
-                </label>
-                <label>
-                  <input type="radio" name="jawaban" value="normadaf" />
-                  normadaf
-                </label>
-                <label>
-                  <input type="radio" name="jawaban" value="bk" />
-                  bk
-                </label>
-              </div>
-            </div>
-            <button type="submit" className="btn-sumbitKode">
-              Tambah
-            </button>
-          </form>
-        </div> */}
 
         <div className="popup-Kode" id="popup-Kode">
           <form onSubmit={handleSubmit} className="detail-Kode">
@@ -920,6 +935,102 @@ function BerandaGuru() {
             </button>
           </form>
         </div>
+
+        {/* messege delete */}
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img
+                src={ImgFailed}
+                alt="Delete Failed"
+                className="img-Failed"
+              />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        {/* end messege delete */}
+
+        {/* message add kode */}
+
+        <div id="popup-success-addCode">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Berhasil Menambahkan Kode Guru</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed-addCode">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img
+                src={ImgFailed}
+                alt="Delete Failed"
+                className="img-Failed"
+              />
+            </div>
+            <p className="desc-Failed">Gagal Menambahkan Kode Guru</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        {/* end message add kode */}
 
         <div className="popup-forget" id="popup-forget">
           <form action="" className="detail-forget-password">

@@ -1,22 +1,20 @@
-import "../cssAll/admin/AddAssets.css";
+import "../cssAll/admin/formAddJadwalKbm.css";
 import { Icon } from "@iconify/react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import Navigation from "../component/NavigationBar";
 import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
-import ImgDelete from "../assets/imgDelete.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function AddAssets() {
-  const navText = "Assets";
+function FormAddJadwalKbm() {
+  const navText = "Edit data jadwal KBM";
   const navigate = useNavigate();
-  const [detailAssets, setDetailAssets] = useState([]);
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -47,7 +45,7 @@ function AddAssets() {
     const popupLogout = document.querySelector("#popup-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    window.location.reload();
+    navigate("/admin/jadwalkbm");
   };
 
   const showFailed = () => {
@@ -103,19 +101,127 @@ function AddAssets() {
       passwordTypeConfirm === "password" ? "text" : "password"
     );
   }
-
+  const { id } = useParams();
   const saveToken = sessionStorage.getItem("token");
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [currentHover, setCurrentHover] = useState(null);
-  const [currentAssets, setCurrentAssets] = useState(null);
 
-  const [dataAssets, setDataAssets] = useState([]);
-  const [isCardLoading, setCardLoading] = useState(true);
+  const [dataJadwal, setDataJadwal] = useState([]);
+  const [formData, setFormData] = useState({
+    // Inisialisasi nilai awal untuk setiap field formulir
+    hariId: "",
+    jamId: "",
+    mapelId: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    // console.log(formData.email_wali_murid);
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/asset", {
+      .get(`https://www.nugasyuk.my.id/api/admin/jadwal/data/${id}`, {
+        headers: {
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.data.length > 0) {
+          const firstData = response.data.data[0];
+          setDataJadwal(firstData);
+          setFormData({
+            hariId: firstData.hari_id,
+            jamId: firstData.jam_id,
+            mapelId: firstData.mapel_id,
+          });
+        }
+      })
+      
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data jadwal:", error);
+      });
+  }, [id, saveToken]);
+
+  useEffect(() => {
+    if (isSubmitting) {
+      // console.log(formData.file);
+
+      const form = new FormData();
+      form.append("hari_id", formData.hariId);
+      form.append("jam_id", formData.jamId);
+      form.append("mapel_id", formData.mapelId);
+
+      axios
+        .post(`https://www.nugasyuk.my.id/api/admin/jadwal/${id}`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+          },
+        })
+        .then((result) => {
+          console.log("Data berhasil ditambahkan");
+          // Lakukan tindakan yang diperlukan setelah menambahkan data
+          showSuccess();
+
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setFormData({
+            // Set nilai awal untuk setiap field formulir
+            hariId: "",
+            jamId: "",
+            mapelId: "",
+          });
+          setIsSubmitting(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat menambahkan data:", error);
+          setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
+          setIsSubmitting(false);
+          showFailed();
+        });
+    }
+  }, [isSubmitting, formData, id, navigate]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    if (!data.hariId) {
+      errors.hariId = "Hari harus diisi";
+    }
+
+    if (!data.jamId) {
+      errors.jamId = "Pilih pelajaran mulai jam ke berapa!!";
+    }
+
+    if (!data.mapelId) {
+      errors.mapelId = "Pilih Mata Pelaajaran!!";
+    }
+
+    return errors;
+  };
+
+  const [dataMapel, setDataMapel] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  useState(() => {
+    setIsLoading(true);
+    axios
+      .get("https://www.nugasyuk.my.id/api/admin/mapel", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -124,9 +230,9 @@ function AddAssets() {
       .then((result) => {
         console.log("data API", result.data);
         const responseAPI = result.data;
-        setDataAssets(responseAPI.data);
+
+        setDataMapel(responseAPI.data);
         setIsLoading(false);
-        setCardLoading(false);
       })
       .catch((err) => {
         console.log("terjadi kesalahan: ", err);
@@ -135,67 +241,93 @@ function AddAssets() {
       });
   }, []);
 
-  const showDeletePopup = (id) => {
-    setCurrentAssets(id);
-    const background = document.querySelector("#popup-Delete");
-    background.style.display = "flex";
-    const popupDelete = document.querySelector(".detail-Delete");
-    popupDelete.style.display = "block";
-    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+  const dataHari = [
+    {
+      id: 1,
+      hari: "Senin",
+    },
+    {
+      id: 2,
+      hari: "Selasa",
+    },
+    {
+      id: 3,
+      hari: "Rabu",
+    },
+    {
+      id: 4,
+      hari: "Kamis",
+    },
+    {
+      id: 5,
+      hari: "Jumat",
+    },
+    {
+      id: 6,
+      hari: "Sabtu",
+    },
+  ];
 
-    // setDetailAssets(null);
+  const dataJamPelajaran = [
+    {
+      id: 1,
+      jamKe: 1,
+    },
+    {
+      id: 2,
+      jamKe: 2,
+    },
+    {
+      id: 3,
+      jamKe: 3,
+    },
+    {
+      id: 4,
+      jamKe: 4,
+    },
+    {
+      id: 5,
+      jamKe: 5,
+    },
+    {
+      id: 6,
+      jamKe: 6,
+    },
+    {
+      id: 7,
+      jamKe: 7,
+    },
+    {
+      id: 8,
+      jamKe: 8,
+    },
+    {
+      id: 9,
+      jamKe: 9,
+    },
+    {
+      id: 10,
+      jamKe: 10,
+    },
+    {
+      id: 11,
+      jamKe: 11,
+    },
+    {
+      id: 12,
+      jamKe: 12,
+    },
+    {
+      id: 13,
+      jamKe: 13,
+    },
+    {
+      id: 14,
+      jamKe: 14,
+    },
+  ];
 
-    axios
-      .get("https://www.nugasyuk.my.id/api/admin/asset/" + currentHover, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((result) => {
-        const responseAPI = result.data;
-        setDetailAssets(responseAPI.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setIsError(true);
-        setIsLoading(false);
-      });
-  };
-
-  const handleDelete = () => {
-    axios
-      .delete(`https://www.nugasyuk.my.id/api/admin/asset/${currentAssets}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((response) => {
-        // Penanganan ketika penghapusan berhasil
-        console.log("Data berhasil dihapus");
-        // Refresh halaman atau ambil ulang data setelah penghapusan
-        // window.location.reload();
-        showSuccess();
-        closeDeletePopup();
-      })
-      .catch((error) => {
-        // Penanganan ketika terjadi kesalahan saat menghapus data
-        console.log("Terjadi kesalahan saat menghapus data:", error);
-        showFailed();
-      });
-  };
-
-  const closeDeletePopup = () => {
-    const background = document.querySelector("#popup-Delete");
-    setTimeout(() => (background.style.display = "none"), 300);
-    const popupDelete = document.querySelector(".detail-Delete");
-    setTimeout(() => (popupDelete.style.display = "none"), 250);
-    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
-  };
-
-  if (dataAssets && !isError)
+  if (dataMapel && !isError)
     return (
       <div>
         {/* <Sidebar/> */}
@@ -229,75 +361,121 @@ function AddAssets() {
               <Icon icon="fluent-mdl2:education" width="20" />
               Mata Pelajaran
             </li>
-            <li onClick={() => navigate("/admin/jadwalkbm")}>
+            <li className="active" onClick={() => navigate("/admin/jadwalkbm")}>
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li
-              className="active"
-              onClick={() => navigate("/admin/pageassets")}
-            >
+            <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
             </li>
           </ul>
         </aside>
-
         <div className="container-content">
           <Navigation text={navText} />
           <main className="main">
-            <div className="header-AddAssets">
-              <div className="header-AddAssets-left">
-                <button className="btn-add-AddAssets" onClick={() => navigate('/admin/pageassets/list/add')}>
-                <Icon icon="ic:round-plus" width="20"></Icon>
-                  <p>Tambah Data</p>
-                </button>
-              </div>
-            </div>
-
-            <div className="content-AddAssets">
-              {isCardLoading ? (
-                <div className="con-card-AddAssets">
-                  <div className="cardAddAssets-skeleton"></div>
-                  <div className="cardAddAssets-skeleton"></div>
-                  <div className="cardAddAssets-skeleton"></div>
-                  <div className="cardAddAssets-skeleton"></div>
-                  <div className="cardAddAssets-skeleton"></div>
-                  <div className="cardAddAssets-skeleton"></div>
-                </div>
-              ) : (
-                <div className="con-card-AddAssets">
-                  {dataAssets.map((data) => (
-                    <div
-                      className="card-AddAssets"
-                      key={data.id}
-                      onMouseEnter={() => setCurrentHover(data.id)}
-                      onMouseLeave={() => setCurrentHover(null)}
+            <div className="content-formKbm">
+              <form onSubmit={handleSubmit} className="container-formKbm">
+                <div className="con-formKbm">
+                  <div className="title-formKbm">Mata Pelajaran</div>
+                  {formData && formData.mapelId ? (
+                    <select
+                      name="mapelId"
+                      id="mapelId"
+                      value={formData.mapelId}
+                      onChange={handleChange}
+                      className="selectClass"
                     >
-                      <img
-                        src={`https://www.nugasyuk.my.id/public/${data.file_asset}`}
-                        alt=""
-                        className="image-card-AddAssets"
-                      />
-                      {currentHover === data.id && (
-                        <div className="hover-card-AddAssets">
-                          <div className="con-btn-card-AddAssets">
-                            <button
-                              className="btn-delete-AddAssets"
-                              onClick={() => showDeletePopup(data.id)}
-                            >
-                              <Icon
-                                icon="material-symbols:delete-outline-rounded"
-                                width="20"
-                              />
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                      <option value="" disabled>
+                        Pilih Mata Pelajaran
+                      </option>
+                      {dataMapel.map((data) => (
+                        <option key={data.id} value={data.id}>
+                          {data.nama_mapel} // {data.nama_guru} //
+                          {data.tingkat_ke +
+                            " " +
+                            data.nama_jurusan.toUpperCase() +
+                            " " +
+                            data.nama_kelas}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
+                  {errors.assetId && (
+                    <span className="error">{errors.assetId}</span>
+                  )}
                 </div>
-              )}
+
+                <div className="con-formKbm">
+                  <div className="title-formKbm">Hari</div>
+                  {formData && formData.hariId ? (
+                    <select
+                      name="hariId"
+                      id="hariId"
+                      value={formData.hariId}
+                      onChange={handleChange}
+                      className="selectClass"
+                    >
+                      <option hidden>-- Hari --</option>
+                      {dataHari.map((data) => (
+                        <option value={data.id}>{data.hari}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
+                  {errors.hariId && (
+                    <span className="error">{errors.hariId}</span>
+                  )}
+                </div>
+
+                <div className="con-formKbm">
+                  <div className="title-formKbm">Jam ke</div>
+                  {formData && formData.jamId ? (
+                    <select
+                      name="jamId"
+                      id="jamId"
+                      value={formData.jamId}
+                      onChange={handleChange}
+                      className="selectClass"
+                    >
+                      <option hidden>-- Jam Ke --</option>
+                      {dataJamPelajaran.map((data) => (
+                        <option value={data.id}>{data.jamKe}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
+                  {errors.jamId && (
+                    <span className="error">{errors.jamId}</span>
+                  )}
+                </div>
+
+                <div className="con-btn-form">
+                  <button
+                    type="submit"
+                    className="btn-form"
+                    style={{ cursor: "pointer" }}
+                  >
+                    Simpan perubahan
+                  </button>
+                </div>
+              </form>
             </div>
           </main>
         </div>
@@ -325,56 +503,6 @@ function AddAssets() {
           </div>
         </div>
 
-        <div className="popup-Delete" id="popup-Delete">
-          <div className="detail-Delete">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeDeletePopup}
-            />
-            <div className="image-Delete">
-              <img src={ImgDelete} alt="" className="img-Delete" />
-            </div>
-            <p className="desc-Delete">Anda yakin ingin menghapus?</p>
-            {detailAssets && detailAssets.data && detailAssets.data.length > 0 ? (
-              <p className="desc-Delete">
-                {detailAssets.data.map((subject, index) => (
-                  <span key={subject.id}>
-                    {index > 0 && ", "}
-                    {subject.nama_mapel}
-                  </span>
-                ))}
-              </p>
-            ) : (
-              <p className="desc-Delete">
-                {detailAssets &&
-                detailAssets.data &&
-                detailAssets.data.length === 0
-                  ? "Assets Tidak Terhubung Dengan Kelas Mata Pelajaran Manapun"
-                  : "Tunggu Sebentar, Data Sedang Dalam Proses..."}
-              </p>
-            )}
-
-            <div className="con-btn-Delete">
-              <button
-                type="button"
-                className="btn-batal"
-                onClick={closeDeletePopup}
-              >
-                Batal
-              </button>
-              <button
-                type="button"
-                className="btn-delete"
-                onClick={handleDelete}
-              >
-                Hapus
-              </button>
-            </div>
-          </div>
-        </div>
-
         <div id="popup-success">
           <div className="detail-success">
             <Icon
@@ -390,7 +518,7 @@ function AddAssets() {
                 className="img-success"
               />
             </div>
-            <p className="desc-success">Data Berhasil Di Hapus!!!</p>
+            <p className="desc-success">Data Berhasil Di Perbarui</p>
             <button className="btn-success" onClick={closeSuccess}>
               Kembali
             </button>
@@ -408,8 +536,13 @@ function AddAssets() {
             <div className="image-Failed">
               <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
-            <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
-            <button className="btn-Failed" onClick={closeFailed}>
+            <p className="desc-Failed">
+              Data Gagal Di Perbarui, Pastikan data tidak menambrak pada jam pelajaran yang sama, jika anda tidak melakukan perubahan silahkan tekan tombol keluar
+            </p>
+            <button className="btn-out" onClick={() => navigate("/admin/jadwalkbm")}>
+              Keluar
+            </button>
+            <button className="btn-Failed2" onClick={closeFailed}>
               Kembali
             </button>
           </div>
@@ -528,4 +661,4 @@ function AddAssets() {
     );
 }
 
-export default AddAssets;
+export default FormAddJadwalKbm;

@@ -8,6 +8,8 @@ import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 
 function EditFormAddKelas() {
@@ -36,6 +38,35 @@ function EditFormAddKelas() {
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
+
+  // messege
+
+  const showSuccessChanges = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    navigate("/admin/pagekelas");
+  };
+
+  const showFailedChanges = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const closeForgetPopupAndClearInput = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -95,12 +126,12 @@ function EditFormAddKelas() {
         },
       })
       .then((response) => {
-        setKelasData(response.data.data);
+        // setKelasData(response.data.data);
         setFormData({
-            tingkatKe: response.data.data.tingkatan_id,
-            namaJurusan: response.data.data.jurusan_id,
-            namaKelas: response.data.data.nama_kelas,
-            waliKelas: response.data.data.guru_id,
+          tingkatKe: response.data.data.tingkat_ke,
+          namaJurusan: response.data.data.nama_jurusan,
+          namaKelas: response.data.data.nama_kelas,
+          waliKelas: response.data.data.guru_id,
         });
       })
       .catch((error) => {
@@ -128,13 +159,15 @@ function EditFormAddKelas() {
         .then((result) => {
           console.log("Data berhasil diperbarui");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
-          navigate("/admin/pagekelas");
-        //   setIsSubmitting(false);
+          // navigate("/admin/pagekelas");
+          showSuccessChanges();
+          //   setIsSubmitting(false);
         })
         .catch((error) => {
           console.error("Terjadi kesalahan saat memperbarui data:", error);
           setErrors({ submit: "Terjadi kesalahan saat memperbarui data" });
           setIsSubmitting(false);
+          showFailedChanges();
         });
     }
   }, [isSubmitting, formData, id, saveToken, navigate]);
@@ -265,7 +298,7 @@ function EditFormAddKelas() {
   //     </div>
   //   );
   // } else
-   if (dataGuru && !isError)
+  if (dataGuru && !isError)
     return (
       <div>
         <aside>
@@ -316,20 +349,14 @@ function EditFormAddKelas() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
                   {formData && formData.tingkatKe ? (
-                  <select
-                    name="tingkatKe"
-                    id="tingkatKe"
-                    value={formData.tingkatKe}
-                    onChange={handleChange}
-                    className="selectClass"
-                  >
-                    <option value="" selected disabled>
-                      Pilih Kelas
-                    </option>
-                    <option value="1">10</option>
-                    <option value="2">11</option>
-                    <option value="3">12</option>
-                  </select>
+                    <input
+                      name="tingkatKe"
+                      id="tingkatKe"
+                      value={formData.tingkatKe}
+                      onChange={handleChange}
+                      className="selectClass"
+                      disabled
+                    />
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -345,22 +372,14 @@ function EditFormAddKelas() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Jurusan</div>
                   {formData && formData.namaJurusan ? (
-                  <select
-                    name="namaJurusan"
-                    id="namaJurusan"
-                    value={formData.namaJurusan}
-                    onChange={handleChange}
-                    className="selectClass"
-                  >
-                    <option value="" selected disabled>
-                      Pilih Jurusan
-                    </option>
-                    <option value="1">PPLG</option>
-                    <option value="2">ANIMASI</option>
-                    <option value="3">DKV</option>
-                    <option value="4">DG</option>
-                    <option value="5">Teknik Grafika</option>
-                  </select>
+                    <input
+                      name="namaJurusan"
+                      id="namaJurusan"
+                      value={formData.namaJurusan}
+                      onChange={handleChange}
+                      className="selectClass"
+                      disabled
+                      />
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -376,15 +395,16 @@ function EditFormAddKelas() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Tingkat</div>
                   {formData && formData.namaKelas ? (
-                  <input
-                    type="text"
-                    id="namaKelas"
-                    name="namaKelas"
-                    value={formData.namaKelas}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Contoh : (1/2/3...) / (A/B/C...)"
-                  />
+                    <input
+                      type="text"
+                      id="namaKelas"
+                      name="namaKelas"
+                      value={formData.namaKelas}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      disabled
+                      placeholder="Contoh : (1/2/3...) / (A/B/C...)"
+                    />
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -398,22 +418,22 @@ function EditFormAddKelas() {
                 </div>
 
                 <div className="con-formKbm">
-                  <div className="title-formKbm">Kelas</div>
+                  <div className="title-formKbm">Wali Kelas</div>
                   {formData && formData.waliKelas ? (
-                  <select
-                    name="waliKelas"
-                    id="kelas"
-                    className="selectClass"
-                    value={formData.waliKelas}
-                    onChange={handleChange}
-                  >
-                    <option value="" selected disabled>
-                      Pilih Guru
-                    </option>
-                    {dataGuru.map((guru) => (
-                      <option value={guru.id}>{guru.nama_guru}</option>
-                    ))}
-                  </select>
+                    <select
+                      name="waliKelas"
+                      id="kelas"
+                      className="selectClass"
+                      value={formData.waliKelas}
+                      onChange={handleChange}
+                    >
+                      <option value="" selected disabled>
+                        Pilih Guru
+                      </option>
+                      {dataGuru.map((guru) => (
+                        <option value={guru.id}>{guru.nama_guru}</option>
+                      ))}
+                    </select>
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -460,6 +480,49 @@ function EditFormAddKelas() {
                 Keluar
               </button>
             </div>
+          </div>
+        </div>
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Perbarui</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Data Gagal Di Perbarui, Silahkan Periksa Apakah Ada Data Yang Sama
+              Dengan Kelas Lain!!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 

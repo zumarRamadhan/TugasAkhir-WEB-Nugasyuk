@@ -9,11 +9,11 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
-import ImgFailed from "../assets/failed.gif"; 
+import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 
-function FormAddGuru() {
-  const navText = "Tambah Data";
+function FormAddAssets() {
+  const navText = "Tambah Data Assets";
   const navigate = useNavigate();
 
   const closeDetail = () => {
@@ -33,6 +33,12 @@ function FormAddGuru() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
+  const showForgetPopup = () => {
+    const popupForget = document.querySelector("#popup-forget");
+    popupForget.style.display = "flex";
+    popupForget.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
   // messege
 
   const showSuccessAdd = () => {
@@ -45,7 +51,7 @@ function FormAddGuru() {
     const popupLogout = document.querySelector("#popup-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    navigate("/admin/pageguru");
+    navigate("/admin/pageassets/list");
   };
 
   const showFailedAdd = () => {
@@ -61,12 +67,6 @@ function FormAddGuru() {
   };
 
   // end messege
-
-  const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
-    popupForget.style.animation = "slide-down 0.3s ease-in-out";
-  };
 
   const closeForgetPopupAndClearInput = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -106,14 +106,9 @@ function FormAddGuru() {
 
   const [formData, setFormData] = useState({
     // Inisialisasi nilai awal untuk setiap field formulir
-    file: "",
-    nama: "",
-    niy: "",
-    email: "",
-    nomorTlp: "",
-    alamat: "",
-    password: "",
-    role: "",
+    fileAsset: "",
+    fileVector: "",
+    colorBackground: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -124,17 +119,12 @@ function FormAddGuru() {
       // console.log(formData.file);
 
       const form = new FormData();
-      form.append("nama_guru", formData.nama);
-      form.append("email", formData.email);
-      form.append("password", formData.password);
-      form.append("niy", formData.niy);
-      form.append("alamat", formData.alamat);
-      form.append("nomor_tlp", formData.nomorTlp);
-      form.append("role", formData.role);
-      form.append("foto_profile", formData.file);
+      form.append("file_asset", formData.fileAsset);
+      form.append("file_vector", formData.fileVector);
+      form.append("color", formData.colorBackground);
 
       axios
-        .post("https://www.nugasyuk.my.id/api/admin/guru", form, {
+        .post("https://www.nugasyuk.my.id/api/admin/asset", form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
@@ -144,27 +134,21 @@ function FormAddGuru() {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
           showSuccessAdd();
+
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
           setFormData({
             // Set nilai awal untuk setiap field formulir
-            file: "",
-            nama: "",
-            niy: "",
-            email: "",
-            nomorTlp: "",
-            alamat: "",
-            password: "",
-            konfirmasiPassword: "",
-            role: "",
+            fileAsset: "",
+            fileVector: "",
+            colorBackground: "",
           });
-
           setIsSubmitting(false);
         })
         .catch((error) => {
           console.error("Terjadi kesalahan saat menambahkan data:", error);
           setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
-          showFailedAdd();
           setIsSubmitting(false);
+          showFailedAdd();
         });
     }
   }, [isSubmitting, formData]);
@@ -189,55 +173,24 @@ function FormAddGuru() {
   const validateForm = (data) => {
     let errors = {};
 
-    // jika file lebih dari 2MB maka muncul error
-    if (data.file.size > 3000000) {
-      errors.file = "Ukuran file tidak boleh lebih dari 3MB";
-    }
-    
-    if (!data.file) {
-      errors.file = "Foto harus diisi";
+    if (data.fileAsset.size > 3000000) {
+      errors.fileAsset = "Ukuran file tidak boleh lebih dari 3MB";
     }
 
-    if (!data.nama.trim()) {
-      errors.nama = "Nama harus diisi";
+    if (!data.fileAsset) {
+      errors.fileAsset = "Assets wajib di isi";
     }
 
-    if (!data.niy.trim()) {
-      errors.niy = "NIY harus diisi";
-    } else if (!/^\d+$/.test(data.niy)) {
-      errors.niy = "NIY hanya boleh berisi angka";
+    if (data.fileVector.size > 3000000) {
+      errors.fileVector = "Ukuran file tidak boleh lebih dari 3MB";
     }
 
-    if (!data.email.trim()) {
-      errors.email = "Email harus diisi";
-    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-      errors.email = "Email tidak valid";
+    if (!data.fileVector) {
+      errors.fileVector = "Vector harus diisi";
     }
 
-    if (!data.nomorTlp.trim()) {
-      errors.nomorTlp = "Nomor telepon harus diisi";
-    } else if (!/^\d+$/.test(data.nomorTlp)) {
-      errors.nomorTlp = "Nomor telepon hanya boleh berisi angka";
-    }
-
-    if (!data.alamat.trim()) {
-      errors.alamat = "Alamat harus diisi";
-    }
-
-    if (!data.role.trim()) {
-      errors.role = "Harus memilih role";
-    }
-
-    if (data.password.trim().length < 8) {
-      errors.password = "Password harus lebih dari 8 karakter";
-    }
-
-    if (!data.password.trim()) {
-      errors.password = "Password harus diisi";
-    }
-
-    if (data.password !== data.konfirmasiPassword) {
-      errors.konfirmasiPassword = "Password tidak cocok";
+    if (!data.colorBackground) {
+      errors.colorBackground = "Background color harus diisi";
     }
 
     return errors;
@@ -249,7 +202,7 @@ function FormAddGuru() {
       const selectedFile = e.target.files[0];
       setFormData((prevState) => ({
         ...prevState,
-        file: selectedFile,
+        fileAsset: selectedFile,
       }));
 
       const reader = new FileReader();
@@ -261,14 +214,27 @@ function FormAddGuru() {
     }
   }
 
-  // useEffect(() => {
-  //   // Mengatur pratinjau gambar dari data API
-  //   if (formData) {
-  //     const previewImage = document.getElementById("previewImage");
-  //     previewImage.src = `https://www.nugasyuk.my.id/public/${formData?.foto_profile}`;
-  //     // console.log(formData.file);
-  //   }
-  // }, [formData]);
+  function handleFoto2(e) {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      setFormData((prevState) => ({
+        ...prevState,
+        fileVector: selectedFile,
+      }));
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const previewImage = document.getElementById("previewImage2");
+        previewImage.src = e.target.result;
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  }
+
+  const [dataGuru, setDataGuru] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  // console.log("data kelas", dataKelas);
 
   return (
     <div>
@@ -286,7 +252,7 @@ function FormAddGuru() {
             <Icon icon="iconoir:home-simple" width="20" />
             Beranda
           </li>
-          <li className="active" onClick={() => navigate("/admin/pageguru")}>
+          <li onClick={() => navigate("/admin/pageguru")}>
             <Icon icon="la:chalkboard-teacher" width="20" />
             Guru
           </li>
@@ -306,7 +272,7 @@ function FormAddGuru() {
             <Icon icon="uiw:date" width="20" />
             Jadwal KBM
           </li>
-          <li onClick={() => navigate("/admin/pageassets")}>
+          <li className="active" onClick={() => navigate("/admin/pageassets")}>
             <Icon icon="ic:outline-file-copy" width="20" />
             Assets
           </li>
@@ -317,153 +283,61 @@ function FormAddGuru() {
         <div className="main">
           <div className="content-formKbm">
             <form onSubmit={handleSubmit} className="container-formKbm">
-            <div className="con-formKbm">
-                <div className="title-formKbm">Profi</div>
+              <div className="con-formKbm">
+                <div className="title-formKbm">Assets Card</div>
                 <input
                   type="file"
-                  id="file"
-                  name="file"
+                  id="fileAsset"
+                  name="fileAsset"
                   className="input-formKbm"
                   // value={formData.file}
                   accept=".jpg, .png, .jpeg"
                   onChange={handleFoto}
                 />
-                {errors.file && <span className="error">{errors.file}</span>}
-                <img id="previewImage" src={formData.file} alt="Pilih foto, dan foto akan muncul di sini" />
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">Nama</div>
-                <input
-                  type="text"
-                  id="nama"
-                  name="nama"
-                  value={formData.nama_guru}
-                  onChange={handleChange}
-                  className="input-formKbm"
-                  placeholder="Tambahkan nama guru"
-                />
-                {errors.nama && <span className="error">{errors.nama}</span>}
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">NIY</div>
-                <input
-                  type="text"
-                  id="niy"
-                  name="niy"
-                  value={formData.niy}
-                  onChange={handleChange}
-                  className="input-formKbm"
-                  placeholder="Tambahkan niy guru"
-                />
-                {errors.niy && <span className="error">{errors.niy}</span>}
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">Email</div>
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="input-formKbm"
-                  placeholder="example@smkrus.schid"
-                />
-                {errors.email && <span className="error">{errors.email}</span>}
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">Nomor Tlp</div>
-                <input
-                  type="text"
-                  className="input-formKbm"
-                  placeholder="08**********"
-                  id="nomorTlp"
-                  name="nomorTlp"
-                  value={formData.nomorTlp}
-                  onChange={handleChange}
-                />
-                {errors.nomorTlp && (
-                  <span className="error">{errors.nomorTlp}</span>
+                {errors.fileAsset && (
+                  <span className="error">{errors.fileAsset}</span>
                 )}
+                <img
+                  id="previewImage"
+                  src={formData.fileAsset}
+                  alt="Pilih assets card, maka akan muncul di sini"
+                />
               </div>
 
               <div className="con-formKbm">
-                <div className="title-formKbm">Alamat</div>
+                <div className="title-formKbm">Asset Vector</div>
+                <input
+                  type="file"
+                  id="fileVector"
+                  name="fileVector"
+                  className="input-formKbm"
+                  // value={formData.fileVector}
+                  accept=".jpg, .png, .jpeg"
+                  onChange={handleFoto2}
+                />
+                {errors.fileVector && (
+                  <span className="error">{errors.fileVector}</span>
+                )}
+                <img
+                  id="previewImage2"
+                  src={formData.fileVector}
+                  alt="Pilih asset vector, maka akan muncul di sini"
+                />
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Kode Warna Background</div>
                 <input
                   type="text"
-                  id="alamat"
-                  name="alamat"
-                  value={formData.alamat}
+                  id="colorBackground"
+                  name="colorBackground"
+                  value={formData.colorBackground}
                   onChange={handleChange}
                   className="input-formKbm"
-                  placeholder="Tambahkan alamat guru"
+                  placeholder="Masukan Kode Warna Background"
                 />
-                {errors.alamat && (
-                  <span className="error">{errors.alamat}</span>
-                )}
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">Status Guru</div>
-                <div className="switch-inputKode">
-                  <div className="con-radio">
-                    <label>
-                      <input
-                        type="radio"
-                        name="role"
-                        value="1"
-                        checked={formData.role === "1"}
-                        onChange={handleChange}
-                      />
-                      Guru Biasa
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="role"
-                        value="2"
-                        checked={formData.role === "2"}
-                        onChange={handleChange}
-                      />
-                      Guru BK
-                    </label>
-                  </div>
-                </div>
-                {errors.role && <span className="error">{errors.role}</span>}
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">Password Guru </div>
-                <input
-                  type="password"
-                  className="input-formKbm"
-                  placeholder="*******"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-                {errors.password && (
-                  <span className="error">{errors.password}</span>
-                )}
-              </div>
-
-              <div className="con-formKbm">
-                <div className="title-formKbm">Konfirmasi Password Guru </div>
-                <input
-                  type="password"
-                  className="input-formKbm"
-                  placeholder="*******"
-                  id="konfirmasiPassword"
-                  name="konfirmasiPassword"
-                  value={formData.konfirmasiPassword}
-                  onChange={handleChange}
-                />
-                {errors.konfirmasiPassword && (
-                  <span className="error">{errors.konfirmasiPassword}</span>
+                {errors.colorBackground && (
+                  <span className="error">{errors.colorBackground}</span>
                 )}
               </div>
 
@@ -505,48 +379,47 @@ function FormAddGuru() {
       </div>
 
       <div id="popup-success">
-          <div className="detail-success">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeSuccess}
+        <div className="detail-success">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeSuccess}
+          />
+          <div className="image-success">
+            <img
+              src={ImgSuccess}
+              alt="Delete Success"
+              className="img-success"
             />
-            <div className="image-success">
-              <img
-                src={ImgSuccess}
-                alt="Delete Success"
-                className="img-success"
-              />
-            </div>
-            <p className="desc-success">Data Berhasil Di Tambahkan</p>
-            <button className="btn-success" onClick={closeSuccess}>
-              Kembali
-            </button>
           </div>
+          <p className="desc-success">Data Berhasil Di Tambahkan</p>
+          <button className="btn-success" onClick={closeSuccess}>
+            Kembali
+          </button>
         </div>
+      </div>
 
-        <div id="popup-Failed">
-          <div className="detail-Failed">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeFailed}
-            />
-            <div className="image-Failed">
-              <img
-                src={ImgFailed}
-                alt="Delete Failed"
-                className="img-Failed"
-              />
-            </div>
-            <p className="desc-Failed">Data Gagal Di Tambahkan, , Silahkan Periksa Apakah Ada Data Yang Sama Dengan Guru Lain!!!</p>
-            <button className="btn-Failed" onClick={closeFailed}>
-              Kembali
-            </button>
+      <div id="popup-Failed">
+        <div className="detail-Failed">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeFailed}
+          />
+          <div className="image-Failed">
+            <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
           </div>
+          <p className="desc-Failed">
+            Data Gagal Di Tambahkan, Silahkan Periksa Apakah Ada Data Yang Sama
+            Dengan Kelas Lain!!!
+          </p>
+          <button className="btn-Failed" onClick={closeFailed}>
+            Kembali
+          </button>
         </div>
+      </div>
 
       <div className="popup-forget" id="popup-forget">
         <form action="" className="detail-forget-password">
@@ -657,4 +530,4 @@ function FormAddGuru() {
   );
 }
 
-export default FormAddGuru;
+export default FormAddAssets;

@@ -9,6 +9,8 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import { useEffect, useState } from "react";
 import ImgDelete from "../assets/imgDelete.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 
 function Pagekelas() {
@@ -32,6 +34,35 @@ function Pagekelas() {
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
+
+  // messege
+
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    window.location.reload();
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -122,11 +153,13 @@ function Pagekelas() {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus");
         // Refresh halaman atau ambil ulang data setelah penghapusan
-        window.location.reload();
+        showSuccess();
+        closeDeletePopup();
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailed();
       });
   };
 
@@ -150,6 +183,7 @@ function Pagekelas() {
   const [filteredData, setFilteredData] = useState([]);
   const [filterValue, setFilterValue] = useState("all");
   const [dataKelas, setDataKelas] = useState({});
+  const [isCardLoading, setCardLoading] = useState(true);
 
   const handleEditClick = (id) => {
     // Ambil data guru dari API berdasarkan id
@@ -182,6 +216,7 @@ function Pagekelas() {
 
         setDataCardKelas(responseAPI.data);
         setIsLoading(false);
+        setCardLoading(false);
       })
       .catch((err) => {
         console.log("terjadi kesalahan: ", err);
@@ -240,22 +275,23 @@ function Pagekelas() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-  if (isLoading) {
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  } else if (dataCardKelas && !isError)
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  // } else
+  if (dataCardKelas && !isError)
     return (
       <div>
         {/* <Sidebar/> */}
@@ -351,6 +387,21 @@ function Pagekelas() {
               <div className="dataNotFound">
                 <h2>Data Tidak Ditemukan</h2>
               </div>
+            ) : isCardLoading ? (
+              <div className="content-kelas">
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+                <div className="cardKelas-skeleton"></div>
+              </div>
             ) : (
               <div className="content-kelas">
                 {renderData.map((kelas, index) => (
@@ -445,15 +496,17 @@ function Pagekelas() {
             <p className="desc-Delete">Anda yakin ingin menghapus?</p>
             {/* memanggil nama sesuai data yang di pilih */}
             {detailKelas && detailKelas.nama_jurusan ? (
-            <p className="desc-Delete">
-              {detailKelas.tingkat_ke +
-                " " +
-                detailKelas.nama_jurusan.toUpperCase() +
-                " " +
-                detailKelas.nama_kelas}
-            </p>
+              <p className="desc-Delete">
+                {detailKelas.tingkat_ke +
+                  " " +
+                  detailKelas.nama_jurusan.toUpperCase() +
+                  " " +
+                  detailKelas.nama_kelas}
+              </p>
             ) : (
-              <p className="desc-Delete">Tunggu Sebentar,Data Sedang Dalam Proses...</p>
+              <p className="desc-Delete">
+                Tunggu Sebentar,Data Sedang Dalam Proses...
+              </p>
             )}
             <div className="con-btn-Delete">
               <button
@@ -471,6 +524,46 @@ function Pagekelas() {
                 Hapus
               </button>
             </div>
+          </div>
+        </div>
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus!!!</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 

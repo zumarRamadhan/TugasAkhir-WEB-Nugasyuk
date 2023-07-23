@@ -8,6 +8,8 @@ import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif"; 
 import axios from "axios";
 
 function FormAddKelas() {
@@ -36,6 +38,35 @@ function FormAddKelas() {
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
+
+    // messege
+
+    const showSuccessAdd = () => {
+      const popupLogout = document.querySelector("#popup-success");
+      popupLogout.style.display = "flex";
+      popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    };
+  
+    const closeSuccess = () => {
+      const popupLogout = document.querySelector("#popup-success");
+      setTimeout(() => (popupLogout.style.display = "none"), 250);
+      popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+      navigate("/admin/pagekelas");
+    };
+  
+    const showFailedAdd = () => {
+      const popupLogout = document.querySelector("#popup-Failed");
+      popupLogout.style.display = "flex";
+      popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    };
+  
+    const closeFailed = () => {
+      const popupLogout = document.querySelector("#popup-Failed");
+      setTimeout(() => (popupLogout.style.display = "none"), 250);
+      popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    };
+  
+    // end messege
 
   const closeForgetPopupAndClearInput = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -104,7 +135,7 @@ function FormAddKelas() {
         .then((result) => {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
-          navigate("/admin/pagekelas");
+          showSuccessAdd();
 
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
           setFormData({
@@ -120,6 +151,7 @@ function FormAddKelas() {
           console.error("Terjadi kesalahan saat menambahkan data:", error);
           setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
           setIsSubmitting(false);
+          showFailedAdd();
         });
     }
   }, [isSubmitting, formData]);
@@ -421,6 +453,50 @@ function FormAddKelas() {
                 Keluar
               </button>
             </div>
+          </div>
+        </div>
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Tambahkan</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img
+                src={ImgFailed}
+                alt="Delete Failed"
+                className="img-Failed"
+              />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Tambahkan, Silahkan Periksa Apakah Ada Data Yang Sama Dengan Kelas Lain!!!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 

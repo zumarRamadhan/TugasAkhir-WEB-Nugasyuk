@@ -7,7 +7,7 @@ import ImgProfil from '../assets/img-profil.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';
-import pageAssets from "../assets/pageAssets.svg";
+import pageAssets from "../assets/67712-upload.gif";
 import { useState } from "react";
 
 function PageAssets(){
@@ -111,7 +111,7 @@ function PageAssets(){
                             <div className="img-pageAssets">
                                 <img src={pageAssets} alt="" className="imagepageAssets" />
                             </div>
-                            <div className="btn-pageAssets" onClick={() => navigate('/admin/pageassets/add')}>
+                            <div className="btn-pageAssets" onClick={() => navigate('/admin/pageassets/list')}>
                                 <Icon icon="material-symbols:upload-rounded" width="25"/>
                                 <p>Upload File</p>
                             </div>

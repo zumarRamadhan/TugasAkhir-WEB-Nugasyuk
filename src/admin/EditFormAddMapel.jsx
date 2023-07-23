@@ -8,6 +8,8 @@ import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 
 function EditFormAddMapel() {
@@ -30,6 +32,35 @@ function EditFormAddMapel() {
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
+
+  // messege
+
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    navigate("/admin/matapelajaran");
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -100,6 +131,7 @@ function EditFormAddMapel() {
           kelasId: response.data.data.kelas_id,
           assetId: response.data.data.asset_id,
         });
+        // console.log("data mapel", response.data.data.kode_id);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengambil data kelas:", error);
@@ -125,7 +157,7 @@ function EditFormAddMapel() {
         .then((result) => {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
-          navigate("/admin/matapelajaran");
+          showSuccess();
 
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
           setFormData({
@@ -140,9 +172,10 @@ function EditFormAddMapel() {
           console.error("Terjadi kesalahan saat menambahkan data:", error);
           setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
           setIsSubmitting(false);
+          showFailed();
         });
     }
-  }, [isSubmitting, formData, id, formData, navigate]);
+  }, [isSubmitting, formData, id, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -470,6 +503,50 @@ function EditFormAddMapel() {
                 Keluar
               </button>
             </div>
+          </div>
+        </div>
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Edit!!!</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img
+                src={ImgFailed}
+                alt="Delete Failed"
+                className="img-Failed"
+              />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Edit, Silahkan Periksa Apakah Ada Data Yang Sama Dengan Mapel Lain!!!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 
