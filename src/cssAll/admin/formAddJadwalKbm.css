@@ -58,7 +58,7 @@
     background: #1D77AF;
 }
 
-#previewImage{
+#previewImage, #previewImage2{
     margin-top: 10px;
     max-width: 300px;
     width: 100%;

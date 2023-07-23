@@ -9,7 +9,7 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
-import ImgFailed from "../assets/failed.gif"; 
+import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 
 function FormAddMapel() {
@@ -33,34 +33,34 @@ function FormAddMapel() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-      // messege
+  // messege
 
-      const showSuccess = () => {
-        const popupLogout = document.querySelector("#popup-success");
-        popupLogout.style.display = "flex";
-        popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-      };
-    
-      const closeSuccess = () => {
-        const popupLogout = document.querySelector("#popup-success");
-        setTimeout(() => (popupLogout.style.display = "none"), 250);
-        popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-        navigate("/admin/matapelajaran");
-      };
-    
-      const showFailed = () => {
-        const popupLogout = document.querySelector("#popup-Failed");
-        popupLogout.style.display = "flex";
-        popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-      };
-    
-      const closeFailed = () => {
-        const popupLogout = document.querySelector("#popup-Failed");
-        setTimeout(() => (popupLogout.style.display = "none"), 250);
-        popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-      };
-    
-      // end messege
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    navigate("/admin/matapelajaran");
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -529,13 +529,12 @@ function FormAddMapel() {
               onClick={closeFailed}
             />
             <div className="image-Failed">
-              <img
-                src={ImgFailed}
-                alt="Delete Failed"
-                className="img-Failed"
-              />
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
-            <p className="desc-Failed">Data Gagal Di Tambahkan, Silahkan Periksa Apakah Ada Data Yang Sama Dengan Mapel Lain!!!</p>
+            <p className="desc-Failed">
+              Data Gagal Di Tambahkan, Silahkan Periksa Apakah Ada Data Yang
+              Sama Dengan Mapel Lain!!!
+            </p>
             <button className="btn-Failed" onClick={closeFailed}>
               Kembali
             </button>

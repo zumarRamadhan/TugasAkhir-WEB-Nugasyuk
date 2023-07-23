@@ -248,9 +248,9 @@ function AddAssets() {
           <main className="main">
             <div className="header-AddAssets">
               <div className="header-AddAssets-left">
-                <button className="btn-add-AddAssets">
-                  <Icon icon="material-symbols:upload" width="20"></Icon>
-                  <p>Upload File</p>
+                <button className="btn-add-AddAssets" onClick={() => navigate('/admin/pageassets/list/add')}>
+                <Icon icon="ic:round-plus" width="20"></Icon>
+                  <p>Tambah Data</p>
                 </button>
               </div>
             </div>

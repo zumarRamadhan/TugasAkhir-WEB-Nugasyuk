@@ -9,6 +9,8 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import imgCardKbm from "../assets/guru-karman.svg";
 import ImgDelete from "../assets/imgDelete.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -65,7 +67,7 @@ function JadwalKBM() {
         setIsLoading(false);
       });
   };
-  
+
   const handleDelete = () => {
     axios
       .delete(`https://www.nugasyuk.my.id/api/admin/jadwal/${selected}`, {
@@ -80,15 +82,14 @@ function JadwalKBM() {
         // Close the delete popup and detail popup
         closeDeletePopup();
         closeDetailKbm();
-        // Fetch the updated data after deletion
-        fetchData(selectedValue);
+        showSuccess();
       })
       .catch((error) => {
         // Handling error when deleting data
         console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailed();
       });
   };
-  
 
   const closeDeletePopup = () => {
     const background = document.querySelector("#popup-Delete");
@@ -110,6 +111,36 @@ function JadwalKBM() {
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
+
+  // messege
+
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    // Fetch the updated data after deletion
+    fetchData(selectedValue);
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -158,7 +189,7 @@ function JadwalKBM() {
   };
 
   useState(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     axios
       .get("https://www.nugasyuk.my.id/api/admin/kelas", {
         headers: {
@@ -516,6 +547,46 @@ function JadwalKBM() {
                 Keluar
               </button>
             </div>
+          </div>
+        </div>
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus!!!</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 
