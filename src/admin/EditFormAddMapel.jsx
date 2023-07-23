@@ -131,6 +131,7 @@ function EditFormAddMapel() {
           kelasId: response.data.data.kelas_id,
           assetId: response.data.data.asset_id,
         });
+        // console.log("data mapel", response.data.data.kode_id);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengambil data kelas:", error);
@@ -174,7 +175,7 @@ function EditFormAddMapel() {
           showFailed();
         });
     }
-  }, [isSubmitting, formData, id, formData, navigate]);
+  }, [isSubmitting, formData, id, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

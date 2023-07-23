@@ -1,19 +1,19 @@
+import "../cssAll/admin/formAddJadwalKbm.css";
 import { Icon } from "@iconify/react";
-import { useState, useEffect } from "react";
-import "../cssAll/admin/FormAddMurid.css";
-import Navigation from "../component/NavigationBar";
-import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import { useNavigate, Link, useParams } from "react-router-dom";
+import IconNugasyuk from "../assets/IconNugasyuk.svg";
+import Navigation from "../component/NavigationBar";
 import ImgProfil from "../assets/img-profil.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-function EditFormAddKelas() {
-  const navText = "Edit Data Kelas";
+function FormAddJadwalKbm() {
+  const navText = "Edit data jadwal KBM";
   const navigate = useNavigate();
 
   const closeDetail = () => {
@@ -33,15 +33,9 @@ function EditFormAddKelas() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
-    popupForget.style.animation = "slide-down 0.3s ease-in-out";
-  };
-
   // messege
 
-  const showSuccessChanges = () => {
+  const showSuccess = () => {
     const popupLogout = document.querySelector("#popup-success");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
@@ -51,10 +45,10 @@ function EditFormAddKelas() {
     const popupLogout = document.querySelector("#popup-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    navigate("/admin/pagekelas");
+    navigate("/admin/jadwalkbm");
   };
 
-  const showFailedChanges = () => {
+  const showFailed = () => {
     const popupLogout = document.querySelector("#popup-Failed");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
@@ -67,6 +61,12 @@ function EditFormAddKelas() {
   };
 
   // end messege
+
+  const showForgetPopup = () => {
+    const popupForget = document.querySelector("#popup-forget");
+    popupForget.style.display = "flex";
+    popupForget.style.animation = "slide-down 0.3s ease-in-out";
+  };
 
   const closeForgetPopupAndClearInput = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -101,17 +101,15 @@ function EditFormAddKelas() {
       passwordTypeConfirm === "password" ? "text" : "password"
     );
   }
-
   const { id } = useParams();
   const saveToken = sessionStorage.getItem("token");
 
-  const [kelasData, setKelasData] = useState(null);
+  const [dataJadwal, setDataJadwal] = useState([]);
   const [formData, setFormData] = useState({
     // Inisialisasi nilai awal untuk setiap field formulir
-    tingkatKe: "",
-    namaJurusan: "",
-    namaKelas: "",
-    waliKelas: "",
+    hariId: "",
+    jamId: "",
+    mapelId: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -120,22 +118,25 @@ function EditFormAddKelas() {
   useEffect(() => {
     // console.log(formData.email_wali_murid);
     axios
-      .get(`https://www.nugasyuk.my.id/api/admin/kelas/${id}`, {
+      .get(`https://www.nugasyuk.my.id/api/admin/jadwal/data/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
         },
       })
       .then((response) => {
-        // setKelasData(response.data.data);
-        setFormData({
-          tingkatKe: response.data.data.tingkat_ke,
-          namaJurusan: response.data.data.nama_jurusan,
-          namaKelas: response.data.data.nama_kelas,
-          waliKelas: response.data.data.guru_id,
-        });
+        if (response.data.data.length > 0) {
+          const firstData = response.data.data[0];
+          setDataJadwal(firstData);
+          setFormData({
+            hariId: firstData.hari_id,
+            jamId: firstData.jam_id,
+            mapelId: firstData.mapel_id,
+          });
+        }
       })
+      
       .catch((error) => {
-        console.error("Terjadi kesalahan saat mengambil data kelas:", error);
+        console.error("Terjadi kesalahan saat mengambil data jadwal:", error);
       });
   }, [id, saveToken]);
 
@@ -144,33 +145,39 @@ function EditFormAddKelas() {
       // console.log(formData.file);
 
       const form = new FormData();
-      form.append("tingkatan", formData.tingkatKe);
-      form.append("jurusan", formData.namaJurusan);
-      form.append("nama_kelas", formData.namaKelas);
-      form.append("wali_kelas", formData.waliKelas);
+      form.append("hari_id", formData.hariId);
+      form.append("jam_id", formData.jamId);
+      form.append("mapel_id", formData.mapelId);
 
       axios
-        .post(`https://www.nugasyuk.my.id/api/admin/kelas/${id}`, form, {
+        .post(`https://www.nugasyuk.my.id/api/admin/jadwal/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
           },
         })
         .then((result) => {
-          console.log("Data berhasil diperbarui");
+          console.log("Data berhasil ditambahkan");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
-          // navigate("/admin/pagekelas");
-          showSuccessChanges();
-          //   setIsSubmitting(false);
+          showSuccess();
+
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setFormData({
+            // Set nilai awal untuk setiap field formulir
+            hariId: "",
+            jamId: "",
+            mapelId: "",
+          });
+          setIsSubmitting(false);
         })
         .catch((error) => {
-          console.error("Terjadi kesalahan saat memperbarui data:", error);
-          setErrors({ submit: "Terjadi kesalahan saat memperbarui data" });
+          console.error("Terjadi kesalahan saat menambahkan data:", error);
+          setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
           setIsSubmitting(false);
-          showFailedChanges();
+          showFailed();
         });
     }
-  }, [isSubmitting, formData, id, saveToken, navigate]);
+  }, [isSubmitting, formData, id, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -192,57 +199,29 @@ function EditFormAddKelas() {
   const validateForm = (data) => {
     let errors = {};
 
-    if (!data.tingkatKe) {
-      errors.tingkatKe = "Kelas harus diisi";
-    } else if (!/^\d+$/.test(data.tingkatKe)) {
-      errors.tingkatKe = "Tingkat kelas harus berupa angka";
+    if (!data.hariId) {
+      errors.hariId = "Hari harus diisi";
     }
 
-    if (!data.namaJurusan) {
-      errors.namaJurusan = "Nama jurusan harus diisi";
+    if (!data.jamId) {
+      errors.jamId = "Pilih pelajaran mulai jam ke berapa!!";
     }
 
-    if (!data.namaKelas) {
-      errors.namaKelas = "Tingkat harus diisi";
-    } else if (!/^\d+$/.test(data.namaKelas)) {
-      errors.namaKelas = "Tingkat harus berupa angka";
-    }
-
-    if (!data.waliKelas) {
-      errors.waliKelas = "Wali kelas harus diisi";
+    if (!data.mapelId) {
+      errors.mapelId = "Pilih Mata Pelaajaran!!";
     }
 
     return errors;
   };
 
-  function handleFoto(e) {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      setFormData((prevState) => ({
-        ...prevState,
-        file: selectedFile,
-      }));
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const previewImage = document.getElementById("previewImage");
-        previewImage.src = e.target.result;
-      };
-      reader.readAsDataURL(selectedFile);
-    }
-  }
-
-  const [dataGuru, setDataGuru] = useState([]);
+  const [dataMapel, setDataMapel] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  // console.log("data kelas", dataKelas);
 
-  // setIsLoading(true);
   useState(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/guru", {
+      .get("https://www.nugasyuk.my.id/api/admin/mapel", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -252,7 +231,7 @@ function EditFormAddKelas() {
         console.log("data API", result.data);
         const responseAPI = result.data;
 
-        setDataGuru(responseAPI.data);
+        setDataMapel(responseAPI.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -261,46 +240,97 @@ function EditFormAddKelas() {
         setIsLoading(false);
       });
   }, []);
-  // useState(() => {
-  //   axios
-  //     .get("https://www.nugasyuk.my.id/api/admin/kelas", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       const responseAPI = result.data;
 
-  //       setDataKelas(responseAPI.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setIsError(true);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
-  // if (isLoading) {
-  //   return (
-  //     <div id="load">
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //     </div>
-  //   );
-  // } else
-  if (dataGuru && !isError)
+  const dataHari = [
+    {
+      id: 1,
+      hari: "Senin",
+    },
+    {
+      id: 2,
+      hari: "Selasa",
+    },
+    {
+      id: 3,
+      hari: "Rabu",
+    },
+    {
+      id: 4,
+      hari: "Kamis",
+    },
+    {
+      id: 5,
+      hari: "Jumat",
+    },
+    {
+      id: 6,
+      hari: "Sabtu",
+    },
+  ];
+
+  const dataJamPelajaran = [
+    {
+      id: 1,
+      jamKe: 1,
+    },
+    {
+      id: 2,
+      jamKe: 2,
+    },
+    {
+      id: 3,
+      jamKe: 3,
+    },
+    {
+      id: 4,
+      jamKe: 4,
+    },
+    {
+      id: 5,
+      jamKe: 5,
+    },
+    {
+      id: 6,
+      jamKe: 6,
+    },
+    {
+      id: 7,
+      jamKe: 7,
+    },
+    {
+      id: 8,
+      jamKe: 8,
+    },
+    {
+      id: 9,
+      jamKe: 9,
+    },
+    {
+      id: 10,
+      jamKe: 10,
+    },
+    {
+      id: 11,
+      jamKe: 11,
+    },
+    {
+      id: 12,
+      jamKe: 12,
+    },
+    {
+      id: 13,
+      jamKe: 13,
+    },
+    {
+      id: 14,
+      jamKe: 14,
+    },
+  ];
+
+  if (dataMapel && !isError)
     return (
       <div>
+        {/* <Sidebar/> */}
         <aside>
           <h1
             className="title-form-login"
@@ -323,7 +353,7 @@ function EditFormAddKelas() {
               <Icon icon="ph:student" width="20" />
               Murid
             </li>
-            <li className="active" onClick={() => navigate("/admin/pagekelas")}>
+            <li onClick={() => navigate("/admin/pagekelas")}>
               <Icon icon="fluent:class-24-regular" width="20" />
               Kelas
             </li>
@@ -331,7 +361,7 @@ function EditFormAddKelas() {
               <Icon icon="fluent-mdl2:education" width="20" />
               Mata Pelajaran
             </li>
-            <li onClick={() => navigate("/admin/jadwalkbm")}>
+            <li className="active" onClick={() => navigate("/admin/jadwalkbm")}>
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
@@ -343,95 +373,31 @@ function EditFormAddKelas() {
         </aside>
         <div className="container-content">
           <Navigation text={navText} />
-          <div className="main">
+          <main className="main">
             <div className="content-formKbm">
               <form onSubmit={handleSubmit} className="container-formKbm">
                 <div className="con-formKbm">
-                  <div className="title-formKbm">Kelas</div>
-                  {formData && formData.tingkatKe ? (
-                    <input
-                      name="tingkatKe"
-                      id="tingkatKe"
-                      value={formData.tingkatKe}
-                      onChange={handleChange}
-                      className="selectClass"
-                      disabled
-                    />
-                  ) : (
-                    <input
-                      value="Data Sedang Dalam Proses..."
-                      disabled
-                      className="input-formKbm"
-                    />
-                  )}
-                  {errors.tingkatKe && (
-                    <span className="error">{errors.tingkatKe}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Jurusan</div>
-                  {formData && formData.namaJurusan ? (
-                    <input
-                      name="namaJurusan"
-                      id="namaJurusan"
-                      value={formData.namaJurusan}
-                      onChange={handleChange}
-                      className="selectClass"
-                      disabled
-                      />
-                  ) : (
-                    <input
-                      value="Data Sedang Dalam Proses..."
-                      disabled
-                      className="input-formKbm"
-                    />
-                  )}
-                  {errors.namaJurusan && (
-                    <span className="error">{errors.namaJurusan}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Tingkat</div>
-                  {formData && formData.namaKelas ? (
-                    <input
-                      type="text"
-                      id="namaKelas"
-                      name="namaKelas"
-                      value={formData.namaKelas}
-                      onChange={handleChange}
-                      className="input-formKbm"
-                      disabled
-                      placeholder="Contoh : (1/2/3...) / (A/B/C...)"
-                    />
-                  ) : (
-                    <input
-                      value="Data Sedang Dalam Proses..."
-                      disabled
-                      className="input-formKbm"
-                    />
-                  )}
-                  {errors.namaKelas && (
-                    <span className="error">{errors.namaKelas}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Wali Kelas</div>
-                  {formData && formData.waliKelas ? (
+                  <div className="title-formKbm">Mata Pelajaran</div>
+                  {formData && formData.mapelId ? (
                     <select
-                      name="waliKelas"
-                      id="kelas"
-                      className="selectClass"
-                      value={formData.waliKelas}
+                      name="mapelId"
+                      id="mapelId"
+                      value={formData.mapelId}
                       onChange={handleChange}
+                      className="selectClass"
                     >
-                      <option value="" selected disabled>
-                        Pilih Guru
+                      <option value="" disabled>
+                        Pilih Mata Pelajaran
                       </option>
-                      {dataGuru.map((guru) => (
-                        <option value={guru.id}>{guru.nama_guru}</option>
+                      {dataMapel.map((data) => (
+                        <option key={data.id} value={data.id}>
+                          {data.nama_mapel} // {data.nama_guru} //
+                          {data.tingkat_ke +
+                            " " +
+                            data.nama_jurusan.toUpperCase() +
+                            " " +
+                            data.nama_kelas}
+                        </option>
                       ))}
                     </select>
                   ) : (
@@ -441,8 +407,62 @@ function EditFormAddKelas() {
                       className="input-formKbm"
                     />
                   )}
-                  {errors.waliKelas && ( //change
-                    <span className="error">{errors.waliKelas}</span>
+                  {errors.assetId && (
+                    <span className="error">{errors.assetId}</span>
+                  )}
+                </div>
+
+                <div className="con-formKbm">
+                  <div className="title-formKbm">Hari</div>
+                  {formData && formData.hariId ? (
+                    <select
+                      name="hariId"
+                      id="hariId"
+                      value={formData.hariId}
+                      onChange={handleChange}
+                      className="selectClass"
+                    >
+                      <option hidden>-- Hari --</option>
+                      {dataHari.map((data) => (
+                        <option value={data.id}>{data.hari}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
+                  {errors.hariId && (
+                    <span className="error">{errors.hariId}</span>
+                  )}
+                </div>
+
+                <div className="con-formKbm">
+                  <div className="title-formKbm">Jam ke</div>
+                  {formData && formData.jamId ? (
+                    <select
+                      name="jamId"
+                      id="jamId"
+                      value={formData.jamId}
+                      onChange={handleChange}
+                      className="selectClass"
+                    >
+                      <option hidden>-- Jam Ke --</option>
+                      {dataJamPelajaran.map((data) => (
+                        <option value={data.id}>{data.jamKe}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      value="Data Sedang Dalam Proses..."
+                      disabled
+                      className="input-formKbm"
+                    />
+                  )}
+                  {errors.jamId && (
+                    <span className="error">{errors.jamId}</span>
                   )}
                 </div>
 
@@ -457,7 +477,7 @@ function EditFormAddKelas() {
                 </div>
               </form>
             </div>
-          </div>
+          </main>
         </div>
 
         <div className="popup-logout" id="popup-logout">
@@ -517,10 +537,12 @@ function EditFormAddKelas() {
               <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
             <p className="desc-Failed">
-              Data Gagal Di Perbarui, Silahkan Periksa Apakah Ada Data Yang Sama
-              Dengan Kelas Lain!!!
+              Data Gagal Di Perbarui, Pastikan data tidak menambrak pada jam pelajaran yang sama, jika anda tidak melakukan perubahan silahkan tekan tombol keluar
             </p>
-            <button className="btn-Failed" onClick={closeFailed}>
+            <button className="btn-out" onClick={() => navigate("/admin/jadwalkbm")}>
+              Keluar
+            </button>
+            <button className="btn-Failed2" onClick={closeFailed}>
               Kembali
             </button>
           </div>
@@ -639,4 +661,4 @@ function EditFormAddKelas() {
     );
 }
 
-export default EditFormAddKelas;
+export default FormAddJadwalKbm;

@@ -14,7 +14,7 @@ import ImgFailed from "../assets/failed.gif";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function JadwalKBM() {
+function EditFormAddJadwal() {
   const navText = "Jadwal KBM";
   const navigate = useNavigate();
   const [detailHariJadwal, setDetailHariJadwal] = useState([]);
@@ -28,6 +28,14 @@ function JadwalKBM() {
   const [isPopupLoading, setPopupLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [selected, setSelected] = useState(null);
+
+  const handleEditClick = (id) => {
+    // Ambil data guru dari API berdasarkan id
+
+    // pindah ke halaman form edit
+    navigate(`/admin/jadwalkbm/edit/${id}`);
+    console.log(dataJadwal);
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -463,7 +471,7 @@ function JadwalKBM() {
                         <div className="con-btn-card-kbm">
                           <div
                             className="btn-edit-card-kbm"
-                            onClick={() => navigate("/admin/jadwalkbm/tambah")}
+                            onClick={() => handleEditClick(dataGuru.id)}
                           >
                             <Icon
                               icon="material-symbols:edit-outline-rounded"
@@ -703,4 +711,4 @@ function JadwalKBM() {
     );
 }
 
-export default JadwalKBM;
+export default EditFormAddJadwal;

@@ -9,7 +9,7 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import ImgDelete from "../assets/imgDelete.svg";
 import ImgSuccess from "../assets/success.gif";
-import ImgFailed from "../assets/failed.gif"; 
+import ImgFailed from "../assets/failed.gif";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -96,34 +96,34 @@ function MataPelajaran() {
     popupDelete.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-      // messege
+  // messege
 
-      const showSuccess = () => {
-        const popupLogout = document.querySelector("#popup-success");
-        popupLogout.style.display = "flex";
-        popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-      };
-    
-      const closeSuccess = () => {
-        const popupLogout = document.querySelector("#popup-success");
-        setTimeout(() => (popupLogout.style.display = "none"), 250);
-        popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-        window.location.reload();
-      };
-    
-      const showFailed = () => {
-        const popupLogout = document.querySelector("#popup-Failed");
-        popupLogout.style.display = "flex";
-        popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-      };
-    
-      const closeFailed = () => {
-        const popupLogout = document.querySelector("#popup-Failed");
-        setTimeout(() => (popupLogout.style.display = "none"), 250);
-        popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-      };
-    
-      // end messege
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    window.location.reload();
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -408,8 +408,12 @@ function MataPelajaran() {
                       />
                       <div className="content-card-matapelajaran">
                         <div className="card-matapelajaran-left">
-                          <p className="mata-pelajaran-guru">{data.nama_mapel}</p>
-                          <p className="nama-guru-matapelajaran">{data.nama_guru}</p>
+                          <p className="mata-pelajaran-guru">
+                            {data.nama_mapel}
+                          </p>
+                          <p className="nama-guru-matapelajaran">
+                            {data.nama_guru}
+                          </p>
                         </div>
                         <div className="kelas-matapelajaran">{`${
                           data.tingkat_ke
@@ -544,11 +548,7 @@ function MataPelajaran() {
               onClick={closeFailed}
             />
             <div className="image-Failed">
-              <img
-                src={ImgFailed}
-                alt="Delete Failed"
-                className="img-Failed"
-              />
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
             <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
             <button className="btn-Failed" onClick={closeFailed}>

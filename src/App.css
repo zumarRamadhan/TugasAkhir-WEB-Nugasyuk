@@ -609,7 +609,7 @@ nav .navbar img {
     text-align: center;
 }
 
-.btn-success {
+.btn-success, .btn-out {
     background: #D8F0FF;
     border-radius: 10px;
     border: none;
@@ -625,7 +625,7 @@ nav .navbar img {
     cursor: pointer;
 }
 
-.btn-success:hover {
+.btn-success:hover, .btn-out:hover {
     background: #2A93D5;
     color: var(--color-primer);
     transition: 0.25s ease-in-out;
@@ -693,7 +693,23 @@ nav .navbar img {
     cursor: pointer;
 }
 
-.btn-Failed:hover {
+.btn-Failed2 {
+    background: #ffb0b0;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #ff0e0e;
+    width: 100%;
+    padding: 14px 0;
+    cursor: pointer;
+}
+
+.btn-Failed:hover, .btn-Failed2:hover {
     background: #ee3a3a;
     color: var(--color-primer);
     transition: 0.25s ease-in-out;

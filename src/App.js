@@ -17,6 +17,7 @@ import FormAddGuru from './admin/FormAddGuru';
 import FormAddKelas from './admin/FormAddKelas';
 import FormAddMapel from './admin/FormAddMapel';
 import FormAddAssets from './admin/FormAddAssets';
+import EditFormAddJadwal from './admin/EditFormAddJadwalKbm';
 import EditFormAddGuru from './admin/EditFormAddGuru';
 import EditFormAddMurid from './admin/EditFormAddMurid';
 import EditFormAddKelas from './admin/EditFormAddKelas';
@@ -92,6 +93,7 @@ function App() {
         <Route path="/admin/pagekelas/add" element={<FormAddKelas/>} />
         <Route path="/admin/matapelajaran/add" element={<FormAddMapel/>} />
         <Route path="/admin/pageassets/list/add" element={<FormAddAssets/>} />
+        <Route path="/admin/jadwalkbm/edit/:id" element={<EditFormAddJadwal/>} />
         <Route path="/admin/pageguru/edit/:id" element={<EditFormAddGuru/>} />
         <Route path="/admin/pagemurid/edit/:id" element={<EditFormAddMurid/>} />
         <Route path="/admin/pagekelas/edit/:id" element={<EditFormAddKelas/>} />
