@@ -6,6 +6,8 @@ import NavbarMurid from "../component/NavbarMurid";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
+import ImgSuccess from "../assets/88860-success-animation.gif";
+import ImgFailed from "../assets/94303-failed.gif";
 import axios from "axios";
 import CardSkeletonDetailTugas from "../componentSkeleton/CardSkeletonDetailTugas";
 import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
@@ -13,6 +15,35 @@ import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
 function DetailTask() {
   const navigate = useNavigate();
+
+     // messege
+
+    const showSuccessAdd = () => {
+      const popupLogout = document.querySelector("#popup-success");
+      popupLogout.style.display = "flex";
+      popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    };
+  
+    const closeSuccess = () => {
+      const popupLogout = document.querySelector("#popup-success");
+      setTimeout(() => (popupLogout.style.display = "none"), 250);
+      popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+      // navigate(`/murid/detailtugas/{$id}`);
+    };
+  
+    const showFailedAdd = () => {
+      const popupLogout = document.querySelector("#popup-Failed");
+      popupLogout.style.display = "flex";
+      popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    };
+  
+    const closeFailed = () => {
+      const popupLogout = document.querySelector("#popup-Failed");
+      setTimeout(() => (popupLogout.style.display = "none"), 250);
+      popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    };
+  
+    // end messege
 
   const saveToken = sessionStorage.getItem("token");
 
@@ -91,16 +122,18 @@ function DetailTask() {
       })
       .then((response) => {
         console.log("Data berhasil dikirim", response.data);
-        alert("Tugas berhasil dikirim");
+        // alert("Tugas berhasil dikirim");
+         showSuccessAdd();
         // Tambahkan logika atau pesan yang ingin ditampilkan jika pengiriman berhasil
         setIsLoadingSubmit(false);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengirim data", error);
-        alert("Tugas gagal dikirim")
+        // alert("Tugas gagal dikirim")
         // Tambahkan logika atau pesan yang ingin ditampilkan jika terjadi kesalahan
         setIsErrorSubmit(true);
         setIsLoadingSubmit(false);
+        showFailedAdd();
       });
   };
 
@@ -425,6 +458,7 @@ function DetailTask() {
                         <p className="title-submition">Pengumpulan Tugas</p>
                         <div className="file-task">
                            {selectedFile && <p>{selectedFile.name}</p>}
+                           {detailTugas.file}
                           {/* Tambahkan tampilan preview lainnya sesuai kebutuhan */}
                         </div>
 
@@ -457,6 +491,50 @@ function DetailTask() {
                   ))}
               </div>
             )}
+          </div>
+        </div>
+
+         <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Tugas Berhasil Dikirim</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img
+                src={ImgFailed}
+                alt="Delete Failed"
+                className="img-Failed"
+              />
+            </div>
+            <p className="desc-Failed">Tugas Gagal Dikirim!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
 
