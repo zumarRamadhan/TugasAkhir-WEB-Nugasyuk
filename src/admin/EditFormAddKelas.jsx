@@ -128,8 +128,8 @@ function EditFormAddKelas() {
       .then((response) => {
         // setKelasData(response.data.data);
         setFormData({
-          tingkatKe: response.data.data.tingkat_ke,
-          namaJurusan: response.data.data.nama_jurusan,
+          tingkatKe: response.data.data.tingkatan_id,
+          namaJurusan: response.data.data.jurusan_id,
           namaKelas: response.data.data.nama_kelas,
           waliKelas: response.data.data.guru_id,
         });
@@ -160,14 +160,18 @@ function EditFormAddKelas() {
           console.log("Data berhasil diperbarui");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
           // navigate("/admin/pagekelas");
+
           showSuccessChanges();
-          //   setIsSubmitting(false);
+          setIsSubmitting(false);
+          // setIsLoadingSubmit(false);
         })
         .catch((error) => {
           console.error("Terjadi kesalahan saat memperbarui data:", error);
           setErrors({ submit: "Terjadi kesalahan saat memperbarui data" });
           setIsSubmitting(false);
+
           showFailedChanges();
+          // setIsLoadingSubmit(false);
         });
     }
   }, [isSubmitting, formData, id, saveToken, navigate]);
@@ -186,6 +190,7 @@ function EditFormAddKelas() {
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
+      // setIsLoadingSubmit(true);
     }
   };
 
@@ -235,6 +240,7 @@ function EditFormAddKelas() {
 
   const [dataGuru, setDataGuru] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
   const [isError, setIsError] = useState(false);
   // console.log("data kelas", dataKelas);
 
@@ -261,43 +267,55 @@ function EditFormAddKelas() {
         setIsLoading(false);
       });
   }, []);
-  // useState(() => {
-  //   axios
-  //     .get("https://www.nugasyuk.my.id/api/admin/kelas", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       const responseAPI = result.data;
 
-  //       setDataKelas(responseAPI.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setIsError(true);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
-  // if (isLoading) {
+  // if (isLoadingSubmit) {
   //   return (
-  //     <div id="load">
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
+  //     <div className="body-loading">
+  //       <svg
+  //         class="pl"
+  //         viewBox="0 0 200 200"
+  //         width="200"
+  //         height="200"
+  //         xmlns="http://www.w3.org/2000/svg"
+  //       >
+  //         <defs>
+  //           <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+  //             <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+  //             <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+  //           </linearGradient>
+  //           <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+  //             <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+  //             <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+  //           </linearGradient>
+  //         </defs>
+  //         <circle
+  //           class="pl__ring"
+  //           cx="100"
+  //           cy="100"
+  //           r="82"
+  //           fill="none"
+  //           stroke="url(#pl-grad1)"
+  //           stroke-width="36"
+  //           stroke-dasharray="0 257 1 257"
+  //           stroke-dashoffset="0.01"
+  //           stroke-linecap="round"
+  //           transform="rotate(-90,100,100)"
+  //         />
+  //         <line
+  //           class="pl__ball"
+  //           stroke="url(#pl-grad2)"
+  //           x1="100"
+  //           y1="18"
+  //           x2="100.01"
+  //           y2="182"
+  //           stroke-width="36"
+  //           stroke-dasharray="1 165"
+  //           stroke-linecap="round"
+  //         />
+  //       </svg>
   //     </div>
   //   );
-  // } else
+  // }
   if (dataGuru && !isError)
     return (
       <div>
@@ -349,14 +367,26 @@ function EditFormAddKelas() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
                   {formData && formData.tingkatKe ? (
-                    <input
+                    <select
                       name="tingkatKe"
                       id="tingkatKe"
                       value={formData.tingkatKe}
                       onChange={handleChange}
                       className="selectClass"
-                      disabled
-                    />
+                    >
+                      <option value="" selected disabled>
+                        Pilih Kelas
+                      </option>
+                      <option value="1" disabled>
+                        10
+                      </option>
+                      <option value="2" disabled>
+                        11
+                      </option>
+                      <option value="3" disabled>
+                        12
+                      </option>
+                    </select>
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -372,14 +402,32 @@ function EditFormAddKelas() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Jurusan</div>
                   {formData && formData.namaJurusan ? (
-                    <input
+                    <select
                       name="namaJurusan"
                       id="namaJurusan"
                       value={formData.namaJurusan}
                       onChange={handleChange}
                       className="selectClass"
-                      disabled
-                      />
+                    >
+                      <option value="" selected disabled>
+                        Pilih Jurusan
+                      </option>
+                      <option value="1" disabled>
+                        PPLG
+                      </option>
+                      <option value="2" disabled>
+                        ANIMASI
+                      </option>
+                      <option value="3" disabled>
+                        DKV
+                      </option>
+                      <option value="4" disabled>
+                        DG
+                      </option>
+                      <option value="5" disabled>
+                        Teknik Grafika
+                      </option>
+                    </select>
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -402,8 +450,8 @@ function EditFormAddKelas() {
                       value={formData.namaKelas}
                       onChange={handleChange}
                       className="input-formKbm"
-                      disabled
                       placeholder="Contoh : (1/2/3...) / (A/B/C...)"
+                      disabled
                     />
                   ) : (
                     <input
