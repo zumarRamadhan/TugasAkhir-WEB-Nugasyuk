@@ -253,6 +253,8 @@ function EditFormAddMurid() {
       axios
         .post(`https://www.nugasyuk.my.id/api/admin/murid/${id}`, form, {
           headers: {
+            'Access-Control-Allow-Origin': 'https://nugasyuk.my.id',
+            'Accept': 'application/json',
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
           },
