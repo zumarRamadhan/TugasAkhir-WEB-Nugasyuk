@@ -2,6 +2,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 // import "../cssAll/walimurid/DetailMateri.css";
 import { Icon } from "@iconify/react";
+import avatar from "../assets/default-avatar.svg";
 
 function SkeletonNavbar() {
   const showDetail = () => {
@@ -23,7 +24,7 @@ function SkeletonNavbar() {
             <Skeleton width={100} />
           </h1>
           <div className="nav-right">
-            <Skeleton circle width={50} height={50} />
+            <img src={avatar} alt="" />
 
             <div
               className="btn-notification"

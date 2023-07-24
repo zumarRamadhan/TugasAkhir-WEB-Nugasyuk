@@ -24,8 +24,11 @@ function DetailTask() {
 
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const handleFileInputChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
   const handleButtonClick = () => {
-    // Pemicu input file ketika tombol diklik
     document.getElementById("file-input").click();
   };
 
@@ -65,21 +68,20 @@ function DetailTask() {
 
   const [errors, setErrors] = useState({});
 
-  const handleFileInputChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
-
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
   const [isErrorSubmit, setIsErrorSubmit] = useState(false);
 
-  const handleFileUpload = (event) => {
+  const handleFileInput = (event) => {
+    const file = event.target.files[0];
+  };
+
+  const submitTask = () => {
     setIsLoadingSubmit(true);
     setIsErrorSubmit(false);
-    const file = event.target.files[0];
-
+  
     const formData = new FormData();
-    formData.append("file", file);
-
+    formData.append("file", selectedFile);
+  
     axios
       .post(`https://www.nugasyuk.my.id/api/murid/tugas/${id}`, formData, {
         headers: {
@@ -95,6 +97,7 @@ function DetailTask() {
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengirim data", error);
+        alert("Tugas gagal dikirim")
         // Tambahkan logika atau pesan yang ingin ditampilkan jika terjadi kesalahan
         setIsErrorSubmit(true);
         setIsLoadingSubmit(false);
@@ -421,7 +424,7 @@ function DetailTask() {
                       <div className="submition-task">
                         <p className="title-submition">Pengumpulan Tugas</p>
                         <div className="file-task">
-                          {selectedFile && <p>{selectedFile}</p>}
+                           {selectedFile && <p>{selectedFile.name}</p>}
                           {/* Tambahkan tampilan preview lainnya sesuai kebutuhan */}
                         </div>
 
@@ -430,8 +433,8 @@ function DetailTask() {
                             type="file"
                             id="file-input"
                             hidden
-                            // onChange={handleFileInputChange}
-                            onChange={handleFileUpload}
+                            onChange={handleFileInputChange}
+                            // onChange={handleFileInput}
                           />
                           <button
                             className="btn-add-task"
@@ -444,6 +447,7 @@ function DetailTask() {
                         <button
                           className="btn-submit-task"
                           type="submit"
+                          onClick={submitTask}
                           // onChange={handleFileUpload}
                         >
                           <p>Kirim</p>
