@@ -98,7 +98,9 @@ function BerandaGuru() {
         setisLoading(false);
       });
   }, []);
-    if (isLoading)
+
+  console.log(dataBerandaGuru);
+  if (isLoading)
     return (
       <div id="load">
         <div>.</div>
@@ -146,12 +148,14 @@ function BerandaGuru() {
             <div className="header-dashboard">
               <div className="head-left">
                 <h1 className="intro-head">
-                  Halo <span className="name-admin">{dataBerandaGuru.nama_guru}</span>
+                  Halo{" "}
+                  <span className="name-admin">
+                    {dataBerandaGuru.nama_guru}
+                  </span>
                 </h1>
                 <p className="desc-head" style={{ width: "550px" }}>
-                  {dataBerandaGuru.nama_guru}
-                  Selamat datang di nugasyuk, anda bisa memonitoring siswa,
-                  memberikan materi dan tugas.
+                  <b>{dataBerandaGuru.nama_guru}</b> Selamat datang di nugasyuk, anda
+                  bisa memonitoring siswa, memberikan materi dan tugas.
                 </p>
               </div>
               <div className="head-right">

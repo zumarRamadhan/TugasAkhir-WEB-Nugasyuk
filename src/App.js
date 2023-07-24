@@ -130,7 +130,7 @@ function App() {
         <Route path='/guru/pagekbm/detail/formtugas' element={<FormTugasKBM/>}/>
 
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
-        <Route path='/guru/pagepengumpulan/detail' element={<DetailPengumpulan/>}/>
+        <Route path='/guru/pagepengumpulan/detail/:id' element={<DetailPengumpulan/>}/>
         <Route path='/guru/pagepengumpulan/detail/detailmenunggu' element={<DetailMenunggu/>}/>
         <Route path='/guru/pagepengumpulan/detail/detailselesai' element={<DetailSelesai/>}/>
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>

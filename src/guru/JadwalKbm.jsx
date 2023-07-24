@@ -176,40 +176,44 @@ function PageJadwalKbm() {
             </p>
 
             {isLoading ? (
-                <div className="con-card-jadwalKBM-Guru">
-                  <div className="card-jadwalKBM-Guru-skeleton"></div>
-                  <div className="card-jadwalKBM-Guru-skeleton"></div>
-                  <div className="card-jadwalKBM-Guru-skeleton"></div>
-                  <div className="card-jadwalKBM-Guru-skeleton"></div>
-                </div>
-              ) : (
-            <div className="con-card-jadwalKBM-Guru">
-              {dataJadwal.map((data, jadwal) => (
-                <div className="card-jadwalKBM-Guru" key={jadwal}>
-                  <div className="card-jadwalKBM-Guru-left">
-                    <p className="id-jadwalKBM-Guru">{jadwal + 1}</p>
-                    <div className="icon-jadwalKBM-Guru">
-                      <Icon icon="fluent:class-24-regular" width="30" />
+              <div className="con-card-jadwalKBM-Guru">
+                <div className="card-jadwalKBM-Guru-skeleton"></div>
+                <div className="card-jadwalKBM-Guru-skeleton"></div>
+                <div className="card-jadwalKBM-Guru-skeleton"></div>
+                <div className="card-jadwalKBM-Guru-skeleton"></div>
+              </div>
+            ) : dataJadwal.length === 0 ? (
+              <div className="card-jadwal-noData">
+                <p>Tidak ada jadwal di hari ini</p>
+              </div>
+            ) : (
+              <div className="con-card-jadwalKBM-Guru">
+                {dataJadwal.map((data, jadwal) => (
+                  <div className="card-jadwalKBM-Guru" key={jadwal}>
+                    <div className="card-jadwalKBM-Guru-left">
+                      <p className="id-jadwalKBM-Guru">{jadwal + 1}</p>
+                      <div className="icon-jadwalKBM-Guru">
+                        <Icon icon="fluent:class-24-regular" width="30" />
+                      </div>
+                      <p className="dataKelas-jadwalKBM-Guru">
+                        {data.tingkat_ke} {data.nama_jurusan} {data.nama_kelas}
+                      </p>
+                      <p className="dataMapel-jadwalKBM-Guru">
+                        {data.nama_mapel}
+                      </p>
                     </div>
-                    <p className="dataKelas-jadwalKBM-Guru">
-                      {data.tingkat_ke} {data.nama_jurusan} {data.nama_kelas}
-                    </p>
-                    <p className="dataMapel-jadwalKBM-Guru">
-                      {data.nama_mapel}
-                    </p>
+                    <div className="hourValue-jadwalKBM-Guru">
+                      <span className="startingHour">
+                        {data.waktu_mulai.substring(0, 5)}
+                      </span>{" "}
+                      -{" "}
+                      <span className="hourIsOver">
+                        {data.waktu_selesai.substring(0, 5)}
+                      </span>
+                    </div>
                   </div>
-                  <div className="hourValue-jadwalKBM-Guru">
-                    <span className="startingHour">
-                      {data.waktu_mulai.substring(0, 5)}
-                    </span>{" "}
-                    -{" "}
-                    <span className="hourIsOver">
-                      {data.waktu_selesai.substring(0, 5)}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
             )}
           </div>
         </div>

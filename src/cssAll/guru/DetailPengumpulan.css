@@ -116,6 +116,7 @@
 
 .con-DetailPengumpulan {
     display: none;
+    margin-top: 20px;
 }
 
 .con-DetailPengumpulan-Menunggu{
@@ -129,6 +130,37 @@
     flex-direction: column;
     gap: 20px;
 }
+
+/* skeleton */
+
+.skeleton-card-DetailPengumpulan-Menunggu, .skeleton-card-DetailPengumpulan-Selesai, .skeleton-card-DetailPengumpulan {
+    width: 100%;
+    height: 100px;
+    border-radius: 20px;
+    background-image: linear-gradient(90deg,
+            #f5f5f5 25%,
+            #e8e8e8 37%,
+            #f5f5f5 63%);
+    /* Animasi gradien skeleton */
+    background-size: 200% 100%;
+    /* Ukuran gradien skeleton */
+    animation: skeleton-loading 1.5s infinite linear;
+    /* Animasi skeleton berjalan selamanya */
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: -200% 0;
+        /* Mulai dari posisi luar layar */
+    }
+
+    100% {
+        background-position: 200% 0;
+        /* Pindah ke posisi luar layar sebaliknya */
+    }
+}
+
+/*  */
 
 .card-DetailPengumpulan-Menunggu {
     display: flex;

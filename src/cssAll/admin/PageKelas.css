@@ -206,6 +206,20 @@ option[selected] {
     }
 }
 
+.card-DetailPengumpulan-Menunggu-noData, .card-DetailPengumpulan-Selesai-noData, .card-jadwal-noData {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: var(--color-aksen);
+    background: var(--color-sekunder);
+}
+
 .con-card-right-kelas {
     display: flex;
     align-items: center;
