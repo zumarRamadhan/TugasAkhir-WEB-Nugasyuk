@@ -63,6 +63,7 @@ import PageJadwalWaliMurid from './waliMurid/JadwalKbm';
 import MapelMateri from './waliMurid/MapelMateri';
 import MapelTugas from './waliMurid/MapelTugas';
 import DetailMaterial from './waliMurid/DetailMateri';
+import DetailTugasOrtu from './waliMurid/DetailTugas';
 // end role wali murid
 // role bk
 import BerandaBk from './guruBk/BerandaBk';
@@ -141,9 +142,10 @@ function App() {
         <Route path='/walimurid/pagetugas' element={<PageTugasWaliMurid/>}/>
         <Route path='/walimurid/pagemapel' element={<PageMapelWaliMurid/>}/>
         <Route path='/walimurid/pagekbm' element={<PageJadwalWaliMurid/>}/>
-        <Route path='/walimurid/pagemapel/mapelmateri' element={<MapelMateri/>}/>
+        <Route path='/walimurid/pagemapel/mapelmateri/:id' element={<MapelMateri/>}/>
         <Route path='/walimurid/pagemapel/mapeltugas' element={<MapelTugas/>}/>
-        <Route path='/walimurid/pagemapel/mapelmateri/detailmateri' element={<DetailMaterial/>}/>
+        <Route path='/walimurid/pagemapel/mapelmateri/detailmateri/:id' element={<DetailMaterial/>}/>
+        <Route path='/walimurid/detailtugas/:id' element={<DetailTugasOrtu/>}/>
         {/* end role wali murid */}
 
         {/* role bk */}

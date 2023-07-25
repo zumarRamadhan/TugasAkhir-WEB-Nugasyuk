@@ -1,11 +1,48 @@
+:root {
+    --loading-grey: #ededed;
+  }
+  .loading .image,
+  .loading h4,
+  .loading .description {
+    background-color: var(--loading-grey);
+    background: linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, .5) 50%,
+      rgba(255, 255, 255, 0) 60%
+    ) var(--loading-grey);
+    background-size: 200% 100%;
+    background-position-x: 180%;
+    animation: 1s loading ease-in-out infinite;
+  }
+  
+  @keyframes loading {
+    to {
+      background-position-x: -20%;
+    }
+  }
+  
+  .loading h4 {
+    min-height: 1.6rem;
+    border-radius: 4px;
+    animation-delay: .05s;
+  }
+  
+  .loading-mapel .description {
+    min-height: 10rem;
+    border-radius: 4px;
+    animation-delay: .06s;
+  }
+
 .content-mapel {
     margin-top: 30px;
 }
 
-.con-card-mapel {
+.con-card-mapel-ortu {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    margin-bottom: 100px;
 }
 
 @media only screen and (max-width: 1240px) {

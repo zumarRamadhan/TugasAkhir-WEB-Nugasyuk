@@ -11,7 +11,7 @@ function CardSkeletonMapel(cards) {
             height: "200px",
             borderRadius: "20px",
             gridTemplateColumns: "repeat(3, ifr)",
-            marginBottom: "10px"
+            marginBottom: "10px",
           }}
         />
       </div>

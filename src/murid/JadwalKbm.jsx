@@ -1,91 +1,152 @@
-import { useNavigate } from "react-router-dom";
+import "../cssAll/walimurid/MapelMateri.css";
+import { useNavigate, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import "../cssAll/murid/JadwalKbm.css";
-import IconNugasyuk from "../assets/IconNugasyuk.svg";
-import NavbarMurid from "../component/NavbarMurid";
-import ImgProfil from "../assets/profil-murid.svg";
-import ImgLogout from "../assets/68582-log-out.gif";
-import passIcon from "../assets/pass-icon.svg";
-import mataIcon from "../assets/icon-mata.svg";
-import imgCardKbm from "../assets/guru-karman.svg";
 import { useState, useEffect } from "react";
-import ProfileSiswa from "../component/ProfileSiswa";
-import NotifSiswa from "../component/NotifSiswa";
+import IconNugasyuk from "../assets/IconNugasyuk.svg";
+import AssetsBinggris from "../assets/img-ilustration-binggris.svg";
+import NavbarWaliMurid from "../component/NavbarWaliMurid";
+import imgGuru from "../assets/profil-guru.svg";
+import DetailOrtu from "../component/ProfileWaliMurid";
+import NotifOrtu from "../component/NotifOrtu";
 import axios from "axios";
-import CardSkeletonJadwal from "../componentSkeleton/CardSkeletonJadwal";
+import SkeletonMapelMateri from "../componentSkeleton/SkeletonMapelMateri";
 import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
-import SkeletonDetailJadwal from "../componentSkeleton/SkeletonDetailJadwal";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
 
-function JadwalKBM() {
+function PageMapel() {
   const navigate = useNavigate();
-  const [detailJadwal, setDetailJadwal] = useState([]);
-  const [selectedKbmId, setSelectedKbmId] = useState(null);
 
-  const closeDetailKbm = () => {
-    const popupLogout = document.querySelector(".popup-kbm");
-    setTimeout(() => (popupLogout.style.display = "none"), 250);
-    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  const [activeContent, setActiveContent] = useState("material-kbm");
+
+  const showMaterial = () => {
+    setActiveContent("material-kbm");
   };
 
-  const showDetailKbm = (id) => {
-    setPopupLoading(true);
-    setSelectedKbmId(id);
-    console.log("ID:", id);
-    const popupForget = document.querySelector(".popup-kbm");
-    popupForget.style.display = "flex";
-    popupForget.style.animation = "slide-down 0.3s ease-in-out";
-
-    axios
-      .get("https://www.nugasyuk.my.id/api/murid/jadwal/" + id, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
-      .then((result) => {
-        setDetailJadwal(result.data);
-        setisLoading(false);
-        setPopupLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setisError(true);
-        setisLoading(false);
-        setPopupLoading(false);
-      });
+  const showTask = () => {
+    setActiveContent("task-kbm");
   };
 
   const saveToken = sessionStorage.getItem("token");
 
-  // const [dataJadwal, setDataJadwal] = useState([]);
-  const [dataListJadwal, setDataListJadwal] = useState([]);
-  const [isLoading, setisLoading] = useState(true);
-  const [isPopupLoading, setPopupLoading] = useState(true);
+  const [dataMapelDetail, setDataMapelDetail] = useState([]);
+  const [dataListMateri, setDataListMateri] = useState([]);
+  const [dataListTugas, setDataListTugas] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterValue, setFilterValue] = useState("all");
+  const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
+  const { id } = useParams();
 
   useEffect(() => {
+    getDetailMapel();
+    listDataMateri();
+    listDataTugas();
+  }, [id]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchQuery, filterValue]);
+
+  const handleSearch = () => {
+    const filteredData = dataListMateri.filter((value) => {
+      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      const lowerCaseStatusMapel = value.status
+        ? value.status.toLowerCase()
+        : "";
+
+      return (
+        (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
+        ((value &&
+          value.soal &&
+          value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.nama_guru &&
+            value.nama_guru
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.status &&
+            value.status.toLowerCase().includes(searchQuery.toLowerCase())))
+      );
+    });
+
+    setFilteredData(filteredData);
+  };
+
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    // setFilterValue(e.target.value);
+    // jika filter value nya tidak ada maka akan menampilkan data not found
+    setFilterValue(e.target.value);
+  };
+  console.log("filter value", dataListTugas);
+
+  const renderData = filteredData.length > 0 ? filteredData : dataListTugas;
+  const dataNotFound =
+    searchQuery !== "" && filteredData.length === 0 && !isLoading;
+
+  function getDetailMapel() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/jadwal", {
+      .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran/" + id, {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },
       })
-      .then((result) => {
-        setDataListJadwal(result.data.data);
+      .then((response) => {
+        setDataMapelDetail(response.data.mapel);
         setisLoading(false);
       })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setisError(true);
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data", error);
         setisLoading(false);
+        setisError(true);
       });
-  }, []);
+  }
 
-  // if (isLoading) {
+  function listDataMateri() {
+    setisLoading(true);
+    axios
+      .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran/materi/" + id, {
+        headers: {
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        setDataListMateri(response.data.data);
+        setisLoading(false);
+      })
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data", error);
+        setisLoading(false);
+        setisError(true);
+      });
+  }
+
+  function listDataTugas() {
+    setisLoading(true);
+    axios
+      .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran/tugas/" + id, {
+        headers: {
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        setDataListTugas(response.data.data);
+        setisLoading(false);
+      })
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data", error);
+        setisLoading(false);
+        setisError(true);
+      });
+  }
+
+  // if (isLoading)
   //   return (
   //     <div id="load">
   //       <div>.</div>
@@ -93,163 +154,249 @@ function JadwalKBM() {
   //       <div>.</div>
   //       <div>.</div>
   //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
   //     </div>
   //   );
-  if (dataListJadwal && !isError)
+  if (dataMapelDetail && !isError)
     return (
       <div>
         <aside>
           <h1
             className="title-form-login"
-            onClick={() => navigate("/murid/berandamurid")}
+            onClick={() => navigate("/walimurid/berandawalimurid")}
           >
             <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
             nugasyuk
           </h1>
           <ul>
-            <li onClick={() => navigate("/murid/berandamurid")}>
+            <li onClick={() => navigate("/walimurid/berandawalimurid")}>
               <Icon icon="iconoir:home-simple" width="20" />
               Beranda
             </li>
-            <li onClick={() => navigate("/murid/pagetugas")}>
+            <li onClick={() => navigate("/walimurid/pagetugas")}>
               <Icon
                 icon="fluent:clipboard-bullet-list-rtl-20-regular"
                 width="25"
               />
               Tugas
             </li>
-            <li className="active" onClick={() => navigate("/murid/pagekbm")}>
+            <li onClick={() => navigate("/walimurid/pagekbm")}>
               <Icon icon="uiw:date" width="18" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/murid/pagemapel")}>
+            <li
+              className="active"
+              onClick={() => navigate("/walimurid/pagemapel")}
+            >
               <Icon icon="fluent-mdl2:education" width="18" />
               Mata Pelajaran
-            </li>
-            <li onClick={() => navigate("/murid/pagekonseling")}>
-              <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
-              Konseling
             </li>
           </ul>
         </aside>
         <div className="container-content">
-          <NavbarMurid textNavigasi={"Jadwal KBM 11 PPLG 1"} />
+          {isLoading ? (
+            <SkeletonNavbarWali />
+          ) : (
+            <div>
+              {dataMapelDetail.map((detailMapel) => (
+                <NavbarWaliMurid navigasiOrtu={detailMapel.nama_mapel} />
+              ))}
+            </div>
+          )}
           <div className="main">
-            <div className="content-jadwalKBM">
+            {isLoading ? (
+              <SkeletonMapelMateri />
+            ) : (
+              <div>
+                {dataMapelDetail &&
+                  dataMapelDetail.map((detailMapel) => (
+                    <div className="con-content-subject">
+                      <div
+                        className="content-subject"
+                        style={{
+                          background: `linear-gradient(${detailMapel.color})`,
+                        }}
+                      >
+                        <div className="content-subject-left">
+                          <p className="name-subject">
+                            {detailMapel.nama_mapel}
+                          </p>
+                          <p className="name-teacher">
+                            {detailMapel.nama_guru}
+                          </p>
+                        </div>
+                        <img
+                          src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
+                          alt=""
+                          className="img-assets-subject"
+                        />
+                      </div>
+                      <div className="content-subject-2">
+                        <img
+                          src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
+                          alt=""
+                          className="img-subject-2"
+                        />
+                        <p className="name-teacher-2">
+                          {detailMapel.nama_guru}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
+
+            <div className="dropdown-task">
+              <div className="switch-container-ortu">
+                <button
+                  id="btn-materiKbm"
+                  className={
+                    activeContent === "material-kbm" ? "activeDetailKbm" : ""
+                  }
+                  onClick={showMaterial}
+                >
+                  Materi
+                </button>
+                <button
+                  id="btn-tugasKbm"
+                  className={
+                    activeContent === "task-kbm" ? "activeDetailKbm" : ""
+                  }
+                  onClick={showTask}
+                >
+                  Tugas
+                </button>
+              </div>
+
+              <form className="search-box" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Cari..."
+                  value={searchQuery}
+                  onChange={handleChange}
+                />
+                <button type="submit">
+                  <Icon
+                    icon="material-symbols:search-rounded"
+                    width="20"
+                  ></Icon>
+                </button>
+              </form>
+            </div>
+
+            <div
+              className="con-material material-kbm"
+              style={{
+                display: activeContent === "material-kbm" ? "block" : "none",
+              }}
+            >
               {isLoading ? (
-                <div className="con-card-jadwalKBM">
-                  <CardSkeletonJadwal />
-                  <CardSkeletonJadwal />
-                  <CardSkeletonJadwal />
-                  <CardSkeletonJadwal />
-                  <CardSkeletonJadwal />
-                  <CardSkeletonJadwal />
+                <div className="con-material">
+                  <CardSkeletonListTask />
+                  <CardSkeletonListTask />
                 </div>
               ) : (
-                <div className="con-card-jadwalKBM">
-                  {dataListJadwal.map((listJadwal) => (
+                <div>
+                  {dataListMateri.map((dataMateri) => (
                     <div
-                      className="cardJadwalKbm"
-                      key={listJadwal.$id}
-                      onClick={() => showDetailKbm(listJadwal.id)}
+                      className="card-material"
+                      style={{ cursor: "pointer" }}
+                      key={dataMateri.id}
+                      onClick={() =>
+                        navigate(
+                          "/walimurid/pagemapel/mapelmateri/detailmateri/" +
+                            dataMateri.id
+                        )
+                      }
                     >
-                      <div className="titleJadwalKbm">
-                        <p>Jadwal KBM</p>
-                        <h1>{listJadwal.hari}</h1>
-                      </div>
-                      <div className="bottomjadwalKbm">
-                        <div className="conImgGuru-Kbm">
-                          {listJadwal.detail.map((items) => (
-                            <div className="imgGuru-Kbm">
-                              <img
-                                src={`https://www.nugasyuk.my.id/public/${items.foto_profile}`}
-                                alt=""
-                                className="imageGuru-Kbm"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                        <div className="btnDetail-Kbm">
+                      <div className="indiecator-left">
+                        <div
+                          className="icon-indie"
+                          style={{ background: "#D8F0FF" }}
+                        >
                           <Icon
-                            icon="ic:round-navigate-next"
+                            icon="ri:book-line"
                             width="30"
-                            className="iconDetail-Kbm"
-                            onClick={() => showDetailKbm(listJadwal.id)}
+                            style={{ color: "#2A93D5" }}
                           />
                         </div>
+                        <div className="desc-indie">
+                          <p className="material-name">
+                            {dataMateri.nama_materi}
+                          </p>
+                          <p className="teacher-name">{dataMateri.nama_guru}</p>
+                        </div>
+                      </div>
+                      <div className="indiecator-right">
+                        <p className="time-upload">
+                          {dataMateri.tanggal_dibuat}
+                        </p>
+                        <Icon
+                          icon="ic:round-navigate-next"
+                          width="30"
+                          className="icon-navigate"
+                        />
                       </div>
                     </div>
                   ))}
                 </div>
               )}
             </div>
-          </div>
-        </div>
 
-        <div
-          className="popup-kbm"
-          style={{ display: selectedKbmId ? "flex" : "none" }}
-        >
-          <div className="detail-popup-kbm">
-            <div className="nav-popup-kbm">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer", color: "#4b4b4b" }}
-                className="btn-close"
-                onClick={closeDetailKbm}
-              />
-              {isPopupLoading ? (
-                <h2 className="day-schedule">Loading...</h2>
-              ) : (
-                <h2 className="day-schedule">{detailJadwal.hari}</h2>
-              )}
-            </div>
-            {isPopupLoading ? (
-              <div className="con-popup-kbm">
-                <SkeletonDetailJadwal/>
-                <SkeletonDetailJadwal/>
-                <SkeletonDetailJadwal/>
-                <SkeletonDetailJadwal/>
-              </div>
-            ) : (
-              <div className="con-popup-kbm">
-                {detailJadwal.data?.map((jadwalDetail) => (
-                  <div className="popup-card-kbm">
-                    <div className="test1">
-                      <img
-                        src={`https://www.nugasyuk.my.id/public/${jadwalDetail.foto_profile}`}
-                        alt=""
-                        className="image-card-kbm"
-                      />
-                      <div className="mapel-card-kbm">
-                        <p>{jadwalDetail.nama_mapel}</p>
-                        <p className="guruPengampu">{jadwalDetail.nama_guru}</p>
+            {/* tugas */}
+            <div
+              className="con-material taskKbm"
+              style={{
+                display: activeContent === "task-kbm" ? "block" : "none",
+              }}
+            >
+              {dataListTugas &&
+                dataListTugas.map((dataTugas) => (
+                  <div
+                    className="card-material"
+                    style={{ cursor: "pointer" }}
+                    key={dataTugas.id}
+                    onClick={() =>
+                      navigate("/walimurid/detailtugas/" + dataTugas.id)
+                    }
+                  >
+                    <div className="indiecator-left">
+                      <div
+                        className="icon-indie"
+                        style={{ background: "#FFFA87" }}
+                      >
+                        <Icon
+                          icon="uiw:time-o"
+                          width="30"
+                          style={{ color: "#CBC41A" }}
+                        />
+                      </div>
+                      <div className="desc-indie">
+                        <p className="material-name">{dataTugas.nama_tugas}</p>
+                        <p className="teacher-name">{dataTugas.nama_guru}</p>
                       </div>
                     </div>
-                    <div className="test2">
-                      <div className="jamMengajar">
-                        <span>{jadwalDetail.waktu_mulai}</span> -{" "}
-                        <span>{jadwalDetail.waktu_selesai}</span>
-                      </div>
+                    <div className="indiecator-right">
+                      <p className="time-upload">{dataTugas.date}</p>
+                      <p className="deadline-time" style={{ color: "#2A93D5" }}>
+                        Deadline : <span>{dataTugas.deadline}</span>
+                      </p>
+                      <Icon
+                        icon="ic:round-navigate-next"
+                        width="30"
+                        className="icon-navigate"
+                      />
                     </div>
                   </div>
                 ))}
-              </div>
-            )}
+            </div>
           </div>
         </div>
 
-        <ProfileSiswa />
+        <DetailOrtu />
 
-        <NotifSiswa />
+        <NotifOrtu />
       </div>
     );
 }
 
-export default JadwalKBM;
+export default PageMapel;

@@ -1,0 +1,134 @@
+.con-content-detail-task{
+    border: 1px solid #c4c4c4;
+    border-radius: 20px;
+    padding: 30px;
+    font-family: 'Poppins';
+}
+
+.content-detail-task{
+    /* border-radius: 20px; */
+    /* height: 350px; */
+    display: flex;
+    /* padding: 30px; */
+    justify-content: space-between;
+}
+
+.content-detail-task-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-detail-task {
+    background: #DDDDDD;
+    color: #797979;
+    /* padding: 20px; */
+    width: 70px;
+    height: 70px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 10px;
+}
+
+.date-upload{
+    font-size: 15px;
+    color: #797979;
+    font-weight: 500;
+}
+
+.name-task{
+    font-size: 20px;
+    color: var(--color-aksen);
+    font-weight: 500;
+}
+
+.content-detail-task-right{
+    display: flex;
+    gap: 50px;
+}
+
+.desc-content-detail-task{
+    margin-top: 30px;
+    color: #4b4b4b;
+}
+
+.task-deadline-time{
+    color: var(--color-aksen);
+    margin-top: 15px;
+}
+
+.submition-task{
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    margin-top: 40px;
+    padding: 15px;
+    width: max-content;
+}
+
+.title-submition{
+    color: #4b4b4b;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.file-task{
+    border: 1px solid #c4c4c4;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.btn-add-task {
+    display: flex;
+    background: #D8F0FF;
+    color: var(--color-aksen);
+    border: none;
+    /* padding: 13px 35px; */
+    width: 370px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    gap: 5px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.btn-add-task p{
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
+
+.btn-add-task:hover{
+    background: var(--color-aksen);
+    color: #fff;
+}
+
+.btn-submit-task {
+    display: flex;
+    background: var(--color-aksen);
+    color: var(--color-primer);
+    border: none;
+    /* padding: 13px 35px; */
+    width: 370px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    gap: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-submit-task p{
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Poppins';
+}
+
+.btn-submit-task:hover{
+    background: #1D77AF;
+    color: #fff;
+}

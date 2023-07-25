@@ -1,7 +1,6 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import "../cssAll/murid/DetailTugas.css";
-import { Icon } from "@iconify/react";
+import "../cssAll/walimurid/DetailTugas.css";
 
 function SkeletonDetailTask(cards) {
   return Array(cards)
@@ -37,17 +36,6 @@ function SkeletonDetailTask(cards) {
             <Skeleton width={100} />
           </span>
         </p>
-        <div className="submition-task">
-          <p className="title-submition">Pengumpulan Tugas</p>
-          <div className="file-task"></div>
-          <button className="btn-add-task">
-            <Icon icon="ic:round-plus" width="20"></Icon>
-            <p>Tambah</p>
-          </button>
-          <button className="btn-submit-task">
-            <p>Kirim</p>
-          </button>
-        </div>
       </div>
     ));
 }

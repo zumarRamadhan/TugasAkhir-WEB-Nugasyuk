@@ -270,7 +270,7 @@ function DataMurid() {
       const lowerCaseStatusMapel = value.nama_jurusan
         ? value.nama_jurusan.toLowerCase()
         : "";
-
+      
       return (
         (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
         ((value &&

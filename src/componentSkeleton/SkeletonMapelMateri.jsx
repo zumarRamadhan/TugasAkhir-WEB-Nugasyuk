@@ -1,6 +1,6 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import "../cssAll/murid/MapelMateri.css";
+import "../cssAll/walimurid/MapelMateri.css";
 
 function SkeletonMapelMateri() {
   return (

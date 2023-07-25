@@ -370,15 +370,15 @@ function DetailPengumpulan() {
                           </div>
                           <div className="desc-DetailPengumpulan-Menunggu">
                             <p className="judul-DetailPengumpulan-Menunggu">
-                              {data.namaMateri}
+                              {data.nama_tugas}
                             </p>
                             <p className="nama-DetailPengumpulan-Guru">
-                              {data.guru}
+                              {data.nama_guru}
                             </p>
                           </div>
                         </div>
                         <div className="card-DetailPengumpulan-Menunggu-right">
-                          <div className="dateDetailDesc">{data.tanggal}</div>
+                          <div className="dateDetailDesc">{data.date}</div>
                           <div className="deadline-timePengumpulan">
                             Deadline : {data.deadline}
                           </div>
@@ -432,15 +432,15 @@ function DetailPengumpulan() {
                           </div>
                           <div className="desc-DetailPengumpulan-Selesai">
                             <p className="judul-DetailPengumpulan-Selesai">
-                              {data.namaTugas}
+                              {data.nama_tugas}
                             </p>
                             <p className="nama-DetailPengumpulan-Guru">
-                              {data.guru}
+                              {data.nama_guru}
                             </p>
                           </div>
                         </div>
                         <div className="card-DetailPengumpulan-Selesai-right">
-                          <div className="dateDetailDesc">{data.tanggal}</div>
+                          <div className="dateDetailDesc">{data.date}</div>
                           <div className="deadline-timePengumpulan">
                             Deadline : {data.deadline}
                           </div>
