@@ -113,7 +113,7 @@ function App() {
         <Route path="/murid/pagemapel/detailtugas" element={<DetailTask/>} /> 
         <Route path="/murid/pagekonseling/buatjanji" element={<PageBuatJanji/>} /> 
         <Route path="/murid/pagemapel/mapelmateri/:id" element={<Materi/>} /> 
-        <Route path="/murid/detailmateri" element={<DetailMateri/>} /> 
+        <Route path="/murid/pagemapel/mapelmateri/detailmateri/:id" element={<DetailMateri/>} /> 
         <Route path="/murid/detailtugas/:id" element={<DetailTask/>} /> 
         <Route path="/murid/pagekonseling/riwayatkonseling" element={<HistoryCounseling/>} /> 
         {/* end role murid */}

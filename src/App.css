@@ -247,6 +247,10 @@ nav .navbar img {
     color: var(--color-primer);
 }
 
+.forget-password:hover{
+    background-color: #1D77AF;
+}
+
 .logout {
     background: #FFC6C6;
     border-radius: 10px;
@@ -254,8 +258,17 @@ nav .navbar img {
     color: #FF3F3F;
 }
 
-/*  */
+.logout:hover{
+    background-color: #FF3F3F;
+    color: var(--color-primer);
+}
 
+.logout:hover{
+    background-color: #FF3F3F;
+    color: var(--color-primer);
+}
+
+/*  */
 .detail-notif {
     display: flex;
     flex-direction: column;
@@ -323,6 +336,14 @@ nav .navbar img {
     font-family: 'Poppins';
 }
 
+.yesterday{
+    margin-top: 30px;
+     font-size: 15px;
+    font-weight: 400;
+    color: #797979;
+    font-family: 'Poppins';
+}
+
 .icon-notif{
     width: 60px;
     height: 60px;
@@ -332,6 +353,12 @@ nav .navbar img {
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+}
+
+.content-notif{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .name-notif{
@@ -1131,16 +1158,175 @@ nav .navbar img {
 	place-items: center;
 }
 
-.pl {
-	display: block;
-	width: 6.25em;
-	height: 6.25em;
+/* data notfound */
+.dataNotFound p{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins';
+    background-color: #fbd7d7;
+    border-radius: 10px;
+    padding: 15px;
 }
-.pl__ring, .pl__ball {
-	animation: ring 2s ease-out infinite;
+
+.text-notfound{
+    /* display: flex; */
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #FF3F3F;
 }
-.pl__ball {
-	animation-name: ball;
+/* end data notfound */
+
+/* popup success */
+
+#popup-success, #popup-success-addCode {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 200;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation-fill-mode: forwards;
+}
+
+.img-success {
+    max-width: 230px;
+    height: auto;
+}
+
+.detail-success {
+    background: #FFFFFF;
+    border-radius: 20px;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.image-success {
+    display: flex;
+    justify-content: center;
+}
+
+.desc-success {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #797979;
+    text-align: center;
+}
+
+.btn-success, .btn-out {
+    background: #D8F0FF;
+    border-radius: 10px;
+    border: none;
+    margin-top: 40px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #2A93D5;
+    width: 100%;
+    padding: 14px 0;
+    cursor: pointer;
+}
+
+.btn-success:hover, .btn-out:hover {
+    background: #2A93D5;
+    color: var(--color-primer);
+    transition: 0.25s ease-in-out;
+}
+
+/* end popup success */
+
+/* popup Failed */
+
+#popup-Failed , #popup-Failed-addCode {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 200;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation-fill-mode: forwards;
+}
+
+.img-Failed {
+    max-width: 230px;
+    height: auto;
+}
+
+.detail-Failed {
+    background: #FFFFFF;
+    border-radius: 20px;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.image-Failed {
+    display: flex;
+    justify-content: center;
+}
+
+.desc-Failed {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #797979;
+    text-align: center;
+}
+
+.btn-Failed {
+    background: #ffb0b0;
+    border-radius: 10px;
+    border: none;
+    margin-top: 40px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #ff0e0e;
+    width: 100%;
+    padding: 14px 0;
+    cursor: pointer;
+}
+
+.btn-Failed2 {
+    background: #ffb0b0;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* line-height: 22px; */
+    color: #ff0e0e;
+    width: 100%;
+    padding: 14px 0;
+    cursor: pointer;
+}
+
+.btn-Failed:hover, .btn-Failed2:hover {
+    background: #ee3a3a;
+    color: var(--color-primer);
+    transition: 0.25s ease-in-out;
 }
 
 /* Dark theme  */
