@@ -9,7 +9,7 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
-import ImgFailed from "../assets/failed.gif"; 
+import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 
 function EditFormAddMurid() {
@@ -33,34 +33,70 @@ function EditFormAddMurid() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-    // messege
+  // messege
 
-    const showSuccessAdd = () => {
-      const popupLogout = document.querySelector("#popup-success");
-      popupLogout.style.display = "flex";
-      popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-    };
-  
-    const closeSuccess = () => {
-      const popupLogout = document.querySelector("#popup-success");
-      setTimeout(() => (popupLogout.style.display = "none"), 250);
-      popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-      navigate("/admin/pagemurid");
-    };
-  
-    const showFailedAdd = () => {
-      const popupLogout = document.querySelector("#popup-Failed");
-      popupLogout.style.display = "flex";
-      popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-    };
-  
-    const closeFailed = () => {
-      const popupLogout = document.querySelector("#popup-Failed");
-      setTimeout(() => (popupLogout.style.display = "none"), 250);
-      popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    };
-  
-    // end messege
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showPopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    background.style.display = "flex";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    PopupLoadingDetail.style.display = "grid";
+    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
+    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
+
+  const showSuccessAdd = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    navigate("/admin/pagemurid");
+  };
+
+  const showFailedAdd = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -104,7 +140,7 @@ function EditFormAddMurid() {
   const { id } = useParams();
   const saveToken = sessionStorage.getItem("token");
 
-  const [muridData, setMuridData] = useState(null);
+  const [muridData, setMuridData] = useState([]);
   const [formData, setFormData] = useState({
     // Inisialisasi nilai awal untuk setiap field formulir
     // file: "",
@@ -128,10 +164,13 @@ function EditFormAddMurid() {
 
   useEffect(() => {
     // console.log(formData.email_wali_murid);
+    setIsLoading(true);
+    showPopupLoadingDetail();
     axios
-      .get(`https://www.nugasyuk.my.id/api/admin/murid/${id}`, {
+      .get(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/murid/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -151,9 +190,11 @@ function EditFormAddMurid() {
           konfirmasiPassword_wali_murid: "",
           kelas: response.data.data.kelas_id,
         });
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengambil data murid:", error);
+        setIsLoading(false);
       });
   }, [id, saveToken]);
 
@@ -251,18 +292,20 @@ function EditFormAddMurid() {
       form.append("kelas_id", formData.kelas || "");
 
       axios
-        .post(`https://www.nugasyuk.my.id/api/admin/murid/${id}`, form, {
+        .post(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/murid/${id}`, form, {
           headers: {
-            'Access-Control-Allow-Origin': 'https://nugasyuk.my.id',
-            'Accept': 'application/json',
+            "Access-Control-Allow-Origin": "https://nugasyuk.my.id",
+            Accept: "application/json",
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
           },
         })
         .then((result) => {
           console.log("Data berhasil diperbarui");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
           showSuccessAdd();
+          closePopupLoading();
           // navigate("/admin/pagemurid");
           //   setIsSubmitting(false);
         })
@@ -271,23 +314,30 @@ function EditFormAddMurid() {
           setErrors({ submit: "Terjadi kesalahan saat memperbarui data" });
           setIsSubmitting(false);
           showFailedAdd();
+          closePopupLoading();
         });
     }
   }, [isSubmitting, formData, id, saveToken, navigate]);
 
   const [dataKelas, setDataKelas] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState([]);
   const [isError, setIsError] = useState(false);
   // console.log("data kelas", dataKelas);
 
-  // setIsLoading(true);
+  useEffect(() => {
+    if (isLoading) {
+      showPopupLoadingDetail();
+    }
+  }, [isLoading]);
+
   useState(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/kelas", {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -295,6 +345,7 @@ function EditFormAddMurid() {
         const responseAPI = result.data;
 
         setDataKelas(responseAPI.data);
+        closePopupLoadingDetail();
         setIsLoading(false);
       })
       .catch((err) => {
@@ -318,6 +369,7 @@ function EditFormAddMurid() {
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
+      showPopupLoading();
     }
   };
 
@@ -455,15 +507,15 @@ function EditFormAddMurid() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Nama Walimurid</div>
                   {formData && formData.namaWaliMurid ? (
-                  <input
-                    type="text"
-                    id="namaWaliMurid"
-                    name="namaWaliMurid"
-                    value={formData.namaWaliMurid}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan nama walimurid"
-                  />
+                    <input
+                      type="text"
+                      id="namaWaliMurid"
+                      name="namaWaliMurid"
+                      value={formData.namaWaliMurid}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan nama walimurid"
+                    />
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -479,26 +531,26 @@ function EditFormAddMurid() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
                   {formData && formData.kelas ? (
-                  <select
-                    name="kelas"
-                    id="kelas"
-                    className="selectClass"
-                    value={formData.kelas}
-                    onChange={handleChange}
-                  >
-                    <option value="" selected disabled>
-                      Pilih Kelas
-                    </option>
-                    {dataKelas.map((kelas) => (
-                      <option value={kelas.id}>
-                        {kelas.tingkat_ke +
-                          " " +
-                          kelas.nama_jurusan.toUpperCase() +
-                          " " +
-                          kelas.nama_kelas}
+                    <select
+                      name="kelas"
+                      id="kelas"
+                      className="selectClass"
+                      value={formData.kelas}
+                      onChange={handleChange}
+                    >
+                      <option value="" selected disabled>
+                        Pilih Kelas
                       </option>
-                    ))}
-                  </select>
+                      {dataKelas.map((kelas) => (
+                        <option value={kelas.id}>
+                          {kelas.tingkat_ke +
+                            " " +
+                            kelas.nama_jurusan.toUpperCase() +
+                            " " +
+                            kelas.nama_kelas}
+                        </option>
+                      ))}
+                    </select>
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -514,15 +566,15 @@ function EditFormAddMurid() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">NIS</div>
                   {formData && formData.nis ? (
-                  <input
-                    type="text"
-                    id="nis"
-                    name="nis"
-                    value={formData.nis}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan niy guru"
-                  />
+                    <input
+                      type="text"
+                      id="nis"
+                      name="nis"
+                      value={formData.nis}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan niy guru"
+                    />
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -536,15 +588,15 @@ function EditFormAddMurid() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Alamat</div>
                   {formData && formData.alamat ? (
-                  <input
-                    type="text"
-                    id="alamat"
-                    name="alamat"
-                    value={formData.alamat}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan alamat siswa"
-                  />
+                    <input
+                      type="text"
+                      id="alamat"
+                      name="alamat"
+                      value={formData.alamat}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan alamat siswa"
+                    />
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -560,15 +612,15 @@ function EditFormAddMurid() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Email</div>
                   {formData && formData.email ? (
-                  <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="example@smkrus.schid"
-                  />
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="example@smkrus.schid"
+                    />
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -584,15 +636,15 @@ function EditFormAddMurid() {
                 <div className="con-formKbm">
                   <div className="title-formKbm">Email Walimurid</div>
                   {formData && formData.email_wali_murid ? (
-                  <input
-                    type="text"
-                    id="email_wali_murid"
-                    name="email_wali_murid"
-                    value={formData.email_wali_murid}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="example@smkrus.schid"
-                  />
+                    <input
+                      type="text"
+                      id="email_wali_murid"
+                      name="email_wali_murid"
+                      value={formData.email_wali_murid}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="example@smkrus.schid"
+                    />
                   ) : (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -741,13 +793,12 @@ function EditFormAddMurid() {
               onClick={closeFailed}
             />
             <div className="image-Failed">
-              <img
-                src={ImgFailed}
-                alt="Delete Failed"
-                className="img-Failed"
-              />
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
-            <p className="desc-Failed">Data Gagal Di Perbarui, , Silahkan Periksa Apakah Ada Data Yang Sama Dengan Murid Lain!!!</p>
+            <p className="desc-Failed">
+              Data Gagal Di Perbarui, , Silahkan Periksa Apakah Ada Data Yang
+              Sama Dengan Murid Lain!!!
+            </p>
             <button className="btn-Failed" onClick={closeFailed}>
               Kembali
             </button>
@@ -863,6 +914,62 @@ function EditFormAddMurid() {
             </button>
           </div>
         </div>
+
+        {/* card loading */}
+        <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div className="popup-loading" id="popup-loadingDetail">
+          <div className="body-loadingDetail" id="body-loadingDetail">
+            <h2 class="animate-loadingDetail">Loading</h2>
+            <p>Data Sedang Di Proses...</p>
+          </div>
+        </div>
+        {/* end loading */}
       </div>
     );
 }

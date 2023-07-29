@@ -118,9 +118,10 @@ function FormAddJadwalKbm() {
   useEffect(() => {
     // console.log(formData.email_wali_murid);
     axios
-      .get(`https://www.nugasyuk.my.id/api/admin/jadwal/data/${id}`, {
+      .get(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/data/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((response) => {
@@ -150,10 +151,11 @@ function FormAddJadwalKbm() {
       form.append("mapel_id", formData.mapelId);
 
       axios
-        .post(`https://www.nugasyuk.my.id/api/admin/jadwal/${id}`, form, {
+        .post(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning":"any"
           },
         })
         .then((result) => {
@@ -221,10 +223,11 @@ function FormAddJadwalKbm() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/mapel", {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((result) => {

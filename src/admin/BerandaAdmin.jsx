@@ -81,10 +81,11 @@ function BerandaAdmin() {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/dataadmin", {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/dataadmin", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((result) => {

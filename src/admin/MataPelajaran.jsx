@@ -46,17 +46,20 @@ function MataPelajaran() {
 
     setDetailMapel(null);
 
+    showPopupLoadingDetail();
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/mapel/" + currentHover, {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel/" + currentHover, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
         const responseAPI = result.data;
         setDetailMapel(responseAPI.data);
         setIsLoading(false);
+        closePopupLoadingDetail();
       })
       .catch((err) => {
         console.log("terjadi kesalahan: ", err);
@@ -66,11 +69,13 @@ function MataPelajaran() {
   };
 
   const handleDelete = () => {
+    showPopupLoading();
     axios
-      .delete(`https://www.nugasyuk.my.id/api/admin/mapel/${currentMapel}`, {
+      .delete(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel/${currentMapel}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -80,11 +85,14 @@ function MataPelajaran() {
         // window.location.reload();
         showSuccess();
         closeDeletePopup();
+        closePopupLoading();
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
         showFailed();
+        closeDeletePopup();
+        closePopupLoading();
       });
   };
 
@@ -97,6 +105,41 @@ function MataPelajaran() {
   };
 
   // messege
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showPopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    background.style.display = "flex";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    PopupLoadingDetail.style.display = "grid";
+    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
+    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
 
   const showSuccess = () => {
     const popupLogout = document.querySelector("#popup-success");
@@ -199,10 +242,11 @@ function MataPelajaran() {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/mapel", {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -666,6 +710,61 @@ function MataPelajaran() {
             </button>
           </div>
         </div>
+        {/* card loading */}
+        <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div className="popup-loading" id="popup-loadingDetail">
+          <div className="body-loadingDetail" id="body-loadingDetail">
+            <h2 class="animate-loadingDetail">Loading</h2>
+            <p>Data Sedang Di Proses...</p>
+          </div>
+        </div>
+        {/* end loading */}
       </div>
     );
 }

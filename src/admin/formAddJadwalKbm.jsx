@@ -126,10 +126,11 @@ function FormAddJadwalKbm() {
       form.append("jumlah_jam", formData.jumlahJam);
 
       axios
-        .post("https://www.nugasyuk.my.id/api/admin/jadwal", form, {
+        .post("https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal", form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning":"any"
           },
         })
         .then((result) => {
@@ -204,10 +205,11 @@ function FormAddJadwalKbm() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/mapel", {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((result) => {

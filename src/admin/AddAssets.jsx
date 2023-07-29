@@ -37,6 +37,42 @@ function AddAssets() {
 
   // messege
 
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showPopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    background.style.display = "flex";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    PopupLoadingDetail.style.display = "grid";
+    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
+    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
+
   const showSuccess = () => {
     const popupLogout = document.querySelector("#popup-success");
     popupLogout.style.display = "flex";
@@ -115,10 +151,11 @@ function AddAssets() {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/asset", {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -143,19 +180,26 @@ function AddAssets() {
     popupDelete.style.display = "block";
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
 
-    // setDetailAssets(null);
-
+    setDetailAssets(null);
+    showPopupLoadingDetail();
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/asset/" + currentHover, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
+      .get(
+        "https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset/" +
+          currentHover,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
+      )
       .then((result) => {
         const responseAPI = result.data;
         setDetailAssets(responseAPI.data);
         setIsLoading(false);
+        console.log(responseAPI.data);
+        closePopupLoadingDetail();
       })
       .catch((err) => {
         console.log("terjadi kesalahan: ", err);
@@ -165,13 +209,18 @@ function AddAssets() {
   };
 
   const handleDelete = () => {
+    showPopupLoading();
     axios
-      .delete(`https://www.nugasyuk.my.id/api/admin/asset/${currentAssets}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-        },
-      })
+      .delete(
+        `https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset/${currentAssets}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
+      )
       .then((response) => {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus");
@@ -179,11 +228,13 @@ function AddAssets() {
         // window.location.reload();
         showSuccess();
         closeDeletePopup();
+        closePopupLoading();
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
         showFailed();
+        closePopupLoading();
       });
   };
 
@@ -248,8 +299,11 @@ function AddAssets() {
           <main className="main">
             <div className="header-AddAssets">
               <div className="header-AddAssets-left">
-                <button className="btn-add-AddAssets" onClick={() => navigate('/admin/pageassets/list/add')}>
-                <Icon icon="ic:round-plus" width="20"></Icon>
+                <button
+                  className="btn-add-AddAssets"
+                  onClick={() => navigate("/admin/pageassets/list/add")}
+                >
+                  <Icon icon="ic:round-plus" width="20"></Icon>
                   <p>Tambah Data</p>
                 </button>
               </div>
@@ -337,9 +391,9 @@ function AddAssets() {
               <img src={ImgDelete} alt="" className="img-Delete" />
             </div>
             <p className="desc-Delete">Anda yakin ingin menghapus?</p>
-            {detailAssets && detailAssets.data && detailAssets.data.length > 0 ? (
+            {detailAssets?.length > 0 ? (
               <p className="desc-Delete">
-                {detailAssets.data.map((subject, index) => (
+                {detailAssets.map((subject, index) => (
                   <span key={subject.id}>
                     {index > 0 && ", "}
                     {subject.nama_mapel}
@@ -348,9 +402,7 @@ function AddAssets() {
               </p>
             ) : (
               <p className="desc-Delete">
-                {detailAssets &&
-                detailAssets.data &&
-                detailAssets.data.length === 0
+                {detailAssets?.length === 0
                   ? "Assets Tidak Terhubung Dengan Kelas Mata Pelajaran Manapun"
                   : "Tunggu Sebentar, Data Sedang Dalam Proses..."}
               </p>
@@ -524,6 +576,62 @@ function AddAssets() {
             </button>
           </div>
         </div>
+
+        {/* card loading */}
+        <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div className="popup-loading" id="popup-loadingDetail">
+          <div className="body-loadingDetail" id="body-loadingDetail">
+            <h2 class="animate-loadingDetail">Loading</h2>
+            <p>Data Sedang Di Proses...</p>
+          </div>
+        </div>
+        {/* end loading */}
       </div>
     );
 }

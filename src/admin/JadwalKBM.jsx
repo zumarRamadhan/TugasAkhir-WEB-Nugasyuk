@@ -51,12 +51,13 @@ function EditFormAddJadwal() {
     popupDelete.style.animation = "slide-down 0.3s ease-in-out";
 
     setDeleteJadwal(null);
-
+    showPopupLoadingDetail();
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/jadwal/data/" + id, {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/data/" + id, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((result) => {
@@ -64,6 +65,7 @@ function EditFormAddJadwal() {
         if (responseAPI.success && responseAPI.data.length > 0) {
           setDeleteJadwal(responseAPI.data[0]);
           setIsLoading(false);
+          closePopupLoadingDetail();
         } else {
           setIsError(true);
           setIsLoading(false);
@@ -77,11 +79,13 @@ function EditFormAddJadwal() {
   };
 
   const handleDelete = () => {
+    showPopupLoading();
     axios
-      .delete(`https://www.nugasyuk.my.id/api/admin/jadwal/${selected}`, {
+      .delete(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/${selected}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((response) => {
@@ -91,11 +95,13 @@ function EditFormAddJadwal() {
         closeDeletePopup();
         closeDetailKbm();
         showSuccess();
+        closePopupLoading();
       })
       .catch((error) => {
         // Handling error when deleting data
         console.log("Terjadi kesalahan saat menghapus data:", error);
         showFailed();
+        closePopupLoading();
       });
   };
 
@@ -121,6 +127,41 @@ function EditFormAddJadwal() {
   };
 
   // messege
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showPopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    background.style.display = "flex";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    PopupLoadingDetail.style.display = "grid";
+    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
+    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
 
   const showSuccess = () => {
     const popupLogout = document.querySelector("#popup-success");
@@ -199,15 +240,17 @@ function EditFormAddJadwal() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/admin/kelas", {
+      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((result) => {
         console.log("data API", result.data);
         const responseAPI = result.data;
+        
 
         setDataKelas(responseAPI.data);
         setIsLoading(false);
@@ -231,13 +274,14 @@ function EditFormAddJadwal() {
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
 
-    const url = `https://www.nugasyuk.my.id/api/admin/jadwal/${id}?kelas=${selectedValue}`;
+    const url = `https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/${id}?kelas=${selectedValue}`;
 
     axios
       .get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((result) => {
@@ -257,7 +301,7 @@ function EditFormAddJadwal() {
   };
 
   const fetchData = (selectedValue) => {
-    const url = `https://www.nugasyuk.my.id/api/admin/jadwal?kelas=${selectedValue}`;
+    const url = `https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal?kelas=${selectedValue}`;
     setCardLoading(true);
 
     axios
@@ -265,6 +309,7 @@ function EditFormAddJadwal() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any"
         },
       })
       .then((result) => {
@@ -707,6 +752,62 @@ function EditFormAddJadwal() {
             </button>
           </div>
         </div>
+
+          {/* card loading */}
+          <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div className="popup-loading" id="popup-loadingDetail">
+          <div className="body-loadingDetail" id="body-loadingDetail">
+            <h2 class="animate-loadingDetail">Loading</h2>
+            <p>Data Sedang Di Proses...</p>
+          </div>
+        </div>
+        {/* end loading */}
       </div>
     );
 }
