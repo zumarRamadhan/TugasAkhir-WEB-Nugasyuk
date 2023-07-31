@@ -13,9 +13,106 @@ import CardCounseling from "../assets/card-counseling.svg";
 import ProfilBk from "../assets/profil-bk.svg";
 import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
+import axios from "axios";
 
 function RiwayatKonseling() {
   const navigate = useNavigate();
+
+  const saveToken = sessionStorage.getItem("token");
+
+  const [dataTabelGuru, setDataTabelGuru] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [active, setActive] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterValue, setFilterValue] = useState("all");
+  const [guruData, setGuruData] = useState({});
+
+  const handleEditClick = (id) => {
+    // Ambil data guru dari API berdasarkan id
+
+    // pindah ke halaman form edit
+    navigate(`/admin/pageguru/edit/${id}`);
+    console.log("");
+  };
+
+  const handleToggle = (e) => {
+    setActive(!active);
+    setSelected(e);
+  };
+
+  const showDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    background.style.display = "flex";
+    const popupDelete = document.querySelector(".detail-Delete");
+    popupDelete.style.display = "block";
+    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+
+    // setDetailGuru(null);
+
+    axios
+      .get("https://www.nugasyuk.my.id/api/admin/guru/" + selected, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        // setDetailGuru(responseAPI.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`https://www.nugasyuk.my.id/api/admin/guru/${selected}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        // Penanganan ketika penghapusan berhasil
+        console.log("Data berhasil dihapus");
+        closeDeletePopup();
+        showSuccessDelete();
+      })
+      .catch((error) => {
+        // Penanganan ketika terjadi kesalahan saat menghapus data
+        console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailedDelete();
+        closeDeletePopup();
+      });
+  };
+
+  const closeDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const popupDelete = document.querySelector(".detail-Delete");
+    setTimeout(() => (popupDelete.style.display = "none"), 250);
+    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showSuccessDelete = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showFailedDelete = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
 
   return (
     <div>
@@ -72,6 +169,22 @@ function RiwayatKonseling() {
                   </div>
                   <div className="icon-option-promise-counseling">
                     <Icon icon="mi:options-vertical" width="30" />
+                    <div
+                      id="popup-menu-guruAdmin"
+                      //   className="popup-menu-guruAdmin"
+                      className={`popup-menu-guruAdmin ${
+                        selected === active ? "active" : ""
+                      }`}
+                    >
+                      <ul>
+                        <li>
+                          <a onClick={() => handleEditClick()}>Edit</a>
+                        </li>
+                        <li>
+                          <a onClick={showDeletePopup}>Hapus</a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
                 <p className="topics-counseling">

@@ -16,34 +16,34 @@ import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 function DetailTask() {
   const navigate = useNavigate();
 
-     // messege
+  // messege
 
-    const showSuccessAdd = () => {
-      const popupLogout = document.querySelector("#popup-success");
-      popupLogout.style.display = "flex";
-      popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-    };
-  
-    const closeSuccess = () => {
-      const popupLogout = document.querySelector("#popup-success");
-      setTimeout(() => (popupLogout.style.display = "none"), 250);
-      popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-      // navigate(`/murid/detailtugas/{$id}`);
-    };
-  
-    const showFailedAdd = () => {
-      const popupLogout = document.querySelector("#popup-Failed");
-      popupLogout.style.display = "flex";
-      popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-    };
-  
-    const closeFailed = () => {
-      const popupLogout = document.querySelector("#popup-Failed");
-      setTimeout(() => (popupLogout.style.display = "none"), 250);
-      popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    };
-  
-    // end messege
+  const showSuccessAdd = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    // navigate(`/murid/detailtugas/{$id}`);
+  };
+
+  const showFailedAdd = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const saveToken = sessionStorage.getItem("token");
 
@@ -109,27 +109,26 @@ function DetailTask() {
   const submitTask = () => {
     setIsLoadingSubmit(true);
     setIsErrorSubmit(false);
-  
+
     const formData = new FormData();
     formData.append("file", selectedFile);
-  
+
     axios
       .post(`https://www.nugasyuk.my.id/api/murid/tugas/${id}`, formData, {
         headers: {
+          // "ngrok-skip-browser-warning":"any",
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${saveToken}`,
         },
       })
       .then((response) => {
         console.log("Data berhasil dikirim", response.data);
-        // alert("Tugas berhasil dikirim");
-         showSuccessAdd();
+        showSuccessAdd();
         // Tambahkan logika atau pesan yang ingin ditampilkan jika pengiriman berhasil
         setIsLoadingSubmit(false);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengirim data", error);
-        // alert("Tugas gagal dikirim")
         // Tambahkan logika atau pesan yang ingin ditampilkan jika terjadi kesalahan
         setIsErrorSubmit(true);
         setIsLoadingSubmit(false);
@@ -144,15 +143,6 @@ function DetailTask() {
       [name]: value,
     }));
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const validationErrors = validateForm(file);
-  //   setErrors(validationErrors);
-  //   if (Object.keys(validationErrors).length === 0) {
-  //     setIsSubmitting(true);
-  //   }
-  // };
 
   const validateForm = (data) => {
     let errors = {};
@@ -177,43 +167,8 @@ function DetailTask() {
         case "docx":
           fileIcon = "mdi:file-word-box";
           break;
-        default:
-          fileIcon = "";
-          break;
-      }
-    }
-
-    return (
-      <>
-        {fileExtension && (
-          <>
-            <div className="icon-value-file">
-              <Icon icon={fileIcon} width={45} />
-            </div>
-            <div>
-              <h1 className="title-value-file">{item.file}</h1>
-              <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()} <span>Klik</span>
-              </p>
-            </div>
-          </>
-        )}
-      </>
-    );
-  }
-
-  function generateFileIcons(item) {
-    let fileIcon;
-    let fileExtension = "";
-
-    if (item.file) {
-      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
-      switch (fileExtension) {
-        case "pdf":
-          fileIcon = "mdi:file-pdf-box";
-          break;
-        case "docx":
-          fileIcon = "mdi:file-word-box";
+        case "xlsx":
+          fileIcon = "mdi:file-icons:microsoft-excel";
           break;
         default:
           fileIcon = "";
@@ -224,17 +179,17 @@ function DetailTask() {
     return (
       <>
         {fileExtension && (
-          <>
+          <div className="file-generate">
             <div className="icon-value-file">
-              <Icon icon={fileIcon} width={45} />
+              <Icon className="icon-file-generate" icon={fileIcon} width={45} />
             </div>
             <div>
               <h1 className="title-value-file">{item.file}</h1>
               <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()} <span>Klik</span>
+                {fileExtension.toUpperCase()}
               </p>
             </div>
-          </>
+          </div>
         )}
       </>
     );
@@ -456,11 +411,13 @@ function DetailTask() {
                       </p>
                       <div className="submition-task">
                         <p className="title-submition">Pengumpulan Tugas</p>
-                        <div className="file-task">
+                        {fileLinkElements}
+                        {/* <div className="file-task">
                            {selectedFile && <p>{selectedFile.name}</p>}
+                           {generateFileIcons}
                            {detailTugas.file}
-                          {/* Tambahkan tampilan preview lainnya sesuai kebutuhan */}
-                        </div>
+                          Tambahkan tampilan preview lainnya sesuai kebutuhan
+                        </div> */}
 
                         <div>
                           <input
@@ -494,7 +451,7 @@ function DetailTask() {
           </div>
         </div>
 
-         <div id="popup-success">
+        <div id="popup-success">
           <div className="detail-success">
             <Icon
               icon="radix-icons:cross-circled"
@@ -525,11 +482,7 @@ function DetailTask() {
               onClick={closeFailed}
             />
             <div className="image-Failed">
-              <img
-                src={ImgFailed}
-                alt="Delete Failed"
-                className="img-Failed"
-              />
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
             <p className="desc-Failed">Tugas Gagal Dikirim!</p>
             <button className="btn-Failed" onClick={closeFailed}>

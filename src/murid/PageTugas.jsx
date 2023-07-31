@@ -76,6 +76,7 @@ function PageTugas() {
     axios
       .get("https://www.nugasyuk.my.id/api/murid/tugas", {
         headers: {
+          // "ngrok-skip-browser-warning":"any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },

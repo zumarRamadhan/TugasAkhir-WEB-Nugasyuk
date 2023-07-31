@@ -33,6 +33,7 @@ function BerandaMurid() {
     axios
       .get("https://www.nugasyuk.my.id/api/murid/datamurid", {
         headers: {
+          // "ngrok-skip-browser-warning":"any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },

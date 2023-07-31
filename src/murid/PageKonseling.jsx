@@ -78,7 +78,7 @@ function PageKonseling() {
                   <p className="title-chat-bk">
                     Jika ada yang ingin ditanyakan kepada guru BK melalui chat
                   </p>
-                  <button className="btn-chat-bk" style={{cursor: 'pointer'}}>
+                  <button className="btn-chat-bk" style={{ cursor: "pointer" }}>
                     <Icon icon="ph:chat-circle-dots" width="20" />
                     Hubungi BK
                   </button>
@@ -89,17 +89,19 @@ function PageKonseling() {
 
           <div className="con-content-counseling-bottom">
             <div className="content-counseling-left">
-              <div className="history-counseling">
+              <div
+                className="history-counseling"
+                onClick={() =>
+                  navigate("/murid/pagekonseling/riwayatkonseling")
+                }
+                style={{ cursor: "pointer" }}
+              >
                 <div className="head-history-counseling">
                   <p className="title-history-counseling">Janji Konseling</p>
                   <Icon
                     icon="ic:round-navigate-next"
                     className="navigate-next-icon"
                     width={30}
-                    style={{ cursor: "pointer" }}
-                    onClick={() =>
-                      navigate("/murid/pagekonseling/riwayatkonseling")
-                    }
                   />
                 </div>
                 <div className="card-counseling">

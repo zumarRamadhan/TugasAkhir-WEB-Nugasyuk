@@ -23,6 +23,7 @@ function NotificationSiswa() {
     axios
       .get("https://www.nugasyuk.my.id/api/murid/notifikasi", {
         headers: {
+          // "ngrok-skip-browser-warning":"any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },

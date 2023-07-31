@@ -25,6 +25,7 @@ function SkeletonNavbar() {
           </h1>
           <div className="nav-right">
             <img src={avatar} alt="" />
+            {/* <Skeleton circle width={50}/> */}
 
             <div
               className="btn-notification"

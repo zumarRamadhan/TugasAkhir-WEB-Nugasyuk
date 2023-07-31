@@ -44,11 +44,12 @@ function MapelMateri() {
     getDetailMapel();
     dataMateri();
     dataTugas();
-  }, [id]);
-
-  useEffect(() => {
     handleSearch();
-  }, [searchQuery, filterValue]);
+  }, [id, searchQuery, filterValue]);
+
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [searchQuery, filterValue]);
 
   const handleSearch = () => {
     const filteredData = dataTask.filter((value) => {
@@ -263,12 +264,20 @@ function MapelMateri() {
               </button>
             </div>
 
-            <form className="search-box">
-              <input type="text" placeholder="Cari..." />
-              <button type="submit">
-                <Icon icon="material-symbols:search-rounded" width="20"></Icon>
-              </button>
-            </form>
+            <form className="search-box" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Cari..."
+                  value={searchQuery}
+                  onChange={handleChange}
+                />
+                <button type="submit">
+                  <Icon
+                    icon="material-symbols:search-rounded"
+                    width="20"
+                  ></Icon>
+                </button>
+              </form>
           </div>
 
           {isLoading ? (

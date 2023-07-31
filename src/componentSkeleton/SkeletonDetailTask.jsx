@@ -32,21 +32,13 @@ function SkeletonDetailTask(cards) {
           <Skeleton width={400} />
         </p>
         <p className="task-deadline-time">
-          Deadline :{" "}
-          <span>
-            <Skeleton width={100} />
-          </span>
+          <Skeleton width={200}/>
         </p>
         <div className="submition-task">
-          <p className="title-submition">Pengumpulan Tugas</p>
-          <div className="file-task"></div>
-          <button className="btn-add-task">
-            <Icon icon="ic:round-plus" width="20"></Icon>
-            <p>Tambah</p>
-          </button>
-          <button className="btn-submit-task">
-            <p>Kirim</p>
-          </button>
+          <Skeleton width={150}/>
+          <Skeleton/>
+          <Skeleton height={40}/>
+          <Skeleton height={40} style={{marginTop: '10px'}}/>
         </div>
       </div>
     ));
