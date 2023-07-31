@@ -11,6 +11,7 @@ import ImgDelete from "../assets/imgDelete.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import { useState, useEffect } from "react";
+import apiurl from "../api/api";
 import axios from "axios";
 
 function AddAssets() {
@@ -151,7 +152,7 @@ function AddAssets() {
 
   useEffect(() => {
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset", {
+      .get(`${apiurl}admin/asset`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -183,17 +184,13 @@ function AddAssets() {
     setDetailAssets(null);
     showPopupLoadingDetail();
     axios
-      .get(
-        "https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset/" +
-          currentHover,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${saveToken}`,
-            "ngrok-skip-browser-warning": "any",
-          },
-        }
-      )
+      .get(`${apiurl}admin/asset/` + currentHover, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
       .then((result) => {
         const responseAPI = result.data;
         setDetailAssets(responseAPI.data);
@@ -211,16 +208,13 @@ function AddAssets() {
   const handleDelete = () => {
     showPopupLoading();
     axios
-      .delete(
-        `https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset/${currentAssets}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${saveToken}`,
-            "ngrok-skip-browser-warning": "any",
-          },
-        }
-      )
+      .delete(`${apiurl}admin/asset/${currentAssets}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
       .then((response) => {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus");

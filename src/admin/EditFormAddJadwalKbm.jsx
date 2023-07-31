@@ -11,6 +11,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function FormAddJadwalKbm() {
   const navText = "Edit data jadwal KBM";
@@ -118,10 +119,10 @@ function FormAddJadwalKbm() {
   useEffect(() => {
     // console.log(formData.email_wali_murid);
     axios
-      .get(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/data/${id}`, {
+      .get(`${apiurl}admin/jadwal/data/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -135,7 +136,7 @@ function FormAddJadwalKbm() {
           });
         }
       })
-      
+
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengambil data jadwal:", error);
       });
@@ -151,11 +152,11 @@ function FormAddJadwalKbm() {
       form.append("mapel_id", formData.mapelId);
 
       axios
-        .post(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/${id}`, form, {
+        .post(`${apiurl}admin/jadwal/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
-            "ngrok-skip-browser-warning":"any"
+            "ngrok-skip-browser-warning": "any",
           },
         })
         .then((result) => {
@@ -223,11 +224,11 @@ function FormAddJadwalKbm() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel", {
+      .get(`${apiurl}admin/mapel`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -540,9 +541,14 @@ function FormAddJadwalKbm() {
               <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
             <p className="desc-Failed">
-              Data Gagal Di Perbarui, Pastikan data tidak menambrak pada jam pelajaran yang sama, jika anda tidak melakukan perubahan silahkan tekan tombol keluar
+              Data Gagal Di Perbarui, Pastikan data tidak menambrak pada jam
+              pelajaran yang sama, jika anda tidak melakukan perubahan silahkan
+              tekan tombol keluar
             </p>
-            <button className="btn-out" onClick={() => navigate("/admin/jadwalkbm")}>
+            <button
+              className="btn-out"
+              onClick={() => navigate("/admin/jadwalkbm")}
+            >
               Keluar
             </button>
             <button className="btn-Failed2" onClick={closeFailed}>

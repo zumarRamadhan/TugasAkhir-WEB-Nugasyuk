@@ -12,6 +12,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function MataPelajaran() {
   const navText = "Mata Pelajaran";
@@ -48,7 +49,7 @@ function MataPelajaran() {
 
     showPopupLoadingDetail();
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel/" + currentHover, {
+      .get(`${apiurl}admin/mapel/` + currentHover, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -71,7 +72,7 @@ function MataPelajaran() {
   const handleDelete = () => {
     showPopupLoading();
     axios
-      .delete(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel/${currentMapel}`, {
+      .delete(`${apiurl}admin/mapel/${currentMapel}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -242,7 +243,7 @@ function MataPelajaran() {
 
   useEffect(() => {
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel", {
+      .get(`${apiurl}admin/mapel`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

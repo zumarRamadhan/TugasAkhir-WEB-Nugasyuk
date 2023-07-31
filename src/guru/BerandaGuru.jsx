@@ -9,6 +9,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function BerandaGuru() {
   const navText = "Beranda";
@@ -79,7 +80,7 @@ function BerandaGuru() {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/guru/dataguru", {
+      .get(`${apiurl}guru/dataguru`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

@@ -11,6 +11,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function EditFormAddMapel() {
   const navText = "Edit Data Mata Pelajaran";
@@ -156,7 +157,7 @@ function EditFormAddMapel() {
     // console.log(formData.email_wali_murid);
     showPopupLoadingDetail();
     axios
-      .get(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel/${id}`, {
+      .get(`${apiurl}admin/mapel/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
           "ngrok-skip-browser-warning":"any"
@@ -187,7 +188,7 @@ function EditFormAddMapel() {
       form.append("asset_id", formData.assetId);
 
       axios
-        .post(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel/${id}`, form, {
+        .post(`${apiurl}admin/mapel/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
@@ -283,7 +284,7 @@ function EditFormAddMapel() {
   // setIsLoading(true);
   useState(() => {
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/guru", {
+      .get(`${apiurl}admin/guru`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -304,7 +305,7 @@ function EditFormAddMapel() {
       });
 
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
+      .get(`${apiurl}admin/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -325,7 +326,7 @@ function EditFormAddMapel() {
       });
 
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset", {
+      .get(`${apiurl}admin/asset`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -347,7 +348,7 @@ function EditFormAddMapel() {
   }, []);
   // useState(() => {
   //   axios
-  //     .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
+  //     .get(`${apiurl}admin/kelas`, {
   //       headers: {
   //         "Content-Type": "application/json",
   //         Authorization: `Bearer ${saveToken}`,

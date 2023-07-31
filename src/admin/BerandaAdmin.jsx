@@ -11,6 +11,7 @@ import ImgProfil from "../assets/img-profil.svg";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function BerandaAdmin() {
   const navText = "Beranda Admin";
@@ -81,7 +82,7 @@ function BerandaAdmin() {
 
   useEffect(() => {
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/dataadmin", {
+      .get(`${apiurl}admin/dataadmin`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

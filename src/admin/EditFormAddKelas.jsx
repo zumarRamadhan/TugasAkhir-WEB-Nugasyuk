@@ -11,6 +11,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function EditFormAddKelas() {
   const navText = "Edit Data Kelas";
@@ -156,7 +157,7 @@ function EditFormAddKelas() {
   useEffect(() => {
     showPopupLoadingDetail();
     axios
-      .get(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas/${id}`, {
+      .get(`${apiurl}admin/kelas/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
           "ngrok-skip-browser-warning": "any",
@@ -188,7 +189,7 @@ function EditFormAddKelas() {
       form.append("wali_kelas", formData.waliKelas);
 
       axios
-        .post(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas/${id}`, form, {
+        .post(`${apiurl}admin/kelas/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
@@ -291,7 +292,7 @@ function EditFormAddKelas() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/guru", {
+      .get(`${apiurl}admin/guru`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

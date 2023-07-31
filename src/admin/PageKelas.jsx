@@ -12,6 +12,7 @@ import ImgDelete from "../assets/imgDelete.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function Pagekelas() {
   const navText = "Kelas";
@@ -158,7 +159,7 @@ function Pagekelas() {
     setDetailKelas(null);
     showPopupLoadingDetail();
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas/" + selected, {
+      .get(`${apiurl}admin/kelas/` + selected, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -181,7 +182,7 @@ function Pagekelas() {
   const handleDelete = () => {
     showPopupLoading();
     axios
-      .delete(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas/${selected}`, {
+      .delete(`${apiurl}admin/kelas/${selected}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -245,7 +246,7 @@ function Pagekelas() {
 
   useEffect(() => {
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
+      .get(`${apiurl}admin/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

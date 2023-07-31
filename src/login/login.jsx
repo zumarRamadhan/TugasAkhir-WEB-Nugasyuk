@@ -10,7 +10,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import { Icon } from "@iconify/react";
 import axios from "axios";
-
+import apiurl from "../api/api";
 function Login() {
   const [passwordShown, setPasswordShown] = useState(false);
 
@@ -62,7 +62,7 @@ function Login() {
     e.preventDefault();
     console.log("mengirim data");
     axios
-      .post("https://6acc-114-125-94-113.ngrok-free.app/api/login", {
+      .post(`${apiurl}login`, {
         email: email,
         password: password,
       })

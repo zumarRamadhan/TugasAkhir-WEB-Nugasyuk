@@ -9,6 +9,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import { useEffect, useState } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function PageJadwalKbm() {
   const navText = "Jadwal KBM";
@@ -83,7 +84,7 @@ function PageJadwalKbm() {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `https://www.nugasyuk.my.id/api/guru/jadwal?hari=${selectedDay}`,
+          `${apiurl}guru/jadwal?hari=${selectedDay}`,
           {
             headers: {
               "Content-Type": "application/json",

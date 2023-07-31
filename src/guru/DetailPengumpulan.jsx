@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
 import vektorProfile from "../assets/vektorProfile.svg";
+import apiurl from "../api/api";
 import axios from "axios";
 
 function DetailPengumpulan() {
@@ -31,7 +32,7 @@ function DetailPengumpulan() {
           // Mengambil data guru dari API berdasarkan id
           setIsLoading(true);
           const response = await axios.get(
-            `https://www.nugasyuk.my.id/api/guru/pengumpulan/${id}`,
+            `${apiurl}guru/pengumpulan/${id}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -65,7 +66,7 @@ function DetailPengumpulan() {
 
           // Pemanggilan API guru/pengumpulan/menunggu/${id}
           const responseMenunggu = await axios.get(
-            `https://www.nugasyuk.my.id/api/guru/pengumpulan/menunggu/${id}`,
+            `${apiurl}guru/pengumpulan/menunggu/${id}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -81,7 +82,7 @@ function DetailPengumpulan() {
 
           // Pemanggilan API guru/pengumpulan/selesai/${id}
           const responseSelesai = await axios.get(
-            `https://www.nugasyuk.my.id/api/guru/pengumpulan/selesai/${id}`,
+            `${apiurl}guru/pengumpulan/selesai/${id}`,
             {
               headers: {
                 "Content-Type": "application/json",

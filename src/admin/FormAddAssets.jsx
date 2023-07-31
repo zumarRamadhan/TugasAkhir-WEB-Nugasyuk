@@ -11,6 +11,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function FormAddAssets() {
   const navText = "Tambah Data Assets";
@@ -160,7 +161,7 @@ function FormAddAssets() {
       form.append("color", formData.colorBackground);
 
       axios
-        .post("https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset", form, {
+        .post(`${apiurl}admin/asset`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,

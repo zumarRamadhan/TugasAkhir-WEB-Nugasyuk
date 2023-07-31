@@ -11,6 +11,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function FormAddJadwalKbm() {
   const navText = "Tambah data";
@@ -126,7 +127,7 @@ function FormAddJadwalKbm() {
       form.append("jumlah_jam", formData.jumlahJam);
 
       axios
-        .post("https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal", form, {
+        .post(`${apiurl}admin/jadwal`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
@@ -205,7 +206,7 @@ function FormAddJadwalKbm() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel", {
+      .get(`${apiurl}admin/mapel`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

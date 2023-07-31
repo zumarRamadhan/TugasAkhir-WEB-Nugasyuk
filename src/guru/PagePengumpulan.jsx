@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function PagePengumpulan() {
   const navText = "Pengumpulan";
@@ -96,7 +97,7 @@ function PagePengumpulan() {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/guru/pengumpulan", {
+      .get(`${apiurl}/guru/pengumpulan`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -116,7 +117,7 @@ function PagePengumpulan() {
       });
 
     axios
-      .get("https://www.nugasyuk.my.id/api/guru/pengumpulan/kelas", {
+      .get(`${apiurl}/guru/pengumpulan/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

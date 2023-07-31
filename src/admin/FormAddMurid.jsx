@@ -11,6 +11,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function FormAddMurid() {
   const navText = "Tambah Data";
@@ -179,7 +180,7 @@ function FormAddMurid() {
 
       axios
         .post(
-          "https://www.nugasyuk.my.id/api/admin/murid",
+          `${apiurl}admin/murid`,
           form,
           {
             headers: {
@@ -376,7 +377,7 @@ function FormAddMurid() {
   }, []);
   // useState(() => {
   //   axios
-  //     .get("https://www.nugasyuk.my.id/api/admin/kelas", {
+  //     .get(`${apiurl}admin/kelas`, {
   //       headers: {
   //         "Content-Type": "application/json",
   //         Authorization: `Bearer ${saveToken}`,

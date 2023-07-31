@@ -11,6 +11,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function FormAddMapel() {
   const navText = "Tambah Data Mata Pelajaran";
@@ -160,7 +161,7 @@ function FormAddMapel() {
 
       axios
         .post(
-          "https://6acc-114-125-94-113.ngrok-free.app/api/admin/mapel",
+          `${apiurl}admin/mapel`,
           form,
           {
             headers: {
@@ -266,7 +267,7 @@ function FormAddMapel() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/guru", {
+      .get(`${apiurl}admin/guru`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -288,7 +289,7 @@ function FormAddMapel() {
       });
 
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
+      .get(`${apiurl}admin/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -309,7 +310,7 @@ function FormAddMapel() {
       });
 
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/asset", {
+      .get(`${apiurl}admin/asset`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -331,7 +332,7 @@ function FormAddMapel() {
   }, []);
   // useState(() => {
   //   axios
-  //     .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
+  //     .get("${apiurl}admin/kelas", {
   //       headers: {
   //         "Content-Type": "application/json",
   //         Authorization: `Bearer ${saveToken}`,

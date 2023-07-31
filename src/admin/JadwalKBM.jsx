@@ -13,6 +13,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function EditFormAddJadwal() {
   const navText = "Jadwal KBM";
@@ -53,7 +54,7 @@ function EditFormAddJadwal() {
     setDeleteJadwal(null);
     showPopupLoadingDetail();
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/data/" + id, {
+      .get(`${apiurl}admin/jadwal/data/` + id, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -81,7 +82,7 @@ function EditFormAddJadwal() {
   const handleDelete = () => {
     showPopupLoading();
     axios
-      .delete(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/${selected}`, {
+      .delete(`${apiurl}admin/jadwal/${selected}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -240,7 +241,7 @@ function EditFormAddJadwal() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
+      .get(`${apiurl}admin/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -274,7 +275,7 @@ function EditFormAddJadwal() {
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
 
-    const url = `https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal/${id}?kelas=${selectedValue}`;
+    const url = `${apiurl}admin/jadwal/${id}?kelas=${selectedValue}`;
 
     axios
       .get(url, {
@@ -301,7 +302,7 @@ function EditFormAddJadwal() {
   };
 
   const fetchData = (selectedValue) => {
-    const url = `https://6acc-114-125-94-113.ngrok-free.app/api/admin/jadwal?kelas=${selectedValue}`;
+    const url = `${apiurl}admin/jadwal?kelas=${selectedValue}`;
     setCardLoading(true);
 
     axios

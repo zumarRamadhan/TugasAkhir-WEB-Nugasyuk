@@ -9,6 +9,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import { useEffect, useState } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function PageKbm() {
   const navText = "KBM";
@@ -82,7 +83,7 @@ function PageKbm() {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/guru/kbm", {
+      .get(`${apiurl}guru/kbm`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

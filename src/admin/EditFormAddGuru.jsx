@@ -11,6 +11,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function EditFormAddGuru() {
   const navText = "Edit Data";
@@ -162,7 +163,7 @@ function EditFormAddGuru() {
   useEffect(() => {
     showPopupLoadingDetail();
     axios
-      .get(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/guru/${id}`, {
+      .get(`${apiurl}admin/guru/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
           "ngrok-skip-browser-warning":"any"
@@ -266,7 +267,7 @@ function EditFormAddGuru() {
       form.append("konfirmasi_password", formData.konfirmasiPassword || "");
 
       axios
-        .post(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/guru/${id}`, form, {
+        .post(`${apiurl}admin/guru/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,

@@ -11,6 +11,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function EditFormAddMurid() {
   const navText = "Tambah Data";
@@ -167,7 +168,7 @@ function EditFormAddMurid() {
     setIsLoading(true);
     showPopupLoadingDetail();
     axios
-      .get(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/murid/${id}`, {
+      .get(`${apiurl}admin/murid/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
           "ngrok-skip-browser-warning": "any",
@@ -292,7 +293,7 @@ function EditFormAddMurid() {
       form.append("kelas_id", formData.kelas || "");
 
       axios
-        .post(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/murid/${id}`, form, {
+        .post(`${apiurl}admin/murid/${id}`, form, {
           headers: {
             "Access-Control-Allow-Origin": "https://nugasyuk.my.id",
             Accept: "application/json",
@@ -333,7 +334,7 @@ function EditFormAddMurid() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
+      .get(`${apiurl}admin/kelas1`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

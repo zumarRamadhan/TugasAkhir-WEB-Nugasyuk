@@ -14,6 +14,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import vektorProfile from "../assets/vektorProfile.svg";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function DataMurid() {
   const navText = "Data Murid";
@@ -31,7 +32,7 @@ function DataMurid() {
     setDetailMurid(null);
     showPopupLoadingDetail();
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/murid/" + selected, {
+      .get(`${apiurl}admin/murid/` + selected, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -152,7 +153,7 @@ function DataMurid() {
     setDetailMurid(null);
     showPopupLoadingDetail();
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/murid/" + selected, {
+      .get("${apiurl}admin/murid/" + selected, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -175,7 +176,7 @@ function DataMurid() {
   const handleDelete = () => {
     showPopupLoading();
     axios
-      .delete(`https://6acc-114-125-94-113.ngrok-free.app/api/admin/murid/${selected}`, {
+      .delete(`${apiurl}admin/murid/${selected}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -284,7 +285,7 @@ function DataMurid() {
 
   useEffect(() => {
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/murid", {
+      .get("${apiurl}admin/murid", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
