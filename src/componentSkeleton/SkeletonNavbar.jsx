@@ -2,7 +2,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 // import "../cssAll/walimurid/DetailMateri.css";
 import { Icon } from "@iconify/react";
-import avatar from "../assets/default-avatar.svg";
+import avatar from "../assets/avatar.svg";
 
 function SkeletonNavbar() {
   const showDetail = () => {
@@ -21,18 +21,20 @@ function SkeletonNavbar() {
         <div className="navbar">
           {/* <h2>{dataNavbar}</h2> */}
           <h1>
-            <Skeleton width={100} />
+            <Skeleton width={200} />
           </h1>
           <div className="nav-right">
-            <img src={avatar} alt="" />
-            {/* <Skeleton circle width={50}/> */}
+            <div className="img-profile">
+              <img src={avatar} />
+            </div>
+            {/* <Skeleton width={50} height={50} style={{ borderRadius: "100%"}}/> */}
 
-            <div
-              className="btn-notification"
-              style={{ cursor: "pointer" }}
-              onClick={showNotif}
-            >
-              <Icon icon="mdi:bell-notification-outline" width="24" />
+            <div className="btn-notification">
+              <Skeleton
+                width={50}
+                height={50}
+                style={{ borderRadius: "100%", marginBottom: "3px" }}
+              />
             </div>
           </div>
         </div>

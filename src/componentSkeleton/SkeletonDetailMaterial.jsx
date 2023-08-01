@@ -11,7 +11,7 @@ function SkeletonDetailMateri(cards) {
           <div className="content-material-left">
             <div className="icon-material">
               <Skeleton
-                style={{ width: "70px", height: "70px", borderRadius: "10px" }}
+                style={{ width: "70px", height: "70px", borderRadius: "10px", marginBottom: "2px" }}
               />
             </div>
             <div className="desc-material">

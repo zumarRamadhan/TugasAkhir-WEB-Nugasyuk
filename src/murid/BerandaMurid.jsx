@@ -18,6 +18,8 @@ import NotifSiswa from "../component/NotifSiswa";
 import CardSkeletonBeranda from "../componentSkeleton/CardSkeletonBeranda";
 import NameStudent from "../componentSkeleton/NameStudent";
 import CardSkeletonInfoTask from "../componentSkeleton/CardSkeletonInfoTask";
+import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
+import SkeletonHeaderHome from "../componentSkeleton/SkeletonHeaderHome";
 
 function BerandaMurid() {
   const navigate = useNavigate();
@@ -102,18 +104,22 @@ function BerandaMurid() {
         </ul>
       </aside>
       <div className="container-content">
-        <NavbarMurid textNavigasi={"Beranda 11 PPLG 1"} />
+        {isLoading ? (
+          <SkeletonNavbar />
+        ) : (
+          <NavbarMurid textNavigasi={"Beranda 11 PPLG 1"} />
+        )}
         <main className="main">
+          {dataBerandaMurid && dataBerandaMurid.nama ? (
+
           <div className="header-dashboard-home-student">
             <div className="head-left-home-student">
               <h1 className="intro-head-student">
                 Halo{" "}
-                {dataBerandaMurid && dataBerandaMurid.nama ? (
                   <span className="student-name">{dataBerandaMurid.nama}</span>
-                ) : (
-                  <NameStudent />
-                )}
+                
               </h1>
+
               <p className="desc-head-home-student" style={{ width: "550px" }}>
                 Selamat datang di nugasyuk, anda bisa memonitoring tugas dan
                 materi yang diberikan oleh guru.
@@ -126,6 +132,9 @@ function BerandaMurid() {
               </div>
             </div>
           </div>
+          ) : (
+            <SkeletonHeaderHome/>
+          )}
 
           <div className="con-content">
             {dataBerandaMurid && dataBerandaMurid.jumlah_siswa ? (
@@ -201,7 +210,19 @@ function BerandaMurid() {
           {/* content information */}
           <div className="con-content-information">
             <div className="content-status-task">
-              <p className="text-status-task">Belum Selesai Dalam Deadline</p>
+              <div>
+                {dataBerandaMurid && dataBerandaMurid.jumlah_siswa ? (
+                  <p className="text-status-task">
+                    Belum Selesai Dalam Deadline
+                  </p>
+                ) : (
+                  <Skeleton
+                    width={250}
+                    height={25}
+                    style={{ marginBottom: "20px" }}
+                  />
+                )}
+              </div>
               {dataBerandaMurid && dataBerandaMurid.jumlah_tugas ? (
                 <div
                   className="content-indiecator-information"
@@ -235,7 +256,17 @@ function BerandaMurid() {
             </div>
 
             <div className="content-status-task">
-              <p className="text-status-task">Selesai Dalam Deadline</p>
+              <div>
+                {dataBerandaMurid && dataBerandaMurid.jumlah_tugas ? (
+                  <p className="text-status-task">Selesai Dalam Deadline</p>
+                ) : (
+                  <Skeleton
+                    width={250}
+                    height={25}
+                    style={{ marginBottom: "20px" }}
+                  />
+                )}
+              </div>
               {dataBerandaMurid && dataBerandaMurid.jumlah_tugas ? (
                 <div
                   className="content-indiecator-information"
@@ -271,9 +302,19 @@ function BerandaMurid() {
             </div>
 
             <div className="content-status-task">
-              <p className="text-status-task">
-                Belum Selesai Lebih Dari Deadline
-              </p>
+              <div>
+                {dataBerandaMurid && dataBerandaMurid.jumlah_tugas ? (
+                  <p className="text-status-task">
+                    Belum Selesai Lebih Dari Deadline
+                  </p>
+                ) : (
+                  <Skeleton
+                    width={250}
+                    height={25}
+                    style={{ marginBottom: "20px" }}
+                  />
+                )}
+              </div>
               {dataBerandaMurid && dataBerandaMurid.jumlah_tugas ? (
                 <div
                   className="content-indiecator-information"
@@ -307,7 +348,19 @@ function BerandaMurid() {
             </div>
 
             <div className="content-status-task">
-              <p className="text-status-task">Selesai Lebih Dari Deadline</p>
+              <div>
+                {dataBerandaMurid && dataBerandaMurid.jumlah_tugas ? (
+                  <p className="text-status-task">
+                    Selesai Lebih Dari Deadline
+                  </p>
+                ) : (
+                  <Skeleton
+                    width={250}
+                    height={25}
+                    style={{ marginBottom: "20px" }}
+                  />
+                )}
+              </div>
               {dataBerandaMurid && dataBerandaMurid.jumlah_tugas ? (
                 <div
                   className="content-indiecator-information"

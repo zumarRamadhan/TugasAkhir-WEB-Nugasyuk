@@ -170,10 +170,10 @@ a {
 .value-file {
   border: 1px solid #c4c4c4;
   border-radius: 10px;
-  padding: 10px 78px 10px 10px;
+  padding: 10px 0px 10px 10px;
   gap: 20px;
   cursor: pointer;
-  width: max-content;
+  width: 100%;
 }
 
 #value-link,
@@ -204,6 +204,7 @@ a {
 
 .file-generate {
   display: flex;
+  width: 100%;
 }
 
 .icon-value-file {
@@ -213,6 +214,26 @@ a {
   border-radius: 5px;
   background: var(--color-aksen);
   color: var(--color-primer);
+}
+
+.button-delete{
+  border: none;
+  background-color: var(--color-primer);
+  cursor: pointer;
+  align-items: center;
+  padding-right: -100px;
+}
+
+.name-delete{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: #4b4b4b;
+
+}
+
+.file-button-delete{
+  width: 100%;
 }
 
 .title-value-file {

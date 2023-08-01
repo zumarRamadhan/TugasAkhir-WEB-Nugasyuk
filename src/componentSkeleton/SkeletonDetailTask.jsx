@@ -35,8 +35,8 @@ function SkeletonDetailTask(cards) {
           <Skeleton width={200}/>
         </p>
         <div className="submition-task">
-          <Skeleton width={150}/>
-          <Skeleton/>
+          <Skeleton width={150} style={{marginBottom: '10px'}}/>
+          <Skeleton style={{width: '370px', height: '100px', marginBottom: '10px', borderRadius: '10px'}}/>
           <Skeleton height={40}/>
           <Skeleton height={40} style={{marginTop: '10px'}}/>
         </div>

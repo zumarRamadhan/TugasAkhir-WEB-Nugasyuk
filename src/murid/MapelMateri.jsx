@@ -14,6 +14,7 @@ import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 import Skeleton from "react-loading-skeleton";
 import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 import SkeletonMapelMateri from "../componentSkeleton/SkeletonMapelMateri";
+import SkeletonFilter from "../componentSkeleton/SkeletonFilter";
 
 function MapelMateri() {
   const navigate = useNavigate();
@@ -243,28 +244,35 @@ function MapelMateri() {
           )}
 
           <div className="dropdown-task">
-            <div className="switch-container">
-              <button
-                id="btn-materiKbm"
-                className={
-                  activeContent === "material-kbm" ? "activeDetailKbm" : ""
-                }
-                onClick={showMaterial}
-              >
-                Materi
-              </button>
-              <button
-                id="btn-tugasKbm"
-                className={
-                  activeContent === "task-kbm" ? "activeDetailKbm" : ""
-                }
-                onClick={showTask}
-              >
-                Tugas
-              </button>
-            </div>
+            {isLoading ? (
+              <SkeletonFilter />
+            ) : (
+              <div className="switch-container">
+                <button
+                  id="btn-materiKbm"
+                  className={
+                    activeContent === "material-kbm" ? "activeDetailKbm" : ""
+                  }
+                  onClick={showMaterial}
+                >
+                  Materi
+                </button>
+                <button
+                  id="btn-tugasKbm"
+                  className={
+                    activeContent === "task-kbm" ? "activeDetailKbm" : ""
+                  }
+                  onClick={showTask}
+                >
+                  Tugas
+                </button>
+              </div>
+            )}
 
-            <form className="search-box" onSubmit={handleSearch}>
+            {isLoading ? (
+              <SkeletonFilter />
+            ) : (
+              <form className="search-box" onSubmit={handleSearch}>
                 <input
                   type="text"
                   placeholder="Cari..."
@@ -278,6 +286,7 @@ function MapelMateri() {
                   ></Icon>
                 </button>
               </form>
+            )}
           </div>
 
           {isLoading ? (
@@ -366,7 +375,7 @@ function MapelMateri() {
                         />
                       </div>
                       <div className="desc-indie">
-                        <p className="material-name">{apiTugas.nama_tugas}</p>
+                        <p className="material-name">{apiTugas.soal}</p>
                         <p className="teacher-name">{apiTugas.nama_guru}</p>
                       </div>
                     </div>

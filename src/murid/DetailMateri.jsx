@@ -339,7 +339,9 @@ function DetailMateri() {
                       <p className="desc-content-material">
                         {detailMateri.isi}
                       </p>
-                      {fileLinkElements}
+                   
+                        <div>{fileLinkElements}</div>
+                      
                     </div>
                   ))}
               </div>

@@ -17,6 +17,7 @@ import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 import SkeletonDetailJadwal from "../componentSkeleton/SkeletonDetailJadwal";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
 function JadwalKBM() {
   const navigate = useNavigate();
@@ -138,7 +139,11 @@ function JadwalKBM() {
           </ul>
         </aside>
         <div className="container-content">
-          <NavbarMurid textNavigasi={"Jadwal KBM 11 PPLG 1"} />
+          {isLoading ? (
+            <SkeletonNavbar />
+          ) : (
+            <NavbarMurid textNavigasi={"Jadwal KBM 11 PPLG 1"} />
+          )}
           <div className="main">
             <div className="content-jadwalKBM">
               {isLoading ? (
@@ -212,10 +217,10 @@ function JadwalKBM() {
             </div>
             {isPopupLoading ? (
               <div className="con-popup-kbm">
-                <SkeletonDetailJadwal/>
-                <SkeletonDetailJadwal/>
-                <SkeletonDetailJadwal/>
-                <SkeletonDetailJadwal/>
+                <SkeletonDetailJadwal />
+                <SkeletonDetailJadwal />
+                <SkeletonDetailJadwal />
+                <SkeletonDetailJadwal />
               </div>
             ) : (
               <div className="con-popup-kbm">

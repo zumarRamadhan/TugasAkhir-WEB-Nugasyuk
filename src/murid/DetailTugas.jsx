@@ -9,7 +9,6 @@ import NotifSiswa from "../component/NotifSiswa";
 import ImgSuccess from "../assets/88860-success-animation.gif";
 import ImgFailed from "../assets/94303-failed.gif";
 import axios from "axios";
-import CardSkeletonDetailTugas from "../componentSkeleton/CardSkeletonDetailTugas";
 import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
 import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
@@ -168,7 +167,7 @@ function DetailTask() {
           fileIcon = "mdi:file-word-box";
           break;
         case "xlsx":
-          fileIcon = "mdi:file-icons:microsoft-excel";
+          fileIcon = "file-icons:microsoft-excel";
           break;
         default:
           fileIcon = "";
@@ -183,8 +182,17 @@ function DetailTask() {
             <div className="icon-value-file">
               <Icon className="icon-file-generate" icon={fileIcon} width={45} />
             </div>
-            <div>
-              <h1 className="title-value-file">{item.file}</h1>
+            <div className="file-button-delete">
+              <div className="name-delete">
+                <h1 className="title-value-file">{item.file}</h1>
+                <button className="button-delete">
+                  <Icon
+                    className="icon-delete-file"
+                    icon="basil:cross-solid"
+                    width={30}
+                  />
+                </button>
+              </div>
               <p className="file-detailMenunggu">
                 {fileExtension.toUpperCase()}
               </p>
@@ -411,9 +419,13 @@ function DetailTask() {
                       </p>
                       <div className="submition-task">
                         <p className="title-submition">Pengumpulan Tugas</p>
-                        {fileLinkElements}
+
+                        <div>
+                          {fileLinkElements}
+                          {selectedFile && <p>{selectedFile.name}</p>}
+                        </div>
+
                         {/* <div className="file-task">
-                           {selectedFile && <p>{selectedFile.name}</p>}
                            {generateFileIcons}
                            {detailTugas.file}
                           Tambahkan tampilan preview lainnya sesuai kebutuhan
