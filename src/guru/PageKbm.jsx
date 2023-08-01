@@ -87,6 +87,7 @@ function PageKbm() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {

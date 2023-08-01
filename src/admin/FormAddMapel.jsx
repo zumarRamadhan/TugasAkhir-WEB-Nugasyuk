@@ -160,17 +160,13 @@ function FormAddMapel() {
       form.append("asset_id", formData.assetId);
 
       axios
-        .post(
-          `${apiurl}admin/mapel`,
-          form,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${saveToken}`,
-              "ngrok-skip-browser-warning": "any",
-            },
-          }
-        )
+        .post(`${apiurl}admin/mapel`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
         .then((result) => {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
@@ -203,6 +199,18 @@ function FormAddMapel() {
       [name]: value,
     }));
   };
+
+  const [assetPreview, setAssetPreview] = useState(""); // State untuk menyimpan URL preview gambar
+
+  useEffect(() => {
+    // Jika formData.assetId berubah, kita perlu mengupdate assetPreview dengan URL gambar baru
+    if (formData.assetId) {
+      setAssetPreview(`https://www.nugasyuk.my.id/public/${formData.assetId}`);
+    } else {
+      // Jika formData.assetId kosong, tampilkan gambar placeholder atau default
+      setAssetPreview("https://www.nugasyuk.my.id/public/placeholder.jpg");
+    }
+  }, [formData.assetId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -330,44 +338,7 @@ function FormAddMapel() {
         setIsLoading(false);
       });
   }, []);
-  // useState(() => {
-  //   axios
-  //     .get("${apiurl}admin/kelas", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  //         "ngrok-skip-browser-warning":"any"
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       const responseAPI = result.data;
 
-  //       setDataKelas(responseAPI.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setIsError(true);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
-  //   if (isLoading) {
-  //     return (
-  //       <div id="load">
-  //         <div>.</div>
-  //         <div>.</div>
-  //         <div>.</div>
-  //         <div>.</div>
-  //         <div>.</div>
-  //         <div>.</div>
-  //         <div>.</div>
-  //         <div>.</div>
-  //         <div>.</div>
-  //         <div>.</div>
-  //       </div>
-  //     );
-  //   } else if (dataKode && dataKelas && dataAsset && !isError)
   if (dataKode && dataKelas && dataAsset && !isError)
     return (
       <div>
@@ -421,6 +392,7 @@ function FormAddMapel() {
               <form onSubmit={handleSubmit} className="container-formKbm">
                 <div className="con-formKbm">
                   <div className="title-formKbm">Asset Card</div>
+                  {/* Dropdown untuk memilih asset */}
                   {isLoading ? (
                     <input
                       value="Data Sedang Dalam Proses..."
@@ -430,7 +402,6 @@ function FormAddMapel() {
                   ) : (
                     <select
                       name="assetId"
-                      id="tingkatKe"
                       value={formData.assetId}
                       onChange={handleChange}
                       className="selectClass"
@@ -439,13 +410,19 @@ function FormAddMapel() {
                         Pilih Asset
                       </option>
                       {dataAsset.map((asset) => (
-                        <option value={asset.id}>{asset.file_asset}</option>
+                        <option key={asset.id} value={asset.file_asset}>
+                          {asset.file_asset}
+                        </option>
                       ))}
                     </select>
                   )}
                   {errors.assetId && (
                     <span className="error">{errors.assetId}</span>
                   )}
+                  {/* Tampilkan preview gambar yang dipilih */}
+                  <div className="image-preview">
+                    <img src={assetPreview} alt="Preview Asset" />
+                  </div>
                 </div>
 
                 <div className="con-formKbm">

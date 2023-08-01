@@ -31,23 +31,21 @@ function DetailPengumpulan() {
         try {
           // Mengambil data guru dari API berdasarkan id
           setIsLoading(true);
-          const response = await axios.get(
-            `${apiurl}guru/pengumpulan/${id}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${saveToken}`,
-              },
-            }
-          );
+          const response = await axios.get(`${apiurl}guru/pengumpulan/${id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${saveToken}`,
+              "ngrok-skip-browser-warning": "any",
+            },
+          });
 
           console.log("data API", response.data);
           const responseData = response.data;
 
-          setDetailPengumpulan(responseData.pengumpulan[0]);
+          setDetailPengumpulan(responseData.pengumpulan);
           setIsLoading(false);
         } catch (error) {
-          console.log("terjadi kesalahan: ", error);
+          console.log("terjadi kesalahan detail profile: ", error);
           setIsError(true);
           setIsLoading(false);
         }
@@ -71,6 +69,7 @@ function DetailPengumpulan() {
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${saveToken}`,
+                "ngrok-skip-browser-warning": "any",
               },
             }
           );
@@ -87,6 +86,7 @@ function DetailPengumpulan() {
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${saveToken}`,
+                "ngrok-skip-browser-warning": "any",
               },
             }
           );
@@ -176,51 +176,6 @@ function DetailPengumpulan() {
   const showSelesai = () => {
     setActiveContent("detailSelesaiPengumpulan");
   };
-
-  // data materi kbm berisi nama materi, tanggal, guru
-
-  const valueDataMenungguKbm = [
-    {
-      id: 1,
-      namaMateri: "Application Letter",
-      tanggal: "8 Mar 2023",
-      deadline: "8 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-    {
-      id: 2,
-      namaMateri: "Reading",
-      tanggal: "5 Mar 2023",
-      deadline: "5 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-  ];
-
-  // data tugas kbm berisi nama tugas, tanggal, deadline, guru
-
-  const valueDataSelesaiKbm = [
-    {
-      id: 1,
-      namaTugas: "Application Letter",
-      tanggal: "8 Mar 2023",
-      deadline: "8 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-    {
-      id: 2,
-      namaTugas: "Reading",
-      tanggal: "5 Mar 2023",
-      deadline: "5 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-    {
-      id: 3,
-      namaTugas: "Laporan B. Inggris",
-      tanggal: "1 Mar 2023",
-      deadline: "1 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-  ];
 
   if (detailPengumpulan && detailMenunggu && detailSelesai && !isError)
     return (
@@ -371,15 +326,15 @@ function DetailPengumpulan() {
                           </div>
                           <div className="desc-DetailPengumpulan-Menunggu">
                             <p className="judul-DetailPengumpulan-Menunggu">
-                              {data.namaMateri}
+                              {data.nama_tugas}
                             </p>
                             <p className="nama-DetailPengumpulan-Guru">
-                              {data.guru}
+                              {data.nama_guru}
                             </p>
                           </div>
                         </div>
                         <div className="card-DetailPengumpulan-Menunggu-right">
-                          <div className="dateDetailDesc">{data.tanggal}</div>
+                          <div className="dateDetailDesc">{data.date}</div>
                           <div className="deadline-timePengumpulan">
                             Deadline : {data.deadline}
                           </div>
@@ -407,11 +362,11 @@ function DetailPengumpulan() {
                 <div className="con-DetailPengumpulan-Selesai">
                   {isLoading ? (
                     <div className="con-DetailPengumpulan-Selesai">
-                    <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
-                    <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
-                    <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
-                    <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
-                  </div>
+                      <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                    </div>
                   ) : detailSelesai.length === 0 ? (
                     <div className="card-DetailPengumpulan-Selesai-noData">
                       <p>Tidak ada tugas selesai.</p>
@@ -433,15 +388,15 @@ function DetailPengumpulan() {
                           </div>
                           <div className="desc-DetailPengumpulan-Selesai">
                             <p className="judul-DetailPengumpulan-Selesai">
-                              {data.namaTugas}
+                              {data.nama_tugas}
                             </p>
                             <p className="nama-DetailPengumpulan-Guru">
-                              {data.guru}
+                              {data.nama_guru}
                             </p>
                           </div>
                         </div>
                         <div className="card-DetailPengumpulan-Selesai-right">
-                          <div className="dateDetailDesc">{data.tanggal}</div>
+                          <div className="dateDetailDesc">{data.date}</div>
                           <div className="deadline-timePengumpulan">
                             Deadline : {data.deadline}
                           </div>

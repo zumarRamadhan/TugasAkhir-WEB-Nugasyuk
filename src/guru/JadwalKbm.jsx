@@ -89,6 +89,7 @@ function PageJadwalKbm() {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${saveToken}`, // Anda harus memiliki variabel saveToken dengan nilai token yang sesuai
+              "ngrok-skip-browser-warning": "any",
             },
           }
         );

@@ -97,10 +97,11 @@ function PagePengumpulan() {
 
   useEffect(() => {
     axios
-      .get(`${apiurl}/guru/pengumpulan`, {
+      .get(`${apiurl}guru/pengumpulan`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -117,10 +118,11 @@ function PagePengumpulan() {
       });
 
     axios
-      .get(`${apiurl}/guru/pengumpulan/kelas`, {
+      .get(`${apiurl}guru/pengumpulan/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {

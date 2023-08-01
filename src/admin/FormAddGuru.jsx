@@ -169,13 +169,13 @@ function FormAddGuru() {
       form.append("nomor_tlp", formData.nomorTlp);
       form.append("role", formData.role);
       form.append("foto_profile", formData.file);
-      
+
       axios
         .post(`${apiurl}admin/guru`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
-            "ngrok-skip-browser-warning":"any"
+            "ngrok-skip-browser-warning": "any",
           },
         })
         .then((result) => {
