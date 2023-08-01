@@ -9,6 +9,8 @@ import axios from "axios";
 import DetailOrtu from "../component/ProfileWaliMurid";
 import NotifOrtu from "../component/NotifOrtu";
 import CardSkeletonMapel from "../componentSkeleton/CardSkeletonMapel";
+import apiurl from "../api/api";
+import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -22,9 +24,10 @@ function PageMapel() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran", {
+      .get(`${apiurl}ortu/matapelajaran`, {
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -78,7 +81,11 @@ function PageMapel() {
         </ul>
       </aside>
       <div className="container-content">
-        <NavbarWaliMurid navigasiOrtu={"Mata Pelajaran"} />
+        {isLoading ? (
+          <SkeletonNavbarWali />
+        ) : (
+          <NavbarWaliMurid navigasiOrtu={"Mata Pelajaran"} />
+        )}
         <main className="main">
           <div className="content-mapel">
             {isLoading ? (

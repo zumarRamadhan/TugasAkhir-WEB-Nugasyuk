@@ -9,6 +9,8 @@ import NotifSiswa from "../component/NotifOrtu";
 import axios from "axios";
 import CardSkeletonJadwal from "../componentSkeleton/CardSkeletonJadwal";
 import SkeletonPopupJadwal from "../componentSkeleton/SkeletonPopupJadwal";
+import apiurl from "../api/api";
+import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -31,9 +33,10 @@ function PageMapel() {
     setisLoading(false);
     console.log(setisLoading);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/jadwal/" + id, {
+      .get(`${apiurl}ortu/jadwal/${id}`, {
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -61,9 +64,10 @@ function PageMapel() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/jadwal", {
+      .get(`${apiurl}ortu/jadwal`, {
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -124,7 +128,11 @@ function PageMapel() {
           </ul>
         </aside>
         <div className="container-content">
-          <NavbarOrtu navigasiOrtu={"Jadwal KBM 11 PPLG 1"} />
+          {isLoading ? (
+            <SkeletonNavbarWali />
+          ) : (
+            <NavbarOrtu navigasiOrtu={"Jadwal KBM 11 PPLG 1"} />
+          )}
           <div className="main">
             <div className="content-jadwalKBM">
               {isLoading ? (

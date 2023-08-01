@@ -10,6 +10,7 @@ import mataIcon from '../assets/icon-mata.svg';
 // import { createBrowserHistory } from 'history';
 // import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import apiurl from '../api/api';
 
 
 function Login (){
@@ -43,7 +44,7 @@ function Login (){
   const login = (e) => {
     e.preventDefault()
     console.log("mengirim data")
-    axios.post('https://www.nugasyuk.my.id/api/login', {
+    axios.post(`${apiurl}login`, {
       email: email,
       password: password
     })

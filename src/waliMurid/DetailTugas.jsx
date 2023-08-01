@@ -11,6 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
 import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
+import apiurl from "../api/api";
 
 function DetailTugasOrtu() {
   const navigate = useNavigate();
@@ -30,8 +31,9 @@ function DetailTugasOrtu() {
   function getDetail() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/tugas/" + id, {
+      .get(`${apiurl}ortu/tugas/${id}`, {
         headers: {
+          "ngrok-skip-browser-warning":"any",
           Authorization: `Bearer ${saveToken}`,
         },
       })

@@ -12,6 +12,8 @@ import axios from "axios";
 import SkeletonMapelMateri from "../componentSkeleton/SkeletonMapelMateri";
 import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
+import apiurl from "../api/api";
+import SkeletonFilter from "../componentSkeleton/SkeletonFilter";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -92,8 +94,9 @@ function PageMapel() {
   function getDetailMapel() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran/" + id, {
+      .get(`${apiurl}ortu/matapelajaran/${id}`, {
         headers: {
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -111,9 +114,10 @@ function PageMapel() {
   function listDataMateri() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran/materi/" + id, {
+      .get(`${apiurl}ortu/matapelajaran/materi/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -130,8 +134,9 @@ function PageMapel() {
   function listDataTugas() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/matapelajaran/tugas/" + id, {
+      .get(`${apiurl}ortu/matapelajaran/tugas/${id}`, {
         headers: {
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -246,41 +251,49 @@ function PageMapel() {
             )}
 
             <div className="dropdown-task">
-              <div className="switch-container-ortu">
-                <button
-                  id="btn-materiKbm"
-                  className={
-                    activeContent === "material-kbm" ? "activeDetailKbm" : ""
-                  }
-                  onClick={showMaterial}
-                >
-                  Materi
-                </button>
-                <button
-                  id="btn-tugasKbm"
-                  className={
-                    activeContent === "task-kbm" ? "activeDetailKbm" : ""
-                  }
-                  onClick={showTask}
-                >
-                  Tugas
-                </button>
-              </div>
+              {isLoading ? (
+                <SkeletonFilter />
+              ) : (
+                <div className="switch-container-ortu">
+                  <button
+                    id="btn-materiKbm"
+                    className={
+                      activeContent === "material-kbm" ? "activeDetailKbm" : ""
+                    }
+                    onClick={showMaterial}
+                  >
+                    Materi
+                  </button>
+                  <button
+                    id="btn-tugasKbm"
+                    className={
+                      activeContent === "task-kbm" ? "activeDetailKbm" : ""
+                    }
+                    onClick={showTask}
+                  >
+                    Tugas
+                  </button>
+                </div>
+              )}
 
-              <form className="search-box" onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  placeholder="Cari..."
-                  value={searchQuery}
-                  onChange={handleChange}
-                />
-                <button type="submit">
-                  <Icon
-                    icon="material-symbols:search-rounded"
-                    width="20"
-                  ></Icon>
-                </button>
-              </form>
+              {isLoading ? (
+                <SkeletonFilter />
+              ) : (
+                <form className="search-box" onSubmit={handleSearch}>
+                  <input
+                    type="text"
+                    placeholder="Cari..."
+                    value={searchQuery}
+                    onChange={handleChange}
+                  />
+                  <button type="submit">
+                    <Icon
+                      icon="material-symbols:search-rounded"
+                      width="20"
+                    ></Icon>
+                  </button>
+                </form>
+              )}
             </div>
 
             <div

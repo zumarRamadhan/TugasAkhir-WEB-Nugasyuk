@@ -7,36 +7,39 @@ function SkeletonDetailTask(cards) {
     .fill(0)
     .map((_, i) => (
       <div className="con-content-detail-task">
-        <div className="content-detail-task">
-          <div className="content-detail-task-left">
-            <Skeleton
-              style={{ width: "70px", height: "70px", borderRadius: "10px" }}
-            />
-            <div className="desc-material">
-              <p className="name-task ">
-                <Skeleton width={100} />
-              </p>
-              <p className="teacher">
-                <Skeleton />
-              </p>
-            </div>
-          </div>
-          <div className="content-detail-task-right">
-            <p className="date-upload">
+      <div className="content-detail-task">
+        <div className="content-detail-task-left">
+          <Skeleton
+            style={{ width: "70px", height: "70px", borderRadius: "10px" }}
+          />
+          <div className="desc-material">
+            <p className="name-task ">
               <Skeleton width={100} />
+            </p>
+            <p className="teacher">
+              <Skeleton />
             </p>
           </div>
         </div>
-        <p className="desc-content-detail-task">
-          <Skeleton width={400} />
-        </p>
-        <p className="task-deadline-time">
-          Deadline :{" "}
-          <span>
+        <div className="content-detail-task-right">
+          <p className="date-upload">
             <Skeleton width={100} />
-          </span>
-        </p>
+          </p>
+        </div>
       </div>
+      <p className="desc-content-detail-task">
+        <Skeleton width={400} />
+      </p>
+      <p className="task-deadline-time">
+        <Skeleton width={200}/>
+      </p>
+      <div className="submition-task">
+        <Skeleton width={150} style={{marginBottom: '10px'}}/>
+        <Skeleton style={{width: '370px', height: '100px', marginBottom: '10px', borderRadius: '10px'}}/>
+        <Skeleton height={40}/>
+        <Skeleton height={40} style={{marginTop: '10px'}}/>
+      </div>
+    </div>
     ));
 }
 

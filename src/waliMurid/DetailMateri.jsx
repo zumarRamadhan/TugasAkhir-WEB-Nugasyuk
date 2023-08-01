@@ -15,6 +15,7 @@ import NotifOrtu from "../component/NotifOrtu";
 import axios from "axios";
 import SkeletonDetailMateri from "../componentSkeleton/SkeletonDetailMaterial";
 import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
+import apiurl from "../api/api";
 
 function DetaillMaterial() {
   const navigate = useNavigate();
@@ -29,9 +30,10 @@ function DetaillMaterial() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/materi/" + id, {
+      .get(`${apiurl}ortu/materi/${id}`, {
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning":"any",
           Authorization: `Bearer ${saveToken}`,
         },
       })

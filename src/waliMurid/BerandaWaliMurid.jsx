@@ -15,6 +15,11 @@ import NameWaliMurid from "../componentSkeleton/NameWaliMurid";
 import CardSkeletonBeranda from "../componentSkeleton/CardSkeletonBeranda";
 import CardSkeletonBerandaInfo from "../componentSkeleton/CardSkeletonBerandaInformation";
 import CardSkeletonInfoTask from "../componentSkeleton/CardSkeletonInfoTask";
+import apiurl from "../api/api";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
+import SkeletonHomeHeader from "../componentSkeleton/SkeletonHomeHeader";
 
 function BerandaWaliMurid() {
   const navigate = useNavigate();
@@ -28,9 +33,10 @@ function BerandaWaliMurid() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/dataortu", {
+      .get(`${apiurl}ortu/dataortu`, {
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -95,29 +101,33 @@ function BerandaWaliMurid() {
         </ul>
       </aside>
       <div className="container-content">
-        <NavbarWaliMurid navigasiOrtu={"Beranda 11 PPLG 1"} />
+        {isLoading ? (
+          <SkeletonNavbarWali />
+        ) : (
+          <NavbarWaliMurid navigasiOrtu={"Beranda 11 PPLG 1"} />
+        )}
         <main className="main">
-          <div className="header-dashboard">
-            <div className="head-left">
-              <h1 className="intro-head" style={{ display: "flex" }}>
-                Halo
-                {dataBerandaWaliMurid && dataBerandaWaliMurid.nama ? (
+          {isLoading ? (
+            <SkeletonHomeHeader />
+          ) : (
+            <div className="header-dashboard">
+              <div className="head-left">
+                <h1 className="intro-head" style={{ display: "flex" }}>
+                  Halo
                   <span className="walimurid-name">
                     {dataBerandaWaliMurid.nama}
                   </span>
-                ) : (
-                  <NameWaliMurid />
-                )}
-              </h1>
-              <p className="desc-head">
-                Selamat datang di nugasyuk, anda bisa memonitoring tugas tugas
-                anak anda.
-              </p>
+                </h1>
+                <p className="desc-head">
+                  Selamat datang di nugasyuk, anda bisa memonitoring tugas tugas
+                  anak anda.
+                </p>
+              </div>
+              <div className="head-right">
+                <div className="kotak1"></div>
+              </div>
             </div>
-            <div className="head-right">
-              <div className="kotak1"></div>
-            </div>
-          </div>
+          )}
 
           <div className="con-content">
             {dataBerandaWaliMurid && dataBerandaWaliMurid.jumlah_siswa ? (
@@ -194,7 +204,19 @@ function BerandaWaliMurid() {
           {/* content information */}
           <div className="con-content-information">
             <div className="content-status-task">
-              <p className="text-status-task">Belum Selesai Dalam Deadline</p>
+              {isLoading ? (
+                <Skeleton
+                  width={250}
+                  height={25}
+                  style={{ marginBottom: "20px" }}
+                />
+              ) : (
+                <div>
+                  <p className="text-status-task">
+                    Belum Selesai Dalam Deadline
+                  </p>
+                </div>
+              )}
               {dataBerandaWaliMurid &&
               dataBerandaWaliMurid.belum_dalamdeadline ? (
                 <div
@@ -231,7 +253,17 @@ function BerandaWaliMurid() {
             </div>
 
             <div className="content-status-task">
-              <p className="text-status-task">Selesai Dalam Deadline</p>
+              {isLoading ? (
+                <Skeleton
+                  width={250}
+                  height={25}
+                  style={{ marginBottom: "20px" }}
+                />
+              ) : (
+                <div>
+                  <p className="text-status-task">Selesai Dalam Deadline</p>
+                </div>
+              )}
               {dataBerandaWaliMurid &&
               dataBerandaWaliMurid.selesai_dalamdeadline ? (
                 <div
@@ -268,9 +300,19 @@ function BerandaWaliMurid() {
             </div>
 
             <div className="content-status-task">
-              <p className="text-status-task">
-                Belum Selesai Lebih Dari Deadline
-              </p>
+              {isLoading ? (
+                <Skeleton
+                  width={250}
+                  height={25}
+                  style={{ marginBottom: "20px" }}
+                />
+              ) : (
+                <div>
+                  <p className="text-status-task">
+                    Belum Selesai Lebih Dari Deadline
+                  </p>
+                </div>
+              )}
               {isLoading ? (
                 <CardSkeletonInfoTask />
               ) : (
@@ -306,7 +348,19 @@ function BerandaWaliMurid() {
             </div>
 
             <div className="content-status-task">
-              <p className="text-status-task">Selesai Lebih Dari Deadline</p>
+              {isLoading ? (
+                <Skeleton
+                  width={250}
+                  height={25}
+                  style={{ marginBottom: "20px" }}
+                />
+              ) : (
+                <div>
+                  <p className="text-status-task">
+                    Selesai Lebih Dari Deadline
+                  </p>
+                </div>
+              )}
               {isLoading ? (
                 <CardSkeletonInfoTask />
               ) : (
