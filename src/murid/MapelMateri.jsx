@@ -15,6 +15,7 @@ import Skeleton from "react-loading-skeleton";
 import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 import SkeletonMapelMateri from "../componentSkeleton/SkeletonMapelMateri";
 import SkeletonFilter from "../componentSkeleton/SkeletonFilter";
+import apiurl from "../api/api";
 
 function MapelMateri() {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ function MapelMateri() {
     dataMateri();
     dataTugas();
     handleSearch();
+    handleSearchMaterial();
   }, [id, searchQuery, filterValue]);
 
   // useEffect(() => {
@@ -53,7 +55,29 @@ function MapelMateri() {
   // }, [searchQuery, filterValue]);
 
   const handleSearch = () => {
-    const filteredData = dataTask.filter((value) => {
+    const filteredData = dataMaterial.filter((value) => {
+      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      const lowerCasesNamaMapel = value.nama_mapel
+        ? value.nama_mapel.toLowerCase()
+        : "";
+
+      return (
+        (filterValue === "all" || filterValue === lowerCasesNamaMapel) &&
+        ((value &&
+          value.nama_materi &&
+          value.nama_materi.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (value &&
+            value.nama_guru &&
+            value.nama_guru.toLowerCase()
+              .includes(searchQuery.toLowerCase()))))
+      
+    });
+
+    setFilteredData(filteredData);
+  };
+
+  const handleSearchMaterial = () => {
+    const filteredData = dataMaterial.filter((value) => {
       // const lowerCaseSearchQuery = searchQuery.toLowerCase();
       const lowerCaseStatusMapel = value.status
         ? value.status.toLowerCase()
@@ -81,13 +105,14 @@ function MapelMateri() {
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
   };
+  console.log("filter value", dataMaterial)
 
-  const handleFilterChange = (e) => {
-    // setFilterValue(e.target.value);
-    // jika filter value nya tidak ada maka akan menampilkan data not found
-    setFilterValue(e.target.value);
-  };
-  console.log("filter value", dataTugas);
+  // const handleFilterChange = (e) => {
+  //   // setFilterValue(e.target.value);
+  //   // jika filter value nya tidak ada maka akan menampilkan data not found
+  //   setFilterValue(e.target.value);
+  // };
+  // console.log("filter value", dataTugas);
 
   const renderData = filteredData.length > 0 ? filteredData : dataTugas;
   const dataNotFound =
@@ -96,9 +121,10 @@ function MapelMateri() {
   function getDetailMapel() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/matapelajaran/" + id, {
+      .get(`${apiurl}murid/matapelajaran/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any",
         },
       })
       .then((response) => {
@@ -115,9 +141,10 @@ function MapelMateri() {
   function dataMateri() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/matapelajaran/materi/" + id, {
+      .get(`${apiurl}murid/matapelajaran/materi/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any",
         },
       })
       .then((response) => {
@@ -134,9 +161,10 @@ function MapelMateri() {
   function dataTugas() {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/matapelajaran/tugas/" + id, {
+      .get(`${apiurl}murid/matapelajaran/tugas/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning":"any",
         },
       })
       .then((response) => {
@@ -199,6 +227,7 @@ function MapelMateri() {
       <div className="container-content">
         {isLoading ? (
           <SkeletonNavbar />
+          
         ) : (
           <div>
             {dataDetailMapel.map((detailMapel) => (
@@ -279,7 +308,7 @@ function MapelMateri() {
                   value={searchQuery}
                   onChange={handleChange}
                 />
-                <button type="submit">
+                <button disabled="disabled">
                   <Icon
                     icon="material-symbols:search-rounded"
                     width="20"
@@ -289,7 +318,7 @@ function MapelMateri() {
             )}
           </div>
 
-          {isLoading ? (
+          {dataNotFound ? (
             <div className="con-material material-kbm">
               <CardSkeletonListTask />
               <CardSkeletonListTask />

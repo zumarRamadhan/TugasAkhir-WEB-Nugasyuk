@@ -205,9 +205,10 @@ a {
 .file-generate {
   display: flex;
   width: 100%;
+  z-index: 88;
 }
 
-.icon-value-file {
+.value-file-icon {
   padding: 18px;
   width: 80px;
   height: 80px;
@@ -222,6 +223,10 @@ a {
   cursor: pointer;
   align-items: center;
   padding-right: -100px;
+  padding-top: 25px;
+  padding-right: 20px;
+  color: #4b4b4b;
+  z-index: 99;
 }
 
 .name-delete{
@@ -250,7 +255,7 @@ a {
   text-overflow: ellipsis;
 }
 
-.file-detailMenunggu {
+.format-file {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
@@ -258,9 +263,10 @@ a {
   line-height: 22px;
   color: #797979;
   padding-left: 20px;
+  margin-top: -12px;
 }
 
-.file-detailMenunggu span {
+.format-file span {
   color: var(--color-aksen);
 }
 

@@ -9,14 +9,13 @@ import NotifSiswa from "../component/NotifSiswa";
 import ImgSuccess from "../assets/88860-success-animation.gif";
 import ImgFailed from "../assets/94303-failed.gif";
 import axios from "axios";
+import apiurl from "../api/api";
 import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
 import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
 function DetailTask() {
   const navigate = useNavigate();
-
   // messege
-
   const showSuccessAdd = () => {
     const popupLogout = document.querySelector("#popup-success");
     popupLogout.style.display = "flex";
@@ -47,7 +46,7 @@ function DetailTask() {
   const saveToken = sessionStorage.getItem("token");
 
   const [dataDetailTugas, setDataDetailTugas] = useState([]);
-
+  const [status, setStatus] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
   const { id } = useParams();
@@ -76,8 +75,9 @@ function DetailTask() {
   function getDetail() {
     setisLoading(true);
     axios
-      .get(`https://www.nugasyuk.my.id/api/murid/tugas/${id}`, {
+      .get(`${apiurl}murid/tugas/${id}`, {
         headers: {
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -91,6 +91,31 @@ function DetailTask() {
         setisError(true);
       });
   }
+
+  const handleDeleteFile = (fileId) => {
+    const saveToken = sessionStorage.getItem("token");
+
+    // Buat objek konfigurasi untuk mengatur headers
+    const config = {
+      headers: {
+        Authorization: `Bearer ${saveToken}`,
+        "ngrok-skip-browser-warning": "any",
+      },
+    };
+
+    // Lakukan permintaan DELETE ke API untuk menghapus data file
+    axios
+      .delete(`${apiurl}murid/tugas/${fileId}`, config)
+      .then((response) => {
+        // Data berhasil dihapus, lakukan tindakan yang sesuai (misalnya: refresh data tugas)
+        getDetail(); // Contoh: refresh data tugas setelah penghapusan berhasil
+      })
+      .catch((error) => {
+        // Tangani kesalahan jika gagal menghapus data file
+        console.error("Terjadi kesalahan saat menghapus data file", error);
+        // Tampilkan pesan kesalahan atau lakukan tindakan yang sesuai
+      });
+  };
 
   const [file, setFile] = useState({
     file: "",
@@ -113,9 +138,9 @@ function DetailTask() {
     formData.append("file", selectedFile);
 
     axios
-      .post(`https://www.nugasyuk.my.id/api/murid/tugas/${id}`, formData, {
+      .post(`${apiurl}murid/tugas/${id}`, formData, {
         headers: {
-          // "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning":"any",
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${saveToken}`,
         },
@@ -134,6 +159,7 @@ function DetailTask() {
         showFailedAdd();
       });
   };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -179,13 +205,13 @@ function DetailTask() {
       <>
         {fileExtension && (
           <div className="file-generate">
-            <div className="icon-value-file">
+            <div className="value-file-icon">
               <Icon className="icon-file-generate" icon={fileIcon} width={45} />
             </div>
             <div className="file-button-delete">
               <div className="name-delete">
                 <h1 className="title-value-file">{item.file}</h1>
-                <button className="button-delete">
+                <button className="button-delete" onClick={handleDeleteFile}>
                   <Icon
                     className="icon-delete-file"
                     icon="basil:cross-solid"
@@ -193,9 +219,7 @@ function DetailTask() {
                   />
                 </button>
               </div>
-              <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()}
-              </p>
+              <p className="format-file">{fileExtension.toUpperCase()}</p>
             </div>
           </div>
         )}

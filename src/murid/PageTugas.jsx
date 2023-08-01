@@ -12,6 +12,7 @@ import NotifSiswa from "../component/NotifSiswa";
 import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
 import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 import SkeletonFilter from "../componentSkeleton/SkeletonFilter";
+import apiurl from "../api/api";
 
 function PageTugas() {
   const navigate = useNavigate();
@@ -76,9 +77,9 @@ function PageTugas() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/tugas", {
+      .get(`${apiurl}murid/tugas`, {
         headers: {
-          // "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning":"any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },

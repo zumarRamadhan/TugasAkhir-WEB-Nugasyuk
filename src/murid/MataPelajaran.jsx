@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CardSkeletonMapel from "../componentSkeleton/CardSkeletonMapel";
 import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
+import apiurl from "../api/api";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -23,9 +24,10 @@ function PageMapel() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/matapelajaran", {
+      .get(`${apiurl}murid/matapelajaran`, {
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning":"any",
           Authorization: `Bearer ${saveToken}`,
         },
       })

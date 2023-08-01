@@ -1,6 +1,4 @@
 
-const apiurl = () =>{
-    return "https://www.nugasyuk.my.id/api/"
-}
+const apiurl = "https://wondrous-squirrel-blatantly.ngrok-free.app/api/";
 
 export default apiurl

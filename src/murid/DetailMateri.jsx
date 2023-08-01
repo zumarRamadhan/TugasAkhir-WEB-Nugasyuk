@@ -7,6 +7,7 @@ import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
 import axios from "axios";
+import apiurl from "../api/api";
 import SkeletonDetailMateri from "../componentSkeleton/SkeletonDetailMaterial";
 import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
@@ -23,9 +24,10 @@ function DetailMateri() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/materi/" + id, {
+      .get(`${apiurl}murid/materi/${id}`, {
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning":"any",
           Authorization: `Bearer ${saveToken}`,
         },
       })

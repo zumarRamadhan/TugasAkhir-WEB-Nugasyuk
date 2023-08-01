@@ -11,6 +11,7 @@ import AssetsHead from "../assets/assets-header.svg";
 import GifHead from "../assets/119593-agenda.gif";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import apiurl from '../api/api';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import ProfileSiswa from "../component/ProfileSiswa";
@@ -33,9 +34,9 @@ function BerandaMurid() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/datamurid", {
+      .get(`${apiurl}murid/datamurid`, {
         headers: {
-          // "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning":"any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },

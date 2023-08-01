@@ -18,6 +18,7 @@ import SkeletonDetailJadwal from "../componentSkeleton/SkeletonDetailJadwal";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
+import apiurl from "../api/api";
 
 function JadwalKBM() {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ function JadwalKBM() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/jadwal", {
+      .get(`${apiurl}murid/jadwal`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
