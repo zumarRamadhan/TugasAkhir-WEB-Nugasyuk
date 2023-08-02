@@ -8,6 +8,7 @@ import ProfileSiswa from "../component/ProfileSiswa";
 import NotifSiswa from "../component/NotifSiswa";
 import ImgSuccess from "../assets/88860-success-animation.gif";
 import ImgFailed from "../assets/94303-failed.gif";
+import ImgDelete from "../assets/15120-delete.gif";
 import axios from "axios";
 import apiurl from "../api/api";
 import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
@@ -92,29 +93,98 @@ function DetailTask() {
       });
   }
 
-  const handleDeleteFile = (fileId) => {
-    const saveToken = sessionStorage.getItem("token");
+  const [selected, setSelected] = useState(null);
 
-    // Buat objek konfigurasi untuk mengatur headers
-    const config = {
-      headers: {
-        Authorization: `Bearer ${saveToken}`,
-        "ngrok-skip-browser-warning": "any",
-      },
-    };
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
 
-    // Lakukan permintaan DELETE ke API untuk menghapus data file
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showPopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    background.style.display = "flex";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    PopupLoadingDetail.style.display = "grid";
+    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
+    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
+
+  const showSuccessDelete = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    background.style.display = "flex";
+    const popupDelete = document.querySelector(".detail-Delete");
+    popupDelete.style.display = "block";
+    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+    showPopupLoadingDetail();
+  };
+
+  const showFailedDelete = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const handleDelete = () => {
+    showPopupLoading();
     axios
-      .delete(`${apiurl}murid/tugas/${fileId}`, config)
+      .delete(`${apiurl}murid/tugas/${selected}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
       .then((response) => {
-        // Data berhasil dihapus, lakukan tindakan yang sesuai (misalnya: refresh data tugas)
-        getDetail(); // Contoh: refresh data tugas setelah penghapusan berhasil
+        // Penanganan ketika penghapusan berhasil
+        console.log("Data berhasil dihapus");
+        closeDeletePopup();
+        showSuccessDelete();
+        closePopupLoading();
       })
       .catch((error) => {
-        // Tangani kesalahan jika gagal menghapus data file
-        console.error("Terjadi kesalahan saat menghapus data file", error);
-        // Tampilkan pesan kesalahan atau lakukan tindakan yang sesuai
+        // Penanganan ketika terjadi kesalahan saat menghapus data
+        console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailedDelete();
+        closeDeletePopup();
+        closePopupLoading();
       });
+  };
+
+  const closeDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const popupDelete = document.querySelector(".detail-Delete");
+    setTimeout(() => (popupDelete.style.display = "none"), 250);
+    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const [file, setFile] = useState({
@@ -140,7 +210,7 @@ function DetailTask() {
     axios
       .post(`${apiurl}murid/tugas/${id}`, formData, {
         headers: {
-          "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning": "any",
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${saveToken}`,
         },
@@ -159,7 +229,6 @@ function DetailTask() {
         showFailedAdd();
       });
   };
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -211,7 +280,7 @@ function DetailTask() {
             <div className="file-button-delete">
               <div className="name-delete">
                 <h1 className="title-value-file">{item.file}</h1>
-                <button className="button-delete" onClick={handleDeleteFile}>
+                <button className="button-delete" onClick={showDeletePopup}>
                   <Icon
                     className="icon-delete-file"
                     icon="basil:cross-solid"
@@ -487,6 +556,38 @@ function DetailTask() {
           </div>
         </div>
 
+        <div className="popup-Delete" id="popup-Delete">
+          <div className="detail-Delete">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeDeletePopup}
+            />
+            <div className="image-Delete">
+              <img src={ImgDelete} alt="" className="img-Delete" />
+            </div>
+            <p className="desc-Delete">Anda yakin ingin menghapus file ini?</p>
+            {/* memanggil nama sesuai data yang di pilih */}
+            <div className="con-btn-Delete">
+              <button
+                type="button"
+                className="btn-batal"
+                onClick={closeDeletePopup}
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                className="btn-delete"
+                onClick={handleDelete}
+              >
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div id="popup-success">
           <div className="detail-success">
             <Icon
@@ -521,6 +622,48 @@ function DetailTask() {
               <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
             <p className="desc-Failed">Tugas Gagal Dikirim!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        {/* messege delete */}
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus</p>
             <button className="btn-Failed" onClick={closeFailed}>
               Kembali
             </button>
