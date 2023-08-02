@@ -217,8 +217,9 @@ function BerandaWaliMurid() {
                   </p>
                 </div>
               )}
-              {dataBerandaWaliMurid &&
-              dataBerandaWaliMurid.belum_dalamdeadline ? (
+              {isLoading ? (
+                <CardSkeletonInfoTask />
+              ) : (
                 <div
                   className="content-indiecator-information"
                   style={{ background: "#fff", cursor: "pointer" }}
@@ -247,8 +248,6 @@ function BerandaWaliMurid() {
                     <Icon icon="ic:round-navigate-next" width="30" />
                   </div>
                 </div>
-              ) : (
-                <CardSkeletonInfoTask />
               )}
             </div>
 

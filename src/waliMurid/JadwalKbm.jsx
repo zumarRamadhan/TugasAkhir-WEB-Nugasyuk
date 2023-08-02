@@ -9,8 +9,10 @@ import NotifSiswa from "../component/NotifOrtu";
 import axios from "axios";
 import CardSkeletonJadwal from "../componentSkeleton/CardSkeletonJadwal";
 import SkeletonPopupJadwal from "../componentSkeleton/SkeletonPopupJadwal";
-import apiurl from "../api/api";
 import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import apiurl from "../api/api";
 
 function PageMapel() {
   const navigate = useNavigate();
@@ -199,7 +201,7 @@ function PageMapel() {
                 onClick={closeDetailKbm}
               />
               {isPopupLoad ? (
-                <h2 className="day-schedule">Loading...</h2>
+                <Skeleton width={70} height={30} style={{marginLeft: '190px'}}/>
               ) : (
                 <h2 className="day-schedule">{detailJadwal.hari}</h2>
               )}
