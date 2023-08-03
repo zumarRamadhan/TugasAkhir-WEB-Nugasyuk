@@ -7,6 +7,8 @@ import userIcon from "../assets/user-icon.svg";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
+import ImgSuccess from '../assets/88860-success-animation.gif';
+import ImgFailed from '../assets/94303-failed.gif';
 // import { createBrowserHistory } from 'history';
 // import { useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -17,6 +19,30 @@ function Login() {
   const navigate = useNavigate();
 
   const [passwordShown, setPasswordShown] = useState(false);
+
+  const showSuccessChanges = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showFailedChanges = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
 
   function togglePassword() {
     setPasswordShown(!passwordShown);
@@ -51,6 +77,7 @@ function Login() {
       .then((response) => {
         console.log(response.data);
         // props.userAuthentication()
+        // showSuccessChanges();
         console.log(response.data);
         sessionStorage.setItem("token", response.data.token);
         // alert('login Berhasil')
@@ -67,9 +94,10 @@ function Login() {
       })
       .catch((err) => {
         console.log("terjadi kesalahan : ", err);
-        alert("login gagal");
+        // alert("login gagal");
         console.log(err.response);
         setisLoading(false);
+        showFailedChanges();
         // alert(err.response.data.error.message)
       });
   };
@@ -134,6 +162,48 @@ function Login() {
           </button>
         </form>
       </div>
+
+      <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">SELAMAT DATANG DI NUGASYUK!!!</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Email atau Password yang anda masukkan salah!!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
     </div>
   );
 }

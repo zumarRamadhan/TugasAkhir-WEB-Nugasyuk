@@ -208,6 +208,26 @@ a {
   z-index: 88;
 }
 
+.input-file-generate {
+  display: flex;
+  width: 100%;
+  z-index: 88;
+  background: var(--color-primer);
+  border-radius: 10px;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  padding: 10px 0px 10px 10px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--color-primer);
+  cursor: pointer;
+  transition: 0.3s;
+  height: max-content;
+  margin-top: 20px;
+}
+
 .value-file-icon {
   padding: 18px;
   width: 80px;

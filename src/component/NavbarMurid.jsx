@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import apiurl from "../api/api";
 
 function NavbarMurid(props) {
   const showDetail = () => {
@@ -25,9 +26,9 @@ function NavbarMurid(props) {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/profile", {
+      .get(`${apiurl}murid/profile`, {
         headers: {
-          // "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning":"any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },

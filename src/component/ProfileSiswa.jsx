@@ -10,6 +10,7 @@ import ImgProfil from "../assets/profil-murid.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
+import apiurl from "../api/api";
 
 function DetailProfileSiswa() {
   const closeDetail = () => {
@@ -82,9 +83,9 @@ function DetailProfileSiswa() {
 
   useEffect(() => {
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/profile", {
+      .get(`${apiurl}murid/profile`, {
         headers: {
-          // "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning":"any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },

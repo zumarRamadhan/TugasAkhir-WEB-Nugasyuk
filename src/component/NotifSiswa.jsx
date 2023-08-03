@@ -2,6 +2,7 @@ import "../App.css";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import apiurl from "../api/api";
 
 function NotificationSiswa() {
   const closeDetailNotif = () => {
@@ -21,9 +22,9 @@ function NotificationSiswa() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/notifikasi", {
+      .get(`${apiurl}murid/notifikasi`, {
         headers: {
-          // "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning":"any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },

@@ -37,86 +37,13 @@ function MapelMateri() {
   const [dataTask, setDataTask] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-  const [filterValue, setFilterValue] = useState("all");
   const { id } = useParams();
 
   useEffect(() => {
     getDetailMapel();
     dataMateri();
     dataTugas();
-    handleSearch();
-    handleSearchMaterial();
-  }, [id, searchQuery, filterValue]);
-
-  // useEffect(() => {
-  //   handleSearch();
-  // }, [searchQuery, filterValue]);
-
-  const handleSearch = () => {
-    const filteredData = dataMaterial.filter((value) => {
-      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
-      const lowerCasesNamaMapel = value.nama_mapel
-        ? value.nama_mapel.toLowerCase()
-        : "";
-
-      return (
-        (filterValue === "all" || filterValue === lowerCasesNamaMapel) &&
-        ((value &&
-          value.nama_materi &&
-          value.nama_materi.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (value &&
-            value.nama_guru &&
-            value.nama_guru.toLowerCase()
-              .includes(searchQuery.toLowerCase()))))
-      
-    });
-
-    setFilteredData(filteredData);
-  };
-
-  const handleSearchMaterial = () => {
-    const filteredData = dataMaterial.filter((value) => {
-      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
-      const lowerCaseStatusMapel = value.status
-        ? value.status.toLowerCase()
-        : "";
-
-      return (
-        (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
-        ((value &&
-          value.soal &&
-          value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (value &&
-            value.nama_guru &&
-            value.nama_guru
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase())) ||
-          (value &&
-            value.status &&
-            value.status.toLowerCase().includes(searchQuery.toLowerCase())))
-      );
-    });
-
-    setFilteredData(filteredData);
-  };
-
-  const handleChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-  console.log("filter value", dataMaterial)
-
-  // const handleFilterChange = (e) => {
-  //   // setFilterValue(e.target.value);
-  //   // jika filter value nya tidak ada maka akan menampilkan data not found
-  //   setFilterValue(e.target.value);
-  // };
-  // console.log("filter value", dataTugas);
-
-  const renderData = filteredData.length > 0 ? filteredData : dataTugas;
-  const dataNotFound =
-    searchQuery !== "" && filteredData.length === 0 && !isLoading;
+  }, [id]);
 
   function getDetailMapel() {
     setisLoading(true);
@@ -124,7 +51,7 @@ function MapelMateri() {
       .get(`${apiurl}murid/matapelajaran/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -144,7 +71,7 @@ function MapelMateri() {
       .get(`${apiurl}murid/matapelajaran/materi/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -164,7 +91,7 @@ function MapelMateri() {
       .get(`${apiurl}murid/matapelajaran/tugas/${id}`, {
         headers: {
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -177,6 +104,35 @@ function MapelMateri() {
         setisLoading(false);
       });
   }
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredDataMaterial, setFilteredDataMaterial] = useState([]);
+  const [filteredDataTask, setFilteredDataTask] = useState([]);
+
+  // Fungsi untuk meng-handle perubahan pada input search
+  const handleSearchInputChange = (event) => {
+    setSearchTerm(event.target.value);
+    filterData(dataMaterial, dataTask, event.target.value);
+  };
+
+  // Fungsi untuk memfilter data sesuai dengan kata kunci pencarian
+  const filterData = (materialData, taskData, keyword) => {
+    const filteredMaterial = materialData.filter((item) =>
+      item.nama_materi.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    const filteredTask = taskData.filter((item) =>
+      item.soal.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    setFilteredDataMaterial(filteredMaterial);
+    setFilteredDataTask(filteredTask);
+  };
+
+   const renderDataMaterial = filteredDataMaterial.length > 0 ? filteredDataMaterial : dataMaterial;
+   const renderDataTask = filteredDataTask.length > 0 ? filteredDataTask : dataTask;
+    const dataNotFound =
+    searchTerm !== "" && filteredDataTask.length === 0 && !isLoading;
 
   // if (isLoading)
   //   return (
@@ -227,7 +183,6 @@ function MapelMateri() {
       <div className="container-content">
         {isLoading ? (
           <SkeletonNavbar />
-          
         ) : (
           <div>
             {dataDetailMapel.map((detailMapel) => (
@@ -298,17 +253,19 @@ function MapelMateri() {
               </div>
             )}
 
+
+
             {isLoading ? (
               <SkeletonFilter />
             ) : (
-              <form className="search-box" onSubmit={handleSearch}>
+              <form className="search-box">
                 <input
                   type="text"
                   placeholder="Cari..."
-                  value={searchQuery}
-                  onChange={handleChange}
+                  value={searchTerm}
+                  onChange={handleSearchInputChange }
                 />
-                <button disabled="disabled">
+                <button type="submit">
                   <Icon
                     icon="material-symbols:search-rounded"
                     width="20"
@@ -318,7 +275,7 @@ function MapelMateri() {
             )}
           </div>
 
-          {dataNotFound ? (
+          {isLoading ? (
             <div className="con-material material-kbm">
               <CardSkeletonListTask />
               <CardSkeletonListTask />
@@ -330,8 +287,14 @@ function MapelMateri() {
                 display: activeContent === "material-kbm" ? "block" : "none",
               }}
             >
-              {dataMaterial &&
-                dataMaterial.map((apiMateri) => (
+              {dataNotFound ? (
+                <div className="dataNotFound">
+                  <p className="text-notfound">Maaf Materi Yang Kamu Cari Tidak Ada!</p>
+                </div>
+              ) : (
+              <div>
+
+              {renderDataMaterial.map((apiMateri) => (
                   <div
                     className="card-material"
                     style={{ cursor: "pointer" }}
@@ -369,6 +332,8 @@ function MapelMateri() {
                   </div>
                 ))}
             </div>
+              )}
+          </div>
           )}
 
           {/* tugas */}
@@ -383,8 +348,14 @@ function MapelMateri() {
                 display: activeContent === "task-kbm" ? "block" : "none",
               }}
             >
-              {dataTask &&
-                dataTask.map((apiTugas) => (
+               {dataNotFound ? (
+                <div className="dataNotFound">
+                  <p className="text-notfound">Maaf Tugas Yang Kamu Cari Tidak Ada!</p>
+                </div>
+              ) : (
+              <div>
+
+              {filteredDataTask.map((apiTugas) => (
                   <div
                     className="card-material"
                     style={{ cursor: "pointer" }}
@@ -421,6 +392,8 @@ function MapelMateri() {
                     </div>
                   </div>
                 ))}
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -343,16 +343,14 @@ nav .navbar img {
     border-radius: 100%;
 }
 
-.content-notif{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
 .name-notif{
     font-size: 20px;
     font-weight: 500;
-    color: #4B4B4B;
+    color: #4B4B4B; 
+    white-space: nowrap; 
+    width: 180px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .teacher{

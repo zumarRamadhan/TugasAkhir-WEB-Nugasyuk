@@ -16,6 +16,7 @@ import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
 function DetailTask() {
   const navigate = useNavigate();
+
   // messege
   const showSuccessAdd = () => {
     const popupLogout = document.querySelector("#popup-success");
@@ -46,6 +47,7 @@ function DetailTask() {
 
   const saveToken = sessionStorage.getItem("token");
 
+  const [fileList, setFileList] = useState([]);
   const [dataDetailTugas, setDataDetailTugas] = useState([]);
   const [status, setStatus] = useState([]);
   const [isLoading, setisLoading] = useState(false);
@@ -56,6 +58,8 @@ function DetailTask() {
 
   const handleFileInputChange = (e) => {
     setSelectedFile(e.target.files[0]);
+    const newFileList = [...fileList, e.target.files[0]];
+    setFileList(newFileList);
   };
 
   const handleButtonClick = () => {
@@ -279,7 +283,7 @@ function DetailTask() {
             </div>
             <div className="file-button-delete">
               <div className="name-delete">
-                <h1 className="title-value-file">{item.file}</h1>
+                <h1 className="title-value-file">{item.file_tugas}</h1>
                 <button className="button-delete" onClick={showDeletePopup}>
                   <Icon
                     className="icon-delete-file"
@@ -407,7 +411,7 @@ function DetailTask() {
         return (
           <div className="con-value-fileOrlink" key={item.id}>
             <a
-              href={`https://www.nugasyuk.my.id/public/${item.file}`}
+                
               className="value-file"
               id="value-file"
             >
@@ -416,12 +420,75 @@ function DetailTask() {
           </div>
         );
       }
-
       return null;
     });
   }
 
+
+
+  // start funsi input file generate file or link materi
+  const generateFileInputs = () => {
+    return fileList.map((file, index) => {
+      let fileIcon = "";
+      let fileExtension = "";
+  
+      if (file.name) {
+        fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
+        switch (fileExtension) {
+          case "pdf":
+            fileIcon = "mdi:file-pdf-box";
+            break;
+          case "docx":
+            fileIcon = "mdi:file-word-box";
+            break;
+          case "xlsx":
+            fileIcon = "file-icons:microsoft-excel";
+            break;
+          default:
+            fileIcon = "";
+            break;
+        }
+      }
+  
+      return (
+        <div className="input-file-generate" key={index}>
+          {/* Tampilkan ikon file dan tombol hapus */}
+          <div className="value-file-icon">
+            <Icon
+              className="icon-file-generate"
+              icon={fileIcon}
+              width={45}
+            />
+          </div>
+          <div className="file-button-delete">
+            <div className="name-delete">
+              <p className="title-value-file">{file.name}</p>
+              <button
+                className="button-delete"
+                onClick={() => handleDeleteFile(index)}
+              >
+                <Icon
+                  className="icon-delete-file"
+                  icon="basil:cross-solid"
+                  width={30}
+                />
+              </button>
+            </div>
+            <p className="format-file">{fileExtension.toUpperCase()}</p>
+          </div>
+        </div>
+      );
+    });
+  };
+  
+
+  const handleDeleteFile = (index) => {
+    const newFileList = fileList.filter((_, i) => i !== index);
+    setFileList(newFileList);
+  };
+
   const fileLinkElements = generateFileLinkElements();
+  const fileGenerate = generateFileInputs();
 
   // if (isLoading)
   //   return (
@@ -512,25 +579,16 @@ function DetailTask() {
                       </p>
                       <div className="submition-task">
                         <p className="title-submition">Pengumpulan Tugas</p>
-
                         <div>
-                          {fileLinkElements}
-                          {selectedFile && <p>{selectedFile.name}</p>}
+                          {generateFileLinkElements()}
+                          {generateFileInputs()}
                         </div>
-
-                        {/* <div className="file-task">
-                           {generateFileIcons}
-                           {detailTugas.file}
-                          Tambahkan tampilan preview lainnya sesuai kebutuhan
-                        </div> */}
-
                         <div>
                           <input
                             type="file"
                             id="file-input"
                             hidden
                             onChange={handleFileInputChange}
-                            // onChange={handleFileInput}
                           />
                           <button
                             className="btn-add-task"
@@ -544,7 +602,6 @@ function DetailTask() {
                           className="btn-submit-task"
                           type="submit"
                           onClick={submitTask}
-                          // onChange={handleFileUpload}
                         >
                           <p>Kirim</p>
                         </button>
