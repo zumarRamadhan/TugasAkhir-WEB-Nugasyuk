@@ -334,7 +334,7 @@ function EditFormAddMurid() {
   useState(() => {
     setIsLoading(true);
     axios
-      .get(`${apiurl}admin/kelas1`, {
+      .get(`${apiurl}admin/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,

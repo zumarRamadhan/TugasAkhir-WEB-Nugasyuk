@@ -36,7 +36,7 @@ function DataMurid() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -153,11 +153,11 @@ function DataMurid() {
     setDetailMurid(null);
     showPopupLoadingDetail();
     axios
-      .get("${apiurl}admin/murid/" + selected, {
+      .get(`${apiurl}admin/murid/` + selected, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -180,7 +180,7 @@ function DataMurid() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -285,11 +285,11 @@ function DataMurid() {
 
   useEffect(() => {
     axios
-      .get("${apiurl}admin/murid", {
+      .get(`${apiurl}admin/murid`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -372,7 +372,7 @@ function DataMurid() {
   //       <div>.</div>
   //     </div>
   //   );
-  // } else 
+  // } else
   if (dataTabelMurid && !isError)
     return (
       <div>
@@ -698,30 +698,23 @@ function DataMurid() {
         </div>
 
         {/* {isShowNotifSucces && ( */}
-          <div id="popup-success">
-            <div className="detail-success">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer" }}
-                onClick={closeSuccess}
-              />
-              <div className="image-success">
-                <img
-                  src={ImgSuccess}
-                  alt="Success"
-                  className="img-success"
-                />
-              </div>
-              <p className="desc-success">Data Berhasil Di Hapus</p>
-              <button
-                className="btn-success"
-                onClick={closeSuccess}
-              >
-                Kembali
-              </button>
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img src={ImgSuccess} alt="Success" className="img-success" />
             </div>
+            <p className="desc-success">Data Berhasil Di Hapus</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
           </div>
+        </div>
         {/* )} */}
 
         <div id="popup-Failed">
@@ -733,11 +726,7 @@ function DataMurid() {
               onClick={closeFailed}
             />
             <div className="image-Failed">
-              <img
-                src={ImgFailed}
-                alt="Failed"
-                className="img-Failed"
-              />
+              <img src={ImgFailed} alt="Failed" className="img-Failed" />
             </div>
             <p className="desc-Failed">Data Gagal Di Hapus</p>
             <button className="btn-Failed" onClick={closeFailed}>
@@ -856,8 +845,8 @@ function DataMurid() {
           </div>
         </div>
 
-          {/* card loading */}
-          <div className="popup-loading">
+        {/* card loading */}
+        <div className="popup-loading">
           <div className="body-loading" id="body-loading">
             <svg
               class="pl"

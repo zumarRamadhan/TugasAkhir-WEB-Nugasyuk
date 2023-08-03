@@ -47,6 +47,8 @@ import FormMateriKBM from './guru/FormMateriKBM';
 import DetailTugasKbm from './guru/DetailTugasKbm';
 import FormTugasKBM from './guru/FormTugasKBM';
 
+import CekPengumpulan from './guru/CekPengumpulan';
+
 import PagePengumpulan from './guru/PagePengumpulan';
 import DetailPengumpulan from './guru/DetailPengumpulan';
 import DetailSelesai from './guru/DetailSelesai';
@@ -122,17 +124,19 @@ function App() {
         <Route path='/guru/berandaguru' element={<BerandaGuru/>}/>
 
         <Route path='/guru/pagekbm' element={<KBM/>}/>
-        <Route path='/guru/pagekbm/detail' element={<DetailKbm/>}/>
+        <Route path='/guru/pagekbm/detail/:id' element={<DetailKbm/>}/>
 
-        <Route path='/guru/pagekbm/detail/detailmateri' element={<DetailMateriKbm/>}/>
+        <Route path='/guru/pagekbm/detail/detailmateri/:id' element={<DetailMateriKbm/>}/>
         <Route path='/guru/pagekbm/detail/formmateri' element={<FormMateriKBM/>}/>
-        <Route path='/guru/pagekbm/detail/detailtugas' element={<DetailTugasKbm/>}/>
+        <Route path='/guru/pagekbm/detail/detailtugas/:id' element={<DetailTugasKbm/>}/>
         <Route path='/guru/pagekbm/detail/formtugas' element={<FormTugasKBM/>}/>
+
+        <Route path='/guru/pagekbm/detail/detailtugas/listtugas/:id' element={<CekPengumpulan/>}/>
 
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
         <Route path='/guru/pagepengumpulan/detail/:id' element={<DetailPengumpulan/>}/>
-        <Route path='/guru/pagepengumpulan/detail/detailmenunggu' element={<DetailMenunggu/>}/>
-        <Route path='/guru/pagepengumpulan/detail/detailselesai' element={<DetailSelesai/>}/>
+        <Route path='/guru/pagepengumpulan/detail/detailmenunggu/:id' element={<DetailMenunggu/>}/>
+        <Route path='/guru/pagepengumpulan/detail/detailselesai/:id' element={<DetailSelesai/>}/>
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>
         {/* end role guru */}
 

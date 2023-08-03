@@ -81,6 +81,14 @@ function PageKbm() {
   const [filteredData, setFilteredData] = useState([]);
   const [filterValue, setFilterValue] = useState("all");
 
+  
+  const handleDetail = (id) => {
+    // Ambil data guru dari API berdasarkan id
+
+    // pindah ke halaman detail
+    navigate(`/guru/pagekbm/detail/${id}`);
+  };
+
   useEffect(() => {
     axios
       .get(`${apiurl}guru/kbm`, {
@@ -105,12 +113,15 @@ function PageKbm() {
   }, []);
 
   useEffect(() => {
+    setFilteredData(dataCardKelas);
+  }, [dataCardKelas]);
+
+  useEffect(() => {
     handleSearch();
   }, [searchQuery, filterValue]);
 
   const handleSearch = () => {
     const searchKeywords = searchQuery.toLowerCase().split(" ");
-
     const filteredData = dataCardKelas.filter((value) => {
       const lowerCaseStatusMapel = value.nama_jurusan
         ? value.nama_jurusan.toLowerCase()
@@ -132,6 +143,7 @@ function PageKbm() {
     });
 
     setFilteredData(filteredData);
+    console.log("filteredData", filteredData);
   };
 
   const handleChange = (e) => {
@@ -144,8 +156,12 @@ function PageKbm() {
 
   const renderData = filteredData.length > 0 ? filteredData : dataCardKelas;
   const dataNotFound =
-    searchQuery !== "" && filteredData.length === 0 && !isLoading;
+    searchQuery !== "" &&
+    filteredData.length === 0 &&
+    !isLoading &&
+    (filterValue !== "all" || searchQuery !== "");
 
+  if(dataCardKelas && !isError)
   return (
     <div>
       <aside>
@@ -200,36 +216,31 @@ function PageKbm() {
                 value={searchQuery}
                 onChange={handleChange}
               />
-              <button disabled="disabled">
+              <button type="submit">
                 <Icon icon="material-symbols:search-rounded" width="20"></Icon>
               </button>
             </form>
           </div>
 
-          {dataNotFound ? (
-            <div className="dataNotFound">
-              <h2>Data Tidak Ditemukan</h2>
+          {isLoading ? (
+            <div className="content-pageKbm-Guru">
+              <div className="card-pageKbm-Guru-skeleton"></div>
+              <div className="card-pageKbm-Guru-skeleton"></div>
+              <div className="card-pageKbm-Guru-skeleton"></div>
+              <div className="card-pageKbm-Guru-skeleton"></div>
+              <div className="card-pageKbm-Guru-skeleton"></div>
+              <div className="card-pageKbm-Guru-skeleton"></div>
             </div>
           ) : (
             <div>
-              {isLoading ? (
+              {filteredData.length > 0 ? (
                 <div className="content-pageKbm-Guru">
-                  <div className="card-pageKbm-Guru-skeleton"></div>
-                  <div className="card-pageKbm-Guru-skeleton"></div>
-                  <div className="card-pageKbm-Guru-skeleton"></div>
-                  <div className="card-pageKbm-Guru-skeleton"></div>
-                  <div className="card-pageKbm-Guru-skeleton"></div>
-                  <div className="card-pageKbm-Guru-skeleton"></div>
-                </div>
-              ) : (
-                <div
-                  className="content-pageKbm-Guru"
-                  onClick={() => navigate("/guru/pagekbm/detail")}
-                >
                   {renderData.map((data) => (
                     <div
                       className="card-pageKbm-Guru"
                       style={{ cursor: "pointer" }}
+                      key={data.id}
+                      onClick={() => handleDetail(data.id)}
                     >
                       <div className="card-pageKbm-Guru-left">
                         <div className="img-pageKbm-Guru">
@@ -253,6 +264,10 @@ function PageKbm() {
                       />
                     </div>
                   ))}
+                </div>
+              ) : (
+                <div className="dataNotFound">
+                  <h2>Data Tidak Ditemukan</h2>
                 </div>
               )}
             </div>

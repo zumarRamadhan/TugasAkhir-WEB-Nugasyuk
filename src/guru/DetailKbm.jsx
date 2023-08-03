@@ -1,18 +1,92 @@
 import "../cssAll/guru/DetailKbm.css";
 import { Icon } from "@iconify/react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarGuru from "../component/NavbarGuru";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
+import axios from "axios";
+import apiurl from "../api/api";
 
 function DetailKbm() {
-  const navText = "{KBM 'KELAS'}";
+  // const navText = "{KBM 'KELAS'}";
   const navigate = useNavigate();
+
+  const { id } = useParams();
+  const saveToken = sessionStorage.getItem("token");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [listMateri, setListMateri] = useState([]);
+  const [listTugas, setListTugas] = useState([]);
+  const [titleKelas, setTitleKelas] = useState([]);
+
+  const handleListMateri = (id) => {
+    navigate(`/guru/pagekbm/detail/detailmateri/${id}`);
+  };
+
+  const handleListTugas = (id) => {
+    navigate(`/guru/pagekbm/detail/detailtugas/${id}`);
+  };
+
+  //   API menunggu dan selesai
+  useEffect(() => {
+    const fetchData = async () => {
+      if (id) {
+        try {
+          setIsLoading(true);
+
+          // Pemanggilan API guru/pengumpulan/menunggu/${id}
+          const responseMateri = await axios.get(
+            `${apiurl}guru/materi/kelas/${id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`,
+                "ngrok-skip-browser-warning": "any",
+              },
+            }
+          );
+
+          console.log("Data API Materi:", responseMateri.data);
+          const responseListMateri = responseMateri.data;
+
+          setListMateri(responseListMateri.materi);
+          setTitleKelas(responseListMateri.kelas);
+
+          // Pemanggilan API guru/pengumpulan/selesai/${id}
+          const responseTugas = await axios.get(
+            `${apiurl}guru/tugas/kelas/${id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`,
+                "ngrok-skip-browser-warning": "any",
+              },
+            }
+          );
+
+          console.log("Data API Tugas:", responseTugas.data);
+          const responseListTugas = responseTugas.data;
+
+          setListTugas(responseListTugas.tugas);
+
+          setIsLoading(false);
+        } catch (error) {
+          console.log("Terjadi kesalahan Tugas/Materi: ", error);
+          setIsError(true);
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+  }, [id, saveToken]);
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -71,128 +145,6 @@ function DetailKbm() {
     );
   }
 
-  const valueDataKelas = [
-    {
-      id: 1,
-      kelas: "10",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel1,
-    },
-    {
-      id: 2,
-      kelas: "10",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel2,
-    },
-    {
-      id: 3,
-      kelas: "11",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel3,
-    },
-    {
-      id: 4,
-      kelas: "11",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel4,
-    },
-    {
-      id: 5,
-      kelas: "12",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel5,
-    },
-    {
-      id: 6,
-      kelas: "12",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel6,
-    },
-    {
-      id: 7,
-      kelas: "10",
-      jurusan: "animasi",
-      tingkatan: "1",
-      // assets: cardMapel7,
-    },
-    {
-      id: 8,
-      kelas: "10",
-      jurusan: "animasi",
-      tingkatan: "2",
-      // assets: cardMapel8,
-    },
-    {
-      id: 9,
-      kelas: "11",
-      jurusan: "animasi",
-      tingkatan: "1",
-      // assets: cardMapel9,
-    },
-    {
-      id: 10,
-      kelas: "11",
-      jurusan: "animasi",
-      tingkatan: "2",
-      // assets: cardMapel10,
-    },
-  ];
-
-  // data materi kbm berisi nama materi, tanggal, guru
-
-  const valueDataMateriKbm = [
-    {
-      id: 1,
-      namaMateri: "Materi Application Letter",
-      tanggal: "8 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-    {
-      id: 2,
-      namaMateri: "Materi Reading",
-      tanggal: "5 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-    {
-      id: 3,
-      namaMateri: "Materi Laporan B. Inggris",
-      tanggal: "12/12/2021",
-      guru: "1 Mar 2023",
-    },
-  ];
-
-  // data tugas kbm berisi nama tugas, tanggal, deadline, guru
-
-  const valueDataTugasKbm = [
-    {
-      id: 1,
-      namaTugas: "Application Letter",
-      tanggal: "8 Mar 2023",
-      deadline: "8 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-    {
-      id: 2,
-      namaTugas: "Reading",
-      tanggal: "5 Mar 2023",
-      deadline: "5 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-    {
-      id: 3,
-      namaTugas: "Laporan B. Inggris",
-      tanggal: "1 Mar 2023",
-      deadline: "1 Mar 2023",
-      guru: "Budiono, S.Pd",
-    },
-  ];
-
   const [activeContent, setActiveContent] = useState("detailMateriKbm");
 
   const showMateri = () => {
@@ -233,7 +185,7 @@ function DetailKbm() {
         </ul>
       </aside>
       <div className="container-content">
-        <NavbarGuru text={navText} />
+        <NavbarGuru text={"KBM" + " " + titleKelas} />
         <div className="main">
           <div className="header-content">
             <div className="switch-container-detailKbm">
@@ -287,11 +239,12 @@ function DetailKbm() {
             }}
           >
             <div className="con-DetailKbm-Materi">
-              {valueDataMateriKbm.map((data) => (
+              {listMateri.map((data) => (
                 <div
+                  key={data.id}
                   className="card-DetailKbm-Materi"
                   style={{ cursor: "pointer" }}
-                  onClick={() => navigate("/guru/pagekbm/detail/detailmateri")}
+                  onClick={() => handleListMateri(data.id)}
                 >
                   <div className="card-DetailKbm-Materi-left">
                     <div className="img-DetailKbm-Materi">
@@ -299,13 +252,13 @@ function DetailKbm() {
                     </div>
                     <div className="desc-DetailKbm-Materi">
                       <p className="judul-DetailKbm-Materi">
-                        {data.namaMateri}
+                        {data.nama_materi}
                       </p>
-                      <p className="materi-DetailKbm-Guru">{data.guru}</p>
+                      <p className="materi-DetailKbm-Guru">{data.nama_guru}</p>
                     </div>
                   </div>
                   <div className="card-DetailKbm-Materi-right">
-                    <div className="dateDetailDesc">{data.tanggal}</div>
+                    <div className="dateDetailDesc">{data.tanggal_dibuat}</div>
                     <Icon
                       icon="ic:round-navigate-next"
                       width={30}
@@ -324,23 +277,24 @@ function DetailKbm() {
             }}
           >
             <div className="con-DetailKbm-Tugas">
-              {valueDataTugasKbm.map((data) => (
+              {listTugas.map((data) => (
                 <div
+                  key={data.id}
                   className="card-DetailKbm-Tugas"
                   style={{ cursor: "pointer" }}
-                  onClick={() => navigate("/guru/pagekbm/detail/detailtugas")}
+                  onClick={() => handleListTugas(data.id)}
                 >
                   <div className="card-DetailKbm-Tugas-left">
                     <div className="img-DetailKbm-Tugas">
                       <Icon icon="tabler:clipboard-text" width={40} />
                     </div>
                     <div className="desc-DetailKbm-Tugas">
-                      <p className="judul-DetailKbm-Tugas">{data.namaTugas}</p>
-                      <p className="materi-DetailKbm-Guru">{data.guru}</p>
+                      <p className="judul-DetailKbm-Tugas">{data.soal}</p>
+                      <p className="materi-DetailKbm-Guru">{data.nama_guru}</p>
                     </div>
                   </div>
                   <div className="card-DetailKbm-Tugas-right">
-                    <div className="dateDetailDesc">{data.tanggal}</div>
+                    <div className="dateDetailDesc">{data.date}</div>
                     <div className="deadline-timeTugas">
                       Deadline : {data.deadline}
                     </div>

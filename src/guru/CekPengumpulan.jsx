@@ -1,4 +1,4 @@
-import "../cssAll/guru/DetailTugasKbm.css";
+import "../cssAll/guru/CekPengumpulan.css";
 import { Icon } from "@iconify/react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
@@ -14,7 +14,7 @@ import ImgFailed from "../assets/failed.gif";
 import apiurl from "../api/api";
 import axios from "axios";
 
-function DetailTugasKbm() {
+function CekPengumpulan() {
   const navText = "KBM 11 PPLG 1";
   const navigate = useNavigate();
 
@@ -22,11 +22,13 @@ function DetailTugasKbm() {
   const saveToken = sessionStorage.getItem("token");
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [detailTugas, setDetailTugas] = useState([]);
-  const [titleKelas, setTitleKelas] = useState([]);
+  const [listPengumpulan, setListPengumpulan] = useState([]);
+  const [detailMenunggu, setDetailMenunggu] = useState([]);
+  const [detailSelesai, setDetailSelesai] = useState([]);
+
   useEffect(() => {
     axios
-      .get(`${apiurl}guru/tugas/${id}`, {
+      .get(`${apiurl}guru/detail/pengumpulan/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -37,8 +39,7 @@ function DetailTugasKbm() {
         console.log("data API detail tugas", result.data);
         const responseAPI = result.data;
 
-        setDetailTugas(responseAPI.tugas[0]);
-        setTitleKelas(responseAPI.kelas);
+        setListPengumpulan(responseAPI.pengumpulan[0]);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -48,12 +49,58 @@ function DetailTugasKbm() {
       });
   }, []);
 
-  const handleCek = (id) => {
-    // Ambil data guru dari API berdasarkan id
+  //   API menunggu dan selesai
+  useEffect(() => {
+    const fetchData = async () => {
+      if (id) {
+        try {
+          setIsLoading(true);
 
-    // pindah ke halaman detail
-    navigate(`/guru/pagekbm/detail/detailtugas/listtugas/${id}`);
-  };
+          // Pemanggilan API guru/pengumpulan/menunggu/${id}
+          const responseMenunggu = await axios.get(
+            `${apiurl}guru/cek/pengumpulan/menunggu/${id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`,
+                "ngrok-skip-browser-warning": "any",
+              },
+            }
+          );
+
+          console.log("Data API Menunggu:", responseMenunggu.data);
+          const responseDataMenunggu = responseMenunggu.data;
+
+          setDetailMenunggu(responseDataMenunggu.pengumpulan);
+
+          // Pemanggilan API guru/pengumpulan/selesai/${id}
+          const responseSelesai = await axios.get(
+            `${apiurl}guru/cek/pengumpulan/selesai/${id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${saveToken}`,
+                "ngrok-skip-browser-warning": "any",
+              },
+            }
+          );
+
+          console.log("Data API Selesai:", responseSelesai.data);
+          const responseDataSelesai = responseSelesai.data;
+
+          setDetailSelesai(responseDataSelesai.pengumpulan);
+
+          setIsLoading(false);
+        } catch (error) {
+          console.log("Terjadi kesalahan: ", error);
+          setIsError(true);
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+  }, [id, saveToken]);
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -112,171 +159,17 @@ function DetailTugasKbm() {
     );
   }
 
-  function generateFileIcons(item) {
-    let fileIcon;
-    let fileExtension = "";
+  const [activeContent, setActiveContent] = useState(
+    "detailMenungguPengumpulan"
+  );
 
-    if (item.file) {
-      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
-      switch (fileExtension) {
-        case "pdf":
-          fileIcon = "mdi:file-pdf-box";
-          break;
-        case "docx":
-          fileIcon = "mdi:file-word-box";
-          break;
-        case "xlsx":
-          fileIcon = "file-icons:microsoft-excel";
-          break;
-        default:
-          fileIcon = "";
-          break;
-      }
-    }
+  const showMenunggu = () => {
+    setActiveContent("detailMenungguPengumpulan");
+  };
 
-    return (
-      <>
-        {fileExtension && (
-          <>
-            <div className="icon-value-file">
-              <Icon icon={fileIcon} width={45} />
-            </div>
-            <div>
-              <h1 className="title-value-file">{item.nama_tugas}</h1>
-              <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()} <span>Klik</span>
-              </p>
-            </div>
-          </>
-        )}
-      </>
-    );
-  }
-
-  // start funsi generate file link elements
-  function generateFileLinkElements(detailTugas) {
-    const item = detailTugas;
-
-    if (item.link && item.file) {
-      let linkElement = [];
-      if (item.link.includes("youtube.com")) {
-        let youtubeLink = item.link.replace("watch?v=", "embed/");
-        linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
-            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
-            <div>
-              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
-              <p className="link-detailMenunggu">
-                YouTube <span>Klik</span>
-              </p>
-            </div>
-          </a>
-        );
-      } else if (item.link.includes("youtu.be")) {
-        let youtubeLink = `https://www.youtube.com/embed/${item.link
-          .split("/")
-          .pop()}`;
-        linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
-            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
-            <div>
-              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
-              <p className="link-detailMenunggu">
-                YouTube <span>Klik</span>
-              </p>
-            </div>
-          </a>
-        );
-      } else {
-        linkElement = (
-          <a href={item.link} className="btn-openSitus">
-            Buka Situs
-          </a>
-        );
-      }
-
-      return (
-        <div className="con-value-fileOrlink" key={item.id}>
-          {linkElement}
-          <a
-            href={`https://www.nugasyuk.my.id/public/${item.file}`}
-            className="value-file"
-            id="value-file"
-          >
-            {generateFileIcons(item)}
-          </a>
-        </div>
-      );
-    } else if (item.link) {
-      if (item.link.includes("youtube.com")) {
-        let youtubeLink = item.link.replace("watch?v=", "embed/");
-        return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowFullScreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
-                <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          </div>
-        );
-      } else if (item.link.includes("youtu.be")) {
-        let youtubeLink = `https://www.youtube.com/embed/${item.link
-          .split("/")
-          .pop()}`;
-        return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowFullScreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
-                <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          </div>
-        );
-      } else {
-        return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={item.link} className="btn-openSitus">
-              Buka Situs
-            </a>
-          </div>
-        );
-      }
-    } else if (item.file) {
-      return (
-        <div className="con-value-fileOrlink" key={item.id}>
-          <a
-            href={`https://www.nugasyuk.my.id/public/${item.file}`}
-            className="value-file"
-            id="value-file"
-          >
-            {generateFileIcons(item)}
-          </a>
-        </div>
-      );
-    }
-
-    return null;
-  }
-  // end funsi generate file link elements
-
-  // Panggil fungsi generateFileLinkElements untuk menghasilkan elemen-elemen yang sesuai
-  const fileLinkElements = generateFileLinkElements(detailTugas);
+  const showSelesai = () => {
+    setActiveContent("detailSelesaiPengumpulan");
+  };
 
   return (
     <div>
@@ -308,7 +201,7 @@ function DetailTugasKbm() {
         </ul>
       </aside>
       <div className="container-content">
-        <NavbarGuru text={"Tugas" + " " + titleKelas} />
+        <NavbarGuru text={navText} />
         <div className="main">
           <div className="con-card-detailTugas">
             <div className="header-card-detailTugas">
@@ -318,34 +211,167 @@ function DetailTugasKbm() {
                 </div>
                 <div className="text-header-card-detailTugas">
                   <h1 className="title-header-card-detailTugas">
-                    {detailTugas.nama_tugas}
+                    {listPengumpulan.nama_tugas}
                   </h1>
                   <p className="guru-header-card-detailTugas">
-                    {detailTugas.nama_guru}
+                    {listPengumpulan.nama_guru}
                   </p>
                 </div>
               </div>
               <div className="right-header-card-detailTugas">
                 <p className="date-header-card-detailTugas">
-                  {detailTugas.date}
+                  {listPengumpulan.date}
                 </p>
-                <div className="icon-options" style={{ cursor: "pointer" }}>
-                  <Icon icon="mi:options-vertical" width={40} />
-                </div>
               </div>
             </div>
 
-            <p className="desc-card-detailTugas">{detailTugas.soal}</p>
+            <p className="desc-card-detailTugas">{listPengumpulan.soal}</p>
 
-            <p className="infoDeadline">Deatline : {detailTugas.deadline}</p>
+            <p className="infoDeadline">
+              Deatline : {listPengumpulan.deadline}
+            </p>
+          </div>
 
-            <div>{fileLinkElements}</div>
-
-            <div
-              className="btn-cek-pengumpulan"
-              onClick={() => handleCek(detailTugas.id)}
+          <div className="switch-container">
+            <button
+              id="btn-MenungguPengumpulan"
+              className={
+                activeContent === "detailMenungguPengumpulan"
+                  ? "activeDetailPengumpulan"
+                  : ""
+              }
+              onClick={showMenunggu}
             >
-              Cek Pengumpulan
+              Menunggu
+            </button>
+            <button
+              id="btn-SelesaiPengumpulan"
+              className={
+                activeContent === "detailSelesaiPengumpulan"
+                  ? "activeDetailPengumpulan"
+                  : ""
+              }
+              onClick={showSelesai}
+            >
+              Selesai
+            </button>
+          </div>
+
+          <div
+            className="con-DetailPengumpulan"
+            style={{
+              display:
+                activeContent === "detailMenungguPengumpulan"
+                  ? "block"
+                  : "none",
+            }}
+          >
+            <div className="con-DetailPengumpulan-Menunggu">
+              {isLoading ? (
+                <div className="con-DetailPengumpulan-Menunggu">
+                  <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                </div>
+              ) : detailMenunggu.length === 0 ? (
+                <div className="card-DetailPengumpulan-Menunggu-noData">
+                  <p>Tidak ada data menunggu konfirmasi</p>
+                </div>
+              ) : (
+                detailMenunggu.map((data) => (
+                  <div
+                    className="card-Pengumpulan-Guru"
+                    style={{ cursor: "pointer" }}
+                    key={data.id} // Tambahkan key prop untuk mencegah pesan warning
+                  >
+                    <div className="card-Pengumpulan-Guru-left">
+                      <div className="img-Pengumpulan-Guru">
+                        <img
+                          src={damiImgMurid} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
+                          alt={data.foto_profile}
+                          className="image-Pengumpulan-Guru"
+                        />
+                      </div>
+                      <div className="desc-card-Pengumpulan-Guru">
+                        <p className="name-card-Pengumpulan-Guru">
+                          {data.nama_siswa}
+                        </p>
+                        <p className="email-card-Pengumpulan-Guru">
+                          {data.email}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="detaiKelas-Pengumpulan-Guru">
+                      <p>
+                        {data.tingkat_ke +
+                          " " +
+                          data.nama_jurusan +
+                          " " +
+                          data.nama_kelas}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+          <div
+            className="con-DetailPengumpulan"
+            style={{
+              display:
+                activeContent === "detailSelesaiPengumpulan" ? "block" : "none",
+            }}
+          >
+            <div className="con-DetailPengumpulan-Selesai">
+              {isLoading ? (
+                <div className="con-DetailPengumpulan-Selesai">
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                </div>
+              ) : detailSelesai.length === 0 ? (
+                <div className="card-DetailPengumpulan-Selesai-noData">
+                  <p>Tidak ada data tugas selesai</p>
+                </div>
+              ) : (
+                detailSelesai.map((data) => (
+                  <div
+                    className="card-Pengumpulan-Guru"
+                    style={{ cursor: "pointer" }}
+                    key={data.id} // Tambahkan key prop untuk mencegah pesan warning
+                  >
+                    <div className="card-Pengumpulan-Guru-left">
+                      <div className="img-Pengumpulan-Guru">
+                        <img
+                          src={damiImgMurid} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
+                          alt={data.foto_profile}
+                          className="image-Pengumpulan-Guru"
+                        />
+                      </div>
+                      <div className="desc-card-Pengumpulan-Guru">
+                        <p className="name-card-Pengumpulan-Guru">
+                          {data.nama_siswa}
+                        </p>
+                        <p className="email-card-Pengumpulan-Guru">
+                          {data.email}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="detaiKelas-Pengumpulan-Guru">
+                      <p>
+                        {data.tingkat_ke +
+                          " " +
+                          data.nama_jurusan +
+                          " " +
+                          data.nama_kelas}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -484,4 +510,4 @@ function DetailTugasKbm() {
   );
 }
 
-export default DetailTugasKbm;
+export default CekPengumpulan;

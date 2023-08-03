@@ -1,14 +1,16 @@
 import "../cssAll/guru/DetailSelesai.css";
 import { Icon } from "@iconify/react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarGuru from "../component/NavbarGuru";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
+import axios from "axios";
+import apiurl from "../api/api";
 
 function DetailSelesai() {
   const navText = "Pengumpulan";
@@ -71,287 +73,63 @@ function DetailSelesai() {
     );
   }
 
-  const valueDataKelas = [
-    {
-      id: 1,
-      kelas: "10",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel1,
-    },
-    {
-      id: 2,
-      kelas: "10",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel2,
-    },
-    {
-      id: 3,
-      kelas: "11",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel3,
-    },
-    {
-      id: 4,
-      kelas: "11",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel4,
-    },
-    {
-      id: 5,
-      kelas: "12",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel5,
-    },
-    {
-      id: 6,
-      kelas: "12",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel6,
-    },
-    {
-      id: 7,
-      kelas: "10",
-      jurusan: "animasi",
-      tingkatan: "1",
-      // assets: cardMapel7,
-    },
-    {
-      id: 8,
-      kelas: "10",
-      jurusan: "animasi",
-      tingkatan: "2",
-      // assets: cardMapel8,
-    },
-    {
-      id: 9,
-      kelas: "11",
-      jurusan: "animasi",
-      tingkatan: "1",
-      // assets: cardMapel9,
-    },
-    {
-      id: 10,
-      kelas: "11",
-      jurusan: "animasi",
-      tingkatan: "2",
-      // assets: cardMapel10,
-    },
-  ];
+  const { id } = useParams();
+  const saveToken = sessionStorage.getItem("token");
+  const [detailSelesai, setDetailSelesai] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
-  const dayData = [
-    {
-      id: 1,
-      hari: "Senin",
-    },
-    {
-      id: 2,
-      hari: "Selasa",
-    },
-    {
-      id: 3,
-      hari: "Rabu",
-    },
-    {
-      id: 4,
-      hari: "Kamis",
-    },
-    {
-      id: 5,
-      hari: "Jumat",
-    },
-    {
-      id: 6,
-      hari: "Sabtu",
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get(`${apiurl}guru/pengumpulan/tugas/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((result) => {
+        console.log("data API", result.data);
+        const responseAPI = result.data;
 
-  const dataCardMurid = [
-    {
-      id: 1,
-      imgProfile: damiImgMurid,
-      name: "Ahmad Aziz Wira Widodo",
-      email: "ahmadaziz@smkrus.sch.id",
-      kelas:
-        valueDataKelas[2].kelas +
-        " " +
-        valueDataKelas[2].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[2].tingkatan,
-    },
-    {
-      id: 2,
-      imgProfile: damiImgMurid,
-      name: "Bayu Septian Kurniawan",
-      email: "bayuseptian@smkrus.sch.id",
-      kelas:
-        valueDataKelas[2].kelas +
-        " " +
-        valueDataKelas[2].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[2].tingkatan,
-    },
-    {
-      id: 3,
-      imgProfile: damiImgMurid,
-      name: "Javier Gavra Abhinaya",
-      email: "javiergavra@smkrus.sch.id",
-      kelas:
-        valueDataKelas[4].kelas +
-        " " +
-        valueDataKelas[4].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[4].tingkatan,
-    },
-    {
-      id: 4,
-      imgProfile: damiImgMurid,
-      name: "Khoiru Rizal Kalam Ismail",
-      email: "khoirurizal@smkrus.sch.id",
-      kelas:
-        valueDataKelas[4].kelas +
-        " " +
-        valueDataKelas[4].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[4].tingkatan,
-    },
-    {
-      id: 5,
-      imgProfile: damiImgMurid,
-      name: "Muhammad Nur Wahid Bimawan",
-      email: "nurwahid@smkrus.sch.id",
-      kelas:
-        valueDataKelas[8].kelas +
-        " " +
-        valueDataKelas[8].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[8].tingkatan,
-    },
-    {
-      id: 6,
-      imgProfile: damiImgMurid,
-      name: "Muh Wahyu Ageng Pambudi",
-      email: "muhwahyu@smkrus.schid",
-      kelas:
-        valueDataKelas[8].kelas +
-        " " +
-        valueDataKelas[8].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[8].tingkatan,
-    },
-    {
-      id: 7,
-      imgProfile: damiImgMurid,
-      name: "Muhammad Vitto Corlenone",
-      email: "vittocorleone@smkrus.sch.id",
-      kelas:
-        valueDataKelas[9].kelas +
-        " " +
-        valueDataKelas[9].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[9].tingkatan,
-    },
-  ];
+        setDetailSelesai(responseAPI.tugas[0]);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  }, []);
 
-  const valueTugas = [
-    {
-      id: 1,
-      judul: "Application Letter",
-      deskripsi:
-        "Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa memahami Tugas mengenai pengertian application letter. Dibawah ini saya mencantumkan link youtube pengertian dari application letter, kalian bisa menyimak video tersebut. jika sudah selesai menyimak video, silahkan resume materi apa saja yang di dapat. Terima kasih, sukses selalu...",
-      deadline: "1 Mar 2023",
-      updateTime: "8 Mar 2023",
-      kelas:
-        valueDataKelas[2].kelas +
-        " " +
-        valueDataKelas[2].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[2].tingkatan,
-      murid: dataCardMurid[0].name,
-      status: "Menunggu",
-    },
-
-    {
-      id: 2,
-      judul: "Application Letter",
-      deskripsi:
-        "Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa memahami Tugas mengenai pengertian application letter. Dibawah ini saya mencantumkan link youtube pengertian dari application letter, kalian bisa menyimak video tersebut. jika sudah selesai menyimak video, silahkan resume materi apa saja yang di dapat. Terima kasih, sukses selalu...",
-      deadline: "1 Mar 2023",
-      updateTime: "8 Mar 2023",
-      kelas:
-        valueDataKelas[2].kelas +
-        " " +
-        valueDataKelas[2].jurusan.toUpperCase() +
-        " " +
-        valueDataKelas[2].tingkatan,
-      murid: dataCardMurid[0].name,
-      status: "Selesai",
-    },
-  ];
-
-  const fileOrlinkMateri = [
-    {
-      id: 1,
-      link: "https://youtu.be/gDLV39EQEC8",
-      file: "test.pdf",
-    },
-    // {
-    //     id: 2,
-    //     link: "https://mamaco.co.id/artikel/14-bagian-ayam-dan-contoh-olahanya",
-    //     file: "test.docx",
-    // },
-    // {
-    //     id: 3,
-    //     link: "https://mamaco.co.id/artikel/14-bagian-ayam-dan-contoh-olahanya",
-    //     file: "",
-    // },
-    // {
-    //     id: 4,
-    //     link: "",
-    //     file: "test.docx",
-    // }
-  ];
-
-  const fileOrlinkJawaban = [
-    {
-      id: 1,
-      link: "https://www.youtube.com/watch?v=9XaS93WMRQQ",
-      file: "test.pdf",
-    },
-    {
-      id: 2,
-      link: "https://mamaco.co.id/artikel/14-bagian-ayam-dan-contoh-olahanya",
-      file: "test.docx",
-    },
-    {
-      id: 3,
-      link: "https://mamaco.co.id/artikel/14-bagian-ayam-dan-contoh-olahanya",
-      file: "",
-    },
-    {
-      id: 4,
-      link: "",
-      file: "test.docx",
-    },
-  ];
+  // Fungsi untuk mengambil data detail tugas dari API
+  function fetchDetailTugas(id, saveToken) {
+    return axios.get(`${apiurl}guru/pengumpulan/tugas/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${saveToken}`,
+        "ngrok-skip-browser-warning": "any",
+      },
+    });
+  }
 
   function generateFileIcons(item) {
     let fileIcon;
     let fileExtension = "";
 
-    if (item.file) {
-      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
+    if (item.soal_file) {
+      fileExtension = item.soal_file.substring(
+        item.soal_file.lastIndexOf(".") + 1
+      );
       switch (fileExtension) {
         case "pdf":
           fileIcon = "mdi:file-pdf-box";
           break;
         case "docx":
           fileIcon = "mdi:file-word-box";
+          break;
+        case "xlsx":
+          fileIcon = "file-icons:microsoft-excel";
           break;
         default:
           fileIcon = "";
@@ -367,8 +145,8 @@ function DetailSelesai() {
               <Icon icon={fileIcon} width={45} />
             </div>
             <div>
-              <h1 className="title-value-file">{item.file}</h1>
-              <p className="file-detailSelesai">
+              <h1 className="title-value-file">{item.nama_tugas}</h1>
+              <p className="file-detailMenunggu">
                 {fileExtension.toUpperCase()} <span>Klik</span>
               </p>
             </div>
@@ -378,131 +156,122 @@ function DetailSelesai() {
     );
   }
 
-  // start funsi generate file or link materi
-  function generateFileLinkElements() {
-    return fileOrlinkMateri.map((item) => {
-      if (item.link && item.file) {
-        let linkElement = null;
-        if (item.link.includes("youtube.com")) {
-          let youtubeLink = item.link.replace("watch?v=", "embed/");
-          linkElement = (
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">Application Letter</h1>
-                <p className="link-detailSelesai">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          );
-        } else if (item.link.includes("youtu.be")) {
-          let youtubeLink = `https://www.youtube.com/embed/${item.link
-            .split("/")
-            .pop()}`;
-          linkElement = (
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">Application Letter</h1>
-                <p className="link-detailSelesai">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          );
-        } else {
-          linkElement = (
-            <a href={item.link} className="btn-openSitus">
-              Buka Situs
-            </a>
-          );
-        }
+  // start funsi generate file link elements
+  function generateFileLinkElements(detailSelesai) {
+    const item = detailSelesai;
 
+    if (item.soal_link && item.soal_file) {
+      let linkElement = [ ];
+      if (item.soal_link.includes("youtube.com")) {
+        let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
+        linkElement = (
+          <a href={youtubeLink} className="value-link" id="value-link">
+            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
+            <div>
+              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+              <p className="link-detailMenunggu">
+                YouTube <span>Klik</span>
+              </p>
+            </div>
+          </a>
+        );
+      } else if (item.soal_link.includes("youtu.be")) {
+        let youtubeLink = `https://www.youtube.com/embed/${item.soal_link
+          .split("/")
+          .pop()}`;
+        linkElement = (
+          <a href={youtubeLink} className="value-link" id="value-link">
+            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
+            <div>
+              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+              <p className="link-detailMenunggu">
+                YouTube <span>Klik</span>
+              </p>
+            </div>
+          </a>
+        );
+      } else {
+        linkElement = (
+          <a href={item.soal_link} className="btn-openSitus">
+            Buka Situs
+          </a>
+        );
+      }
+
+      return (
+        <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+          {linkElement}
+          <a href={`https://www.nugasyuk.my.id/public/${item.soal_file}`} className="value-file" id="value-file">
+            {generateFileIcons(item)}
+          </a>
+        </div>
+      );
+    } else if (item.soal_link) {
+      if (item.soal_link.includes("youtube.com")) {
+        let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            {linkElement}
-            <a href={item.file} className="value-file" id="value-file">
-              {generateFileIcons(item)}
+          <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameborder="0"
+                allowFullScreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
             </a>
           </div>
         );
-      } else if (item.link) {
-        if (item.link.includes("youtube.com")) {
-          let youtubeLink = item.link.replace("watch?v=", "embed/");
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={youtubeLink} className="value-link" id="value-link">
-                <iframe
-                  src={youtubeLink}
-                  frameborder="0"
-                  allowfullscreen
-                ></iframe>
-                <div>
-                  <h1 className="title-fileOrlink">Application Letter</h1>
-                  <p className="link-detailSelesai">
-                    YouTube <span>Klik</span>
-                  </p>
-                </div>
-              </a>
-            </div>
-          );
-        } else if (item.link.includes("youtu.be")) {
-          let youtubeLink = `https://www.youtube.com/embed/${item.link
-            .split("/")
-            .pop()}`;
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={youtubeLink} className="value-link" id="value-link">
-                <iframe
-                  src={youtubeLink}
-                  frameborder="0"
-                  allowfullscreen
-                ></iframe>
-                <div>
-                  <h1 className="title-fileOrlink">Application Letter</h1>
-                  <p className="link-detailSelesai">
-                    YouTube <span>Klik</span>
-                  </p>
-                </div>
-              </a>
-            </div>
-          );
-        } else {
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={item.link} className="btn-openSitus">
-                Buka Situs
-              </a>
-            </div>
-          );
-        }
-      } else if (item.file) {
+      } else if (item.soal_link.includes("youtu.be")) {
+        let youtubeLink = `https://www.youtube.com/embed/${item.soal_link
+          .split("/")
+          .pop()}`;
         return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={item.file} className="value-file" id="value-file">
-              {generateFileIcons(item)}
+          <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameborder="0"
+                allowFullScreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          </div>
+        );
+      } else {
+        return (
+          <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+            <a href={item.soal_link} className="btn-openSitus">
+              Buka Situs
             </a>
           </div>
         );
       }
+    } else if (item.soal_file) {
+      return (
+        <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+          <a href={`https://www.nugasyuk.my.id/public/${item.soal_file}`} className="value-file" id="value-file">
+            {generateFileIcons(item)}
+          </a>
+        </div>
+      );
+    }
 
-      return null;
-    });
+    return null;
   }
-
-  //   end funsi generate file link elements
+  // end funsi generate file link elements
 
   // Panggil fungsi generateFileLinkElements untuk menghasilkan elemen-elemen yang sesuai
-  const fileLinkElements = generateFileLinkElements();
+  const fileLinkElements = generateFileLinkElements(detailSelesai);
 
   return (
     <div>
@@ -573,15 +342,15 @@ function DetailSelesai() {
                   </div>
                   <div className="text-header-card-detailSelesai">
                     <h1 className="title-header-card-detailSelesai">
-                      Tugas Application Letter
+                      {detailSelesai.nama_tugas}
                     </h1>
                     <p className="guru-header-card-detailSelesai">
-                      Budiono, S.Pd
+                      {detailSelesai.nama_guru}
                     </p>
                   </div>
                 </div>
                 <div className="right-header-card-detailSelesai">
-                  <p className="date-header-card-detailSelesai">8 Mar 2023</p>
+                  <p className="date-header-card-detailSelesai">{detailSelesai.date}</p>
                   <div className="icon-options" style={{ cursor: "pointer" }}>
                     <Icon icon="mi:options-vertical" width={40} />
                   </div>
@@ -589,15 +358,10 @@ function DetailSelesai() {
               </div>
 
               <p className="desc-card-detailSelesai">
-                Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa
-                memahami Tugas mengenai pengertian application letter. Dibawah
-                ini saya mencantumkan link youtube pengertian dari application
-                letter, kalian bisa menyimak video tersebut. jika sudah selesai
-                menyimak video, silahkan resume materi apa saja yang di dapat.
-                Terima kasih, sukses selalu...
+                {detailSelesai.soal}
               </p>
 
-              <p className="infoDeadline">Deatline : 1 Mar 2022</p>
+              <p className="infoDeadline">Deatline : {detailSelesai.deadline}</p>
 
               <div>{fileLinkElements}</div>
 

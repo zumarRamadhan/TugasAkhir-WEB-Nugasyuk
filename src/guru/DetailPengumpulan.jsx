@@ -25,6 +25,14 @@ function DetailPengumpulan() {
   const [detailMenunggu, setDetailMenunggu] = useState([]);
   const [detailSelesai, setDetailSelesai] = useState([]);
 
+  const handleDetailMenunggu = (id) => {
+    navigate(`/guru/pagepengumpulan/detail/detailmenunggu/${id}`);
+  };
+
+  const handleDetailSelesai = (id) => {
+    navigate(`/guru/pagepengumpulan/detail/detailselesai/${id}`);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
@@ -313,11 +321,7 @@ function DetailPengumpulan() {
                         key={data.id} // Pastikan menyediakan key yang unik jika data memiliki properti id
                         className="card-DetailPengumpulan-Menunggu"
                         style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          navigate(
-                            "/guru/pagepengumpulan/detail/detailmenunggu"
-                          )
-                        }
+                        onClick={() => handleDetailMenunggu(data.id)}
                       >
                         {/* Rendering data tugas yang menunggu */}
                         <div className="card-DetailPengumpulan-Menunggu-left">
@@ -377,9 +381,7 @@ function DetailPengumpulan() {
                         key={data.id} // Pastikan menyediakan key yang unik jika data memiliki properti id
                         className="card-DetailPengumpulan-Selesai"
                         style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          navigate("/guru/pagepengumpulan/detail/detailselesai")
-                        }
+                        onClick={() => handleDetailSelesai(data.id)}
                       >
                         {/* Rendering data tugas yang selesai */}
                         <div className="card-DetailPengumpulan-Selesai-left">

@@ -1,14 +1,18 @@
 import "../cssAll/guru/DetailMenunggu.css";
 import { Icon } from "@iconify/react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarGuru from "../component/NavbarGuru";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
+import axios from "axios";
+import apiurl from "../api/api";
 
 function DetailMenunggu() {
   const navText = "Pengumpulan";
@@ -30,6 +34,54 @@ function DetailMenunggu() {
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
+
+  // message
+
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
+
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = (id) => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    navigate(`/guru/pagepengumpulan/detail/${id}`);
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end message
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -71,64 +123,90 @@ function DetailMenunggu() {
     );
   }
 
-  const fileOrlinkMateri = [
-    // {
-    //   id: 1,
-    //   link: "https://www.youtube.com/watch?v=MTayv8IqOqQ",
-    //   file: "test.pdf",
-    // },
-    {
-        id: 2,
-        link: "https://mamaco.co.id/artikel/14-bagian-ayam-dan-contoh-olahanya",
-        file: "test.docx",
-    },
-    // {
-    //     id: 3,
-    //     link: "https://mamaco.co.id/artikel/14-bagian-ayam-dan-contoh-olahanya",
-    //     file: "",
-    // },
-    // {
-    //     id: 4,
-    //     link: "",
-    //     file: "test.docx",
-    // }
-  ];
+  const { id } = useParams();
+  const saveToken = sessionStorage.getItem("token");
+  const [detailMenunggu, setDetailMenunggu] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
-  const fileOrlinkJawaban = [
-    {
-      id: 1,
-      link: "https://www.youtube.com/watch?v=9XaS93WMRQQ",
-      file: "test.pdf",
-    },
-    {
-      id: 2,
-      link: "https://mamaco.co.id/artikel/14-bagian-ayam-dan-contoh-olahanya",
-      file: "test.docx",
-    },
-    {
-      id: 3,
-      link: "https://mamaco.co.id/artikel/14-bagian-ayam-dan-contoh-olahanya",
-      file: "",
-    },
-    {
-      id: 4,
-      link: "",
-      file: "test.docx",
-    },
-  ];
+  const handleKonfirmasi = (id) => {
+    showPopupLoading();
+    axios
+      .get(`${apiurl}guru/pengumpulan/konfirmasi/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((response) => {
+        // Penanganan ketika penghapusan berhasil
+        console.log("Data berhasil Dikonfirmasi");
+        // Refresh halaman atau ambil ulang data setelah penghapusan
+        // window.location.reload();
+        // setisShowNotifSucces(true);
+        showSuccess();
+        closePopupLoading();
+      })
+      .catch((error) => {
+        // Penanganan ketika terjadi kesalahan saat menghapus data
+        console.log("Terjadi kesalahan saat mengkonfirmasi :", error);
+        showFailed();
+        closePopupLoading();
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${apiurl}guru/pengumpulan/tugas/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((result) => {
+        console.log("data API", result.data);
+        const responseAPI = result.data;
+
+        setDetailMenunggu(responseAPI.tugas[0]);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  }, []);
+
+  // Fungsi untuk mengambil data detail tugas dari API
+  function fetchDetailTugas(id, saveToken) {
+    return axios.get(`${apiurl}guru/pengumpulan/tugas/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${saveToken}`,
+        "ngrok-skip-browser-warning": "any",
+      },
+    });
+  }
 
   function generateFileIcons(item) {
     let fileIcon;
     let fileExtension = "";
 
-    if (item.file) {
-      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
+    if (item.soal_file) {
+      fileExtension = item.soal_file.substring(
+        item.soal_file.lastIndexOf(".") + 1
+      );
       switch (fileExtension) {
         case "pdf":
           fileIcon = "mdi:file-pdf-box";
           break;
         case "docx":
           fileIcon = "mdi:file-word-box";
+          break;
+        case "xlsx":
+          fileIcon = "file-icons:microsoft-excel";
           break;
         default:
           fileIcon = "";
@@ -144,7 +222,7 @@ function DetailMenunggu() {
               <Icon icon={fileIcon} width={45} />
             </div>
             <div>
-              <h1 className="title-value-file">{item.file}</h1>
+              <h1 className="title-value-file">{item.nama_tugas}</h1>
               <p className="file-detailMenunggu">
                 {fileExtension.toUpperCase()} <span>Klik</span>
               </p>
@@ -155,132 +233,132 @@ function DetailMenunggu() {
     );
   }
 
-  // start funsi generate file or link materi
-  function generateFileLinkElements() {
-    return fileOrlinkMateri.map((item) => {
-      if (item.link && item.file) {
-        let linkElement = null;
-        if (item.link.includes("youtube.com")) {
-          let youtubeLink = item.link.replace("watch?v=", "embed/");
-          linkElement = (
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">Application Letter</h1>
-                <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          );
-        } else if (item.link.includes("youtu.be")) {
-          let youtubeLink = `https://www.youtube.com/embed/${item.link
-            .split("/")
-            .pop()}`;
-          linkElement = (
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">Application Letter</h1>
-                <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          );
-        } else {
-          linkElement = (
-            <a href={item.link} className="btn-openSitus">
-              Buka Situs
-            </a>
-          );
-        }
+  // start funsi generate file link elements
+  function generateFileLinkElements(detailMenunggu) {
+    const item = detailMenunggu;
 
+    if (item.soal_link && item.soal_file) {
+      let linkElement = [];
+      if (item.soal_link.includes("youtube.com")) {
+        let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
+        linkElement = (
+          <a href={youtubeLink} className="value-link" id="value-link">
+            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
+            <div>
+              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+              <p className="link-detailMenunggu">
+                YouTube <span>Klik</span>
+              </p>
+            </div>
+          </a>
+        );
+      } else if (item.soal_link.includes("youtu.be")) {
+        let youtubeLink = `https://www.youtube.com/embed/${item.soal_link
+          .split("/")
+          .pop()}`;
+        linkElement = (
+          <a href={youtubeLink} className="value-link" id="value-link">
+            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
+            <div>
+              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+              <p className="link-detailMenunggu">
+                YouTube <span>Klik</span>
+              </p>
+            </div>
+          </a>
+        );
+      } else {
+        linkElement = (
+          <a href={item.soal_link} className="btn-openSitus">
+            Buka Situs
+          </a>
+        );
+      }
+
+      return (
+        <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+          {linkElement}
+          <a
+            href={`https://www.nugasyuk.my.id/public/${item.soal_file}`}
+            className="value-file"
+            id="value-file"
+          >
+            {generateFileIcons(item)}
+          </a>
+        </div>
+      );
+    } else if (item.soal_link) {
+      if (item.soal_link.includes("youtube.com")) {
+        let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            {linkElement}
-            <a href={item.file} className="value-file" id="value-file">
-              {generateFileIcons(item)}
+          <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameborder="0"
+                allowFullScreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
             </a>
           </div>
         );
-      } else if (item.link) {
-        if (item.link.includes("youtube.com")) {
-          let youtubeLink = item.link.replace("watch?v=", "embed/");
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={youtubeLink} className="value-link" id="value-link">
-                <iframe
-                  src={youtubeLink}
-                  frameborder="0"
-                  allowfullscreen
-                ></iframe>
-                <div>
-                  <h1 className="title-fileOrlink">Application Letter</h1>
-                  <p className="link-detailMenunggu">
-                    YouTube <span>Klik</span>
-                  </p>
-                </div>
-              </a>
-            </div>
-          );
-        } else if (item.link.includes("youtu.be")) {
-          let youtubeLink = `https://www.youtube.com/embed/${item.link
-            .split("/")
-            .pop()}`;
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={youtubeLink} className="value-link" id="value-link">
-                <iframe
-                  src={youtubeLink}
-                  frameborder="0"
-                  allowfullscreen
-                ></iframe>
-                <div>
-                  <h1 className="title-fileOrlink">Application Letter</h1>
-                  <p className="link-detailMenunggu">
-                    YouTube <span>Klik</span>
-                  </p>
-                </div>
-              </a>
-            </div>
-          );
-        } else {
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={item.link} className="btn-openSitus">
-                Buka Situs
-              </a>
-            </div>
-          );
-        }
-      } else if (item.file) {
+      } else if (item.soal_link.includes("youtu.be")) {
+        let youtubeLink = `https://www.youtube.com/embed/${item.soal_link
+          .split("/")
+          .pop()}`;
         return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={item.file} className="value-file" id="value-file">
-              {generateFileIcons(item)}
+          <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameborder="0"
+                allowFullScreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          </div>
+        );
+      } else {
+        return (
+          <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+            <a href={item.soal_link} className="btn-openSitus">
+              Buka Situs
             </a>
           </div>
         );
       }
+    } else if (item.soal_file) {
+      return (
+        <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
+          <a
+            href={`https://www.nugasyuk.my.id/public/${item.soal_file}`}
+            className="value-file"
+            id="value-file"
+          >
+            {generateFileIcons(item)}
+          </a>
+        </div>
+      );
+    }
 
-      return null;
-    });
+    return null;
   }
-
-  //   end funsi generate file link elements
+  // end funsi generate file link elements
 
   // Panggil fungsi generateFileLinkElements untuk menghasilkan elemen-elemen yang sesuai
-  const fileLinkElements = generateFileLinkElements();
+  const fileLinkElements = generateFileLinkElements(detailMenunggu);
 
+  if (detailMenunggu && !isError)
   return (
     <div>
       <aside>
@@ -295,7 +373,7 @@ function DetailMenunggu() {
           <li onClick={() => navigate("/guru/berandaguru")}>
             <Icon icon="iconoir:home-simple" width="20" />
             Beranda
-          </li> 
+          </li>
           <li onClick={() => navigate("/guru/pagekbm")}>
             <Icon icon="ph:chalkboard-teacher" width="20" />
             KBM
@@ -350,31 +428,28 @@ function DetailMenunggu() {
                   </div>
                   <div className="text-header-card-detailMenunggu">
                     <h1 className="title-header-card-detailMenunggu">
-                      Tugas Application Letter
+                      {detailMenunggu.nama_tugas}
                     </h1>
                     <p className="guru-header-card-detailMenunggu">
-                      Budiono, S.Pd
+                      {detailMenunggu.nama_guru}
                     </p>
                   </div>
                 </div>
                 <div className="right-header-card-detailMenunggu">
-                  <p className="date-header-card-detailMenunggu">8 Mar 2023</p>
+                  <p className="date-header-card-detailMenunggu">
+                    {detailMenunggu.date}
+                  </p>
                   <div className="icon-options" style={{ cursor: "pointer" }}>
                     <Icon icon="mi:options-vertical" width={40} />
                   </div>
                 </div>
               </div>
 
-              <p className="desc-card-detailMenunggu">
-                Assalamualaikum wr wb, untuk kelas 11 PPLG 1 kalian bisa
-                memahami Tugas mengenai pengertian application letter. Dibawah
-                ini saya mencantumkan link youtube pengertian dari application
-                letter, kalian bisa menyimak video tersebut. jika sudah selesai
-                menyimak video, silahkan resume materi apa saja yang di dapat.
-                Terima kasih, sukses selalu...
-              </p>
+              <p className="desc-card-detailMenunggu">{detailMenunggu.soal}</p>
 
-              <p className="infoDeadline">Deatline : 1 Mar 2022</p>
+              <p className="infoDeadline">
+                Deatline : {detailMenunggu.deadline}
+              </p>
 
               <div>{fileLinkElements}</div>
 
@@ -387,11 +462,11 @@ function DetailMenunggu() {
                   <div>
                     <h1 className="title-value-file">29_Muhammad_Zum...</h1>
                     <p className="file-detailMenunggu">
-                       DOCX <span>Klik</span>
+                      DOCX <span>Klik</span>
                     </p>
                   </div>
                 </div>
-                <button className="btn-collection-confirmation">
+                <button className="btn-collection-confirmation" onClick={() => handleKonfirmasi(detailMenunggu.pengumpulan_id)}>
                   Konfirmasi
                 </button>
               </div>
@@ -528,6 +603,94 @@ function DetailMenunggu() {
           </button>
         </div>
       </div>
+
+      {/* message */}
+      <div id="popup-success">
+        <div className="detail-success">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeSuccess}
+          />
+          <div className="image-success">
+            <img src={ImgSuccess} alt="Success" className="img-success" />
+          </div>
+          <p className="desc-success">Tugas Berhasil Di Konfirmasi</p>
+          <button className="btn-success" onClick={() => closeSuccess(detailMenunggu.murid_id)}>
+            Kembali
+          </button>
+        </div>
+      </div>
+
+      <div id="popup-Failed">
+        <div className="detail-Failed">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeFailed}
+          />
+          <div className="image-Failed">
+            <img src={ImgFailed} alt="Failed" className="img-Failed" />
+          </div>
+          <p className="desc-Failed">Tugas Gagal Di konfirmasi</p>
+          <button className="btn-Failed" onClick={closeFailed}>
+            Kembali
+          </button>
+        </div>
+      </div>
+
+      {/* end message */}
+
+      {/* card loading */}
+      <div className="popup-loading">
+        <div className="body-loading" id="body-loading">
+          <svg
+            class="pl"
+            viewBox="0 0 200 200"
+            width="200"
+            height="200"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+              </linearGradient>
+              <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+              </linearGradient>
+            </defs>
+            <circle
+              class="pl__ring"
+              cx="100"
+              cy="100"
+              r="82"
+              fill="none"
+              stroke="url(#pl-grad1)"
+              stroke-width="36"
+              stroke-dasharray="0 257 1 257"
+              stroke-dashoffset="0.01"
+              stroke-linecap="round"
+              transform="rotate(-90,100,100)"
+            />
+            <line
+              class="pl__ball"
+              stroke="url(#pl-grad2)"
+              x1="100"
+              y1="18"
+              x2="100.01"
+              y2="182"
+              stroke-width="36"
+              stroke-dasharray="1 165"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+      {/* end loading */}
     </div>
   );
 }

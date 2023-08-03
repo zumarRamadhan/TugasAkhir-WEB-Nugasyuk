@@ -260,9 +260,9 @@ function PagePengumpulan() {
               <div className="skeleton-card-DetailPengumpulan"></div>
               <div className="skeleton-card-DetailPengumpulan"></div>
             </div>
-          ) : renderData.length === 0 ? (
+          ) : dataNotFound ? (
             <div className="card-DetailPengumpulan-Menunggu-noData">
-              <p>Tidak ada tugas menunggu.</p>
+              <p>Tidak Ada Pengumpulan</p>
             </div>
           ) : (
             <div className="content-Pengumpulan-Guru">
