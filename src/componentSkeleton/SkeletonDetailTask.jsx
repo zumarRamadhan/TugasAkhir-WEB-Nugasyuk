@@ -33,12 +33,7 @@ function SkeletonDetailTask(cards) {
       <p className="task-deadline-time">
         <Skeleton width={200}/>
       </p>
-      <div className="submition-task">
-        <Skeleton width={150} style={{marginBottom: '10px'}}/>
-        <Skeleton style={{width: '370px', height: '100px', marginBottom: '10px', borderRadius: '10px'}}/>
-        <Skeleton height={40}/>
-        <Skeleton height={40} style={{marginTop: '10px'}}/>
-      </div>
+        <Skeleton style={{width: '370px', height: '100px', marginBottom: '10px', marginTop: '20px', borderRadius: '10px'}}/>
     </div>
     ));
 }

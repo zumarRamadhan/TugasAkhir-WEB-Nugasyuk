@@ -33,7 +33,7 @@ function DetailTugasOrtu() {
     axios
       .get(`${apiurl}ortu/tugas/${id}`, {
         headers: {
-          "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -47,6 +47,196 @@ function DetailTugasOrtu() {
         setisError(true);
       });
   }
+
+  const [file, setFile] = useState({
+    file: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFile((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    if (!data.file) {
+      errors.file = "File harus diisi";
+    }
+
+    return errors;
+  };
+
+  function generateFileIcons(item) {
+    let fileIcon;
+    let fileExtension = "";
+
+    if (typeof item.file === "string") {
+      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
+      switch (fileExtension) {
+        case "pdf":
+          fileIcon = "mdi:file-pdf-box";
+          break;
+        case "docx":
+          fileIcon = "mdi:file-word-box";
+          break;
+        case "xlsx":
+          fileIcon = "file-icons:microsoft-excel";
+          break;
+        default:
+          fileIcon = "";
+          break;
+      }
+    }
+
+    return (
+      <>
+        {fileExtension && (
+          <div className="file-generate">
+            <div className="value-file-icon">
+              <Icon className="icon-file-generate" icon={fileIcon} width={45} />
+            </div>
+            <div className="file-button-delete">
+              <div className="name-delete">
+                <h1 className="title-value-file">{item.file}</h1>
+              </div>
+              <p className="format-file">{fileExtension.toUpperCase()}</p>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  // start funsi generate file or link materi
+  function generateFileLinkElements() {
+    return dataDetailTugas.map((item) => {
+      if (item.link && item.file) {
+        let linkElement = null;
+        if (item.link.includes("youtube.com")) {
+          let youtubeLink = item.link.replace("watch?v=", "embed/");
+          linkElement = (
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">Application Letter</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          );
+        } else if (item.link.includes("youtu.be")) {
+          let youtubeLink = `https://www.youtube.com/embed/${item.link
+            .split("/")
+            .pop()}`;
+          linkElement = (
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">Application Letter</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          );
+        } else {
+          linkElement = (
+            <a href={item.link} className="btn-openSitus">
+              Buka Situs
+            </a>
+          );
+        }
+
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            {linkElement}
+            <a href={item.file} className="value-file" id="value-file">
+              {generateFileIcons(item)}
+            </a>
+          </div>
+        );
+      } else if (item.link) {
+        if (item.link.includes("youtube.com")) {
+          let youtubeLink = item.link.replace("watch?v=", "embed/");
+          return (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a href={youtubeLink} className="value-link" id="value-link">
+                <iframe
+                  src={youtubeLink}
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+                <div>
+                  <h1 className="title-fileOrlink">Application Letter</h1>
+                  <p className="link-detailMenunggu">
+                    YouTube <span>Klik</span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          );
+        } else if (item.link.includes("youtu.be")) {
+          let youtubeLink = `https://www.youtube.com/embed/${item.link
+            .split("/")
+            .pop()}`;
+          return (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a href={youtubeLink} className="value-link" id="value-link">
+                <iframe
+                  src={youtubeLink}
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+                <div>
+                  <h1 className="title-fileOrlink">Application Letter</h1>
+                  <p className="link-detailMenunggu">
+                    YouTube <span>Klik</span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          );
+        } else {
+          return (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a href={item.link} className="btn-openSitus">
+                Buka Situs
+              </a>
+            </div>
+          );
+        }
+      } else if (item.file) {
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            <a
+              href={`https://www.nugasyuk.my.id/public/${item.file}`}
+              className="value-file"
+              id="value-file"
+            >
+              {generateFileIcons(item)}
+            </a>
+          </div>
+        );
+      }
+
+      return null;
+    });
+  }
+
+  const fileLinkElements = generateFileLinkElements();
 
   // if (isLoading)
   //   return (
@@ -99,9 +289,7 @@ function DetailTugasOrtu() {
           ) : (
             <div>
               {dataDetailTugas.map((detailTugas) => (
-                <NavbarWaliMurid
-                  navigasiOrtu={detailTugas.nama_mapel || <Skeleton />}
-                />
+                <NavbarWaliMurid navigasiOrtu={detailTugas.nama_mapel} />
               ))}
             </div>
           )}
@@ -135,6 +323,7 @@ function DetailTugasOrtu() {
                       <p className="task-deadline-time">
                         Deadline : <span>{detailTugas.deadline}</span>
                       </p>
+                      {fileLinkElements}
                     </div>
                   ))}
               </div>
