@@ -371,6 +371,7 @@ nav .navbar img {
     display: none;
     justify-content: center;
     align-items: center;
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .detail-forget-password {
@@ -490,6 +491,8 @@ nav .navbar img {
     justify-content: center;
     align-items: center;
     animation-fill-mode: forwards;
+    background: rgba(0, 0, 0, 0.25);
+	place-items: center;
 }
 
 .img-logout{
@@ -637,6 +640,7 @@ nav .navbar img {
     justify-content: center;
     align-items: center;
     animation-fill-mode: forwards;
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .img-success {
@@ -705,6 +709,7 @@ nav .navbar img {
     justify-content: center;
     align-items: center;
     animation-fill-mode: forwards;
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .img-Failed {

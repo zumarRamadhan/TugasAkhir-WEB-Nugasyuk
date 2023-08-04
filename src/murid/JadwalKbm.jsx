@@ -40,8 +40,9 @@ function JadwalKBM() {
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
 
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/jadwal/" + id, {
+      .get(`${apiurl}murid/jadwal/${id}`, {
         headers: {
+          "ngrok-skip-browser-warning": "any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },
@@ -72,6 +73,7 @@ function JadwalKBM() {
     axios
       .get(`${apiurl}murid/jadwal`, {
         headers: {
+          "ngrok-skip-browser-warning": "any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },
@@ -173,7 +175,7 @@ function JadwalKBM() {
                           {listJadwal.detail.map((items) => (
                             <div className="imgGuru-Kbm">
                               <img
-                                src={`https://www.nugasyuk.my.id/public/${items.foto_profile}`}
+                                src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${items.foto_profile}`}
                                 alt=""
                                 className="imageGuru-Kbm"
                               />
@@ -229,7 +231,7 @@ function JadwalKBM() {
                   <div className="popup-card-kbm">
                     <div className="test1">
                       <img
-                        src={`https://www.nugasyuk.my.id/public/${jadwalDetail.foto_profile}`}
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${jadwalDetail.foto_profile}`}
                         alt=""
                         className="image-card-kbm"
                       />

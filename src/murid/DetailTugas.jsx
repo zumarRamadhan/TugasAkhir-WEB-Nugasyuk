@@ -157,9 +157,9 @@ function DetailTask() {
   };
 
   const handleDelete = () => {
-    showPopupLoading();
+    console.log('menghapus data');
     axios
-      .delete(`${apiurl}murid/tugas/${selected}`, {
+      .get(`${apiurl}murid/tugas/hapus/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -168,17 +168,12 @@ function DetailTask() {
       })
       .then((response) => {
         // Penanganan ketika penghapusan berhasil
-        console.log("Data berhasil dihapus");
-        closeDeletePopup();
-        showSuccessDelete();
-        closePopupLoading();
+        console.log("Data berhasil dihapus", response.data);
+     
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
         console.log("Terjadi kesalahan saat menghapus data:", error);
-        showFailedDelete();
-        closeDeletePopup();
-        closePopupLoading();
       });
   };
 
@@ -211,6 +206,7 @@ function DetailTask() {
     const formData = new FormData();
     formData.append("file", selectedFile);
 
+    console.log("mengirim tugas");
     axios
       .post(`${apiurl}murid/tugas/${id}`, formData, {
         headers: {
@@ -283,8 +279,8 @@ function DetailTask() {
             </div>
             <div className="file-button-delete">
               <div className="name-delete">
-                <h1 className="title-value-file">{item.file_tugas}</h1>
-                <button className="button-delete" onClick={showDeletePopup}>
+                <h1 className="title-value-file">{item.file}</h1>
+                <button className="button-delete" onClick={handleDelete}>
                   <Icon
                     className="icon-delete-file"
                     icon="basil:cross-solid"
@@ -410,11 +406,7 @@ function DetailTask() {
       } else if (item.file) {
         return (
           <div className="con-value-fileOrlink" key={item.id}>
-            <a
-                
-              className="value-file"
-              id="value-file"
-            >
+            <a className="value-file" id="value-file">
               {generateFileIcons(item)}
             </a>
           </div>
@@ -424,14 +416,12 @@ function DetailTask() {
     });
   }
 
-
-
   // start funsi input file generate file or link materi
   const generateFileInputs = () => {
     return fileList.map((file, index) => {
       let fileIcon = "";
       let fileExtension = "";
-  
+
       if (file.name) {
         fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
         switch (fileExtension) {
@@ -449,23 +439,19 @@ function DetailTask() {
             break;
         }
       }
-  
+
       return (
         <div className="input-file-generate" key={index}>
           {/* Tampilkan ikon file dan tombol hapus */}
           <div className="value-file-icon">
-            <Icon
-              className="icon-file-generate"
-              icon={fileIcon}
-              width={45}
-            />
+            <Icon className="icon-file-generate" icon={fileIcon} width={45} />
           </div>
           <div className="file-button-delete">
             <div className="name-delete">
               <p className="title-value-file">{file.name}</p>
               <button
                 className="button-delete"
-                onClick={() => handleDeleteFile(index)}
+                onClick={handleDelete}
               >
                 <Icon
                   className="icon-delete-file"
@@ -480,7 +466,6 @@ function DetailTask() {
       );
     });
   };
-  
 
   const handleDeleteFile = (index) => {
     const newFileList = fileList.filter((_, i) => i !== index);
@@ -581,7 +566,15 @@ function DetailTask() {
                         <p className="title-submition">Pengumpulan Tugas</p>
                         <div>
                           {generateFileLinkElements()}
-                          {generateFileInputs()}
+                          {fileList.map((file, index) => (
+                            <div key={index}>
+                              <a
+                                href={URL.createObjectURL(file)}
+                              >
+                                {generateFileInputs()}
+                              </a>
+                            </div>
+                          ))}
                         </div>
                         <div>
                           <input

@@ -114,6 +114,11 @@ nav .btn-notification:hover{
     border-radius: 0 18px 18px 0;
     height: 299px;
 }
+
+.gif-head{
+    margin-top: -600px;
+    padding-right: -200px;
+}
 /* end header */
 
 
