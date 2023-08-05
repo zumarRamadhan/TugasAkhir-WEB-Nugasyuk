@@ -198,17 +198,21 @@ function FormMateriKBM() {
   }, [isSubmitting, formData]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    const fileData = type === "file" ? e.target.files[0] : value;
+
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: type === "file" ? fileData : value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const validationErrors = validateForm(formData);
     setErrors(validationErrors);
+
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
       showPopupLoading();
@@ -217,23 +221,22 @@ function FormMateriKBM() {
 
   const validateForm = (data) => {
     let errors = {};
-  
+
     if (!data.judul.trim()) {
       errors.judul = "Judul Harus Diisi";
     }
-  
+
     if (!data.deskripsi.trim()) {
       errors.deskripsi = "Harus Mengisi Deskripsi";
     }
-  
+
     // Validasi link
     if (data.link && !/^https?:\/\//.test(data.link)) {
       errors.link = "Link harus dimulai dengan https:// atau http://";
     }
-  
+
     return errors;
   };
-  
 
   return (
     <div>
@@ -312,15 +315,15 @@ function FormMateriKBM() {
 
               <div className="con-formKbm">
                 <div className="title-formKbm">File Materi</div>
-                  <input
-                    type="file"
-                    name="file"
-                    id="file"
-                    className="input-formKbm"
-                    accept=".pdf , .docx , .xlsx"
-                    value={formData.file}
-                    onChange={handleChange}
-                  />
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  className="input-formKbm"
+                  accept=".pdf , .docx , .xlsx"
+                  // value={formData.file}
+                  onChange={handleChange} // The file data will be updated when the user selects a file
+                />
               </div>
               <div className="con-btn-form">
                 <button
