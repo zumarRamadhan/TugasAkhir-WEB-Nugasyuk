@@ -1,4 +1,4 @@
 // api/apiurl.js
-const apiurl = "https://www.nugasyuk.my.id/api/";
+const apiurl = "https://wondrous-squirrel-blatantly.ngrok-free.app/api/";
 
 export default apiurl;
