@@ -13,6 +13,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import apiurl from "../api/api";
 import axios from "axios";
+import ImgDelete from "../assets/imgDelete.svg";
 
 function DetailTugasKbm() {
   const navText = "KBM 11 PPLG 1";
@@ -23,7 +24,13 @@ function DetailTugasKbm() {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [detailTugas, setDetailTugas] = useState([]);
+  const [kelasId, setKelasId] = useState([]);
   const [titleKelas, setTitleKelas] = useState([]);
+
+  const handleEditClick = (id) => {
+    navigate(`/admin/jadwalkbm/edit/${id}`);
+  };
+
   useEffect(() => {
     axios
       .get(`${apiurl}guru/tugas/${id}`, {
@@ -36,9 +43,9 @@ function DetailTugasKbm() {
       .then((result) => {
         console.log("data API detail tugas", result.data);
         const responseAPI = result.data;
-
         setDetailTugas(responseAPI.tugas[0]);
         setTitleKelas(responseAPI.kelas);
+        setKelasId(responseAPI.kelas_id);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -60,6 +67,49 @@ function DetailTugasKbm() {
     detailProfile.style.transform = "translateX(350px)";
   };
 
+  const showDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    background.style.display = "flex";
+    const popupDelete = document.querySelector(".detail-Delete");
+    popupDelete.style.display = "block";
+    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const handleDelete = (id) => {
+    showPopupLoading();
+    axios
+      .delete(`${apiurl}guru/tugas/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((response) => {
+        // Handling successful deletion
+        console.log("Data berhasil dihapus");
+        // Close the delete popup and detail popup
+        closeDeletePopup();
+        showSuccess();
+        closePopupLoading();
+      })
+      .catch((error) => {
+        // Handling error when deleting data
+        console.log("Terjadi kesalahan saat menghapus data:", error);
+        showFailed();
+        closePopupLoading();
+      });
+  };
+
+  const closeDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const popupDelete = document.querySelector(".detail-Delete");
+    setTimeout(() => (popupDelete.style.display = "none"), 250);
+    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
   const showLogoutPopup = () => {
     const popupLogout = document.querySelector("#popup-logout");
     popupLogout.style.display = "flex";
@@ -71,6 +121,54 @@ function DetailTugasKbm() {
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
+
+  // messege
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
+
+  const showSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = (id) => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    navigate(`/guru/pagekbm/detail/${id}`);
+  };
+
+  const showFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
+
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -329,8 +427,22 @@ function DetailTugasKbm() {
                 <p className="date-header-card-detailTugas">
                   {detailTugas.date}
                 </p>
-                <div className="icon-options" style={{ cursor: "pointer" }}>
-                  <Icon icon="mi:options-vertical" width={40} />
+                <div className="con-btn-card-kbm">
+                  <div
+                    className="btn-edit-card-kbm"
+                    onClick={() => handleEditClick(detailTugas.id)}
+                  >
+                    <Icon
+                      icon="material-symbols:edit-outline-rounded"
+                      width="15"
+                    />
+                  </div>
+                  <div
+                    className="btn-delete-card-kbm"
+                    onClick={showDeletePopup}
+                  >
+                    <Icon icon="ic:round-delete-outline" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -352,6 +464,37 @@ function DetailTugasKbm() {
       </div>
       {/* end body */}
 
+      <div className="popup-Delete" id="popup-Delete">
+        <div className="detail-Delete">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeDeletePopup}
+          />
+          <div className="image-Delete">
+            <img src={ImgDelete} alt="" className="img-Delete" />
+          </div>
+          <p className="desc-Delete">Anda yakin ingin menghapus materi ini?</p>
+          <div className="con-btn-Delete">
+            <button
+              type="button"
+              className="btn-batal"
+              onClick={closeDeletePopup}
+            >
+              Batal
+            </button>
+            <button
+              type="button"
+              className="btn-delete"
+              onClick={() => handleDelete(detailTugas.id)}
+            >
+              Hapus
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="popup-logout" id="popup-logout">
         <div className="detail-logout">
           <Icon
@@ -372,6 +515,46 @@ function DetailTugasKbm() {
               Keluar
             </button>
           </div>
+        </div>
+      </div>
+
+      <div id="popup-success">
+        <div className="detail-success">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={() => closeSuccess(kelasId)}
+          />
+          <div className="image-success">
+            <img
+              src={ImgSuccess}
+              alt="Delete Success"
+              className="img-success"
+            />
+          </div>
+          <p className="desc-success">Data Berhasil Di Hapus!!!</p>
+          <button className="btn-success" onClick={() => closeSuccess(kelasId)}>
+            Kembali
+          </button>
+        </div>
+      </div>
+
+      <div id="popup-Failed">
+        <div className="detail-Failed">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeFailed}
+          />
+          <div className="image-Failed">
+            <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+          </div>
+          <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
+          <button className="btn-Failed" onClick={closeFailed}>
+            Kembali
+          </button>
         </div>
       </div>
 
@@ -480,6 +663,55 @@ function DetailTugasKbm() {
           </button>
         </div>
       </div>
+
+      {/* card loading */}
+      <div className="popup-loading">
+        <div className="body-loading" id="body-loading">
+          <svg
+            class="pl"
+            viewBox="0 0 200 200"
+            width="200"
+            height="200"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+              </linearGradient>
+              <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+              </linearGradient>
+            </defs>
+            <circle
+              class="pl__ring"
+              cx="100"
+              cy="100"
+              r="82"
+              fill="none"
+              stroke="url(#pl-grad1)"
+              stroke-width="36"
+              stroke-dasharray="0 257 1 257"
+              stroke-dashoffset="0.01"
+              stroke-linecap="round"
+              transform="rotate(-90,100,100)"
+            />
+            <line
+              class="pl__ball"
+              stroke="url(#pl-grad2)"
+              x1="100"
+              y1="18"
+              x2="100.01"
+              y2="182"
+              stroke-width="36"
+              stroke-dasharray="1 165"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+      {/* end loading */}
     </div>
   );
 }
