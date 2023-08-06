@@ -138,8 +138,6 @@ nav .navbar img {
     position: fixed;
     width: 350px;
     background: var(--color-primer);
-    /* background: #4B4B4B; */
-    /* background: #4B4B4B; */
     transform: translateX(350px);
     transition: transform 350ms ease-in-out;
     box-shadow: -3px 0px 20px rgba(0, 0, 0, 0.1)
@@ -321,6 +319,14 @@ nav .navbar img {
     font-family: 'Poppins';
 }
 
+.yesterday{
+    font-size: 15px;
+    font-weight: 400;
+    color: #797979;
+    margin-top: 30px;
+    font-family: 'Poppins';
+}
+
 .icon-notif{
     width: 60px;
     height: 60px;
@@ -336,6 +342,10 @@ nav .navbar img {
     font-size: 20px;
     font-weight: 500;
     color: #4B4B4B;
+    white-space: nowrap; 
+    width: 200px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }
 
 .teacher{

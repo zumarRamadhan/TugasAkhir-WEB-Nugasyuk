@@ -103,7 +103,7 @@ function DetailTugasOrtu() {
               <div className="name-delete">
                 <h1 className="title-value-file">{item.file}</h1>
               </div>
-              <p className="format-file">{fileExtension.toUpperCase()}</p>
+              <p className="file-format">{fileExtension.toUpperCase()}</p>
             </div>
           </div>
         )}

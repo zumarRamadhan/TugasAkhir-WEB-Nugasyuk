@@ -33,9 +33,6 @@ function PageMapel() {
   const [dataMapelDetail, setDataMapelDetail] = useState([]);
   const [dataListMateri, setDataListMateri] = useState([]);
   const [dataListTugas, setDataListTugas] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-  const [filterValue, setFilterValue] = useState("all");
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
   const { id } = useParams();
@@ -45,51 +42,6 @@ function PageMapel() {
     listDataMateri();
     listDataTugas();
   }, [id]);
-
-  useEffect(() => {
-    handleSearch();
-  }, [searchQuery, filterValue]);
-
-  const handleSearch = () => {
-    const filteredData = dataListMateri.filter((value) => {
-      // const lowerCaseSearchQuery = searchQuery.toLowerCase();
-      const lowerCaseStatusMapel = value.status
-        ? value.status.toLowerCase()
-        : "";
-
-      return (
-        (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
-        ((value &&
-          value.soal &&
-          value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (value &&
-            value.nama_guru &&
-            value.nama_guru
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase())) ||
-          (value &&
-            value.status &&
-            value.status.toLowerCase().includes(searchQuery.toLowerCase())))
-      );
-    });
-
-    setFilteredData(filteredData);
-  };
-
-  const handleChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleFilterChange = (e) => {
-    // setFilterValue(e.target.value);
-    // jika filter value nya tidak ada maka akan menampilkan data not found
-    setFilterValue(e.target.value);
-  };
-  console.log("filter value", dataListTugas);
-
-  const renderData = filteredData.length > 0 ? filteredData : dataListTugas;
-  const dataNotFound =
-    searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
   function getDetailMapel() {
     setisLoading(true);
@@ -150,6 +102,35 @@ function PageMapel() {
         setisError(true);
       });
   }
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredDataMateri, setFilteredDataMateri] = useState([]);
+  const [filteredDataTugas, setFilteredDataTugas] = useState([]);
+
+  const handleSearchInputChange = (event) => {
+    setSearchTerm(event.target.value);
+    filterData(dataListMateri, dataListTugas, event.target.value);
+  };
+
+  const filterData = (materialData, taskData, keyword) => {
+    const filteredMaterial = materialData.filter((item) =>
+      item.nama_materi.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    const filteredTask = taskData.filter((item) =>
+      item.nama_tugas.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    setFilteredDataMateri(filteredMaterial);
+    setFilteredDataTugas(filteredTask);
+  };
+
+  const renderDataMateri =
+    filteredDataMateri.length > 0 ? filteredDataMateri : dataListMateri;
+  const rendetDataTugas =
+    filteredDataTugas.length > 0 ? filteredDataTugas : dataListTugas;
+  const dataNotFound =
+    searchTerm !== "" && filteredDataTugas.length === 0 && !isLoading;
 
   // if (isLoading)
   //   return (
@@ -279,14 +260,19 @@ function PageMapel() {
               {isLoading ? (
                 <SkeletonFilter />
               ) : (
-                <form className="search-box" onSubmit={handleSearch}>
+                <form className="search-box">
                   <input
                     type="text"
                     placeholder="Cari..."
-                    value={searchQuery}
-                    onChange={handleChange}
+                    value={searchTerm}
+                    onChange={handleSearchInputChange}
                   />
-                  <button type="submit">
+                  <button
+                    type="submit"
+                    onClick={() =>
+                      filterData(dataListMateri, dataListTugas, searchTerm)
+                    }
+                  >
                     <Icon
                       icon="material-symbols:search-rounded"
                       width="20"
@@ -296,52 +282,125 @@ function PageMapel() {
               )}
             </div>
 
+            {isLoading ? (
+              <div className="con-material">
+                <CardSkeletonListTask />
+                <CardSkeletonListTask />
+              </div>
+            ) : (
+              <div
+                className="con-material material-kbm"
+                style={{
+                  display: activeContent === "material-kbm" ? "block" : "none",
+                }}
+              >
+                {" "}
+                {dataNotFound ? (
+                  <div className="dataNotFound">
+                    <p className="text-notfound">
+                      Maaf Materi Yang Kamu Cari Tidak Ada!
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    {renderDataMateri.map((dataMateri) => (
+                      <div
+                        className="card-material"
+                        style={{ cursor: "pointer" }}
+                        key={dataMateri.id}
+                        onClick={() =>
+                          navigate(
+                            "/walimurid/pagemapel/mapelmateri/detailmateri/" +
+                              dataMateri.id
+                          )
+                        }
+                      >
+                        <div className="indiecator-left">
+                          <div
+                            className="icon-indie"
+                            style={{ background: "#D8F0FF" }}
+                          >
+                            <Icon
+                              icon="ri:book-line"
+                              width="30"
+                              style={{ color: "#2A93D5" }}
+                            />
+                          </div>
+                          <div className="desc-indie">
+                            <p className="material-name">
+                              {dataMateri.nama_materi}
+                            </p>
+                            <p className="teacher-name">
+                              {dataMateri.nama_guru}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="indiecator-right">
+                          <p className="time-upload">
+                            {dataMateri.tanggal_dibuat}
+                          </p>
+                          <Icon
+                            icon="ic:round-navigate-next"
+                            width="30"
+                            className="icon-navigate"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* tugas */}
             <div
-              className="con-material material-kbm"
+              className="con-material taskKbm"
               style={{
-                display: activeContent === "material-kbm" ? "block" : "none",
+                display: activeContent === "task-kbm" ? "block" : "none",
               }}
             >
-              {isLoading ? (
-                <div className="con-material">
-                  <CardSkeletonListTask />
-                  <CardSkeletonListTask />
+              {dataNotFound ? (
+                <div className="dataNotFound">
+                  <p className="text-notfound">
+                    Maaf Tugas Yang Kamu Cari Tidak Ada!
+                  </p>
                 </div>
               ) : (
                 <div>
-                  {dataListMateri.map((dataMateri) => (
+                  {rendetDataTugas.map((dataTugas) => (
                     <div
                       className="card-material"
                       style={{ cursor: "pointer" }}
-                      key={dataMateri.id}
+                      key={dataTugas.id}
                       onClick={() =>
-                        navigate(
-                          "/walimurid/pagemapel/mapelmateri/detailmateri/" +
-                            dataMateri.id
-                        )
+                        navigate("/walimurid/detailtugas/" + dataTugas.id)
                       }
                     >
                       <div className="indiecator-left">
                         <div
                           className="icon-indie"
-                          style={{ background: "#D8F0FF" }}
+                          style={{ background: "#FFFA87" }}
                         >
                           <Icon
-                            icon="ri:book-line"
+                            icon="uiw:time-o"
                             width="30"
-                            style={{ color: "#2A93D5" }}
+                            style={{ color: "#CBC41A" }}
                           />
                         </div>
                         <div className="desc-indie">
                           <p className="material-name">
-                            {dataMateri.nama_materi}
+                            {dataTugas.nama_tugas}
                           </p>
-                          <p className="teacher-name">{dataMateri.nama_guru}</p>
+                          <p className="teacher-name">{dataTugas.nama_guru}</p>
                         </div>
                       </div>
                       <div className="indiecator-right">
-                        <p className="time-upload">
-                          {dataMateri.tanggal_dibuat}
+                        <p className="time-upload">{dataTugas.date}</p>
+                        <p
+                          className="deadline-time"
+                          style={{ color: "#2A93D5" }}
+                        >
+                          Deadline : <span>{dataTugas.deadline}</span>
                         </p>
                         <Icon
                           icon="ic:round-navigate-next"
@@ -353,54 +412,6 @@ function PageMapel() {
                   ))}
                 </div>
               )}
-            </div>
-
-            {/* tugas */}
-            <div
-              className="con-material taskKbm"
-              style={{
-                display: activeContent === "task-kbm" ? "block" : "none",
-              }}
-            >
-              {dataListTugas &&
-                dataListTugas.map((dataTugas) => (
-                  <div
-                    className="card-material"
-                    style={{ cursor: "pointer" }}
-                    key={dataTugas.id}
-                    onClick={() =>
-                      navigate("/walimurid/detailtugas/" + dataTugas.id)
-                    }
-                  >
-                    <div className="indiecator-left">
-                      <div
-                        className="icon-indie"
-                        style={{ background: "#FFFA87" }}
-                      >
-                        <Icon
-                          icon="uiw:time-o"
-                          width="30"
-                          style={{ color: "#CBC41A" }}
-                        />
-                      </div>
-                      <div className="desc-indie">
-                        <p className="material-name">{dataTugas.nama_tugas}</p>
-                        <p className="teacher-name">{dataTugas.nama_guru}</p>
-                      </div>
-                    </div>
-                    <div className="indiecator-right">
-                      <p className="time-upload">{dataTugas.date}</p>
-                      <p className="deadline-time" style={{ color: "#2A93D5" }}>
-                        Deadline : <span>{dataTugas.deadline}</span>
-                      </p>
-                      <Icon
-                        icon="ic:round-navigate-next"
-                        width="30"
-                        className="icon-navigate"
-                      />
-                    </div>
-                  </div>
-                ))}
             </div>
           </div>
         </div>

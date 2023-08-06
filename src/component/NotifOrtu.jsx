@@ -7,6 +7,7 @@ import ImgProfil from "../assets/profil-walimurid.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
+import apiurl from "../api/api";
 
 function NotifOrtu() {
 
@@ -27,9 +28,10 @@ function NotifOrtu() {
   useEffect(() => {
     setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/ortu/notifikasi", {
+      .get(`${apiurl}ortu/notifikasi`, {
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -95,7 +97,7 @@ function NotifOrtu() {
           </div>
           )}
   
-          <p className="day">Kemarin</p>
+          <p className="yesterday">Kemarin</p>
           {tugasKemarin.map((item) => 
             <div className="notif">
             <div className="icon-notif">

@@ -3,6 +3,7 @@ import '../App.css';
 import ImgProfil from '../assets/profil-walimurid.svg';
 import { Icon } from '@iconify/react';
 import React, { useState, useEffect } from 'react';
+import apiurl from '../api/api';
 
 
 function NavbarWaliMurid(props){
@@ -26,9 +27,10 @@ function NavbarWaliMurid(props){
   
     useEffect(() => {
       axios
-        .get("https://www.nugasyuk.my.id/api/ortu/profile", {
+        .get(`${apiurl}ortu/profile`, {
           headers: {
             "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "any",
             Authorization: `Bearer ${saveToken}`,
           },
         })
