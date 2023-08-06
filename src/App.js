@@ -127,9 +127,9 @@ function App() {
         <Route path='/guru/pagekbm/detail/:id' element={<DetailKbm/>}/>
 
         <Route path='/guru/pagekbm/detail/detailmateri/:id' element={<DetailMateriKbm/>}/>
-        <Route path='/guru/pagekbm/detail/formmateri' element={<FormMateriKBM/>}/>
+        <Route path='/guru/pagekbm/detail/formmateri/:id' element={<FormMateriKBM/>}/>
         <Route path='/guru/pagekbm/detail/detailtugas/:id' element={<DetailTugasKbm/>}/>
-        <Route path='/guru/pagekbm/detail/formtugas' element={<FormTugasKBM/>}/>
+        <Route path='/guru/pagekbm/detail/formtugas/:id' element={<FormTugasKBM/>}/>
 
         <Route path='/guru/pagekbm/detail/detailtugas/listtugas/:id' element={<CekPengumpulan/>}/>
 

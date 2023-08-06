@@ -25,6 +25,8 @@ function DetailKbm() {
   const [listMateri, setListMateri] = useState([]);
   const [listTugas, setListTugas] = useState([]);
   const [titleKelas, setTitleKelas] = useState([]);
+  const [kelasIdMateri, setKelasIdMateri] = useState([]);
+  const [kelasIdTugas, setKelasIdTugas] = useState([]);
 
   const handleListMateri = (id) => {
     navigate(`/guru/pagekbm/detail/detailmateri/${id}`);
@@ -32,6 +34,22 @@ function DetailKbm() {
 
   const handleListTugas = (id) => {
     navigate(`/guru/pagekbm/detail/detailtugas/${id}`);
+  };
+
+  const handleMateri = (id) => {
+    navigate(`/guru/pagekbm/detail/formmateri/${id}`);
+  };
+
+  const handleTugas = (id) => {
+    navigate(`/guru/pagekbm/detail/formtugas/${id}`);
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   };
 
   //   API menunggu dan selesai
@@ -58,6 +76,7 @@ function DetailKbm() {
 
           setListMateri(responseListMateri.materi);
           setTitleKelas(responseListMateri.kelas);
+          setKelasIdMateri(responseListMateri.kelas_id);
 
           // Pemanggilan API guru/pengumpulan/selesai/${id}
           const responseTugas = await axios.get(
@@ -75,6 +94,7 @@ function DetailKbm() {
           const responseListTugas = responseTugas.data;
 
           setListTugas(responseListTugas.tugas);
+          setKelasIdTugas(responseListTugas.kelas_id);
 
           setIsLoading(false);
         } catch (error) {
@@ -214,7 +234,7 @@ function DetailKbm() {
               style={{
                 display: activeContent === "detailMateriKbm" ? "flex" : "none",
               }}
-              onClick={() => navigate("/guru/pagekbm/detail/formmateri")}
+              onClick={() => handleMateri(kelasIdMateri)}
             >
               <Icon icon="ic:round-plus" width="20"></Icon>
               <p>Tambah Data</p>
@@ -225,7 +245,7 @@ function DetailKbm() {
               style={{
                 display: activeContent === "detailTugasKbm" ? "flex" : "none",
               }}
-              onClick={() => navigate("/guru/pagekbm/detail/formtugas")}
+              onClick={() => handleTugas(kelasIdTugas)}
             >
               <Icon icon="ic:round-plus" width="20"></Icon>
               <p>Tambah Data</p>
@@ -258,7 +278,7 @@ function DetailKbm() {
                     </div>
                   </div>
                   <div className="card-DetailKbm-Materi-right">
-                    <div className="dateDetailDesc">{data.tanggal_dibuat}</div>
+                    <div className="dateDetailDesc">{formatDate(data.tanggal_dibuat)}</div>
                     <Icon
                       icon="ic:round-navigate-next"
                       width={30}
@@ -294,9 +314,9 @@ function DetailKbm() {
                     </div>
                   </div>
                   <div className="card-DetailKbm-Tugas-right">
-                    <div className="dateDetailDesc">{data.date}</div>
+                    <div className="dateDetailDesc">{formatDate(data.date)}</div>
                     <div className="deadline-timeTugas">
-                      Deadline : {data.deadline}
+                      Deadline : {formatDate(data.deadline)}
                     </div>
                     <Icon
                       icon="ic:round-navigate-next"

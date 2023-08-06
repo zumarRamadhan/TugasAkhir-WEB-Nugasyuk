@@ -1,6 +1,6 @@
 import "../cssAll/guru/FormMateriKBM.css";
 import { Icon } from "@iconify/react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarGuru from "../component/NavbarGuru";
 import ImgLogout from "../assets/68582-log-out.gif";
@@ -14,9 +14,15 @@ import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 import apiurl from "../api/api";
 
+function useIdFromParams() {
+  const { id } = useParams();
+  return id;
+}
+
 function FormMateriKBM() {
   const navText = "Tambah Materi";
   const navigate = useNavigate();
+  const id = useIdFromParams();
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -83,7 +89,7 @@ function FormMateriKBM() {
     const popupLogout = document.querySelector("#popup-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    navigate("/guru/pagekbm/detail/1");
+    navigate(`/guru/pagekbm/detail/${id}`);
   };
 
   const showFailedAdd = () => {
@@ -164,7 +170,7 @@ function FormMateriKBM() {
       form.append("link", formData.link);
 
       axios
-        .post(`${apiurl}guru/materi/1`, form, {
+        .post(`${apiurl}guru/materi/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
