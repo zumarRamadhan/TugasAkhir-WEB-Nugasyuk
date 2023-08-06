@@ -29,6 +29,7 @@ function DetailTask() {
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
     // navigate(`/murid/detailtugas/{$id}`);
+    window.location.reload();
   };
 
   const showFailedAdd = () => {
@@ -169,6 +170,7 @@ function DetailTask() {
       .then((response) => {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus", response.data);
+        window.location.reload();
      
       })
       .catch((error) => {
@@ -719,6 +721,13 @@ function DetailTask() {
             </button>
           </div>
         </div>
+
+        <div className="popup-loading" id="popup-loadingDetail">
+        <div className="body-loadingDetail" id="body-loadingDetail">
+          <h2 class="animate-loadingDetail">Loading</h2>
+          <p>Data Sedang Di Proses...</p>
+        </div>
+      </div>
 
         <ProfileSiswa />
 

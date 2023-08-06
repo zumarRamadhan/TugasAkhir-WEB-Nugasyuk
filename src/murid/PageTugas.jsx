@@ -55,7 +55,6 @@ function PageTugas() {
             value.status.toLowerCase().includes(searchQuery.toLowerCase())))
       );
     });
-
     setFilteredData(filteredData);
   };
 

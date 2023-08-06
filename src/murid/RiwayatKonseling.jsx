@@ -167,25 +167,6 @@ function RiwayatKonseling() {
                     <img src={ProfilBk} alt="" className="img-teacher-bk" />
                     <p className="name-teacher-bk">Sumijah, S.Pd</p>
                   </div>
-                  <div className="icon-option-promise-counseling">
-                    <Icon icon="mi:options-vertical" width="30" />
-                    <div
-                      id="popup-menu-guruAdmin"
-                      //   className="popup-menu-guruAdmin"
-                      className={`popup-menu-guruAdmin ${
-                        selected === active ? "active" : ""
-                      }`}
-                    >
-                      <ul>
-                        <li>
-                          <a onClick={() => handleEditClick()}>Edit</a>
-                        </li>
-                        <li>
-                          <a onClick={showDeletePopup}>Hapus</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
                 </div>
                 <p className="topics-counseling">
                   Topik : <span>Kuliah setelah SMK</span>

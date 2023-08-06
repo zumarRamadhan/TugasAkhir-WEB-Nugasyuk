@@ -213,7 +213,7 @@ function JadwalKBM() {
                 onClick={closeDetailKbm}
               />
               {isPopupLoading ? (
-                <h2 className="day-schedule">Loading...</h2>
+                <Skeleton style={{marginLeft: "175px", height: "25px", width: "100px"}}/>
               ) : (
                 <h2 className="day-schedule">{detailJadwal.hari}</h2>
               )}
