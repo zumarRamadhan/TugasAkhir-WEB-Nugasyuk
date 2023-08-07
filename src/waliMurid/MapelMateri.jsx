@@ -211,14 +211,14 @@ function PageMapel() {
                           </p>
                         </div>
                         <img
-                          src={`https://www.nugasyuk.my.id/public/${detailMapel.file_vector}`}
+                          src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailMapel.file_vector}`}
                           alt=""
                           className="img-assets-subject"
                         />
                       </div>
                       <div className="content-subject-2">
                         <img
-                          src={`https://www.nugasyuk.my.id/public/${detailMapel.foto_profile}`}
+                          src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailMapel.foto_profile}`}
                           alt=""
                           className="img-subject-2"
                         />
