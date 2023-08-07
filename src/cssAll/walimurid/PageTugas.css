@@ -145,6 +145,10 @@ option[selected] {
   font-weight: 500;
   font-size: 20px;
   /* line-height: 22px; */
+  white-space: nowrap; 
+  width: 460px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
   color: #4b4b4b;
 }
 
