@@ -164,7 +164,7 @@ function PageMapel() {
                           {listJadwal.detail.map((items) => (
                             <div className="imgGuru-Kbm">
                               <img
-                                src={`https://www.nugasyuk.my.id/public/${items.foto_profile}`}
+                                src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${items.foto_profile}`}
                                 alt=""
                                 className="imageGuru-Kbm"
                               />
@@ -219,7 +219,7 @@ function PageMapel() {
                   <div className="popup-card-kbm">
                     <div className="test1">
                       <img
-                        src={`https://www.nugasyuk.my.id/public/${jadwalDetail.foto_profile}`}
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${jadwalDetail.foto_profile}`}
                         alt=""
                         className="image-card-kbm"
                       />
