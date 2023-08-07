@@ -141,7 +141,6 @@ function EditFormAddMurid() {
   const { id } = useParams();
   const saveToken = sessionStorage.getItem("token");
 
-  const [muridData, setMuridData] = useState([]);
   const [formData, setFormData] = useState({
     // Inisialisasi nilai awal untuk setiap field formulir
     // file: "",
@@ -175,7 +174,7 @@ function EditFormAddMurid() {
         },
       })
       .then((response) => {
-        setMuridData(response.data.data);
+        // setMuridData(response.data.data);
         setFormData({
           // file: response.data.data.foto_profile,
           namaMurid: response.data.data.nama_siswa,
