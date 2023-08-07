@@ -4,93 +4,86 @@ import { Icon } from "@iconify/react";
 import { useState, useEffect } from "react";
 import NavbarMurid from "../component/NavbarMurid";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
-import ImgProfil from "../assets/profil-murid.svg";
-import ImgLogout from "../assets/68582-log-out.gif";
-import passIcon from "../assets/pass-icon.svg";
-import mataIcon from "../assets/icon-mata.svg";
+import ProfileSiswa from "../component/ProfileSiswa";
+import NotifSiswa from "../component/NotifSiswa";
+import ImgSuccess from "../assets/88860-success-animation.gif";
+import ImgFailed from "../assets/94303-failed.gif";
+import ImgDelete from "../assets/15120-delete.gif";
 import axios from "axios";
+import apiurl from "../api/api";
+import SkeletonDetailTask from "../componentSkeleton/SkeletonDetailTask";
+import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
 
 function DetailTask() {
   const navigate = useNavigate();
 
-  const closeDetail = () => {
-    const detailProfile = document.querySelector(".detail-profile");
-    detailProfile.style.transform = "translateX(350px)";
-  };
-
-  const closeDetailNotif = () => {
-    const detailProfile = document.querySelector(".detail-notif");
-    detailProfile.style.transform = "translateX(350px)";
-  };
-
-  const showLogoutPopup = () => {
-    const popupLogout = document.querySelector("#popup-logout");
+  // messege
+  const showSuccessAdd = () => {
+    const popupLogout = document.querySelector("#popup-success");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
-  const closeLogoutPopup = () => {
-    const popupLogout = document.querySelector("#popup-logout");
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    // navigate(`/murid/detailtugas/{$id}`);
+    window.location.reload();
+  };
+
+  const showFailedAdd = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
-    popupForget.style.animation = "slide-down 0.3s ease-in-out";
-  };
-
-  const closeForgetPopupAndClearInput = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    setTimeout(() => (popupForget.style.display = "none"), 250);
-    popupForget.style.animation = "slide-up 0.3s ease-in-out";
-    const clearpassword = document.querySelector(
-      "#password",
-      "#newPassword",
-      "#confirmPassword"
-    );
-    clearpassword.value = "";
-    const clearpasswordNew = document.querySelector("#newPassword");
-    clearpasswordNew.value = "";
-    const clearpasswordConfirm = document.querySelector("#confirmPassword");
-    clearpasswordConfirm.value = "";
-  };
-
-  const [passwordType, setPasswordType] = useState("password");
-  const [passwordTypeNew, setPasswordTypeNew] = useState("password");
-  const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
-
-  function togglePasswordVisibility() {
-    setPasswordType(passwordType === "password" ? "text" : "password");
-  }
-
-  function togglePasswordVisibilityNew() {
-    setPasswordTypeNew(passwordTypeNew === "password" ? "text" : "password");
-  }
-
-  function togglePasswordVisibilityConfirm() {
-    setPasswordTypeConfirm(
-      passwordTypeConfirm === "password" ? "text" : "password"
-    );
-  }
+  // end messege
 
   const saveToken = sessionStorage.getItem("token");
 
+  const [fileList, setFileList] = useState([]);
   const [dataDetailTugas, setDataDetailTugas] = useState([]);
-
+  const [status, setStatus] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [isError, setisError] = useState(false);
   const { id } = useParams();
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileInputChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+    const newFileList = [...fileList, e.target.files[0]];
+    setFileList(newFileList);
+  };
+
+  const handleButtonClick = () => {
+    document.getElementById("file-input").click();
+  };
+
   useEffect(() => {
     getDetail();
+    // submitTask();
   }, [id]);
 
+  const [fileTask, setFileTask] = useState({
+    file: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   function getDetail() {
+    setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/matapelajaran/tugas/" + id, {
+      .get(`${apiurl}murid/tugas/${id}`, {
         headers: {
+          "ngrok-skip-browser-warning": "any",
           Authorization: `Bearer ${saveToken}`,
         },
       })
@@ -98,19 +91,402 @@ function DetailTask() {
         setDataDetailTugas(response.data.data);
         setisLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data", error);
+        setisLoading(false);
+        setisError(true);
+      });
   }
 
-  if (isLoading)
+  const [selected, setSelected] = useState(null);
+
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showPopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    background.style.display = "flex";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    PopupLoadingDetail.style.display = "grid";
+    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
+    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
+
+  const showSuccessDelete = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    background.style.display = "flex";
+    const popupDelete = document.querySelector(".detail-Delete");
+    popupDelete.style.display = "block";
+    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
+    showPopupLoadingDetail();
+  };
+
+  const showFailedDelete = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const handleDelete = () => {
+    console.log('menghapus data');
+    axios
+      .get(`${apiurl}murid/tugas/hapus/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((response) => {
+        // Penanganan ketika penghapusan berhasil
+        console.log("Data berhasil dihapus", response.data);
+        window.location.reload();
+     
+      })
+      .catch((error) => {
+        // Penanganan ketika terjadi kesalahan saat menghapus data
+        console.log("Terjadi kesalahan saat menghapus data:", error);
+      });
+  };
+
+  const closeDeletePopup = () => {
+    const background = document.querySelector("#popup-Delete");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const popupDelete = document.querySelector(".detail-Delete");
+    setTimeout(() => (popupDelete.style.display = "none"), 250);
+    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const [file, setFile] = useState({
+    file: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
+  const [isErrorSubmit, setIsErrorSubmit] = useState(false);
+
+  const handleFileInput = (event) => {
+    const file = event.target.files[0];
+  };
+
+  const submitTask = () => {
+    setIsLoadingSubmit(true);
+    setIsErrorSubmit(false);
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    console.log("mengirim tugas");
+    axios
+      .post(`${apiurl}murid/tugas/${id}`, formData, {
+        headers: {
+          "ngrok-skip-browser-warning": "any",
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        console.log("Data berhasil dikirim", response.data);
+        showSuccessAdd();
+        // Tambahkan logika atau pesan yang ingin ditampilkan jika pengiriman berhasil
+        setIsLoadingSubmit(false);
+      })
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengirim data", error);
+        // Tambahkan logika atau pesan yang ingin ditampilkan jika terjadi kesalahan
+        setIsErrorSubmit(true);
+        setIsLoadingSubmit(false);
+        showFailedAdd();
+      });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFile((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    if (!data.file) {
+      errors.file = "File harus diisi";
+    }
+
+    return errors;
+  };
+
+  function generateFileIcons(item) {
+    let fileIcon;
+    let fileExtension = "";
+
+    if (item.file) {
+      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
+      switch (fileExtension) {
+        case "pdf":
+          fileIcon = "mdi:file-pdf-box";
+          break;
+        case "docx":
+          fileIcon = "mdi:file-word-box";
+          break;
+        case "xlsx":
+          fileIcon = "file-icons:microsoft-excel";
+          break;
+        default:
+          fileIcon = "";
+          break;
+      }
+    }
+
     return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
+      <>
+        {fileExtension && (
+          <div className="file-generate">
+            <div className="value-file-icon">
+              <Icon className="icon-file-generate" icon={fileIcon} width={45} />
+            </div>
+            <div className="file-button-delete">
+              <div className="name-delete">
+                <h1 className="title-value-file">{item.file}</h1>
+                <button className="button-delete" onClick={handleDelete}>
+                  <Icon
+                    className="icon-delete-file"
+                    icon="basil:cross-solid"
+                    width={30}
+                  />
+                </button>
+              </div>
+              <p className="format-file">{fileExtension.toUpperCase()}</p>
+            </div>
+          </div>
+        )}
+      </>
     );
-  else if (dataDetailTugas && !isError)
+  }
+
+  // start funsi generate file or link materi
+  function generateFileLinkElements() {
+    return dataDetailTugas.map((item) => {
+      if (item.link && item.file) {
+        let linkElement = null;
+        if (item.link.includes("youtube.com")) {
+          let youtubeLink = item.link.replace("watch?v=", "embed/");
+          linkElement = (
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">Application Letter</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          );
+        } else if (item.link.includes("youtu.be")) {
+          let youtubeLink = `https://www.youtube.com/embed/${item.link
+            .split("/")
+            .pop()}`;
+          linkElement = (
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">Application Letter</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          );
+        } else {
+          linkElement = (
+            <a href={item.link} className="btn-openSitus">
+              Buka Situs
+            </a>
+          );
+        }
+
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            {linkElement}
+            <a href={item.file} className="value-file" id="value-file">
+              {generateFileIcons(item)}
+            </a>
+          </div>
+        );
+      } else if (item.link) {
+        if (item.link.includes("youtube.com")) {
+          let youtubeLink = item.link.replace("watch?v=", "embed/");
+          return (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a href={youtubeLink} className="value-link" id="value-link">
+                <iframe
+                  src={youtubeLink}
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+                <div>
+                  <h1 className="title-fileOrlink">Application Letter</h1>
+                  <p className="link-detailMenunggu">
+                    YouTube <span>Klik</span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          );
+        } else if (item.link.includes("youtu.be")) {
+          let youtubeLink = `https://www.youtube.com/embed/${item.link
+            .split("/")
+            .pop()}`;
+          return (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a href={youtubeLink} className="value-link" id="value-link">
+                <iframe
+                  src={youtubeLink}
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+                <div>
+                  <h1 className="title-fileOrlink">Application Letter</h1>
+                  <p className="link-detailMenunggu">
+                    YouTube <span>Klik</span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          );
+        } else {
+          return (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a href={item.link} className="btn-openSitus">
+                Buka Situs
+              </a>
+            </div>
+          );
+        }
+      } else if (item.file) {
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            <a className="value-file" id="value-file">
+              {generateFileIcons(item)}
+            </a>
+          </div>
+        );
+      }
+      return null;
+    });
+  }
+
+  // start funsi input file generate file or link materi
+  const generateFileInputs = () => {
+    return fileList.map((file, index) => {
+      let fileIcon = "";
+      let fileExtension = "";
+
+      if (file.name) {
+        fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
+        switch (fileExtension) {
+          case "pdf":
+            fileIcon = "mdi:file-pdf-box";
+            break;
+          case "docx":
+            fileIcon = "mdi:file-word-box";
+            break;
+          case "xlsx":
+            fileIcon = "file-icons:microsoft-excel";
+            break;
+          default:
+            fileIcon = "";
+            break;
+        }
+      }
+
+      return (
+        <div className="input-file-generate" key={index}>
+          {/* Tampilkan ikon file dan tombol hapus */}
+          <div className="value-file-icon">
+            <Icon className="icon-file-generate" icon={fileIcon} width={45} />
+          </div>
+          <div className="file-button-delete">
+            <div className="name-delete">
+              <p className="title-value-file">{file.name}</p>
+              <button
+                className="button-delete"
+                onClick={handleDelete}
+              >
+                <Icon
+                  className="icon-delete-file"
+                  icon="basil:cross-solid"
+                  width={30}
+                />
+              </button>
+            </div>
+            <p className="format-file">{fileExtension.toUpperCase()}</p>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  const handleDeleteFile = (index) => {
+    const newFileList = fileList.filter((_, i) => i !== index);
+    setFileList(newFileList);
+  };
+
+  const fileLinkElements = generateFileLinkElements();
+  const fileGenerate = generateFileInputs();
+
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  if (dataDetailTugas && !isError)
     return (
       <div>
         <aside>
@@ -148,216 +524,214 @@ function DetailTask() {
           </ul>
         </aside>
         <div className="container-content">
-          {dataDetailTugas.map((detailTugas) => (
-            <NavbarMurid textNavigasi={detailTugas.nama_mapel} />
-          ))}
-          <div className="main">
-            {dataDetailTugas &&
-              dataDetailTugas.map((detailTugas) => (
-                <div className="con-content-detail-task">
-                  <div className="content-detail-task">
-                    <div className="content-detail-task-left">
-                      <div className="icon-detail-task">
-                        <Icon icon="uiw:time-o" width="30" />
-                      </div>
-                      <div className="desc-material">
-                        <p className="name-task ">{detailTugas.nama_tugas}</p>
-                        <p className="teacher">{detailTugas.nama_guru}</p>
-                      </div>
-                    </div>
-                    <div className="content-detail-task-right">
-                      <p className="date-upload">{detailTugas.date}</p>
-                    </div>
-                  </div>
-                  <p className="desc-content-detail-task">{detailTugas.soal}</p>
-                  <p className="task-deadline-time">
-                    Deadline : <span>{detailTugas.deadline}</span>
-                  </p>
-                  <div className="submition-task">
-                    <p className="title-submition">Pengumpulan Tugas</p>
-                    <div className="file-task"></div>
-                    <button className="btn-add-task">
-                      <Icon icon="ic:round-plus" width="20"></Icon>
-                      <p>Tambah</p>
-                    </button>
-                    <button className="btn-submit-task">
-                      <p>Kirim</p>
-                    </button>
-                  </div>
-                </div>
+          {isLoading ? (
+            <SkeletonNavbar />
+          ) : (
+            <div>
+              {dataDetailTugas.map((detailTugas) => (
+                <NavbarMurid textNavigasi={detailTugas.nama_mapel} />
               ))}
+            </div>
+          )}
+
+          <div className="main">
+            {isLoading ? (
+              <SkeletonDetailTask />
+            ) : (
+              <div>
+                {dataDetailTugas &&
+                  dataDetailTugas.map((detailTugas) => (
+                    <div className="con-content-detail-task">
+                      <div className="content-detail-task">
+                        <div className="content-detail-task-left">
+                          <div className="icon-detail-task">
+                            <Icon icon="uiw:time-o" width="30" />
+                          </div>
+                          <div className="desc-material">
+                            <p className="name-task ">
+                              {detailTugas.nama_tugas}
+                            </p>
+                            <p className="teacher">{detailTugas.nama_guru}</p>
+                          </div>
+                        </div>
+                        <div className="content-detail-task-right">
+                          <p className="date-upload">{detailTugas.date}</p>
+                        </div>
+                      </div>
+                      <p className="desc-content-detail-task">
+                        {detailTugas.soal}
+                      </p>
+                      <p className="task-deadline-time">
+                        Deadline : <span>{detailTugas.deadline}</span>
+                      </p>
+                      <div className="submition-task">
+                        <p className="title-submition">Pengumpulan Tugas</p>
+                        <div>
+                          {generateFileLinkElements()}
+                          {fileList.map((file, index) => (
+                            <div key={index}>
+                              <a
+                                href={URL.createObjectURL(file)}
+                              >
+                                {generateFileInputs()}
+                              </a>
+                            </div>
+                          ))}
+                        </div>
+                        <div>
+                          <input
+                            type="file"
+                            id="file-input"
+                            hidden
+                            onChange={handleFileInputChange}
+                          />
+                          <button
+                            className="btn-add-task"
+                            onClick={handleButtonClick}
+                          >
+                            <Icon icon="ic:round-plus" width="20" />
+                            <p>Tambah</p>
+                          </button>
+                        </div>
+                        <button
+                          className="btn-submit-task"
+                          type="submit"
+                          onClick={submitTask}
+                        >
+                          <p>Kirim</p>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="popup-forget" id="popup-forget">
-          <form action="" className="detail-forget-password">
-            <div className="navbar-detail-forget">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer" }}
-                onClick={closeForgetPopupAndClearInput}
-              />
-              <h2>Ganti Password</h2>
+        <div className="popup-Delete" id="popup-Delete">
+          <div className="detail-Delete">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeDeletePopup}
+            />
+            <div className="image-Delete">
+              <img src={ImgDelete} alt="" className="img-Delete" />
             </div>
-            <p className="judul-form">Sandi lama</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordType}
-                id="password"
-                placeholder="*********"
-                className="input-password"
-              />
+            <p className="desc-Delete">Anda yakin ingin menghapus file ini?</p>
+            {/* memanggil nama sesuai data yang di pilih */}
+            <div className="con-btn-Delete">
               <button
                 type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibility}
+                className="btn-batal"
+                onClick={closeDeletePopup}
               >
-                <img src={mataIcon} alt="" />
+                Batal
               </button>
-            </div>
-            <p className="judul-form">Sandi baru</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordTypeNew}
-                id="newPassword"
-                placeholder="*********"
-                className="input-password"
-              />
               <button
                 type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibilityNew}
+                className="btn-delete"
+                onClick={handleDelete}
               >
-                <img src={mataIcon} alt="" />
+                Hapus
               </button>
             </div>
-            <p className="judul-form">Konfirmasi sandi baru</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordTypeConfirm}
-                id="confirmPassword"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibilityConfirm}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-
-            <button type="submit" className="btn-simpan">
-              Simpan sandi baru
-            </button>
-          </form>
+          </div>
         </div>
 
-        <div className="detail-profile">
-          <div className="content-detail">
-            <div className="navbar-detail">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer", color: "#4b4b4b" }}
-                onClick={closeDetail}
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
               />
-              <h2>Profil</h2>
             </div>
-            <div className="detail-image-profile">
-              <img src={ImgProfil} alt="" className="detail-img-profile" />
-            </div>
-            <p className="judul-detail">Email</p>
-            <p className="value-detail">zumarramadhan@smkrus.sch.id</p>
-            <p className="judul-detail">Nama Pengguna</p>
-            <p className="value-detail">Zumar</p>
-            <p className="judul-detail">Nama</p>
-            <p className="value-detail">Muhammad Zumar Ramadhan</p>
-            <p className="judul-detail">Jurusan</p>
-            <p className="value-detail">PPLG</p>
-            <p className="judul-detail">Kelas</p>
-            <p className="value-detail">11 PPLG 1</p>
-            <p className="judul-detail">NIS</p>
-            <p className="value-detail">04449</p>
-          </div>
-          <div className="con-btn-detail-profile">
-            <button
-              className="forget-password"
-              id="btn-forget-pass"
-              onClick={showForgetPopup}
-            >
-              <Icon icon="material-symbols:key-outline-rounded" width="30" />
-              <p>Ganti Password</p>
-            </button>
-            <button
-              className="logout"
-              id="btn-logout"
-              onClick={showLogoutPopup}
-            >
-              <Icon icon="material-symbols:logout-rounded" width="30" />
-              <p>Logout</p>
+            <p className="desc-success">Tugas Berhasil Dikirim</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
             </button>
           </div>
         </div>
 
-        <div className="detail-notif">
-          <div className="content-detail-notif">
-            <div className="navbar-detail-notif">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer", color: "#4b4b4b" }}
-                onClick={closeDetailNotif}
-              />
-              <h2>Notifikasi</h2>
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
-            <p className="day">Hari Ini</p>
-            <div className="notif">
-              <div className="icon-notif">
-                <Icon icon="tabler:clipboard-text" width="30" />
-              </div>
-              <div className="content-notif">
-                <div className="name-notif">
-                  <p>Application Letter</p>
-                </div>
-                <div className="teacher">
-                  <p>Budiono, S.Pd</p>
-                </div>
-              </div>
-            </div>
-            <div className="notif">
-              <div className="icon-notif">
-                <Icon icon="tabler:clipboard-text" width="30" />
-              </div>
-              <div className="content-notif">
-                <div className="name-notif">
-                  <p>Sejarah Gojek</p>
-                </div>
-                <div className="teacher">
-                  <p>Rini, S.Pd</p>
-                </div>
-              </div>
-            </div>
-            <div className="notif">
-              <div className="icon-notif">
-                <Icon icon="ri:book-line" width="30" />
-              </div>
-              <div className="content-notif">
-                <div className="name-notif">
-                  <p>Sejarah Gojek</p>
-                </div>
-                <div className="teacher">
-                  <p>Rini, S.Pd</p>
-                </div>
-              </div>
-            </div>
+            <p className="desc-Failed">Tugas Gagal Dikirim!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
           </div>
         </div>
+
+        {/* messege delete */}
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div className="popup-loading" id="popup-loadingDetail">
+        <div className="body-loadingDetail" id="body-loadingDetail">
+          <h2 class="animate-loadingDetail">Loading</h2>
+          <p>Data Sedang Di Proses...</p>
+        </div>
+      </div>
+
+        <ProfileSiswa />
+
+        <NotifSiswa />
       </div>
     );
 }

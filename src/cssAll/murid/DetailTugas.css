@@ -1,133 +1,327 @@
-.con-content-detail-task{
-    border: 1px solid #c4c4c4;
-    border-radius: 20px;
-    padding: 30px;
-    font-family: 'Poppins';
+.con-content-detail-task {
+  border: 1px solid #c4c4c4;
+  border-radius: 20px;
+  padding: 30px;
+  font-family: "Poppins";
 }
 
-.content-detail-task{
-    /* border-radius: 20px; */
-    /* height: 350px; */
-    display: flex;
-    /* padding: 30px; */
-    justify-content: space-between;
+.content-detail-task {
+  /* border-radius: 20px; */
+  /* height: 350px; */
+  display: flex;
+  /* padding: 30px; */
+  justify-content: space-between;
 }
 
 .content-detail-task-left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .icon-detail-task {
-    background: #DDDDDD;
-    color: #797979;
-    /* padding: 20px; */
-    width: 70px;
-    height: 70px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    border-radius: 10px;
+  background: #dddddd;
+  color: #797979;
+  /* padding: 20px; */
+  width: 70px;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 10px;
 }
 
-.date-upload{
-    font-size: 15px;
-    color: #797979;
-    font-weight: 500;
+.date-upload {
+  font-size: 15px;
+  color: #797979;
+  font-weight: 500;
 }
 
-.name-task{
-    font-size: 20px;
-    color: var(--color-aksen);
-    font-weight: 500;
+.name-task {
+  font-size: 20px;
+  color: var(--color-aksen);
+  font-weight: 500;
 }
 
-.content-detail-task-right{
-    display: flex;
-    gap: 50px;
+.content-detail-task-right {
+  display: flex;
+  gap: 50px;
 }
 
-.desc-content-detail-task{
-    margin-top: 30px;
-    color: #4b4b4b;
+.desc-content-detail-task {
+  margin-top: 30px;
+  color: #4b4b4b;
 }
 
 .task-deadline-time{
     color: var(--color-aksen);
 }
 
-.submition-task{
-    border: 1px solid #c4c4c4;
-    border-radius: 10px;
-    margin-top: 40px;
-    padding: 15px;
-    width: max-content;
+.submition-task {
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  margin-top: 40px;
+  padding: 15px;
+  width: 400px;
 }
 
-.title-submition{
-    color: #4b4b4b;
-    font-size: 15px;
-    font-weight: 500;
+.title-submition {
+  color: #4b4b4b;
+  font-size: 15px;
+  font-weight: 500;
 }
 
-.file-task{
-    border: 1px solid #c4c4c4;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 20px;
+.file-task {
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
 }
 
 .btn-add-task {
-    display: flex;
-    background: #D8F0FF;
-    color: var(--color-aksen);
-    border: none;
-    /* padding: 13px 35px; */
-    width: 370px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    gap: 5px;
-    cursor: pointer;
-    margin-top: 30px;
+  display: flex;
+  background: #d8f0ff;
+  color: var(--color-aksen);
+  border: none;
+  /* padding: 13px 35px; */
+  width: 370px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  gap: 5px;
+  cursor: pointer;
+  margin-top: 30px;
 }
 
-.btn-add-task p{
-    font-size: 15px;
-    font-weight: 600;
-    font-family: 'Poppins';
+.btn-add-task p {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Poppins";
 }
 
-.btn-add-task:hover{
-    background: var(--color-aksen);
-    color: #fff;
+.btn-add-task:hover {
+  background: var(--color-aksen);
+  color: #fff;
 }
 
 .btn-submit-task {
-    display: flex;
-    background: var(--color-aksen);
-    color: var(--color-primer);
-    border: none;
-    /* padding: 13px 35px; */
-    width: 370px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    gap: 5px;
-    cursor: pointer;
-    margin-top: 10px;
+  display: flex;
+  background: var(--color-aksen);
+  color: var(--color-primer);
+  border: none;
+  /* padding: 13px 35px; */
+  width: 370px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  gap: 5px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.btn-submit-task p{
-    font-size: 15px;
-    font-weight: 600;
-    font-family: 'Poppins';
+.btn-submit-task p {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Poppins";
 }
 
-.btn-submit-task:hover{
-    background: #1D77AF;
-    color: #fff;
+.btn-submit-task:hover {
+  background: #1d77af;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  width: fit-content;
+}
+
+.con-value-fileOrlink {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  gap: 15px;
+}
+
+.btn-openSitus {
+  background: var(--color-aksen);
+  border-radius: 10px;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--color-primer);
+  cursor: pointer;
+  transition: 0.3s;
+  height: max-content;
+}
+
+.btn-openSitus:hover {
+  background: #1d77af;
+  color: var(--color-primer);
+}
+
+.value-link,
+.value-file {
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  padding: 10px 0px 10px 10px;
+  gap: 20px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#value-link,
+#value-file {
+  display: flex;
+  align-items: center;
+}
+
+.value-link iframe {
+  width: 160px;
+  height: 100px;
+  border-radius: 10px;
+}
+
+.title-fileOrlink {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #4b4b4b;
+}
+
+.con-soal-jawaban {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.file-generate {
+  display: flex;
+  width: 100%;
+  z-index: 88;
+}
+
+.input-file-generate {
+  display: flex;
+  width: 100%;
+  z-index: 88;
+  background: var(--color-primer);
+  border-radius: 10px;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  padding: 10px 0px 10px 10px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--color-primer);
+  cursor: pointer;
+  transition: 0.3s;
+  height: max-content;
+  margin-top: 20px;
+}
+
+.value-file-icon {
+  padding: 18px;
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  background: var(--color-aksen);
+  color: var(--color-primer);
+}
+
+.button-delete{
+  border: none;
+  background-color: var(--color-primer);
+  cursor: pointer;
+  align-items: center;
+  padding-right: -100px;
+  padding-top: 25px;
+  padding-right: 20px;
+  color: #4b4b4b;
+  z-index: 99;
+}
+
+.name-delete{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: #4b4b4b;
+
+}
+
+.file-button-delete{
+  width: 100%;
+}
+
+.title-value-file {
+  font-family: "Poppins";
+  padding-left: 20px;
+  padding-top: 17px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #4b4b4b;
+  white-space: nowrap;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.format-file {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #797979;
+  padding-left: 20px;
+  margin-top: -12px;
+}
+
+.format-file span {
+  color: var(--color-aksen);
+}
+
+.sectionJawaban {
+  margin-top: 40px;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  padding: 15px;
+  width: max-content;
+}
+
+.title-sectionJawaban {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #4b4b4b;
+}
+
+.btn-collection-confirmation {
+  margin-top: 30px;
+  border-radius: 5px;
+  background: var(--color-aksen);
+  padding: 9px 54px;
+  width: 100%;
+  line-height: 22px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.15s ease-in-out;
+  color: var(--color-primer);
+}
+
+.btn-collection-confirmation:hover {
+  background: #1d77af;
 }

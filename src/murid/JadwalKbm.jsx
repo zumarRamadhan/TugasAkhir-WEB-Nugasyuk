@@ -1,4 +1,4 @@
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import "../cssAll/murid/JadwalKbm.css";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
@@ -8,74 +8,22 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import imgCardKbm from "../assets/guru-karman.svg";
-import ImgBinggris from "../assets/img-binggris.svg";
 import { useState, useEffect } from "react";
+import ProfileSiswa from "../component/ProfileSiswa";
+import NotifSiswa from "../component/NotifSiswa";
 import axios from "axios";
+import CardSkeletonJadwal from "../componentSkeleton/CardSkeletonJadwal";
+import CardSkeletonListTask from "../componentSkeleton/CardSkeletonListTask";
+import SkeletonDetailJadwal from "../componentSkeleton/SkeletonDetailJadwal";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonNavbar from "../componentSkeleton/SkeletonNavbar";
+import apiurl from "../api/api";
 
 function JadwalKBM() {
   const navigate = useNavigate();
-
-  const closeDetail = () => {
-    const detailProfile = document.querySelector(".detail-profile");
-    detailProfile.style.transform = "translateX(350px)";
-  };
-
-  const closeDetailNotif = () => {
-    const detailProfile = document.querySelector(".detail-notif");
-    detailProfile.style.transform = "translateX(350px)";
-  };
-
-  const showLogoutPopup = () => {
-    const popupLogout = document.querySelector("#popup-logout");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-  };
-
-  const closeLogoutPopup = () => {
-    const popupLogout = document.querySelector("#popup-logout");
-    setTimeout(() => (popupLogout.style.display = "none"), 250);
-    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-  };
-
-  const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
-    popupForget.style.animation = "slide-down 0.3s ease-in-out";
-  };
-
-  const closeForgetPopupAndClearInput = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    setTimeout(() => (popupForget.style.display = "none"), 250);
-    popupForget.style.animation = "slide-up 0.3s ease-in-out";
-    const clearpassword = document.querySelector(
-      "#password",
-      "#newPassword",
-      "#confirmPassword"
-    );
-    clearpassword.value = "";
-    const clearpasswordNew = document.querySelector("#newPassword");
-    clearpasswordNew.value = "";
-    const clearpasswordConfirm = document.querySelector("#confirmPassword");
-    clearpasswordConfirm.value = "";
-  };
-
-  const [passwordType, setPasswordType] = useState("password");
-  const [passwordTypeNew, setPasswordTypeNew] = useState("password");
-  const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
-
-  function togglePasswordVisibility() {
-    setPasswordType(passwordType === "password" ? "text" : "password");
-  }
-
-  function togglePasswordVisibilityNew() {
-    setPasswordTypeNew(passwordTypeNew === "password" ? "text" : "password");
-  }
-
-  function togglePasswordVisibilityConfirm() {
-    setPasswordTypeConfirm(
-      passwordTypeConfirm === "password" ? "text" : "password"
-    );
-  }
+  const [detailJadwal, setDetailJadwal] = useState([]);
+  const [selectedKbmId, setSelectedKbmId] = useState(null);
 
   const closeDetailKbm = () => {
     const popupLogout = document.querySelector(".popup-kbm");
@@ -83,164 +31,55 @@ function JadwalKBM() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showDetailKbm = () => {
+  const showDetailKbm = (id) => {
+    setPopupLoading(true);
+    setSelectedKbmId(id);
+    console.log("ID:", id);
     const popupForget = document.querySelector(".popup-kbm");
     popupForget.style.display = "flex";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
-  };
 
-  const valueDataKelas = [
-    {
-      id: 1,
-      kelas: "10",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel1,
-    },
-    {
-      id: 2,
-      kelas: "10",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel2,
-    },
-    {
-      id: 3,
-      kelas: "11",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel3,
-    },
-    {
-      id: 4,
-      kelas: "11",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel4,
-    },
-    {
-      id: 5,
-      kelas: "12",
-      jurusan: "pplg",
-      tingkatan: "1",
-      // assets: cardMapel5,
-    },
-    {
-      id: 6,
-      kelas: "12",
-      jurusan: "pplg",
-      tingkatan: "2",
-      // assets: cardMapel6,
-    },
-    {
-      id: 7,
-      kelas: "10",
-      jurusan: "animasi",
-      tingkatan: "1",
-      // assets: cardMapel7,
-    },
-    {
-      id: 8,
-      kelas: "10",
-      jurusan: "animasi",
-      tingkatan: "2",
-      // assets: cardMapel8,
-    },
-    {
-      id: 9,
-      kelas: "11",
-      jurusan: "animasi",
-      tingkatan: "1",
-      // assets: cardMapel9,
-    },
-  ];
-
-  const valueDataGuru = [
-    {
-      id: 1,
-      kodeGuru: "BI1",
-      namaGuru: "Budiono, S.Pd",
-      mapel: "B. Inggris",
-      profileImg: imgCardKbm,
-    },
-    {
-      id: 2,
-      kodeGuru: "OLA1",
-      namaGuru: "Asep, S.Pd",
-      mapel: "Olahraga",
-      profileImg: imgCardKbm,
-    },
-    {
-      id: 3,
-      kodeGuru: "MTK1",
-      namaGuru: "Rini, S.Pd",
-      mapel: "Matematika",
-      profileImg: imgCardKbm,
-    },
-    {
-      id: 4,
-      kodeGuru: "PAI1",
-      namaGuru: "Edi, S.Pd.I",
-      mapel: "PAI",
-      profileImg: imgCardKbm,
-    },
-  ];
-
-  const valueCardKbm = [
-    {
-      id: 1,
-      hari: "Senin",
-    },
-    {
-      id: 2,
-      hari: "Selasa",
-    },
-    {
-      id: 3,
-      hari: "Rabu",
-    },
-    {
-      id: 4,
-      hari: "Kamis",
-    },
-    {
-      id: 5,
-      hari: "Jumat",
-    },
-    {
-      id: 6,
-      hari: "Sabtu",
-    },
-  ];
-
-  const saveToken = sessionStorage.getItem("token");
-
-  // const [dataJadwal, setDataJadwal] = useState([]);
-  const [dataAPIJadwal, setDataAPIJadwal] = useState([]);
-
-  const [isLoading, setisLoading] = useState(false);
-  const [isError, setisError] = useState(false);
-  const { id } = useParams();
-
-  useEffect(() => {
-    // getDetailJadwal();
-    getDataJadwal();
-  }, [id]);
-
-  function getDataJadwal() {
-    setisLoading(true);
     axios
-      .get("https://www.nugasyuk.my.id/api/murid/jadwal/", {
+      .get(`${apiurl}murid/jadwal/${id}`, {
         headers: {
+          "ngrok-skip-browser-warning": "any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },
       })
       .then((result) => {
-        console.log("data API", result.data);
-        // const responseAPI = result.data;
+        setDetailJadwal(result.data);
+        setisLoading(false);
+        setPopupLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setisError(true);
+        setisLoading(false);
+        setPopupLoading(false);
+      });
+  };
 
-        setDataAPIJadwal(result.data.data);
+  const saveToken = sessionStorage.getItem("token");
+
+  // const [dataJadwal, setDataJadwal] = useState([]);
+  const [dataListJadwal, setDataListJadwal] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
+  const [isPopupLoading, setPopupLoading] = useState(true);
+  const [isError, setisError] = useState(false);
+
+  useEffect(() => {
+    setisLoading(true);
+    axios
+      .get(`${apiurl}murid/jadwal`, {
+        headers: {
+          "ngrok-skip-browser-warning": "any",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((result) => {
+        setDataListJadwal(result.data.data);
         setisLoading(false);
       })
       .catch((err) => {
@@ -248,42 +87,24 @@ function JadwalKBM() {
         setisError(true);
         setisLoading(false);
       });
-  }
+  }, []);
 
-  // function getDetailJadwal() {
-  //   setisLoading(true);
-  //   axios
-  //     .get("https://www.nugasyuk.my.id/api/murid/jadwal/" + id, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       // const responseAPI = result.data;
-
-  //       setDataJadwal(result.data.data);
-  //       setisLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setisError(true);
-  //       setisLoading(false);
-  //     });
-  // }
-
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataAPIJadwal && !isError)
-  
+  // if (isLoading) {
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  if (dataListJadwal && !isError)
     return (
       <div>
         <aside>
@@ -321,40 +142,67 @@ function JadwalKBM() {
           </ul>
         </aside>
         <div className="container-content">
-          <NavbarMurid textNavigasi={"Jadwal KBM 11 PPLG 1"} />
+          {isLoading ? (
+            <SkeletonNavbar />
+          ) : (
+            <NavbarMurid textNavigasi={"Jadwal KBM 11 PPLG 1"} />
+          )}
           <div className="main">
             <div className="content-jadwalKBM">
-              <div className="con-card-jadwalKBM">
-                {dataAPIJadwal &&
-                  dataAPIJadwal.map((listJadwal) => (
-                    <div className="cardJadwalKbm" key={listJadwal.id}>
+              {isLoading ? (
+                <div className="con-card-jadwalKBM">
+                  <CardSkeletonJadwal />
+                  <CardSkeletonJadwal />
+                  <CardSkeletonJadwal />
+                  <CardSkeletonJadwal />
+                  <CardSkeletonJadwal />
+                  <CardSkeletonJadwal />
+                </div>
+              ) : (
+                <div className="con-card-jadwalKBM">
+                  {dataListJadwal.map((listJadwal) => (
+                    <div
+                      className="cardJadwalKbm"
+                      key={listJadwal.$id}
+                      onClick={() => showDetailKbm(listJadwal.id)}
+                    >
                       <div className="titleJadwalKbm">
                         <p>Jadwal KBM</p>
                         <h1>{listJadwal.hari}</h1>
                       </div>
                       <div className="bottomjadwalKbm">
                         <div className="conImgGuru-Kbm">
-                          <div className="imgGuru-Kbm">
-                            <img src="" alt="" className="imageGuru-Kbm" />
-                          </div>
+                          {listJadwal.detail.map((items) => (
+                            <div className="imgGuru-Kbm">
+                              <img
+                                src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${items.foto_profile}`}
+                                alt=""
+                                className="imageGuru-Kbm"
+                              />
+                            </div>
+                          ))}
                         </div>
                         <div className="btnDetail-Kbm">
                           <Icon
                             icon="ic:round-navigate-next"
                             width="30"
                             className="iconDetail-Kbm"
-                            onClick={showDetailKbm}
+                            onClick={() => showDetailKbm(listJadwal.id)}
                           />
                         </div>
                       </div>
                     </div>
                   ))}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="popup-kbm">
+        <div
+          className="popup-kbm"
+          style={{ display: selectedKbmId ? "flex" : "none" }}
+        >
           <div className="detail-popup-kbm">
             <div className="nav-popup-kbm">
               <Icon
@@ -364,220 +212,50 @@ function JadwalKBM() {
                 className="btn-close"
                 onClick={closeDetailKbm}
               />
-              <h2 className="day-schedule">Senin</h2>
+              {isPopupLoading ? (
+                <Skeleton style={{marginLeft: "175px", height: "25px", width: "100px"}}/>
+              ) : (
+                <h2 className="day-schedule">{detailJadwal.hari}</h2>
+              )}
             </div>
-            <div className="con-popup-kbm">
-              <div className="popup-card-kbm">
-                <div className="test1">
-                  <img src={ImgProfil} alt="" className="image-card-kbm" />
-                  <div className="mapel-card-kbm">
-                    <p>okeh</p>
-                    <p className="guruPengampu">Joko Arianto</p>
+            {isPopupLoading ? (
+              <div className="con-popup-kbm">
+                <SkeletonDetailJadwal />
+                <SkeletonDetailJadwal />
+                <SkeletonDetailJadwal />
+                <SkeletonDetailJadwal />
+              </div>
+            ) : (
+              <div className="con-popup-kbm">
+                {detailJadwal.data?.map((jadwalDetail) => (
+                  <div className="popup-card-kbm">
+                    <div className="test1">
+                      <img
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${jadwalDetail.foto_profile}`}
+                        alt=""
+                        className="image-card-kbm"
+                      />
+                      <div className="mapel-card-kbm">
+                        <p>{jadwalDetail.nama_mapel}</p>
+                        <p className="guruPengampu">{jadwalDetail.nama_guru}</p>
+                      </div>
+                    </div>
+                    <div className="test2">
+                      <div className="jamMengajar">
+                        <span>{jadwalDetail.waktu_mulai}</span> -{" "}
+                        <span>{jadwalDetail.waktu_selesai}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="test2">
-                  <div className="jamMengajar">
-                    <span>07.00</span>
-                    <span>11.00</span>
-                  </div>
-                </div>
+                ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
 
-        <div className="popup-logout" id="popup-logout">
-          <div className="detail-logout">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeLogoutPopup}
-            />
-            <div className="image-logout">
-              <img src={ImgLogout} alt="" className="img-logout" />
-            </div>
-            <p className="desc-logout">Anda yakin ingin keluar?</p>
-            <div className="con-btn-logout">
-              <button type="button" className="btn-batal">
-                Batal
-              </button>
-              <button type="button" className="btn-keluar">
-                Keluar
-              </button>
-            </div>
-          </div>
-        </div>
+        <ProfileSiswa />
 
-        <div className="popup-forget" id="popup-forget">
-          <form action="" className="detail-forget-password">
-            <div className="navbar-detail-forget">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer" }}
-                onClick={closeForgetPopupAndClearInput}
-              />
-              <h2>Ganti Password</h2>
-            </div>
-            <p className="judul-form">Sandi lama</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordType}
-                id="password"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibility}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-            <p className="judul-form">Sandi baru</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordTypeNew}
-                id="newPassword"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibilityNew}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-            <p className="judul-form">Konfirmasi sandi baru</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordTypeConfirm}
-                id="confirmPassword"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibilityConfirm}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-
-            <button type="submit" className="btn-simpan">
-              Simpan sandi baru
-            </button>
-          </form>
-        </div>
-
-        <div className="detail-profile">
-          <div className="content-detail">
-            <div className="navbar-detail">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer" }}
-                onClick={closeDetail}
-              />
-              <h2>Profil</h2>
-            </div>
-            <div className="detail-image-profile">
-              <img src={ImgProfil} alt="" className="detail-img-profile" />
-            </div>
-            <p className="judul-detail">Email</p>
-            <p className="value-detail">zumarramadhan@smkrus.sch.id</p>
-            <p className="judul-detail">Nama Pengguna</p>
-            <p className="value-detail">Zumar</p>
-            <p className="judul-detail">Nama</p>
-            <p className="value-detail">Muhammad Zumar Ramadhan</p>
-            <p className="judul-detail">Jurusan</p>
-            <p className="value-detail">PPLG</p>
-            <p className="judul-detail">Kelas</p>
-            <p className="value-detail">11 PPLG 1</p>
-            <p className="judul-detail">NIS</p>
-            <p className="value-detail">04449</p>
-          </div>
-          <div className="con-btn-detail-profile">
-            <button
-              className="forget-password"
-              id="btn-forget-pass"
-              onClick={showForgetPopup}
-            >
-              <Icon icon="material-symbols:key-outline-rounded" width="30" />
-              <p>Ganti Password</p>
-            </button>
-            <button
-              className="logout"
-              id="btn-logout"
-              onClick={showLogoutPopup}
-            >
-              <Icon icon="material-symbols:logout-rounded" width="30" />
-              <p>Logout</p>
-            </button>
-          </div>
-        </div>
-
-        <div className="detail-notif">
-          <div className="content-detail-notif">
-            <div className="navbar-detail-notif">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer", color: "#4b4b4b" }}
-                onClick={closeDetailNotif}
-              />
-              <h2>Notifikasi</h2>
-            </div>
-            <p className="day">Hari Ini</p>
-            <div className="notif">
-              <div className="icon-notif">
-                <Icon icon="tabler:clipboard-text" width="30" />
-              </div>
-              <div className="content-notif">
-                <div className="name-notif">
-                  <p>Application Letter</p>
-                </div>
-                <div className="teacher">
-                  <p>Budiono, S.Pd</p>
-                </div>
-              </div>
-            </div>
-            <div className="notif">
-              <div className="icon-notif">
-                <Icon icon="tabler:clipboard-text" width="30" />
-              </div>
-              <div className="content-notif">
-                <div className="name-notif">
-                  <p>Sejarah Gojek</p>
-                </div>
-                <div className="teacher">
-                  <p>Rini, S.Pd</p>
-                </div>
-              </div>
-            </div>
-            <div className="notif">
-              <div className="icon-notif">
-                <Icon icon="ri:book-line" width="30" />
-              </div>
-              <div className="content-notif">
-                <div className="name-notif">
-                  <p>Sejarah Gojek</p>
-                </div>
-                <div className="teacher">
-                  <p>Rini, S.Pd</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <NotifSiswa />
       </div>
     );
 }
