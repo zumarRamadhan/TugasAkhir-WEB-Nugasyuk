@@ -55,6 +55,7 @@
 
 .task-deadline-time{
     color: var(--color-aksen);
+    margin-top: 15px;
 }
 
 .submition-task {
@@ -179,6 +180,7 @@ a {
 #value-file {
   display: flex;
   align-items: center;
+  width: 370px;
 }
 
 .value-link iframe {
@@ -243,7 +245,8 @@ a {
   align-items: center;
   padding-right: -100px;
   padding-top: 25px;
-  padding-right: 20px;
+  padding-right: 10px;
+  margin-left: 35px;
   color: #4b4b4b;
   z-index: 99;
 }
