@@ -245,16 +245,80 @@ function PageTugas() {
                         id="123"
                       >
                         <div className="indiecator-left">
+                          
+                          {/* icon tugas belum dikerjakan */}
                           <div
                             className="icon-indie-information"
                             style={{ background: "#DDDDDD" }}
                           >
                             <Icon
-                              icon="uiw:time-o"
-                              width="30"
+                              icon="ic:round-pending-actions"
+                              width="35"
                               style={{ color: "#797979" }}
                             />
                           </div>
+
+                          {/* icon tugas belum selesai lebih dari deadline */}
+                          {/* <div
+                            className="icon-indie-information"
+                            style={{ background: "#FFC6C6" }}
+                          >
+                            <Icon
+                              icon="ic:round-pending-actions"
+                              width="30"
+                              style={{ color: "#FF3F3F" }}
+                            />
+                          </div> */}
+
+                          {/* icon tugas menunggu konfirmasi guru */}
+                          {/* <div
+                            className="icon-indie-information"
+                            style={{ background: "#FFFA87" }}
+                          >
+                            <Icon
+                              icon="uiw:time-o"
+                              width="30"
+                              style={{ color: "#CBC41A" }}
+                            />
+                          </div> */}
+
+                          {/* icon tugas selesai*/}
+                          {/* <div
+                            className="icon-indie-information"
+                            style={{ background: "#D5FFC6" }}
+                          >
+                            <Icon
+                              icon="material-symbols:check-small-rounded" 
+                              width="50"
+                              style={{ color: "#84E063" }}
+                            />
+                          </div> */}
+
+                          {/* icon tugas selesai lebih deadline */}
+                          {/* <div
+                            className="icon-indie-information"
+                            style={{ background: "#FFC6C6" }}
+                          >
+                            <Icon
+                              icon="material-symbols:check-small-rounded" 
+                              width="50"
+                              style={{ color: "#FF3F3F" }}
+                            />
+                          </div> */}
+                          
+                          {/* icon menunggu lebih deadline */}
+                          {/* <div
+                            className="icon-indie-information"
+                            style={{ background: "#FFC6C6" }}
+                          >
+                            <Icon
+                              icon="uiw:time-o"
+                              width="30"
+                              style={{ color: "#FF3F3F" }}
+                            />
+                          </div> */}
+
+
                           <div className="desc-indie">
                             <p className="title-indie-information">
                               {listTugas.soal}
