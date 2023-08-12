@@ -16,6 +16,8 @@ import vektorProfile from "../assets/vektorProfile.svg";
 import axios from "axios";
 import apiurl from "../api/api";
 // import { useHistory } from "react-router-dom";
+import ExportExcelButton from "../component/ExportExcelButton";
+import ImportExcelComponent from "../component/ImportExcelComponent";
 
 function BerandaGuru() {
   const navText = "Data Guru";
@@ -34,13 +36,21 @@ function BerandaGuru() {
   const [filterValue, setFilterValue] = useState("all");
   const [guruData, setGuruData] = useState({});
 
+  const handleDataImport = (importedData) => {
+    // Lakukan pemrosesan data yang diimpor dari Excel di sini
+    console.log("Data imported:", importedData);
+
+    // Contoh: Perbarui state dataTabelGuru dengan data yang diimpor
+    setDataTabelGuru(importedData);
+  };
+
   function getGuru() {
     axios
       .get(`${apiurl}admin/guru`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -76,41 +86,41 @@ function BerandaGuru() {
 
   // massege
 
-    // popup card loading
-    const showPopupLoading = () => {
-      const background = document.querySelector(".popup-loading");
-      background.style.display = "flex";
-      const PopupLoading = document.querySelector(".body-loading");
-      PopupLoading.style.display = "grid";
-      PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
-    };
-  
-    const closePopupLoading = () => {
-      const background = document.querySelector(".popup-loading");
-      setTimeout(() => (background.style.display = "none"), 300);
-      // background.style.display = "none";
-      const PopupLoading = document.querySelector(".body-loading");
-      setTimeout(() => (PopupLoading.style.display = "none"), 250);
-      PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
-    };
-  
-    const showPopupLoadingDetail = () => {
-      const background = document.querySelector("#popup-loadingDetail");
-      background.style.display = "flex";
-      const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
-      PopupLoadingDetail.style.display = "grid";
-      PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
-    };
-  
-    const closePopupLoadingDetail = () => {
-      const background = document.querySelector("#popup-loadingDetail");
-      setTimeout(() => (background.style.display = "none"), 300);
-      // background.style.display = "none";
-      const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
-      setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
-      PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
-    };
-    // end popup card loading
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showPopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    background.style.display = "flex";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    PopupLoadingDetail.style.display = "grid";
+    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
+    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
 
   const showSuccessDelete = () => {
     const popupLogout = document.querySelector("#popup-success");
@@ -149,7 +159,7 @@ function BerandaGuru() {
   };
 
   const closeFailed = () => {
-    const messageDelete = document.querySelector("#popup-Failed"); 
+    const messageDelete = document.querySelector("#popup-Failed");
     const messageCode = document.querySelector("#popup-Failed-addCode");
     setTimeout(() => (messageDelete.style.display = "none"), 250);
     setTimeout(() => (messageCode.style.display = "none"), 250);
@@ -171,7 +181,7 @@ function BerandaGuru() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -194,7 +204,7 @@ function BerandaGuru() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -237,7 +247,7 @@ function BerandaGuru() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -277,7 +287,7 @@ function BerandaGuru() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -343,13 +353,6 @@ function BerandaGuru() {
       passwordTypeConfirm === "password" ? "text" : "password"
     );
   }
-
-  // const navigate = useNavigate();
-
-  // const handleEditClick = (id) => {
-  //   setSelected(id);
-  //   navigate(`/admin/pageguru/edit?id=${id}`);
-  // };
 
   const handleEditClick = (id) => {
     // Ambil data guru dari API berdasarkan id
@@ -423,17 +426,13 @@ function BerandaGuru() {
       formData.append("status_mapel", formKode.status_mapel);
 
       axios
-        .post(
-          `${apiurl}admin/kode/${selected}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${saveToken}`,
-              "ngrok-skip-browser-warning":"any"
-            },
-          }
-        )
+        .post(`${apiurl}admin/kode/${selected}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
         .then((result) => {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan refresh window
@@ -521,22 +520,11 @@ function BerandaGuru() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-  // if (isLoading) {
-  //   return (
-  //     <div id="load">
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //     </div>
-  //   );
-  // } else
+  const dataExel = [
+    { name: "John", age: 30 },
+    { name: "Jane", age: 28 },
+  ];
+
   if (dataTabelGuru && !isError)
     return (
       <div>
@@ -574,10 +562,10 @@ function BerandaGuru() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">
@@ -616,7 +604,10 @@ function BerandaGuru() {
                     ></Icon>
                   </button>
                 </form>
+                <ExportExcelButton data={dataTabelGuru} filename="exported_data" />
+                <ImportExcelComponent onDataImport={handleDataImport} />
               </div>
+
               <div className="header-guru-right">
                 <p className="detail-jumlah-guru">
                   <span>{renderData.length}</span> Guru
@@ -647,7 +638,7 @@ function BerandaGuru() {
                         <td className="tdImg">
                           <div className="img-td">
                             <img
-                              src={`https://www.nugasyuk.my.id/public/${item.foto_profile}`}
+                              src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${item.foto_profile}`}
                               alt={item.foto_profile}
                             />
                           </div>
@@ -724,7 +715,7 @@ function BerandaGuru() {
               <div className="img-detailGuru">
                 {detailGuru && detailGuru.foto_profile ? (
                   <img
-                    src={`https://www.nugasyuk.my.id/public/${detailGuru.foto_profile}`}
+                    src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailGuru.foto_profile}`}
                     alt="foto profile ${detailGuru.foto_profile}"
                     className="image-detailGuru"
                   />
@@ -1029,11 +1020,7 @@ function BerandaGuru() {
               onClick={closeFailed}
             />
             <div className="image-Failed">
-              <img
-                src={ImgFailed}
-                alt="Delete Failed"
-                className="img-Failed"
-              />
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
             <p className="desc-Failed">Data Gagal Di Hapus</p>
             <button className="btn-Failed" onClick={closeFailed}>
@@ -1077,11 +1064,7 @@ function BerandaGuru() {
               onClick={closeFailed}
             />
             <div className="image-Failed">
-              <img
-                src={ImgFailed}
-                alt="Delete Failed"
-                className="img-Failed"
-              />
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
             <p className="desc-Failed">Gagal Menambahkan Kode Guru</p>
             <button className="btn-Failed" onClick={closeFailed}>

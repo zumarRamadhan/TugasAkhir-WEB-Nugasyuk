@@ -12,6 +12,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 import apiurl from "../api/api";
+import Select from "react-select";
 
 function FormAddKelas() {
   const navText = "Tambah Data Kelas";
@@ -290,44 +291,41 @@ function FormAddKelas() {
         setIsLoading(false);
       });
   }, []);
-  // useState(() => {
-  //   axios
-  //     .get("${apiurl}admin/kelas", {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  //         "ngrok-skip-browser-warning":"any"
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       const responseAPI = result.data;
 
-  //       setDataKelas(responseAPI.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setIsError(true);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
-  // if (isLoading) {
-  //   return (
-  //     <div id="load">
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //     </div>
-  //   );
-  // } else
+  const [selectedGuru, setSelectedGuru] = useState(null);
+  const [guruOptions, setGuruOptions] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${apiurl}admin/guru`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        const options = responseAPI.data.map((guru) => ({
+          value: guru.id,
+          label: guru.nama_guru,
+        }));
+        setGuruOptions(options);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+      });
+  }, []);
+
+  const handleGuruChange = (selectedOption) => {
+    setSelectedGuru(selectedOption);
+    setFormData((prevState) => ({
+      ...prevState,
+      waliKelas: selectedOption ? selectedOption.value : "",
+    }));
+  };
+
   if (dataGuru && !isError)
     return (
       <div>
@@ -365,10 +363,10 @@ function FormAddKelas() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">
@@ -438,29 +436,15 @@ function FormAddKelas() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Wali Kelas</div>
-                  {isLoading ? (
-                    <input
-                      value="Data Sedang Dalam Proses..."
-                      disabled
-                      className="input-formKbm"
-                    />
-                  ) : (
-                    <select
-                      name="waliKelas"
-                      id="kelas"
-                      className="selectClass"
-                      value={formData.waliKelas}
-                      onChange={handleChange}
-                    >
-                      <option value="" selected disabled>
-                        Pilih Guru
-                      </option>
-                      {dataGuru.map((guru) => (
-                        <option value={guru.id}>{guru.nama_guru}</option>
-                      ))}
-                    </select>
-                  )}
-                  {errors.waliKelas && ( //change
+                  <Select
+                    value={selectedGuru}
+                    onChange={handleGuruChange}
+                    options={guruOptions}
+                    isClearable
+                    placeholder="Pilih Guru"
+                    className="input-formKbm"
+                  />
+                  {errors.waliKelas && (
                     <span className="error">{errors.waliKelas}</span>
                   )}
                 </div>

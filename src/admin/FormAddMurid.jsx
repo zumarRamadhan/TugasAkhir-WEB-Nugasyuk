@@ -354,7 +354,7 @@ function FormAddMurid() {
   
   useState(() => {
     axios
-      .get("https://6acc-114-125-94-113.ngrok-free.app/api/admin/kelas", {
+      .get(`${apiurl}admin/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -450,10 +450,10 @@ function FormAddMurid() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">
