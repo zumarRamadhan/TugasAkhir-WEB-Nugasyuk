@@ -27,6 +27,7 @@ function BerandaGuru() {
   const saveToken = sessionStorage.getItem("token");
 
   const [dataTabelGuru, setDataTabelGuru] = useState([]);
+  const [dataExport, setDataExport] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [active, setActive] = useState(false);
@@ -41,7 +42,7 @@ function BerandaGuru() {
     console.log("Data imported:", importedData);
 
     // Contoh: Perbarui state dataTabelGuru dengan data yang diimpor
-    setDataTabelGuru(importedData);
+    // setDataTabelGuru(importedData);
   };
 
   function getGuru() {
@@ -520,10 +521,28 @@ function BerandaGuru() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-  const dataExel = [
-    { name: "John", age: 30 },
-    { name: "Jane", age: 28 },
-  ];
+    useEffect(() => {
+      axios
+        .get(`${apiurl}admin/export-guru`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
+        .then((result) => {
+          console.log("data API", result.data);
+          const responseAPI = result.data;
+  
+          setDataExport(responseAPI.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan: ", err);
+          setIsError(true);
+          setIsLoading(false);
+        });
+    }, []);
 
   if (dataTabelGuru && !isError)
     return (
@@ -604,8 +623,8 @@ function BerandaGuru() {
                     ></Icon>
                   </button>
                 </form>
-                <ExportExcelButton data={dataTabelGuru} filename="exported_data" />
-                <ImportExcelComponent onDataImport={handleDataImport} />
+                <ExportExcelButton data={dataExport} filename="exported_data" />
+                {/* <ImportExcelComponent onDataImport={handleDataImport} /> */}
               </div>
 
               <div className="header-guru-right">

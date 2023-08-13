@@ -3,18 +3,20 @@ import * as XLSX from "xlsx"; // Menggunakan * as XLSX
 import axios from "axios";
 import apiurl from "../api/api";
 import './ImportExcelComponent.css'; // Impor file CSS untuk styling
+import { useNavigate, Link } from "react-router-dom";
 
 const ImportExcelComponent = () => {
   const saveToken = sessionStorage.getItem("token");
+  const navigate = useNavigate();
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFileImport, setSelectedFileImport] = useState(null);
 
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    setSelectedFileImport(e.target.files[0]);
   };
 
   const handleImport = () => {
-    if (!selectedFile) {
+    if (!selectedFileImport) {
       console.log("Please select a file to import.");
       return;
     }
@@ -30,7 +32,7 @@ const ImportExcelComponent = () => {
         new Blob([data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }),
-        selectedFile.name
+        selectedFileImport.name
       );
 
       try {
@@ -48,7 +50,7 @@ const ImportExcelComponent = () => {
 
         console.log("Import successful:", response.data);
         // refresh data
-        window.location.reload();
+        navigate("/admin/pageguru"); 
         // Lakukan tindakan setelah impor selesai
       } catch (error) {
         console.error("Import error:", error);
@@ -56,15 +58,16 @@ const ImportExcelComponent = () => {
       }
     };
 
-    reader.readAsArrayBuffer(selectedFile);
+    reader.readAsArrayBuffer(selectedFileImport);
   };
 
   return (
+  
     <div className="import-excel-container">
       <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} />
       <button onClick={handleImport}>Import Excel</button>
     </div>
-  );
+  );  
 };
 
 export default ImportExcelComponent;
