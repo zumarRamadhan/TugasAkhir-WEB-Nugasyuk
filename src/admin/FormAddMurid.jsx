@@ -12,10 +12,16 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 import apiurl from "../api/api";
+import * as XLSX from "xlsx";
 
 function FormAddMurid() {
   const navText = "Tambah Data";
   const navigate = useNavigate();
+  const [formType, setFormType] = useState("manual");
+
+  const handleFormTypeChange = (event) => {
+    setFormType(event.target.value);
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -91,8 +97,20 @@ function FormAddMurid() {
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
+  const showFailedImport = () => {
+    const popupLogout = document.querySelector("#popup-Failed-Import");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
   const closeFailed = () => {
     const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const closeFailedImport = () => {
+    const popupLogout = document.querySelector("#popup-Failed-Import");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
@@ -179,19 +197,15 @@ function FormAddMurid() {
       form.append("kelas_id", formData.kelas);
 
       axios
-        .post(
-          `${apiurl}admin/murid`,
-          form,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              "Access-Control-Allow-Origin": "https://nugasyuk.my.id",
-              Accept: "application/json",
-              Authorization: `Bearer ${saveToken}`,
-              "ngrok-skip-browser-warning": "any",
-            },
-          }
-        )
+        .post(`${apiurl}admin/murid`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "https://nugasyuk.my.id",
+            Accept: "application/json",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
         .then((result) => {
           console.log("Data berhasil ditambahkan");
           // Lakukan tindakan yang diperlukan setelah menambahkan data
@@ -351,7 +365,7 @@ function FormAddMurid() {
       showPopupLoadingDetail();
     }
   }, [isLoading]);
-  
+
   useState(() => {
     axios
       .get(`${apiurl}admin/kelas`, {
@@ -375,44 +389,67 @@ function FormAddMurid() {
         setIsLoading(false);
       });
   }, []);
-  // useState(() => {
-  //   axios
-  //     .get(`${apiurl}admin/kelas`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  // "ngrok-skip-browser-warning":"any"
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       const responseAPI = result.data;
 
-  //       setDataKelas(responseAPI.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setIsError(true);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
-  // if (isLoading) {
-  //   return (
-  //     <div id="load">
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //     </div>
-  //   );
-  // } else
+  // fungsi import
+
+  const [selectedFileImport, setSelectedFileImport] = useState(null);
+
+  const handleFileChange = (e) => {
+    setSelectedFileImport(e.target.files[0]);
+  };
+
+  const handleImport = () => {
+    showPopupLoading();
+    if (!selectedFileImport) {
+      console.log("Please select a file to import.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+
+      const formData = new FormData();
+      formData.append(
+        "file",
+        new Blob([data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        }),
+        selectedFileImport.name
+      );
+
+      try {
+        const response = await axios.post(
+          `${apiurl}admin/import/murid`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${saveToken}`,
+              "ngrok-skip-browser-warning": "any",
+            },
+          }
+        );
+
+        console.log("Import successful:", response.data);
+        // refresh data
+        closePopupLoading();
+        showSuccessAdd();
+        // Lakukan tindakan setelah impor selesai
+      } catch (error) {
+        console.error("Import error:", error);
+        closePopupLoading();
+        showFailedImport();
+        // Tangani kesalahan impor
+      }
+    };
+
+    reader.readAsArrayBuffer(selectedFileImport);
+  };
+
+  // end fungsi import
+
   if (dataKelas && !isError)
     return (
       <div>
@@ -460,249 +497,301 @@ function FormAddMurid() {
           <Navigation text={navText} />
           <div className="main">
             <div className="content-formKbm">
-              <form onSubmit={handleSubmit} className="container-formKbm">
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Profi</div>
-                  <input
-                    type="file"
-                    id="file"
-                    name="file"
-                    className="input-formKbm"
-                    // value={formData.file}
-                    accept=".jpg, .png, .jpeg"
-                    onChange={handleFoto}
-                  />
-                  {errors.file && <span className="error">{errors.file}</span>}
-                  <img
-                    id="previewImage"
-                    src={formData.file}
-                    alt="Pilih foto, dan foto akan muncul di sini"
-                  />
+              <div className="con-formKbm">
+                <div className="title-formKbm">Menambah Data Melalui</div>
+                <div className="switch-Option">
+                  <div className="con-radio">
+                    <label>
+                      <input
+                        type="radio"
+                        name="formType"
+                        value="manual"
+                        checked={formType === "manual"}
+                        onChange={handleFormTypeChange}
+                      />
+                      Manual
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="formType"
+                        value="import"
+                        checked={formType === "import"}
+                        onChange={handleFormTypeChange}
+                      />
+                      Import Excel
+                    </label>
+                  </div>
                 </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Nama Siswa</div>
-                  <input
-                    type="text"
-                    id="namaMurid"
-                    name="namaMurid"
-                    value={formData.namaMurid}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan nama siswa"
-                  />
-                  {errors.namaMurid && (
-                    <span className="error">{errors.namaMurid}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Nama Panggilan</div>
-                  <input
-                    type="text"
-                    id="namaPanggilan"
-                    name="namaPanggilan"
-                    value={formData.namaPanggilan}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan nama panggilan"
-                  />
-                  {errors.namaPanggilan && (
-                    <span className="error">{errors.namaPanggilan}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Nama Walimurid</div>
-                  <input
-                    type="text"
-                    id="namaWaliMurid"
-                    name="namaWaliMurid"
-                    value={formData.namaWaliMurid}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan nama walimurid"
-                  />
-                  {errors.namaWaliMurid && (
-                    <span className="error">{errors.namaWaliMurid}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Kelas</div>
-                  {isLoading ? (
+              </div>
+              {formType === "import" && (
+                <div className="container-formKbm">
+                  <div className="con-formKbm">
                     <input
-                      value="Data Sedang Dalam Proses..."
-                      disabled
+                      type="file"
+                      accept=".xlsx, .xls"
+                      onChange={handleFileChange}
                       className="input-formKbm"
                     />
-                  ) : (
-                    <select
-                      name="kelas"
-                      id="kelas"
-                      className="selectClass"
-                      value={formData.kelas}
-                      onChange={handleChange}
-                    >
-                      <option value="" selected disabled>
-                        Pilih Kelas
-                      </option>
-                      {dataKelas.map((kelas) => (
-                        <option value={kelas.id}>
-                          {kelas.tingkat_ke +
-                            " " +
-                            kelas.nama_jurusan.toUpperCase() +
-                            " " +
-                            kelas.nama_kelas}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                  {errors.kelas && ( //change
-                    <span className="error">{errors.kelas}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">NIS</div>
-                  <input
-                    type="text"
-                    id="nis"
-                    name="nis"
-                    value={formData.nis}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan niy guru"
-                  />
-                  {errors.nis && <span className="error">{errors.nis}</span>}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Alamat</div>
-                  <input
-                    type="text"
-                    id="alamat"
-                    name="alamat"
-                    value={formData.alamat}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="Tambahkan alamat siswa"
-                  />
-                  {errors.alamat && (
-                    <span className="error">{errors.alamat}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Email</div>
-                  <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="example@smkrus.schid"
-                  />
-                  {errors.email && (
-                    <span className="error">{errors.email}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Email Walimurid</div>
-                  <input
-                    type="text"
-                    id="email_wali_murid"
-                    name="email_wali_murid"
-                    value={formData.email_wali_murid}
-                    onChange={handleChange}
-                    className="input-formKbm"
-                    placeholder="example@smkrus.schid"
-                  />
-                  {errors.email_wali_murid && (
-                    <span className="error">{errors.email_wali_murid}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Password Siswa</div>
-                  <input
-                    type="password"
-                    className="input-formKbm"
-                    placeholder="*******"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
-                  {errors.password && (
-                    <span className="error">{errors.password}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Konfirmasi Password Siswa</div>
-                  <input
-                    type="password"
-                    className="input-formKbm"
-                    placeholder="*******"
-                    id="konfirmasiPassword"
-                    name="konfirmasiPassword"
-                    value={formData.konfirmasiPassword}
-                    onChange={handleChange}
-                  />
-                  {errors.konfirmasiPassword && (
-                    <span className="error">{errors.konfirmasiPassword}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">Password Walimurid</div>
-                  <input
-                    type="password"
-                    className="input-formKbm"
-                    placeholder="*******"
-                    id="password_wali_murid"
-                    name="password_wali_murid"
-                    value={formData.password_wali_murid}
-                    onChange={handleChange}
-                  />
-                  {errors.password_wali_murid && (
-                    <span className="error">{errors.password_wali_murid}</span>
-                  )}
-                </div>
-
-                <div className="con-formKbm">
-                  <div className="title-formKbm">
-                    Konfirmasi Password Walimurid
                   </div>
-                  <input
-                    type="password"
-                    className="input-formKbm"
-                    placeholder="*******"
-                    id="konfirmasiPassword_wali_murid"
-                    name="konfirmasiPassword_wali_murid"
-                    value={formData.konfirmasiPassword_wali_murid}
-                    onChange={handleChange}
-                  />
-                  {errors.konfirmasiPassword_wali_murid && (
-                    <span className="error">
-                      {errors.konfirmasiPassword_wali_murid}
-                    </span>
-                  )}
+                  <div className="con-btn-form">
+                    <button onClick={handleImport} className="btn-form">
+                      Import Excel
+                    </button>
+                  </div>
                 </div>
+              )}
+              {formType === "manual" && (
+                <form onSubmit={handleSubmit} className="container-formKbm">
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Profi</div>
+                    <input
+                      type="file"
+                      id="file"
+                      name="file"
+                      className="input-formKbm"
+                      // value={formData.file}
+                      accept=".jpg, .png, .jpeg"
+                      onChange={handleFoto}
+                    />
+                    {errors.file && (
+                      <span className="error">{errors.file}</span>
+                    )}
+                    <img
+                      id="previewImage"
+                      src={formData.file}
+                      alt="Pilih foto, dan foto akan muncul di sini"
+                    />
+                  </div>
 
-                <div className="con-btn-form">
-                  <button
-                    type="submit"
-                    className="btn-form"
-                    style={{ cursor: "pointer" }}
-                  >
-                    Simpan perubahan
-                  </button>
-                </div>
-              </form>
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Nama Siswa</div>
+                    <input
+                      type="text"
+                      id="namaMurid"
+                      name="namaMurid"
+                      value={formData.namaMurid}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan nama siswa"
+                    />
+                    {errors.namaMurid && (
+                      <span className="error">{errors.namaMurid}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Nama Panggilan</div>
+                    <input
+                      type="text"
+                      id="namaPanggilan"
+                      name="namaPanggilan"
+                      value={formData.namaPanggilan}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan nama panggilan"
+                    />
+                    {errors.namaPanggilan && (
+                      <span className="error">{errors.namaPanggilan}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Nama Walimurid</div>
+                    <input
+                      type="text"
+                      id="namaWaliMurid"
+                      name="namaWaliMurid"
+                      value={formData.namaWaliMurid}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan nama walimurid"
+                    />
+                    {errors.namaWaliMurid && (
+                      <span className="error">{errors.namaWaliMurid}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Kelas</div>
+                    {isLoading ? (
+                      <input
+                        value="Data Sedang Dalam Proses..."
+                        disabled
+                        className="input-formKbm"
+                      />
+                    ) : (
+                      <select
+                        name="kelas"
+                        id="kelas"
+                        className="selectClass"
+                        value={formData.kelas}
+                        onChange={handleChange}
+                      >
+                        <option value="" selected disabled>
+                          Pilih Kelas
+                        </option>
+                        {dataKelas.map((kelas) => (
+                          <option value={kelas.id}>
+                            {kelas.tingkat_ke +
+                              " " +
+                              kelas.nama_jurusan.toUpperCase() +
+                              " " +
+                              kelas.nama_kelas}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    {errors.kelas && ( //change
+                      <span className="error">{errors.kelas}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">NIS</div>
+                    <input
+                      type="text"
+                      id="nis"
+                      name="nis"
+                      value={formData.nis}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan niy guru"
+                    />
+                    {errors.nis && <span className="error">{errors.nis}</span>}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Alamat</div>
+                    <input
+                      type="text"
+                      id="alamat"
+                      name="alamat"
+                      value={formData.alamat}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="Tambahkan alamat siswa"
+                    />
+                    {errors.alamat && (
+                      <span className="error">{errors.alamat}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Email</div>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="example@smkrus.schid"
+                    />
+                    {errors.email && (
+                      <span className="error">{errors.email}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Email Walimurid</div>
+                    <input
+                      type="text"
+                      id="email_wali_murid"
+                      name="email_wali_murid"
+                      value={formData.email_wali_murid}
+                      onChange={handleChange}
+                      className="input-formKbm"
+                      placeholder="example@smkrus.schid"
+                    />
+                    {errors.email_wali_murid && (
+                      <span className="error">{errors.email_wali_murid}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Password Siswa</div>
+                    <input
+                      type="password"
+                      className="input-formKbm"
+                      placeholder="*******"
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                    />
+                    {errors.password && (
+                      <span className="error">{errors.password}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">
+                      Konfirmasi Password Siswa
+                    </div>
+                    <input
+                      type="password"
+                      className="input-formKbm"
+                      placeholder="*******"
+                      id="konfirmasiPassword"
+                      name="konfirmasiPassword"
+                      value={formData.konfirmasiPassword}
+                      onChange={handleChange}
+                    />
+                    {errors.konfirmasiPassword && (
+                      <span className="error">{errors.konfirmasiPassword}</span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">Password Walimurid</div>
+                    <input
+                      type="password"
+                      className="input-formKbm"
+                      placeholder="*******"
+                      id="password_wali_murid"
+                      name="password_wali_murid"
+                      value={formData.password_wali_murid}
+                      onChange={handleChange}
+                    />
+                    {errors.password_wali_murid && (
+                      <span className="error">
+                        {errors.password_wali_murid}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="con-formKbm">
+                    <div className="title-formKbm">
+                      Konfirmasi Password Walimurid
+                    </div>
+                    <input
+                      type="password"
+                      className="input-formKbm"
+                      placeholder="*******"
+                      id="konfirmasiPassword_wali_murid"
+                      name="konfirmasiPassword_wali_murid"
+                      value={formData.konfirmasiPassword_wali_murid}
+                      onChange={handleChange}
+                    />
+                    {errors.konfirmasiPassword_wali_murid && (
+                      <span className="error">
+                        {errors.konfirmasiPassword_wali_murid}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="con-btn-form">
+                    <button
+                      type="submit"
+                      className="btn-form"
+                      style={{ cursor: "pointer" }}
+                    >
+                      Simpan perubahan
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </div>
@@ -768,6 +857,27 @@ function FormAddMurid() {
               Sama!!!
             </p>
             <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed-Import">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailedImport}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Data Gagal Di Tambahkah, Silahkan Periksa Apakah Data Pada File
+              Ada Yang Sama Dengan Guru Lain!!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailedImport}>
               Kembali
             </button>
           </div>
