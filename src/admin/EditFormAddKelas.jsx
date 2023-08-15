@@ -312,14 +312,6 @@ function EditFormAddKelas() {
       });
   }, []);
 
-  // if (isLoadingDetail) {
-  //   return (
-  //     <div className="jano">
-  //       Lorem ipsum dolor sit amet consectetur
-  //     </div>
-  //   );
-  // }
-  // else
   if (dataGuru && !isError)
     return (
       <div>

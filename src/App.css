@@ -635,7 +635,7 @@ nav .navbar img {
 
 /* popup Failed */
 
-#popup-Failed , #popup-Failed-addCode , #popup-Failed-Import {
+#popup-Failed , #popup-Failed-addCode , #popup-Failed-Import, #popup-Failed-NoData {
     top: 0;
     position: fixed;
     width: 100%;

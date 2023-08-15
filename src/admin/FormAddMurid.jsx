@@ -103,6 +103,12 @@ function FormAddMurid() {
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
+  const showFailedNoData = () => {
+    const popupLogout = document.querySelector("#popup-Failed-NoData");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
   const closeFailed = () => {
     const popupLogout = document.querySelector("#popup-Failed");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
@@ -111,6 +117,12 @@ function FormAddMurid() {
 
   const closeFailedImport = () => {
     const popupLogout = document.querySelector("#popup-Failed-Import");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const closeFailedNoData = () => {
+    const popupLogout = document.querySelector("#popup-Failed-NoData");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
@@ -401,6 +413,8 @@ function FormAddMurid() {
   const handleImport = () => {
     showPopupLoading();
     if (!selectedFileImport) {
+      showFailedNoData();
+      closePopupLoading();
       console.log("Please select a file to import.");
       return;
     }
@@ -650,7 +664,7 @@ function FormAddMurid() {
                   <div className="con-formKbm">
                     <div className="title-formKbm">NIS</div>
                     <input
-                      type="text"
+                      type="number"
                       id="nis"
                       name="nis"
                       value={formData.nis}
@@ -878,6 +892,26 @@ function FormAddMurid() {
               Ada Yang Sama Dengan Guru Lain!!!
             </p>
             <button className="btn-Failed" onClick={closeFailedImport}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed-NoData">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailedNoData}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Data Gagal Di Tambahkah, Data Wajib Di Isi!!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailedNoData}>
               Kembali
             </button>
           </div>

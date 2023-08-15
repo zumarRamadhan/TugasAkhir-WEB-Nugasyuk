@@ -17,7 +17,6 @@ import axios from "axios";
 import apiurl from "../api/api";
 // import { useHistory } from "react-router-dom";
 import ExportExcelButton from "../component/ExportExcelButton";
-import ImportExcelComponent from "../component/ImportExcelComponent";
 
 function BerandaGuru() {
   const navText = "Data Guru";
@@ -521,28 +520,28 @@ function BerandaGuru() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-    useEffect(() => {
-      axios
-        .get(`${apiurl}admin/export-guru`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${saveToken}`,
-            "ngrok-skip-browser-warning": "any",
-          },
-        })
-        .then((result) => {
-          console.log("data API", result.data);
-          const responseAPI = result.data;
-  
-          setDataExport(responseAPI.data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log("terjadi kesalahan: ", err);
-          setIsError(true);
-          setIsLoading(false);
-        });
-    }, []);
+  useEffect(() => {
+    axios
+      .get(`${apiurl}admin/export-guru`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((result) => {
+        console.log("data API", result.data);
+        const responseAPI = result.data;
+
+        setDataExport(responseAPI.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  }, []);
 
   if (dataTabelGuru && !isError)
     return (

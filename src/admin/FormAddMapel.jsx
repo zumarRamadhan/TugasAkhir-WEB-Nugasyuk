@@ -12,6 +12,7 @@ import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
 import apiurl from "../api/api";
+import Select from "react-select";
 
 function FormAddMapel() {
   const navText = "Tambah Data Mata Pelajaran";
@@ -339,6 +340,76 @@ function FormAddMapel() {
     //   });
   }, []);
 
+  const [selectedGuru, setSelectedGuru] = useState(null);
+  const [guruOptions, setGuruOptions] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${apiurl}admin/guru`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        const options = responseAPI.data.flatMap((guru) =>
+          guru.kode_guru.map((kode) => ({
+            value: kode.id,
+            label: `${kode.kode_guru} // ${guru.nama_guru} // ${kode.nama_mapel}`,
+          }))
+        );
+        setGuruOptions(options);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+      });
+  }, []);
+
+  const handleGuruChange = (selectedOption) => {
+    setSelectedGuru(selectedOption);
+    setFormData((prevState) => ({
+      ...prevState,
+      kodeId: selectedOption ? selectedOption.value : "",
+    }));
+  };
+
+  const [selectedKelas, setSelectedKelas] = useState([null]);
+  const [kelasOptions, setKelasOptions] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${apiurl}admin/kelas`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        const options = responseAPI.data.map((kelas) => ({
+          value: kelas.id,
+          label: `${kelas.tingkat_ke} ${kelas.nama_jurusan} ${kelas.nama_kelas}`,
+        }));
+        setKelasOptions(options);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+      });
+  }, []);
+
+  const handleKelasChange = (selectedOption) => {
+    setSelectedKelas(selectedOption);
+    setFormData((prevState) => ({
+      ...prevState,
+      kelasId: selectedOption ? selectedOption.value : "",
+    }));
+  };
+
   if (dataKode && dataKelas && !isError)
     return (
       <div>
@@ -425,68 +496,30 @@ function FormAddMapel() {
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>
-                  {isLoading ? (
-                    <input
-                      value="Data Sedang Dalam Proses..."
-                      disabled
-                      className="input-formKbm"
-                    />
-                  ) : (
-                    <select
-                      name="kelasId"
-                      id="kelasId"
-                      value={formData.kelasId}
-                      onChange={handleChange}
-                      className="selectClass"
-                    >
-                      <option value="" selected disabled>
-                        Pilih Kelas
-                      </option>
-                      {dataKelas.map((kelas) => (
-                        <option value={kelas.id}>
-                          {kelas.tingkat_ke +
-                            " " +
-                            kelas.nama_jurusan.toUpperCase() +
-                            " " +
-                            kelas.nama_kelas}
-                        </option>
-                      ))}
-                    </select>
-                  )}
+                  <Select
+                    value={selectedKelas}
+                    onChange={handleKelasChange}
+                    options={kelasOptions}
+                    isClearable
+                    placeholder="Pilih Kelas"
+                    className="input-formKbm"
+                  />
                   {errors.kelasId && (
                     <span className="error">{errors.kelasId}</span>
                   )}
                 </div>
 
                 <div className="con-formKbm">
-                  <div className="title-formKbm">Kode Guru</div>
-                  {isLoading ? (
-                    <input
-                      value="Data Sedang Dalam Proses..."
-                      disabled
-                      className="input-formKbm"
-                    />
-                  ) : (
-                    <select
-                      name="kodeId"
-                      id="kelas"
-                      className="selectClass"
-                      value={formData.kodeId}
-                      onChange={handleChange}
-                    >
-                      <option value="" selected disabled>
-                        Pilih Kode Guru
-                      </option>
-                      {dataKode.map((kelas) =>
-                        kelas.kode_guru.map((guru) => (
-                          <option value={guru.id}>
-                            {guru.kode_guru} // {kelas.nama_guru} // {guru.nama_mapel}
-                          </option>
-                        ))
-                      )}
-                    </select>
-                  )}
-                  {errors.kodeId && ( //change
+                  <div className="title-formKbm">Mata Pelajaran</div>
+                  <Select
+                    value={selectedGuru}
+                    onChange={handleGuruChange}
+                    options={guruOptions}
+                    isClearable
+                    placeholder="Pilih Kode / Guru"
+                    className="input-formKbm"
+                  />
+                  {errors.kodeId && (
                     <span className="error">{errors.kodeId}</span>
                   )}
                 </div>
