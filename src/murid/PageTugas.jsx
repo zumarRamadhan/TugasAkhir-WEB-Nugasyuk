@@ -245,6 +245,7 @@ function PageTugas() {
                         id="123"
                       >
                         <div className="indiecator-left">
+                          {/* buat beginian all status trs ceknya di commend command misal ngecek konfirmasi, yaudah selain konfirmasi di command dulu */}
                           <div
                             className="icon-indie-information"
                             style={{ background: "#DDDDDD" }}
@@ -255,6 +256,7 @@ function PageTugas() {
                               style={{ color: "#797979" }}
                             />
                           </div>
+
                           <div className="desc-indie">
                             <p className="title-indie-information">
                               {listTugas.soal}

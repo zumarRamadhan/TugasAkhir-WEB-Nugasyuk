@@ -453,7 +453,7 @@ function DetailTask() {
               <p className="title-value-file">{file.name}</p>
               <button
                 className="button-delete"
-                onClick={handleDelete}
+                onClick={handleDeleteFile}
               >
                 <Icon
                   className="icon-delete-file"
