@@ -15,12 +15,13 @@ import ImgFailed from "../assets/failed.gif";
 import vektorProfile from "../assets/vektorProfile.svg";
 import axios from "axios";
 import apiurl from "../api/api";
+import ExportExcelButton from "../component/ExportExcelButton";
 
 function DataMurid() {
   const navText = "Data Murid";
   const navigate = useNavigate();
   const [detailMurid, setDetailMurid] = useState([]);
-  const [isShowNotifSucces, setisShowNotifSucces] = useState(false);
+  const [dataExport, setDataExport] = useState([]);
 
   const showDetailPopup = () => {
     const background = document.querySelector(".popup-detailMurid");
@@ -357,22 +358,29 @@ function DataMurid() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-  // if (isLoading) {
-  //   return (
-  //     <div id="load">
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //       <div>.</div>
-  //     </div>
-  //   );
-  // } else
+    // useEffect(() => {
+    //   axios
+    //     .get(`${apiurl}admin/export-murid`, {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${saveToken}`,
+    //         "ngrok-skip-browser-warning": "any",
+    //       },
+    //     })
+    //     .then((result) => {
+    //       console.log("data API", result.data);
+    //       const responseAPI = result.data;
+  
+    //       setDataExport(responseAPI.data);
+    //       setIsLoading(false);
+    //     })
+    //     .catch((err) => {
+    //       console.log("terjadi kesalahan: ", err);
+    //       setIsError(true);
+    //       setIsLoading(false);
+    //     });
+    // }, []);
+    
   if (dataTabelMurid && !isError)
     return (
       <div>
@@ -410,10 +418,10 @@ function DataMurid() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">
@@ -456,6 +464,7 @@ function DataMurid() {
                     ></Icon>
                   </button>
                 </form>
+                {/* <ExportExcelButton data={dataExport} filename="exported_data" /> */}
               </div>
               <div className="header-murid-right">
                 <p className="detail-jumlah-murid">

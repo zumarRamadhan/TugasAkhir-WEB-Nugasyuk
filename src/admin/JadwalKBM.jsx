@@ -58,7 +58,7 @@ function EditFormAddJadwal() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -86,7 +86,7 @@ function EditFormAddJadwal() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((response) => {
@@ -245,13 +245,12 @@ function EditFormAddJadwal() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
         console.log("data API", result.data);
         const responseAPI = result.data;
-        
 
         setDataKelas(responseAPI.data);
         setIsLoading(false);
@@ -282,7 +281,7 @@ function EditFormAddJadwal() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -310,7 +309,7 @@ function EditFormAddJadwal() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -386,10 +385,10 @@ function EditFormAddJadwal() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">
@@ -411,8 +410,8 @@ function EditFormAddJadwal() {
                 >
                   {dataKelas.map((data) => (
                     <option value={data.id}>
-                      {data.nama_kelas} {data.nama_jurusan.toUpperCase()}{" "}
-                      {data.tingkat_ke}
+                      {data.tingkat_ke} {data.nama_jurusan.toUpperCase()}{" "}
+                      {data.nama_kelas}
                     </option>
                   ))}
                 </select>
@@ -754,8 +753,8 @@ function EditFormAddJadwal() {
           </div>
         </div>
 
-          {/* card loading */}
-          <div className="popup-loading">
+        {/* card loading */}
+        <div className="popup-loading">
           <div className="body-loading" id="body-loading">
             <svg
               class="pl"

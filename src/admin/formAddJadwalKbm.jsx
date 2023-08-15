@@ -12,6 +12,7 @@ import ImgFailed from "../assets/failed.gif";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import apiurl from "../api/api";
+import Select from "react-select";
 
 function FormAddJadwalKbm() {
   const navText = "Tambah data";
@@ -313,6 +314,44 @@ function FormAddJadwalKbm() {
     },
   ];
 
+  const [selectedMapel, setSelectedMapel] = useState([null]);
+  const [MapelOptions, setMapelOptions] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${apiurl}admin/mapel`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((result) => {
+        const responseAPI = result.data;
+        const options = responseAPI.data.map((mapel) => ({
+          value: mapel.id,
+          label: `${mapel.nama_mapel} // ${mapel.nama_guru} // ${mapel.tingkat_ke +
+          " " +
+          mapel.nama_jurusan.toUpperCase() +
+          " " +
+          mapel.nama_kelas}`,
+        }));
+        setMapelOptions(options);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+      });
+  }, []);
+
+  const handleMapelChange = (selectedOption) => {
+    setSelectedMapel(selectedOption);
+    setFormData((prevState) => ({
+      ...prevState,
+      mapelId: selectedOption ? selectedOption.value : "",
+    }));
+  };
+
   if (dataMapel && !isError)
     return (
       <div>
@@ -351,10 +390,10 @@ function FormAddJadwalKbm() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">
@@ -362,37 +401,16 @@ function FormAddJadwalKbm() {
           <main className="main">
             <div className="content-formKbm">
               <form onSubmit={handleSubmit} className="container-formKbm">
-                <div className="con-formKbm">
+              <div className="con-formKbm">
                   <div className="title-formKbm">Mata Pelajaran</div>
-                  {isLoading ? (
-                    <input
-                      value="Data Sedang Dalam Proses..."
-                      disabled
-                      className="input-formKbm"
-                    />
-                  ) : (
-                    <select
-                      name="mapelId"
-                      id="mapelId"
-                      value={formData.mapelId}
-                      onChange={handleChange}
-                      className="selectClass"
-                    >
-                      <option value="" hidden>
-                        Pilih Mapel
-                      </option>
-                      {dataMapel.map((data) => (
-                        <option value={data.id}>
-                          {data.nama_mapel} // {data.nama_guru} //
-                          {data.tingkat_ke +
-                            " " +
-                            data.nama_jurusan.toUpperCase() +
-                            " " +
-                            data.nama_kelas}
-                        </option>
-                      ))}
-                    </select>
-                  )}
+                  <Select
+                    value={selectedMapel}
+                    onChange={handleMapelChange}
+                    options={MapelOptions}
+                    isClearable
+                    placeholder="Pilih Mata Pelajaran"
+                    className="input-formKbm"
+                  />
                   {errors.mapelId && (
                     <span className="error">{errors.mapelId}</span>
                   )}
