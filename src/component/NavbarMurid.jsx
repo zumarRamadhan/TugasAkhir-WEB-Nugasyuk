@@ -55,7 +55,7 @@ function NavbarMurid(props) {
               {dataNavbar.map((navData) =>
               <div className="img-profile" style={{ cursor: "pointer" }}>
                 <img
-                  src={`https://www.nugasyuk.my.id/public/${navData.foto_profile || <Skeleton circle/>}`}
+                  src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${navData.foto_profile || <Skeleton circle/>}`}
                   alt={dataNavbar.foto_profile}
                   onClick={showDetail}
                 />

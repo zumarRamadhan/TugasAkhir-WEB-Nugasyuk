@@ -246,8 +246,8 @@ function PageTugas() {
                       >
                         <div className="indiecator-left">
                           
-                          {/* icon tugas belum dikerjakan */}
-                          <div
+                          {/* icon belum dikerjakan */}
+                          {/* <div
                             className="icon-indie-information"
                             style={{ background: "#DDDDDD" }}
                           >
@@ -256,10 +256,10 @@ function PageTugas() {
                               width="35"
                               style={{ color: "#797979" }}
                             />
-                          </div>
+                          </div> */}
 
-                          {/* icon tugas belum selesai lebih dari deadline */}
-                          {/* <div
+                          {/* icon belum selesai lebih dari deadline */}
+                          <div
                             className="icon-indie-information"
                             style={{ background: "#FFC6C6" }}
                           >
@@ -268,9 +268,9 @@ function PageTugas() {
                               width="30"
                               style={{ color: "#FF3F3F" }}
                             />
-                          </div> */}
+                          </div>
 
-                          {/* icon tugas menunggu konfirmasi guru */}
+                          {/* icon menunggu */}
                           {/* <div
                             className="icon-indie-information"
                             style={{ background: "#FFFA87" }}
@@ -282,7 +282,7 @@ function PageTugas() {
                             />
                           </div> */}
 
-                          {/* icon tugas selesai*/}
+                          {/* icon selesai dalam deadline*/}
                           {/* <div
                             className="icon-indie-information"
                             style={{ background: "#D5FFC6" }}
@@ -294,7 +294,7 @@ function PageTugas() {
                             />
                           </div> */}
 
-                          {/* icon tugas selesai lebih deadline */}
+                          {/* icon selesai lebih deadline */}
                           {/* <div
                             className="icon-indie-information"
                             style={{ background: "#FFC6C6" }}

@@ -875,3 +875,122 @@ nav .navbar img {
 }
 
 /* end popup Delete */
+
+/* hover image profile */
+.detail-img-profile:hover{
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.detail-img-profile:hover .btn-edit-profile{
+    opacity: 1;
+}
+
+/* .btn-edit-profile{
+    position: absolute;
+    width: 500px;
+    left:0;
+    top: 180px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+    border: none;
+    background-color: #1D77AF;
+    margin-top: -70px;
+} */
+
+/* .icon-edit-profile{
+    color: #fff;
+    margin-left: -160px;
+} */
+
+
+.image-profile-detail {
+    position: relative;
+    margin-top: 60px;
+    width: 200px;
+    height: 200px;
+    margin-left: 40px;
+    cursor: pointer;
+    margin-bottom: 30px;
+  }
+  
+  .overlay {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.5s ease;
+    margin-top: -200px;
+    z-index: 90;
+  }
+  
+  .image-profile-detail:hover .overlay {
+    display: block;
+    background: rgba(0, 0, 0, .3);
+    cursor: pointer;
+    filter: brightness(.5);
+  }
+  
+  .img-detail-profile {
+    /* position: absolute; */
+    width: 200px;
+    height: 200px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    z-index: 29;
+    border-radius: 100%;
+  }
+  
+  .title {
+    position: absolute;
+    width: 500px;
+    left: 0;
+    top: 120px;
+    font-weight: 700;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    z-index: 1;
+    transition: top .5s ease;
+  }
+  
+  .image-profile-detail:hover .title {
+    top: 90px;
+  }
+  
+  .btn-edit-profile {
+    position: absolute;
+    width: 100px;
+    left:0;
+    top: 180px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+    background-color: #00000000;
+    border: none;
+    align-items: center;
+    margin-top: -110px;
+    cursor: pointer;
+  }
+  
+  .btn-edit-profile .icon-edit-profile {
+    width: 200px;
+    padding: 12px 48px;
+    text-align: center;
+    color: white;
+    border: none;
+    z-index: 1;
+  }
+  
+  .image-profile-detail:hover .btn-edit-profile{
+    opacity: 1;
+  }
+  
+/* end hover image profile */

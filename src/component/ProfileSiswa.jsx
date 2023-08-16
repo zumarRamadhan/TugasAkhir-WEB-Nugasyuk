@@ -2,8 +2,8 @@ import "../App.css";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarMurid from "../component/NavbarMurid";
 import ImgProfil from "../assets/profil-murid.svg";
@@ -77,15 +77,15 @@ function DetailProfileSiswa() {
   const [isError, setisError] = useState(false);
 
   const logout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
+    localStorage.removeItem("token");
+    window.location.href = "/login";
   };
 
   useEffect(() => {
     axios
       .get(`${apiurl}murid/profile`, {
         headers: {
-          "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning": "any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },
@@ -104,17 +104,57 @@ function DetailProfileSiswa() {
       });
   }, []);
 
-  if (isLoading)
-    return (
-      <div id="load">
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-        <div>.</div>
-      </div>
-    );
-  else if (dataProfileSiswa && !isError)
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+
+    // Generate a preview of the selected image
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setPreviewImage(e.target.result);
+    };
+    reader.readAsDataURL(file);
+
+    // Automatically send the edited profile image to the API
+    editProfile(file);
+  };
+
+  const editProfile = (file) => {
+    // Create FormData to send the file to the API
+    const formData = new FormData();
+    formData.append("foto_profile", file);
+
+    axios
+      .post(`${apiurl}murid/edit/foto`, formData, {
+        headers: {
+          "ngrok-skip-browser-warning": "any",
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${saveToken}`,
+        },
+      })
+      .then((response) => {
+        console.log("Data berhasil dikirim", response.data);
+        alert('Foto Profile Berhasil Diubah')
+        // Optionally, you can update the dataProfileSiswa state with the new image URL
+      })
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengirim data", error);
+      });
+  };
+
+  // if (isLoading)
+  //   return (
+  //     <div id="load">
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //       <div>.</div>
+  //     </div>
+  //   );
+  if (dataProfileSiswa && !isError)
     return (
       <div>
         <div className="popup-logout" id="popup-logout">
@@ -221,21 +261,57 @@ function DetailProfileSiswa() {
                 />
                 <h2>Profil</h2>
               </div>
-              <div className="detail-image-profile">
-                <img src={`https://www.nugasyuk.my.id/public/${profileSiswa.foto_profile}`} alt="" className="detail-img-profile" />
+              <div className="image-profile-detail">
+                <img
+                  src={
+                    previewImage ||
+                    `https://wondrous-squirrel-blatantly.ngrok-free.app/${profileSiswa.foto_profile}`
+                  }
+                  alt=""
+                  className="img-detail-profile"
+                />
+                <div className="overlay"></div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                  id="file-input"
+                />
+                <label htmlFor="file-input" className="btn-edit-profile">
+                  <Icon
+                    icon="material-symbols:photo-camera-outline"
+                    width="70"
+                    className="icon-edit-profile"
+                  />
+                </label>
               </div>
-                <p className="judul-detail">Email</p>
-                <p className="value-detail">{profileSiswa.email}</p>
-                <p className="judul-detail">Nama Pengguna</p>
-                <p className="value-detail">{profileSiswa.nama_panggilan}</p>
-                <p className="judul-detail">Nama</p>
-                <p className="value-detail">{profileSiswa.nama_siswa}</p>
-                <p className="judul-detail">Jurusan</p>
-                <p className="value-detail">{profileSiswa.nama_jurusan}</p>
-                <p className="judul-detail">Kelas</p>
-                <p className="value-detail">{profileSiswa.tingkat_ke}</p>
-                <p className="judul-detail">NIS</p>
-                <p className="value-detail">{profileSiswa.nis}</p>
+              {/* <div className="detail-image-profile">
+                <img
+                  src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${profileSiswa.foto_profile}`}
+                  alt=""
+                  className="detail-img-profile"
+                />
+                <button className="btn-edit-profile">
+                  <Icon
+                    icon="material-symbols:photo-camera-outline"
+                    width="50"
+                    className="icon-edit-profile"
+                  />
+                </button>
+              </div> */}
+              <p className="judul-detail">Email</p>
+              <p className="value-detail">{profileSiswa.email}</p>
+              <p className="judul-detail">Nama Pengguna</p>
+              <p className="value-detail">{profileSiswa.nama_panggilan}</p>
+              <p className="judul-detail">Nama</p>
+              <p className="value-detail">{profileSiswa.nama_siswa}</p>
+              <p className="judul-detail">Jurusan</p>
+              <p className="value-detail">{profileSiswa.nama_jurusan}</p>
+              <p className="judul-detail">Kelas</p>
+              <p className="value-detail">{profileSiswa.tingkat_ke}</p>
+              <p className="judul-detail">NIS</p>
+              <p className="value-detail">{profileSiswa.nis}</p>
             </div>
             <div className="con-btn-detail-profile">
               <button
