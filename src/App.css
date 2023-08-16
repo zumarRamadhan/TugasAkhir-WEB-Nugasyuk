@@ -944,6 +944,8 @@ nav .navbar img {
     justify-content: center;
     margin-top: 60px;
     z-index: 29;
+    object-fit: cover;
+    object-position: 25% 25%;
     border-radius: 100%;
   }
   

@@ -8,6 +8,8 @@ import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarMurid from "../component/NavbarMurid";
 import ImgProfil from "../assets/profil-murid.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
+import ImgSuccess from "../assets/88860-success-animation.gif";
+import ImgFailed from "../assets/94303-failed.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import apiurl from "../api/api";
@@ -69,6 +71,35 @@ function DetailProfileSiswa() {
       passwordTypeConfirm === "password" ? "text" : "password"
     );
   }
+
+  // messege
+  const showSuccessAdd = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccess = () => {
+    const popupLogout = document.querySelector("#popup-success");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    // navigate(`/murid/detailtugas/{$id}`);
+    window.location.reload();
+  };
+
+  const showFailedAdd = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeFailed = () => {
+    const popupLogout = document.querySelector("#popup-Failed");
+    setTimeout(() => (popupLogout.style.display = "none"), 250);
+    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end messege
 
   const saveToken = sessionStorage.getItem("token");
 
@@ -137,11 +168,12 @@ function DetailProfileSiswa() {
       })
       .then((response) => {
         console.log("Data berhasil dikirim", response.data);
-        alert('Foto Profile Berhasil Diubah')
+        showSuccessAdd();
         // Optionally, you can update the dataProfileSiswa state with the new image URL
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengirim data", error);
+        showFailedAdd();
       });
   };
 
@@ -333,6 +365,95 @@ function DetailProfileSiswa() {
             </div>
           </div>
         ))}
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Foto Profile Sudah Diubah</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Tugas Gagal Dikirim!</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        {/* messege delete */}
+
+        <div id="popup-success">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccess}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Data Berhasil Di Hapus</p>
+            <button className="btn-success" onClick={closeSuccess}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Data Gagal Di Hapus</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div className="popup-loading" id="popup-loadingDetail">
+          <div className="body-loadingDetail" id="body-loadingDetail">
+            <h2 class="animate-loadingDetail">Loading</h2>
+            <p>Data Sedang Di Proses...</p>
+          </div>
+        </div>
       </div>
     );
 }
