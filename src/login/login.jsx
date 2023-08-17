@@ -7,8 +7,8 @@ import userIcon from "../assets/user-icon.svg";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
-import ImgSuccess from '../assets/88860-success-animation.gif';
-import ImgFailed from '../assets/94303-failed.gif';
+import ImgSuccess from "../assets/88860-success-animation.gif";
+import ImgFailed from "../assets/94303-failed.gif";
 // import { createBrowserHistory } from 'history';
 // import { useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -113,97 +113,102 @@ function Login() {
   //   );
 
   return (
-    <div className="container-login">
-      <div className="image-login">
-        <img src={greenLoginIcon} alt="" className="img-login" />
-      </div>
-      <div className="con-form-login">
-        <h1 className="title-form-login">
-          <img src={IconNugasyuk} alt="" className="icon-jurnal-login" />
-          nugasyuk
-        </h1>
-        <div className="con-desc">
-          <p className="desc-form-login">
-            Masukkan akun anda terlebih dahulu untuk masuk!
-          </p>
+    <div>
+      <div className="container-login">
+        <div className="image-login">
+          <img src={greenLoginIcon} alt="" className="img-login" />
         </div>
-        <form className="form-login" onSubmit={login}>
-          <div className="con-form-username">
-            <img src={userIcon} className="icon-input" />
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="email"
-              className="input-username"
-              value={email}
-              onChange={handleEmail}
-              required
-            />
+        <div className="con-form-login">
+          <h1 className="title-form-login">
+            <img src={IconNugasyuk} alt="" className="icon-jurnal-login" />
+            nugasyuk
+          </h1>
+          <div className="con-desc">
+            <p className="desc-form-login">
+              Masukkan akun anda terlebih dahulu untuk masuk!
+            </p>
           </div>
-          <div className="con-form-password">
-            <img src={passIcon} className="icon-input" />
-            <input
-              type={passwordShown ? "text" : "password"}
-              id="password"
-              name="password"
-              placeholder="password"
-              className="input-password"
-              value={password}
-              onChange={handlePassword}
-              required
-            />
-            <button type="button" onClick={togglePassword} className="btn-mata">
-              <img src={mataIcon} className="icon-mata" />
-            </button>
-          </div>
-          <button type="submit" value="Login" className="btn-login">
-            MASUK
-          </button>
-        </form>
-      </div>
-
-      <div id="popup-success">
-          <div className="detail-success">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeSuccess}
-            />
-            <div className="image-success">
-              <img
-                src={ImgSuccess}
-                alt="Delete Success"
-                className="img-success"
+          <form className="form-login" onSubmit={login}>
+            <div className="con-form-username">
+              <img src={userIcon} className="icon-input" />
+              <input
+                type="text"
+                id="email"
+                name="email"
+                placeholder="email"
+                className="input-username"
+                value={email}
+                onChange={handleEmail}
+                required
               />
             </div>
-            <p className="desc-success">SELAMAT DATANG DI NUGASYUK!!!</p>
-            <button className="btn-success" onClick={closeSuccess}>
-              Kembali
-            </button>
-          </div>
-        </div>
-
-        <div id="popup-Failed">
-          <div className="detail-Failed">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeFailed}
-            />
-            <div className="image-Failed">
-              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            <div className="con-form-password">
+              <img src={passIcon} className="icon-input" />
+              <input
+                type={passwordShown ? "text" : "password"}
+                id="password"
+                name="password"
+                placeholder="password"
+                className="input-password"
+                value={password}
+                onChange={handlePassword}
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePassword}
+                className="btn-mata"
+              >
+                <img src={mataIcon} className="icon-mata" />
+              </button>
             </div>
-            <p className="desc-Failed">
-              Email atau Password yang anda masukkan salah!!!
-            </p>
-            <button className="btn-Failed" onClick={closeFailed}>
-              Kembali
+            <button type="submit" value="Login" className="btn-login">
+              MASUK
             </button>
-          </div>
+          </form>
         </div>
+      </div>
+      <div id="popup-success">
+        <div className="detail-success">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeSuccess}
+          />
+          <div className="image-success">
+            <img
+              src={ImgSuccess}
+              alt="Delete Success"
+              className="img-success"
+            />
+          </div>
+          <p className="desc-success">SELAMAT DATANG DI NUGASYUK!!!</p>
+          <button className="btn-success" onClick={closeSuccess}>
+            Kembali
+          </button>
+        </div>
+      </div>
+
+      <div id="popup-Failed">
+        <div className="detail-Failed">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeFailed}
+          />
+          <div className="image-Failed">
+            <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+          </div>
+          <p className="desc-Failed">
+            Email atau Password yang anda masukkan salah!!!
+          </p>
+          <button className="btn-Failed" onClick={closeFailed}>
+            Kembali
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -78,7 +78,7 @@ function PageTugas() {
     axios
       .get(`${apiurl}murid/tugas`, {
         headers: {
-          "ngrok-skip-browser-warning":"any",
+          "ngrok-skip-browser-warning": "any",
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
         },
@@ -245,79 +245,80 @@ function PageTugas() {
                         id="123"
                       >
                         <div className="indiecator-left">
-                          
-                          {/* icon belum dikerjakan */}
-                          {/* <div
-                            className="icon-indie-information"
-                            style={{ background: "#DDDDDD" }}
-                          >
-                            <Icon
-                              icon="ic:round-pending-actions"
-                              width="35"
-                              style={{ color: "#797979" }}
-                            />
-                          </div> */}
-
-                          {/* icon belum selesai lebih dari deadline */}
-                          <div
-                            className="icon-indie-information"
-                            style={{ background: "#FFC6C6" }}
-                          >
-                            <Icon
-                              icon="ic:round-pending-actions"
-                              width="30"
-                              style={{ color: "#FF3F3F" }}
-                            />
-                          </div>
-
-                          {/* icon menunggu */}
-                          {/* <div
-                            className="icon-indie-information"
-                            style={{ background: "#FFFA87" }}
-                          >
-                            <Icon
-                              icon="uiw:time-o"
-                              width="30"
-                              style={{ color: "#CBC41A" }}
-                            />
-                          </div> */}
-
-                          {/* icon selesai dalam deadline*/}
-                          {/* <div
-                            className="icon-indie-information"
-                            style={{ background: "#D5FFC6" }}
-                          >
-                            <Icon
-                              icon="material-symbols:check-small-rounded" 
-                              width="50"
-                              style={{ color: "#84E063" }}
-                            />
-                          </div> */}
-
-                          {/* icon selesai lebih deadline */}
-                          {/* <div
-                            className="icon-indie-information"
-                            style={{ background: "#FFC6C6" }}
-                          >
-                            <Icon
-                              icon="material-symbols:check-small-rounded" 
-                              width="50"
-                              style={{ color: "#FF3F3F" }}
-                            />
-                          </div> */}
-                          
-                          {/* icon menunggu lebih deadline */}
-                          {/* <div
-                            className="icon-indie-information"
-                            style={{ background: "#FFC6C6" }}
-                          >
-                            <Icon
-                              icon="uiw:time-o"
-                              width="30"
-                              style={{ color: "#FF3F3F" }}
-                            />
-                          </div> */}
-
+                          {listTugas.status ===
+                            "belum_selesai_dalam_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#DDDDDD" }}
+                            >
+                              <Icon
+                                icon="ic:round-pending-actions"
+                                width="35"
+                                style={{ color: "#797979" }}
+                              />
+                            </div>
+                          )}
+                          {listTugas.status ===
+                            "belum_selesai_luar_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="ic:round-pending-actions"
+                                width="30"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
+                          {listTugas.status === "menunggu_dalam_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#FFFA87" }}
+                            >
+                              <Icon
+                                icon="uiw:time-o"
+                                width="30"
+                                style={{ color: "#CBC41A" }}
+                              />
+                            </div>
+                          )}
+                          {listTugas.status === "menunggu_lebih_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="uiw:time-o"
+                                width="30"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
+                          {listTugas.status === "selesai_dalam_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#D5FFC6" }}
+                            >
+                              <Icon
+                                icon="material-symbols:check-small-rounded"
+                                width="50"
+                                style={{ color: "#84E063" }}
+                              />
+                            </div>
+                          )}
+                          {listTugas.status === "selesai_lebih_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="material-symbols:check-small-rounded"
+                                width="50"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
 
                           <div className="desc-indie">
                             <p className="title-indie-information">
