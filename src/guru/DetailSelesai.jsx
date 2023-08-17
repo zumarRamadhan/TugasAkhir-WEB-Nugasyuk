@@ -351,9 +351,9 @@ function DetailSelesai() {
                 </div>
                 <div className="right-header-card-detailSelesai">
                   <p className="date-header-card-detailSelesai">{detailSelesai.date}</p>
-                  <div className="icon-options" style={{ cursor: "pointer" }}>
+                  {/* <div className="icon-options" style={{ cursor: "pointer" }}>
                     <Icon icon="mi:options-vertical" width={40} />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 

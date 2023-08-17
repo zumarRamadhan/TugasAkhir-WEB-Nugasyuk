@@ -439,9 +439,9 @@ function DetailMenunggu() {
                   <p className="date-header-card-detailMenunggu">
                     {detailMenunggu.date}
                   </p>
-                  <div className="icon-options" style={{ cursor: "pointer" }}>
+                  {/* <div className="icon-options" style={{ cursor: "pointer" }}>
                     <Icon icon="mi:options-vertical" width={40} />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
