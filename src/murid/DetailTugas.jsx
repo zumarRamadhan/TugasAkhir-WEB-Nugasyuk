@@ -158,7 +158,7 @@ function DetailTask() {
   };
 
   const handleDelete = () => {
-    console.log('menghapus data');
+    console.log("menghapus data");
     axios
       .get(`${apiurl}murid/tugas/hapus/${id}`, {
         headers: {
@@ -171,7 +171,6 @@ function DetailTask() {
         // Penanganan ketika penghapusan berhasil
         console.log("Data berhasil dihapus", response.data);
         window.location.reload();
-     
       })
       .catch((error) => {
         // Penanganan ketika terjadi kesalahan saat menghapus data
@@ -451,10 +450,7 @@ function DetailTask() {
           <div className="file-button-delete">
             <div className="name-delete">
               <p className="title-value-file">{file.name}</p>
-              <button
-                className="button-delete"
-                onClick={handleDelete}
-              >
+              <button className="button-delete" onClick={handleDelete}>
                 <Icon
                   className="icon-delete-file"
                   icon="basil:cross-solid"
@@ -544,9 +540,80 @@ function DetailTask() {
                     <div className="con-content-detail-task">
                       <div className="content-detail-task">
                         <div className="content-detail-task-left">
-                          <div className="icon-detail-task">
-                            <Icon icon="uiw:time-o" width="30" />
-                          </div>
+                          {detailTugas.status ===
+                            "belum_selesai_dalam_deadline" && (
+                            <div
+                              className="icon-detail-task"
+                              style={{ background: "#DDDDDD" }}
+                            >
+                              <Icon
+                                icon="ic:round-pending-actions"
+                                width="35"
+                                style={{ color: "#797979" }}
+                              />
+                            </div>
+                          )}
+                          {detailTugas.status ===
+                            "belum_selesai_luar_deadline" && (
+                            <div
+                              className="icon-detail-task"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="ic:round-pending-actions"
+                                width="30"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
+                          {detailTugas.status === "menunggu_dalam_deadline" && (
+                            <div
+                              className="icon-detail-task"
+                              style={{ background: "#FFFA87" }}
+                            >
+                              <Icon
+                                icon="uiw:time-o"
+                                width="30"
+                                style={{ color: "#CBC41A" }}
+                              />
+                            </div>
+                          )}
+                          {detailTugas.status === "menunggu_lebih_deadline" && (
+                            <div
+                              className="icon-detail-task"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="uiw:time-o"
+                                width="30"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
+                          {detailTugas.status === "selesai_dalam_deadline" && (
+                            <div
+                              className="icon-detail-task"
+                              style={{ background: "#D5FFC6" }}
+                            >
+                              <Icon
+                                icon="material-symbols:check-small-rounded"
+                                width="50"
+                                style={{ color: "#84E063" }}
+                              />
+                            </div>
+                          )}
+                          {detailTugas.status === "selesai_lebih_deadline" && (
+                            <div
+                              className="icon-detail-task"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="material-symbols:check-small-rounded"
+                                width="50"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
                           <div className="desc-material">
                             <p className="name-task ">
                               {detailTugas.nama_tugas}
@@ -570,9 +637,7 @@ function DetailTask() {
                           {generateFileLinkElements()}
                           {fileList.map((file, index) => (
                             <div key={index}>
-                              <a
-                                href={URL.createObjectURL(file)}
-                              >
+                              <a href={URL.createObjectURL(file)}>
                                 {generateFileInputs()}
                               </a>
                             </div>
@@ -588,6 +653,13 @@ function DetailTask() {
                           <button
                             className="btn-add-task"
                             onClick={handleButtonClick}
+                            style={{
+                              display:
+                                detailTugas.status === "selesai_dalam_deadline" ||
+                                detailTugas.status === "selesai_lebih_deadline"
+                                  ? "none"
+                                  : "block",
+                            }}
                           >
                             <Icon icon="ic:round-plus" width="20" />
                             <p>Tambah</p>
@@ -597,6 +669,13 @@ function DetailTask() {
                           className="btn-submit-task"
                           type="submit"
                           onClick={submitTask}
+                          style={{
+                            display:
+                              detailTugas.status === "selesai_dalam_deadline" ||
+                              detailTugas.status === "selesai_lebih_deadline"
+                                ? "none"
+                                : "block",
+                          }}
                         >
                           <p>Kirim</p>
                         </button>
@@ -723,11 +802,11 @@ function DetailTask() {
         </div>
 
         <div className="popup-loading" id="popup-loadingDetail">
-        <div className="body-loadingDetail" id="body-loadingDetail">
-          <h2 class="animate-loadingDetail">Loading</h2>
-          <p>Data Sedang Di Proses...</p>
+          <div className="body-loadingDetail" id="body-loadingDetail">
+            <h2 class="animate-loadingDetail">Loading</h2>
+            <p>Data Sedang Di Proses...</p>
+          </div>
         </div>
-      </div>
 
         <ProfileSiswa />
 
