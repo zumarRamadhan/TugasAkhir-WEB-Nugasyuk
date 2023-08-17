@@ -85,8 +85,8 @@
   color: var(--color-aksen);
   border: none;
   /* padding: 13px 35px; */
-  width: 370px;
-  height: 40px;
+  width: 100%;
+  /* height: 40px; */
   align-items: center;
   justify-content: center;
   border-radius: 10px;
@@ -242,8 +242,6 @@ a {
   background-color: var(--color-primer);
   cursor: pointer;
   align-items: center;
-  padding-right: -100px;
-  padding-top: 25px;
   padding-right: 20px;
   color: #4b4b4b;
   z-index: 99;
@@ -252,6 +250,7 @@ a {
 .name-delete{
   display: flex;
   width: 100%;
+  height: 100%;
   justify-content: space-between;
   color: #4b4b4b;
 
@@ -280,10 +279,10 @@ a {
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 22px;
+  /* line-height: 22px; */
   color: #797979;
   padding-left: 20px;
-  margin-top: -12px;
+  /* margin-top: -12px; */
 }
 
 .format-file span {

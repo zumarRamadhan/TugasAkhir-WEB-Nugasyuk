@@ -167,15 +167,24 @@ function PageTugas() {
                   <option value="all" selected>
                     -- Semua Tugas --
                   </option>
-                  <option value="selesai">Tugas selesai dalam deadline</option>
-                  <option value="selesai">Tugas selesai lewat deadline</option>
-                  <option value="belum_selesai">
+                  <option value="selesai_dalam_deadline">
+                    Tugas selesai dalam deadline
+                  </option>
+                  <option value="selesai_lebih_deadline">
+                    Tugas selesai lewat deadline
+                  </option>
+                  <option value="belum_selesai_dalam_deadline">
                     Tugas belum selesai dalam deadline
                   </option>
-                  <option value="belum_selesai">
+                  <option value="belum_selesai_luar_deadline">
                     Tugas belum selesai lewat deadline
                   </option>
-                  <option value="menunggu">Menunggu konfirmasi guru</option>
+                  <option value="menunggu_dalam_deadline">
+                    Menunggu konfirmasi guru
+                  </option>
+                  <option value="menunggu_lebih_deadline">
+                    Menunggu konfirmasi guru lewat deadline
+                  </option>
                 </select>
               )}
 
@@ -322,7 +331,7 @@ function PageTugas() {
 
                           <div className="desc-indie">
                             <p className="title-indie-information">
-                              {listTugas.soal}
+                              {listTugas.nama_tugas}
                             </p>
                             <p className="value-indie-information">
                               {listTugas.nama_guru}

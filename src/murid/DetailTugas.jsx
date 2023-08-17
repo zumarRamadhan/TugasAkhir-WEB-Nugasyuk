@@ -280,7 +280,10 @@ function DetailTask() {
             </div>
             <div className="file-button-delete">
               <div className="name-delete">
-                <h1 className="title-value-file">{item.file}</h1>
+                <div>
+                  <h1 className="title-value-file">{item.file}</h1>
+                  <p className="format-file">{fileExtension.toUpperCase()}</p>
+                </div>
                 <button className="button-delete" onClick={handleDelete}>
                   <Icon
                     className="icon-delete-file"
@@ -289,7 +292,6 @@ function DetailTask() {
                   />
                 </button>
               </div>
-              <p className="format-file">{fileExtension.toUpperCase()}</p>
             </div>
           </div>
         )}
@@ -449,7 +451,10 @@ function DetailTask() {
           </div>
           <div className="file-button-delete">
             <div className="name-delete">
-              <p className="title-value-file">{file.name}</p>
+              <div>
+                <h1 className="title-value-file">{file.name}</h1>
+                <p className="format-file">{fileExtension.toUpperCase()}</p>
+              </div>
               <button className="button-delete" onClick={handleDelete}>
                 <Icon
                   className="icon-delete-file"
@@ -458,7 +463,6 @@ function DetailTask() {
                 />
               </button>
             </div>
-            <p className="format-file">{fileExtension.toUpperCase()}</p>
           </div>
         </div>
       );
@@ -655,7 +659,8 @@ function DetailTask() {
                             onClick={handleButtonClick}
                             style={{
                               display:
-                                detailTugas.status === "selesai_dalam_deadline" ||
+                                detailTugas.status ===
+                                  "selesai_dalam_deadline" ||
                                 detailTugas.status === "selesai_lebih_deadline"
                                   ? "none"
                                   : "block",

@@ -375,7 +375,7 @@ function MapelMateri() {
                         />
                       </div>
                       <div className="desc-indie">
-                        <p className="material-name">{apiTugas.soal}</p>
+                        <p className="material-name">{apiTugas.nama_tugas}</p>
                         <p className="teacher-name">{apiTugas.nama_guru}</p>
                       </div>
                     </div>
