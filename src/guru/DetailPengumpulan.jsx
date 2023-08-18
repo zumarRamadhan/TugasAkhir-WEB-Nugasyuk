@@ -51,7 +51,7 @@ function DetailPengumpulan() {
           const responseData = response.data;
 
           setDetailPengumpulan(responseData.pengumpulan);
-          setIsLoading(false);
+          // setIsLoading(false);
         } catch (error) {
           console.log("terjadi kesalahan detail profile: ", error);
           setIsError(true);
@@ -68,7 +68,7 @@ function DetailPengumpulan() {
     const fetchData = async () => {
       if (id) {
         try {
-          setIsLoading(true);
+          // setIsLoading(true);
 
           // Pemanggilan API guru/pengumpulan/menunggu/${id}
           const responseMenunggu = await axios.get(
@@ -227,7 +227,7 @@ function DetailPengumpulan() {
                   <div className="img-DetailPengumpulan-Guru">
                     {detailPengumpulan && detailPengumpulan.foto_profile ? (
                       <img
-                        src={damiImgMurid}
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailPengumpulan.foto_profile}`}
                         // src={detailPengumpulan.foto_profile}
                         alt=""
                         className="image-DetailPengumpulan-Guru"
@@ -310,6 +310,8 @@ function DetailPengumpulan() {
                       <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
                       <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
                       <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
                     </div>
                   ) : detailMenunggu.length === 0 ? (
                     <div className="card-DetailPengumpulan-Menunggu-noData">
@@ -323,10 +325,26 @@ function DetailPengumpulan() {
                         style={{ cursor: "pointer" }}
                         onClick={() => handleDetailMenunggu(data.id)}
                       >
-                        {/* Rendering data tugas yang menunggu */}
                         <div className="card-DetailPengumpulan-Menunggu-left">
-                          <div className="img-DetailPengumpulan-Menunggu">
-                            <Icon icon="uiw:time-o" width={40} />
+                          <div
+                            className="img-DetailPengumpulan-Menunggu"
+                            style={{
+                              background:
+                                data.status === "menunggu_dalam_deadline"
+                                  ? "#FFFA87"
+                                  : "#FFC6C6",
+                            }}
+                          >
+                            <Icon
+                              icon="uiw:time-o"
+                              width="40"
+                              style={{
+                                color:
+                                  data.status === "menunggu_dalam_deadline"
+                                    ? "#CBC41A"
+                                    : "#FF3F3F",
+                              }}
+                            />
                           </div>
                           <div className="desc-DetailPengumpulan-Menunggu">
                             <p className="judul-DetailPengumpulan-Menunggu">
@@ -370,6 +388,8 @@ function DetailPengumpulan() {
                       <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                       <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                       <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                     </div>
                   ) : detailSelesai.length === 0 ? (
                     <div className="card-DetailPengumpulan-Selesai-noData">
@@ -385,8 +405,25 @@ function DetailPengumpulan() {
                       >
                         {/* Rendering data tugas yang selesai */}
                         <div className="card-DetailPengumpulan-Selesai-left">
-                          <div className="img-DetailPengumpulan-Selesai">
-                            <Icon icon="material-symbols:check" width={40} />
+                          <div
+                            className="img-DetailPengumpulan-Selesai"
+                            style={{
+                              background:
+                                data.status === "selesai_dalam_deadline"
+                                  ? "#D5FFC6"
+                                  : "#FFC6C6",
+                            }}
+                          >
+                            <Icon
+                              icon="material-symbols:check-small-rounded"
+                              width="40"
+                              style={{
+                                color:
+                                  data.status === "selesai_dalam_deadline"
+                                    ? "#84E063"
+                                    : "#FF3F3F",
+                              }}
+                            />
                           </div>
                           <div className="desc-DetailPengumpulan-Selesai">
                             <p className="judul-DetailPengumpulan-Selesai">

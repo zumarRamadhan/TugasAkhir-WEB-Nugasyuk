@@ -205,7 +205,7 @@ function DetailKbm() {
         </ul>
       </aside>
       <div className="container-content">
-        <NavbarGuru text={"KBM" + " " + titleKelas} />
+        <NavbarGuru text={"KBM"} />
         <div className="main">
           <div className="header-content">
             <div className="switch-container-detailKbm">
@@ -259,34 +259,54 @@ function DetailKbm() {
             }}
           >
             <div className="con-DetailKbm-Materi">
-              {listMateri.map((data) => (
-                <div
-                  key={data.id}
-                  className="card-DetailKbm-Materi"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleListMateri(data.id)}
-                >
-                  <div className="card-DetailKbm-Materi-left">
-                    <div className="img-DetailKbm-Materi">
-                      <Icon icon="ri:book-line" width={40} />
-                    </div>
-                    <div className="desc-DetailKbm-Materi">
-                      <p className="judul-DetailKbm-Materi">
-                        {data.nama_materi}
-                      </p>
-                      <p className="materi-DetailKbm-Guru">{data.nama_guru}</p>
-                    </div>
-                  </div>
-                  <div className="card-DetailKbm-Materi-right">
-                    <div className="dateDetailDesc">{formatDate(data.tanggal_dibuat)}</div>
-                    <Icon
-                      icon="ic:round-navigate-next"
-                      width={30}
-                      color="#2A93D5"
-                    />
-                  </div>
+              {isLoading ? (
+                /* Skeleton loading for list materi */
+                <div className="con-DetailKbm-Materi">
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                 </div>
-              ))}
+              ) : listMateri.length === 0 ? (
+                <div className="card-DetailPengumpulan-Selesai-noData">
+                  <p>Tidak ada materi diberikan</p>
+                </div>
+              ) : (
+                listMateri.map((data) => (
+                  <div
+                    key={data.id}
+                    className="card-DetailKbm-Materi"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleListMateri(data.id)}
+                  >
+                    <div className="card-DetailKbm-Materi-left">
+                      <div className="img-DetailKbm-Materi">
+                        <Icon icon="ri:book-line" width={40} />
+                      </div>
+                      <div className="desc-DetailKbm-Materi">
+                        <p className="judul-DetailKbm-Materi">
+                          {data.nama_materi}
+                        </p>
+                        <p className="materi-DetailKbm-Guru">
+                          {data.nama_guru}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="card-DetailKbm-Materi-right">
+                      <div className="dateDetailDesc">
+                        {formatDate(data.tanggal_dibuat)}
+                      </div>
+                      <Icon
+                        icon="ic:round-navigate-next"
+                        width={30}
+                        color="#2A93D5"
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
@@ -297,35 +317,55 @@ function DetailKbm() {
             }}
           >
             <div className="con-DetailKbm-Tugas">
-              {listTugas.map((data) => (
-                <div
-                  key={data.id}
-                  className="card-DetailKbm-Tugas"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleListTugas(data.id)}
-                >
-                  <div className="card-DetailKbm-Tugas-left">
-                    <div className="img-DetailKbm-Tugas">
-                      <Icon icon="tabler:clipboard-text" width={40} />
-                    </div>
-                    <div className="desc-DetailKbm-Tugas">
-                      <p className="judul-DetailKbm-Tugas">{data.soal}</p>
-                      <p className="materi-DetailKbm-Guru">{data.nama_guru}</p>
-                    </div>
-                  </div>
-                  <div className="card-DetailKbm-Tugas-right">
-                    <div className="dateDetailDesc">{formatDate(data.date)}</div>
-                    <div className="deadline-timeTugas">
-                      Deadline : {formatDate(data.deadline)}
-                    </div>
-                    <Icon
-                      icon="ic:round-navigate-next"
-                      width={30}
-                      color="#2A93D5"
-                    />
-                  </div>
+            {isLoading ? (
+                /* Skeleton loading for list materi */
+                <div className="con-DetailKbm-Tugas">
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                 </div>
-              ))}
+              ) : listTugas.length === 0 ? (
+                <div className="card-DetailPengumpulan-Selesai-noData">
+                  <p>Tidak ada tugas yang di berikan</p>
+                </div>
+              ) : (
+                listTugas.map((data) => (
+                  <div
+                    key={data.id}
+                    className="card-DetailKbm-Tugas"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleListTugas(data.id)}
+                  >
+                    <div className="card-DetailKbm-Tugas-left">
+                      <div className="img-DetailKbm-Tugas">
+                        <Icon icon="tabler:clipboard-text" width={40} />
+                      </div>
+                      <div className="desc-DetailKbm-Tugas">
+                        <p className="judul-DetailKbm-Tugas">{data.nama_tugas}</p>
+                        <p className="materi-DetailKbm-Guru">
+                          {data.nama_guru}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="card-DetailKbm-Tugas-right">
+                      <div className="dateDetailDesc">
+                        {formatDate(data.date)}
+                      </div>
+                      <div className="deadline-timeTugas">
+                        Deadline : {formatDate(data.deadline)}
+                      </div>
+                      <Icon
+                        icon="ic:round-navigate-next"
+                        width={30}
+                        color="#2A93D5"
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
