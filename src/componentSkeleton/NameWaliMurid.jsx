@@ -1,21 +1,21 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-function CardSkeletonBerandaInfo(cards) {
+function NameWaliMurid(cards) {
   return Array(cards)
     .fill(0)
     .map((_, i) => (
       <div className="card-skeleton-beranda" key={i}>
         <Skeleton
           style={{
-            padding: "15px",
-            height: "100px",
-            borderRadius: "20px",
-            gridTemplateColumns: "repeat(3, ifr)"
+            padding: "10px 16px",
+            width: "70px",
+            borderRadius: "10px",
+            marginLeft: "15px",
           }}
         />
       </div>
     ));
 }
 
-export default CardSkeletonBerandaInfo;
+export default NameWaliMurid;

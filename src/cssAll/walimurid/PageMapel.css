@@ -1,0 +1,115 @@
+:root {
+    --loading-grey: #ededed;
+  }
+  .loading .image,
+  .loading h4,
+  .loading .description {
+    background-color: var(--loading-grey);
+    background: linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, .5) 50%,
+      rgba(255, 255, 255, 0) 60%
+    ) var(--loading-grey);
+    background-size: 200% 100%;
+    background-position-x: 180%;
+    animation: 1s loading ease-in-out infinite;
+  }
+  
+  @keyframes loading {
+    to {
+      background-position-x: -20%;
+    }
+  }
+  
+  .loading h4 {
+    min-height: 1.6rem;
+    border-radius: 4px;
+    animation-delay: .05s;
+  }
+  
+  .loading-mapel .description {
+    min-height: 10rem;
+    border-radius: 4px;
+    animation-delay: .06s;
+  }
+
+.content-mapel {
+    margin-top: 30px;
+}
+
+.con-card-mapel-ortu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 100px;
+}
+
+@media only screen and (max-width: 1240px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (min-width: 1640px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (min-width: 2030px) {
+    .con-card-mapel {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.card-mapel {
+    border-radius: 20px;
+    max-width: 405px;
+    position: relative;
+}
+
+.image-card-mapel {
+    width: 100%;
+    height: auto;
+}
+
+.content-card-mapel {
+    display: flex;
+    /* justify-content: space-between; */
+    /* transform: translateY(-300%); */
+    position: absolute;
+    top: 0;
+    padding-left: 30px;
+    width: 100%;
+}
+
+.card-mapel-left {
+    margin-top: 30px;
+}
+
+.mata-pelajaran {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--color-primer);
+}
+
+.nama-guru-mapel {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: px;
+    color: var(--color-primer);
+}
+
+.kelas-mapel {
+    right: 0;
+    position: absolute;
+    padding: 4px 18px;
+    background: #4B4B4B;
+    height: max-content;
+    border-radius: 0px 7px 0px 10px;
+    color: var(--color-primer);
+}

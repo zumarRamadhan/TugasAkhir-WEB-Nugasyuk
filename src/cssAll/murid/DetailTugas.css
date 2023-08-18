@@ -53,9 +53,9 @@
   color: #4b4b4b;
 }
 
-.task-deadline-time {
-  color: var(--color-aksen);
-  margin-top: 15px;
+.deadline-time{
+    color: var(--color-aksen);
+    margin-top: 15px;
 }
 
 .submition-task {
