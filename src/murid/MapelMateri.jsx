@@ -174,10 +174,10 @@ function MapelMateri() {
             <Icon icon="fluent-mdl2:education" width="18" />
             Mata Pelajaran
           </li>
-          <li onClick={() => navigate("/murid/pagekonseling")}>
+          {/* <li onClick={() => navigate("/murid/pagekonseling")}>
             <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
             Konseling
-          </li>
+          </li> */}
         </ul>
       </aside>
       <div className="container-content">
@@ -355,7 +355,7 @@ function MapelMateri() {
               ) : (
               <div>
 
-              {filteredDataTask.map((apiTugas) => (
+              {renderDataTask.map((apiTugas) => (
                   <div
                     className="card-material"
                     style={{ cursor: "pointer" }}

@@ -281,7 +281,7 @@ function DetailTask() {
             <div className="file-button-delete">
               <div className="name-delete">
                 <div>
-                  <h1 className="title-value-file">{item.file}</h1>
+                  <h1 className="title-value-file">{item.nama_tugas}</h1>
                   <p className="format-file">{fileExtension.toUpperCase()}</p>
                 </div>
                 <button className="button-delete" onClick={handleDelete}>
@@ -517,10 +517,10 @@ function DetailTask() {
               <Icon icon="fluent-mdl2:education" width="18" />
               Mata Pelajaran
             </li>
-            <li onClick={() => navigate("/murid/pagekonseling")}>
+            {/* <li onClick={() => navigate("/murid/pagekonseling")}>
               <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
               Konseling
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">

@@ -48,13 +48,13 @@ function BuatJanji() {
             <Icon icon="fluent-mdl2:education" width="18" />
             Mata Pelajaran
           </li>
-          <li
+          {/* <li
             className="active"
             onClick={() => navigate("/murid/pagekonseling")}
           >
             <Icon icon="ph:apple-podcasts-logo-duotone" width="18" />
             Konseling
-          </li>
+          </li> */}
         </ul>
       </aside>
       <div className="container-content">
