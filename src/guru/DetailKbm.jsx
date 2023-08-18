@@ -344,7 +344,7 @@ function DetailKbm() {
                         <Icon icon="tabler:clipboard-text" width={40} />
                       </div>
                       <div className="desc-DetailKbm-Tugas">
-                        <p className="judul-DetailKbm-Tugas">{data.soal}</p>
+                        <p className="judul-DetailKbm-Tugas">{data.nama_tugas}</p>
                         <p className="materi-DetailKbm-Guru">
                           {data.nama_guru}
                         </p>

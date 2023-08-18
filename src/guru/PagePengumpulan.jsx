@@ -276,7 +276,7 @@ function PagePengumpulan() {
                   <div className="card-Pengumpulan-Guru-left">
                     <div className="img-Pengumpulan-Guru">
                       <img
-                        src={damiImgMurid} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
                         alt={data.foto_profile}
                         className="image-Pengumpulan-Guru"
                       />

@@ -227,7 +227,7 @@ function DetailPengumpulan() {
                   <div className="img-DetailPengumpulan-Guru">
                     {detailPengumpulan && detailPengumpulan.foto_profile ? (
                       <img
-                        src={damiImgMurid}
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailPengumpulan.foto_profile}`}
                         // src={detailPengumpulan.foto_profile}
                         alt=""
                         className="image-DetailPengumpulan-Guru"
