@@ -33,7 +33,7 @@ function DetailTugasKbm() {
   const [titleKelas, setTitleKelas] = useState([]);
 
   const handleEditClick = (id) => {
-    navigate(`/admin/jadwalkbm/edit/${id}`);
+    navigate(`/guru/pagekbm/detail/editformtugas/${id}`);
   };
 
   useEffect(() => {

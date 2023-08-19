@@ -349,7 +349,7 @@ function DetailKbm() {
         </ul>
       </aside>
       <div className="container-content">
-        <NavbarGuru text={"KBM"} />
+        <NavbarGuru text={"KBM" +" "+ titleKelas} />
         <div className="main">
           <div className="header-content">
             <div className="switch-container-detailKbm">

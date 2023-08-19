@@ -1,4 +1,4 @@
-import "../cssAll/guru/DetailMateriKbm.css";
+import "../cssAll/guru/FormTugasKBM.css";
 import { Icon } from "@iconify/react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
@@ -6,18 +6,23 @@ import NavbarGuru from "../component/NavbarGuru";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
-import apiurl from "../api/api";
 import axios from "axios";
-import ImgDelete from "../assets/imgDelete.svg";
+import apiurl from "../api/api";
 
-function DetailMateriKbm() {
-  // const navText = "KBM 11 PPLG 1";
+function useIdFromParams() {
+  const { id } = useParams();
+  return id;
+}
+
+function EditFormTugasKBM() {
+  const navText = "Edit Tugas";
   const navigate = useNavigate();
+  const id = useIdFromParams();
   const saveToken = sessionStorage.getItem("token");
 
   const logout = () => {
@@ -25,88 +30,9 @@ function DetailMateriKbm() {
     window.location.href = "/login";
   };
 
-  const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [detailMateri, setDetailMateri] = useState([]);
-  const [kelasId, setKelasId] = useState([]);
-  const [titleKelas, setTitleKelas] = useState([]);
-
-  const handleEditClick = (id) => {
-    navigate(`/guru/pagekbm/detail/editformmateri/${id}`);
-  };
-
-  useEffect(() => {
-    axios
-      .get(`${apiurl}guru/materi/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning": "any",
-        },
-      })
-      .then((result) => {
-        console.log("data API detail materi", result.data);
-        const responseAPI = result.data;
-
-        setDetailMateri(responseAPI.materi);
-        setTitleKelas(responseAPI.kelas);
-        setKelasId(responseAPI.kelas_id);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setIsError(true);
-        setIsLoading(false);
-      });
-  }, []);
-
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
     detailProfile.style.transform = "translateX(350px)";
-  };
-
-  const showDeletePopup = () => {
-    const background = document.querySelector("#popup-Delete");
-    background.style.display = "flex";
-    const popupDelete = document.querySelector(".detail-Delete");
-    popupDelete.style.display = "block";
-    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
-  };
-
-  const handleDelete = (id) => {
-    showPopupLoading();
-    axios
-      .delete(`${apiurl}guru/materi/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning": "any",
-        },
-      })
-      .then((response) => {
-        // Handling successful deletion
-        console.log("Data berhasil dihapus");
-        // Close the delete popup and detail popup
-        closeDeletePopup();
-        showSuccess();
-        closePopupLoading();
-      })
-      .catch((error) => {
-        // Handling error when deleting data
-        console.log("Terjadi kesalahan saat menghapus data:", error);
-        showFailed();
-        closePopupLoading();
-      });
-  };
-
-  const closeDeletePopup = () => {
-    const background = document.querySelector("#popup-Delete");
-    setTimeout(() => (background.style.display = "none"), 300);
-    // background.style.display = "none";
-    const popupDelete = document.querySelector(".detail-Delete");
-    setTimeout(() => (popupDelete.style.display = "none"), 250);
-    popupDelete.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const showLogoutPopup = () => {
@@ -122,6 +48,7 @@ function DetailMateriKbm() {
   };
 
   // messege
+
   // popup card loading
   const showPopupLoading = () => {
     const background = document.querySelector(".popup-loading");
@@ -138,6 +65,23 @@ function DetailMateriKbm() {
     const PopupLoading = document.querySelector(".body-loading");
     setTimeout(() => (PopupLoading.style.display = "none"), 250);
     PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showPopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    background.style.display = "flex";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    PopupLoadingDetail.style.display = "grid";
+    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoadingDetail = () => {
+    const background = document.querySelector("#popup-loadingDetail");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
+    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
+    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
   };
   // end popup card loading
 
@@ -166,7 +110,7 @@ function DetailMateriKbm() {
     messageCode.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showSuccess = () => {
+  const showSuccessAdd = () => {
     const popupLogout = document.querySelector("#popup-success");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
@@ -179,7 +123,7 @@ function DetailMateriKbm() {
     navigate(`/guru/pagekbm/detail/${id}`);
   };
 
-  const showFailed = () => {
+  const showFailedAdd = () => {
     const popupLogout = document.querySelector("#popup-Failed");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
@@ -233,171 +177,154 @@ function DetailMateriKbm() {
     );
   }
 
-  function generateFileIcons(item) {
-    let fileIcon;
-    let fileExtension = "";
+  const [formData, setFormData] = useState({
+    // Inisialisasi nilai awal untuk setiap field formulir
+    judul_tugas: "",
+    desc_tugas: "",
+    deadline: "",
+    link: "",
+    file: "",
+    input_jawaban: "",
+  });
 
-    if (item.file) {
-      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
-      switch (fileExtension) {
-        case "pdf":
-          fileIcon = "mdi:file-pdf-box";
-          break;
-        case "docx":
-          fileIcon = "mdi:file-word-box";
-          break;
-        case "xlsx":
-          fileIcon = "file-icons:microsoft-excel";
-          break;
-        default:
-          fileIcon = "";
-          break;
-      }
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState([]);
+  const [kelasId, setKelasId] = useState([]);
+
+  useEffect(() => {
+    if (isLoading) {
+      showPopupLoadingDetail();
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    // console.log(formData.email_wali_murid);
+    setIsLoading(true);
+    showPopupLoadingDetail();
+    axios
+      .get(`${apiurl}guru/tugas/${id}`, {
+        headers: {
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((response) => {
+        // setMuridData(response.data.data);
+        setFormData({
+          // file: response.data.data.foto_profile,
+          judul_tugas: response.data.tugas[0].nama_tugas,
+          desc_tugas: response.data.tugas[0].soal,
+          deadline: response.data.tugas[0].deadline,
+          link: response.data.tugas[0].link,
+          file: response.data.tugas.file,
+          input_jawaban: response.data.tugas[0].input_jawaban,
+        });
+        console.log(response.data.tugas.file);
+        setIsLoading(false);
+        closePopupLoadingDetail();
+        setKelasId(response.data.kelas_id);
+      })
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data murid:", error);
+        setIsLoading(false);
+      });
+  }, [id, saveToken]);
+
+  useEffect(() => {
+    if (isSubmitting) {
+      // console.log(formData.file);
+
+      const form = new FormData();
+      form.append("judul_tugas", formData.judul_tugas);
+      form.append("tugas", formData.desc_tugas);
+      form.append("deadline", formData.deadline);
+      form.append("link", formData.link);
+      form.append("file", formData.file);
+      form.append("input_jawaban", formData.input_jawaban);
+
+      axios
+        .post(`${apiurl}guru/tugas/edit/${id}`, form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
+        .then((result) => {
+          console.log("Data berhasil ditambahkan");
+          // Lakukan tindakan yang diperlukan setelah menambahkan data
+          showSuccessAdd();
+          closePopupLoading();
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setFormData({
+            // Set nilai awal untuk setiap field formulir
+            judul_tugas: "",
+            desc_tugas: "",
+            deadline: "",
+            link: "",
+            file: "",
+            input_jawaban: "",
+          });
+
+          setIsSubmitting(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat menambahkan data:", error);
+          setErrors({ submit: "Terjadi kesalahan saat menambahkan data" });
+          showFailedAdd();
+          closePopupLoading();
+          setIsSubmitting(false);
+        });
+    }
+  }, [isSubmitting, formData]);
+
+  const handleChange = (e) => {
+    const { name, value, type } = e.target;
+    const fileData = type === "file" ? e.target.files[0] : value;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: type === "file" ? fileData : value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+      showPopupLoading();
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    if (!data.judul_tugas.trim()) {
+      errors.judul_tugas = "Judul Tugas Harus Diisi";
     }
 
-    return (
-      <>
-        {fileExtension && (
-          <>
-            <div className="icon-value-file">
-              <Icon icon={fileIcon} width={45} />
-            </div>
-            <div>
-              <h1 className="title-value-file">{item.nama_materi}</h1>
-              <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()} <span>Klik</span>
-              </p>
-            </div>
-          </>
-        )}
-      </>
-    );
-  }
-
-  // start funsi generate file link elements
-  function generateFileLinkElements(detailMateri) {
-    const item = detailMateri;
-
-    if (item.link && item.file) {
-      let linkElement = [];
-      if (item.link.includes("youtube.com")) {
-        let youtubeLink = item.link.replace("watch?v=", "embed/");
-        linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
-            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
-            <div>
-              <h1 className="title-fileOrlink">{item.nama_materi}</h1>
-              <p className="link-detailMenunggu">
-                YouTube <span>Klik</span>
-              </p>
-            </div>
-          </a>
-        );
-      } else if (item.link.includes("youtu.be")) {
-        let youtubeLink = `https://www.youtube.com/embed/${item.link
-          .split("/")
-          .pop()}`;
-        linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
-            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
-            <div>
-              <h1 className="title-fileOrlink">{item.nama_materi}</h1>
-              <p className="link-detailMenunggu">
-                YouTube <span>Klik</span>
-              </p>
-            </div>
-          </a>
-        );
-      } else {
-        linkElement = (
-          <a href={item.link} className="btn-openSitus">
-            Buka Situs
-          </a>
-        );
-      }
-
-      return (
-        <div className="con-value-fileOrlink" key={item.id}>
-          {linkElement}
-          <a
-            href={`https://wondrous-squirrel-blatantly.ngrok-free.app/${item.file}`}
-            className="value-file"
-            id="value-file"
-          >
-            {generateFileIcons(item)}
-          </a>
-        </div>
-      );
-    } else if (item.link) {
-      if (item.link.includes("youtube.com")) {
-        let youtubeLink = item.link.replace("watch?v=", "embed/");
-        return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowFullScreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">{item.nama_materi}</h1>
-                <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          </div>
-        );
-      } else if (item.link.includes("youtu.be")) {
-        let youtubeLink = `https://www.youtube.com/embed/${item.link
-          .split("/")
-          .pop()}`;
-        return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowFullScreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">{item.nama_materi}</h1>
-                <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          </div>
-        );
-      } else {
-        return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={item.link} className="btn-openSitus">
-              Buka Situs
-            </a>
-          </div>
-        );
-      }
-    } else if (item.file) {
-      return (
-        <div className="con-value-fileOrlink" key={item.id}>
-          <a
-            href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file}`}
-            className="value-file"
-            id="value-file"
-          >
-            {generateFileIcons(item)}
-          </a>
-        </div>
-      );
+    if (!data.deadline.trim()) {
+      errors.deadline = "Deadline Harus Diisi";
+    }
+    if (!data.desc_tugas.trim()) {
+      errors.desc_tugas = "Deskripsi Tugas Harus Diisi";
+    }
+    // Validasi link
+    if (data.link && !/^https?:\/\//.test(data.link)) {
+      errors.link = "Link harus dimulai dengan https:// atau http://";
     }
 
-    return null;
-  }
-  // end funsi generate file link elements
+    if (!data.input_jawaban) {
+      errors.input_jawaban = "Harus memilih salah satu";
+    }
 
-  // Panggil fungsi generateFileLinkElements untuk menghasilkan elemen-elemen yang sesuai
-  const fileLinkElements = generateFileLinkElements(detailMateri);
+    return errors;
+  };
 
   // function changes password
   const [formPass, setformPass] = useState({
@@ -406,8 +333,8 @@ function DetailMateriKbm() {
     konfirmasi_password_baru: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [isSubmittingPass, setIsSubmittingPass] = useState(false);
+  // const [errors, setErrors] = useState({});
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
@@ -419,15 +346,15 @@ function DetailMateriKbm() {
 
   const handleSubmitChangesPass = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm(formPass);
+    const validationErrors = validateFormPass(formPass);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      setIsSubmitting(true);
+      setIsSubmittingPass(true);
       showPopupLoading();
     }
   };
 
-  const validateForm = (data) => {
+  const validateFormPass = (data) => {
     let errors = {};
 
     if (!data.password_lama) {
@@ -450,7 +377,7 @@ function DetailMateriKbm() {
   };
 
   useEffect(() => {
-    if (isSubmitting) {
+    if (isSubmittingPass) {
       const formData = new FormData();
       formData.append("password_lama", formPass.password_lama);
       formData.append("password_baru", formPass.password_baru);
@@ -477,17 +404,17 @@ function DetailMateriKbm() {
             konfirmasi_password_baru: "",
           });
 
-          setIsSubmitting(false);
+          setIsSubmittingPass(false);
         })
         .catch((error) => {
           console.error("Terjadi kesalahan saat memperbarui password:", error);
           setErrors({ submit: "Terjadi kesalahan saat memperbarui password" });
-          setIsSubmitting(false);
+          setIsSubmittingPass(false);
           showFailedChangesPass();
           closePopupLoading();
         });
     }
-  }, [isSubmitting, formPass]);
+  }, [isSubmittingPass, formPass]);
 
   // end function changes password
 
@@ -521,85 +448,126 @@ function DetailMateriKbm() {
         </ul>
       </aside>
       <div className="container-content">
-        <NavbarGuru text={"Materi" + " " + titleKelas} />
+        <NavbarGuru text={navText} />
         <div className="main">
-          <div className="con-card-detailMateri">
-            <div className="header-card-detailMateri">
-              <div className="left-header-card-detailMateri">
-                <div className="icon-header-card-detailMateri">
-                  <Icon icon="ri:book-line" width={40} />
-                </div>
-                <div className="text-header-card-detailMateri">
-                  <h1 className="title-header-card-detailMateri">
-                    Materi {detailMateri.nama_materi}
-                  </h1>
-                  <p className="guru-header-card-detailMateri">
-                    {detailMateri.nama_guru}
-                  </p>
-                </div>
+          <div className="content-formKbm">
+            <form onSubmit={handleSubmit} className="container-formKbm">
+              <div className="con-formKbm">
+                <div className="title-formKbm">Judul Tugas</div>
+                <input
+                  type="text"
+                  className="input-formKbm"
+                  placeholder="judul tugas"
+                  name="judul_tugas"
+                  value={formData.judul_tugas}
+                  onChange={handleChange}
+                />
+                {errors.judul_tugas && (
+                  <span className="error">{errors.judul_tugas}</span>
+                )}
               </div>
-              <div className="right-header-card-detailMateri">
-                <p className="date-header-card-detailMateri">
-                  {detailMateri.tanggal_dibuat}
-                </p>
-                <div className="con-btn-card-kbm">
-                  <div
-                    className="btn-edit-card-kbm"
-                    onClick={() => handleEditClick(detailMateri.id)}
-                  >
-                    <Icon
-                      icon="material-symbols:edit-outline-rounded"
-                      width="15"
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Deskrips Tugas</div>
+                <textarea
+                  rows="7"
+                  className="input-formKbm"
+                  placeholder="deskripsi tugas"
+                  name="desc_tugas"
+                  value={formData.desc_tugas}
+                  onChange={handleChange}
+                ></textarea>
+                {errors.desc_tugas && (
+                  <span className="error">{errors.desc_tugas}</span>
+                )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Deadline</div>
+                <input
+                  type="date"
+                  className="input-formKbm"
+                  style={{ cursor: "pointer" }}
+                  name="deadline"
+                  value={formData.deadline}
+                  onChange={handleChange}
+                />
+                {errors.deadline && (
+                  <span className="error">{errors.deadline}</span>
+                )}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">Link Tugas</div>
+                <input
+                  type="text"
+                  className="input-formKbm"
+                  placeholder="link tugas"
+                  name="link"
+                  value={formData.link}
+                  onChange={handleChange}
+                />
+                {errors.link && <span className="error">{errors.link}</span>}
+              </div>
+
+              <div className="con-formKbm">
+                <div className="title-formKbm">File Tugas</div>
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  className="input-formKbm"
+                  accept=".pdf , .docx , .xlsx"
+                  // value={formData.file}
+                  onChange={handleChange} // The file data will be updated when the user selects a file
+                />
+              </div>
+
+              <div className="switch-inputTugas">
+                <h2 className="title-formKbm">
+                  Apakah murid dapat menginput jawaban?
+                </h2>
+                <div className="con-radio">
+                  <label>
+                    <input
+                      type="radio"
+                      name="input_jawaban"
+                      value="ya"
+                      checked={formData.input_jawaban === "ya"}
+                      onChange={handleChange}
                     />
-                  </div>
-                  <div
-                    className="btn-delete-card-kbm"
-                    onClick={showDeletePopup}
-                  >
-                    <Icon icon="ic:round-delete-outline" />
-                  </div>
+                    Ya
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="input_jawaban"
+                      value="tidak"
+                      checked={formData.input_jawaban === "tidak"}
+                      onChange={handleChange}
+                    />
+                    Tidak
+                  </label>
                 </div>
+                {errors.input_jawaban && (
+                  <span className="error">{errors.input_jawaban}</span>
+                )}
               </div>
-            </div>
 
-            <p className="desc-card-detailMateri">{detailMateri.isi}</p>
-
-            <div>{fileLinkElements}</div>
+              <div className="con-btn-form">
+                <button
+                  type="submit"
+                  className="btn-form"
+                  style={{ cursor: "pointer" }}
+                >
+                  Simpan perubahan
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
       {/* end body */}
-
-      <div className="popup-Delete" id="popup-Delete">
-        <div className="detail-Delete">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeDeletePopup}
-          />
-          <div className="image-Delete">
-            <img src={ImgDelete} alt="" className="img-Delete" />
-          </div>
-          <p className="desc-Delete">Anda yakin ingin menghapus materi ini?</p>
-          <div className="con-btn-Delete">
-            <button
-              type="button"
-              className="btn-batal"
-              onClick={closeDeletePopup}
-            >
-              Batal
-            </button>
-            <button
-              type="button"
-              className="btn-delete"
-              onClick={() => handleDelete(detailMateri.id)}
-            >
-              Hapus
-            </button>
-          </div>
-        </div>
-      </div>
 
       <div className="popup-logout" id="popup-logout">
         <div className="detail-logout">
@@ -639,7 +607,7 @@ function DetailMateriKbm() {
               className="img-success"
             />
           </div>
-          <p className="desc-success">Data Berhasil Di Hapus!!!</p>
+          <p className="desc-success">Anda berhasil menambahkan tugas</p>
           <button className="btn-success" onClick={() => closeSuccess(kelasId)}>
             Kembali
           </button>
@@ -657,7 +625,7 @@ function DetailMateriKbm() {
           <div className="image-Failed">
             <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
           </div>
-          <p className="desc-Failed">Data Gagal Di Hapus!!!</p>
+          <p className="desc-Failed">Anda gagal menambahkan tugas</p>
           <button className="btn-Failed" onClick={closeFailed}>
             Kembali
           </button>
@@ -887,9 +855,16 @@ function DetailMateriKbm() {
           </svg>
         </div>
       </div>
+
+      <div className="popup-loading" id="popup-loadingDetail">
+        <div className="body-loadingDetail" id="body-loadingDetail">
+          <h2 class="animate-loadingDetail">Loading</h2>
+          <p>Data Sedang Di Proses...</p>
+        </div>
+      </div>
       {/* end loading */}
     </div>
   );
 }
 
-export default DetailMateriKbm;
+export default EditFormTugasKBM;
