@@ -7,13 +7,17 @@
     --color-sekunder: #D8F0FF;
 }
 
-.switch-inputTugas input[type="radio"] {
+.switch-inputTugas input[type="radio"] , .switch-Option input[type="radio"] {
     width: 25px;
     height: 25px;
     cursor: pointer;
   }
 
-  .switch-inputTugas label{
+  .switch-Option{
+    margin-bottom: 20px;
+  }
+
+  .switch-inputTugas label, .switch-Option label{
     display: flex;
     align-items: center;
     font-size: 18px;

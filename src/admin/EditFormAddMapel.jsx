@@ -147,7 +147,7 @@ function EditFormAddMapel() {
     // Inisialisasi nilai awal untuk setiap field formulir
     kodeId: "",
     kelasId: "",
-    assetId: "",
+    // assetId: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -168,7 +168,7 @@ function EditFormAddMapel() {
         setFormData({
           kodeId: response.data.data.kode_id,
           kelasId: response.data.data.kelas_id,
-          assetId: response.data.data.asset_id,
+          // assetId: response.data.data.asset_id,
         });
         closePopupLoadingDetail();
         // console.log("data mapel", response.data.data.kode_id);
@@ -185,7 +185,7 @@ function EditFormAddMapel() {
       const form = new FormData();
       form.append("kode_id", formData.kodeId);
       form.append("kelas_id", formData.kelasId);
-      form.append("asset_id", formData.assetId);
+      // form.append("asset_id", formData.assetId);
 
       axios
         .post(`${apiurl}admin/mapel/${id}`, form, {
@@ -205,7 +205,7 @@ function EditFormAddMapel() {
             // Set nilai awal untuk setiap field formulir
             kodeId: "",
             kelasId: "",
-            assetId: "",
+            // assetId: "",
           });
           setIsSubmitting(false);
           closePopupLoading();
@@ -245,9 +245,9 @@ function EditFormAddMapel() {
       errors.kodeId = "Kode harus diisi";
     }
 
-    if (!data.assetId) {
-      errors.assetId = "Asset harus diisi";
-    }
+    // if (!data.assetId) {
+    //   errors.assetId = "Asset harus diisi";
+    // }
 
     if (!data.kelasId) {
       errors.kelasId = "Kelas harus diisi";
@@ -256,27 +256,27 @@ function EditFormAddMapel() {
     return errors;
   };
 
-  function handleFoto(e) {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      setFormData((prevState) => ({
-        ...prevState,
-        file: selectedFile,
-      }));
+  // function handleFoto(e) {
+  //   e.preventDefault();
+  //   if (e.target.files && e.target.files[0]) {
+  //     const selectedFile = e.target.files[0];
+  //     setFormData((prevState) => ({
+  //       ...prevState,
+  //       file: selectedFile,
+  //     }));
 
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const previewImage = document.getElementById("previewImage");
-        previewImage.src = e.target.result;
-      };
-      reader.readAsDataURL(selectedFile);
-    }
-  }
+  //     const reader = new FileReader();
+  //     reader.onload = function (e) {
+  //       const previewImage = document.getElementById("previewImage");
+  //       previewImage.src = e.target.result;
+  //     };
+  //     reader.readAsDataURL(selectedFile);
+  //   }
+  // }
 
   const [dataKode, setDataKode] = useState([]);
   const [dataKelas, setDataKelas] = useState([]);
-  const [dataAsset, setDataAsset] = useState([]);
+  // const [dataAsset, setDataAsset] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   // console.log("data kelas", dataKelas);
@@ -325,50 +325,29 @@ function EditFormAddMapel() {
         setIsLoading(false);
       });
 
-    axios
-      .get(`${apiurl}admin/asset`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${saveToken}`,
-          "ngrok-skip-browser-warning":"any"
-        },
-      })
-      .then((result) => {
-        console.log("data API", result.data);
-        const responseAPI = result.data;
-        closePopupLoadingDetail();
-        setDataAsset(responseAPI.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("terjadi kesalahan: ", err);
-        setIsError(true);
-        setIsLoading(false);
-      });
+    // axios
+    //   .get(`${apiurl}admin/asset`, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${saveToken}`,
+    //       "ngrok-skip-browser-warning":"any"
+    //     },
+    //   })
+    //   .then((result) => {
+    //     console.log("data API", result.data);
+    //     const responseAPI = result.data;
+    //     closePopupLoadingDetail();
+    //     setDataAsset(responseAPI.data);
+    //     setIsLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log("terjadi kesalahan: ", err);
+    //     setIsError(true);
+    //     setIsLoading(false);
+    //   });
   }, []);
-  // useState(() => {
-  //   axios
-  //     .get(`${apiurl}admin/kelas`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${saveToken}`,
-  //         "ngrok-skip-browser-warning":"any"
-  //       },
-  //     })
-  //     .then((result) => {
-  //       console.log("data API", result.data);
-  //       const responseAPI = result.data;
 
-  //       setDataKelas(responseAPI.data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log("terjadi kesalahan: ", err);
-  //       setIsError(true);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
-  if (dataKode && dataKelas && dataAsset && !isError)
+  if (dataKode && dataKelas && !isError)
     return (
       <div>
         <aside>
@@ -408,10 +387,10 @@ function EditFormAddMapel() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">
@@ -419,7 +398,7 @@ function EditFormAddMapel() {
           <div className="main">
             <div className="content-formKbm">
               <form onSubmit={handleSubmit} className="container-formKbm">
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Asset Card</div>
                   {formData && formData.assetId ? (
                     <select
@@ -446,7 +425,7 @@ function EditFormAddMapel() {
                   {errors.assetId && (
                     <span className="error">{errors.assetId}</span>
                   )}
-                </div>
+                </div> */}
 
                 <div className="con-formKbm">
                   <div className="title-formKbm">Kelas</div>

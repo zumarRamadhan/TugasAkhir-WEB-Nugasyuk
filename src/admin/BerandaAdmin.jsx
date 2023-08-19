@@ -152,10 +152,10 @@ function BerandaAdmin() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
         <div className="container-content">

@@ -372,10 +372,10 @@ function MataPelajaran() {
               <Icon icon="uiw:date" width="20" />
               Jadwal KBM
             </li>
-            <li onClick={() => navigate("/admin/pageassets")}>
+            {/* <li onClick={() => navigate("/admin/pageassets")}>
               <Icon icon="ic:outline-file-copy" width="20" />
               Assets
-            </li>
+            </li> */}
           </ul>
         </aside>
 
@@ -469,7 +469,7 @@ function MataPelajaran() {
                       {currentHover === data.id && (
                         <div className="hover-card-matapelajaran">
                           <div className="con-btn-card-matapelajaran">
-                            <button
+                            {/* <button
                               className="btn-edit-matapelajaran"
                               onClick={() => handleEditClick(data.id)}
                             >
@@ -477,7 +477,7 @@ function MataPelajaran() {
                                 icon="material-symbols:edit-outline-rounded"
                                 width="20"
                               />
-                            </button>
+                            </button> */}
                             <button
                               className="btn-delete-matapelajaran"
                               onClick={() => showDeletePopup(data.id)}
