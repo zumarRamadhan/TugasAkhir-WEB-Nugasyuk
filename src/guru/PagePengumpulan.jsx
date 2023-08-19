@@ -262,7 +262,7 @@ function PagePengumpulan() {
             </div>
           ) : dataNotFound ? (
             <div className="card-DetailPengumpulan-Menunggu-noData">
-              <p>Tidak Ada Pengumpulan</p>
+              <p>Murid tidak di temukan</p>
             </div>
           ) : (
             <div className="content-Pengumpulan-Guru">
