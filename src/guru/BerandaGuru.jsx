@@ -14,6 +14,12 @@ import apiurl from "../api/api";
 function BerandaGuru() {
   const navText = "Beranda";
   const navigate = useNavigate();
+  const saveToken = sessionStorage.getItem("token");
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -71,8 +77,6 @@ function BerandaGuru() {
       passwordTypeConfirm === "password" ? "text" : "password"
     );
   }
-
-  const saveToken = sessionStorage.getItem("token");
 
   const [dataBerandaGuru, setDataBerandaGuru] = useState([]);
   const [isLoading, setisLoading] = useState(true);
@@ -232,7 +236,7 @@ function BerandaGuru() {
               </button>
               <button
                 type="button"
-                onClick={"logoutClick"}
+                onClick={logout}
                 className="btn-keluar"
               >
                 Keluar

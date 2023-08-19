@@ -17,6 +17,11 @@ function EditFormAddGuru() {
   const navText = "Edit Data";
   const navigate = useNavigate();
 
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   // console.log(guruData);
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -572,7 +577,7 @@ function EditFormAddGuru() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>

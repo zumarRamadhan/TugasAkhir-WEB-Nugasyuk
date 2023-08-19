@@ -15,6 +15,12 @@ import apiurl from "../api/api";
 function PagePengumpulan() {
   const navText = "Pengumpulan";
   const navigate = useNavigate();
+  const saveToken = sessionStorage.getItem("token");
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -69,7 +75,6 @@ function PagePengumpulan() {
     );
   }
 
-  const saveToken = sessionStorage.getItem("token");
   const [dataTabelMurid, setDataTabelMurid] = useState([]);
   const [dataKelas, setDataKelas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -325,7 +330,7 @@ function PagePengumpulan() {
             <button type="button" className="btn-batal">
               Batal
             </button>
-            <button type="button" className="btn-keluar">
+            <button type="button" className="btn-keluar" onClick={logout}>
               Keluar
             </button>
           </div>

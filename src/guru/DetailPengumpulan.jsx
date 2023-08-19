@@ -16,9 +16,14 @@ import axios from "axios";
 function DetailPengumpulan() {
   const navText = "Pengumpulan";
   const navigate = useNavigate();
+  const saveToken = sessionStorage.getItem("token");
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const { id } = useParams();
-  const saveToken = sessionStorage.getItem("token");
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [detailPengumpulan, setDetailPengumpulan] = useState([]);
@@ -470,7 +475,7 @@ function DetailPengumpulan() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>

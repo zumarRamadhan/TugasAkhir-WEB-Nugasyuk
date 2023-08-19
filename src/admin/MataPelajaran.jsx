@@ -18,7 +18,11 @@ function MataPelajaran() {
   const navText = "Mata Pelajaran";
   const navigate = useNavigate();
   const [detailMapel, setDetailMapel] = useState([]);
-  // const source = axios.CancelToken.source();
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -514,7 +518,7 @@ function MataPelajaran() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>

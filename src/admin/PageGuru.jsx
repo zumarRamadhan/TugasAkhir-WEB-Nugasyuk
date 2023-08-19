@@ -23,6 +23,11 @@ function BerandaGuru() {
   const navigate = useNavigate();
   const [detailGuru, setDetailGuru] = useState([]);
 
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   const saveToken = sessionStorage.getItem("token");
 
   const [dataTabelGuru, setDataTabelGuru] = useState([]);
@@ -856,7 +861,7 @@ function BerandaGuru() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>

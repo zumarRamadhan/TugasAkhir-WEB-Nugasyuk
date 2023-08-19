@@ -15,6 +15,12 @@ import apiurl from "../api/api";
 function DetailSelesai() {
   const navText = "Pengumpulan";
   const navigate = useNavigate();
+  const saveToken = sessionStorage.getItem("token");
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -74,7 +80,6 @@ function DetailSelesai() {
   }
 
   const { id } = useParams();
-  const saveToken = sessionStorage.getItem("token");
   const [detailSelesai, setDetailSelesai] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -161,7 +166,7 @@ function DetailSelesai() {
     const item = detailSelesai;
 
     if (item.soal_link && item.soal_file) {
-      let linkElement = [ ];
+      let linkElement = [];
       if (item.soal_link.includes("youtube.com")) {
         let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         linkElement = (
@@ -201,7 +206,11 @@ function DetailSelesai() {
       return (
         <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
           {linkElement}
-          <a href={`https://www.nugasyuk.my.id/public/${item.soal_file}`} className="value-file" id="value-file">
+          <a
+            href={`https://www.nugasyuk.my.id/public/${item.soal_file}`}
+            className="value-file"
+            id="value-file"
+          >
             {generateFileIcons(item)}
           </a>
         </div>
@@ -259,7 +268,11 @@ function DetailSelesai() {
     } else if (item.soal_file) {
       return (
         <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
-          <a href={`https://www.nugasyuk.my.id/public/${item.soal_file}`} className="value-file" id="value-file">
+          <a
+            href={`https://www.nugasyuk.my.id/public/${item.soal_file}`}
+            className="value-file"
+            id="value-file"
+          >
             {generateFileIcons(item)}
           </a>
         </div>
@@ -287,7 +300,7 @@ function DetailSelesai() {
           <li onClick={() => navigate("/guru/berandaguru")}>
             <Icon icon="iconoir:home-simple" width="20" />
             Beranda
-          </li> 
+          </li>
           <li onClick={() => navigate("/guru/pagekbm")}>
             <Icon icon="ph:chalkboard-teacher" width="20" />
             KBM
@@ -337,9 +350,30 @@ function DetailSelesai() {
             <div className="con-card-detailSelesai">
               <div className="header-card-detailSelesai">
                 <div className="left-header-card-detailSelesai">
-                  <div className="icon-header-card-detailSelesai">
-                    <Icon icon="material-symbols:check" width={40} />
-                  </div>
+                  {detailSelesai.status === "selesai_lebih_deadline" && (
+                    <div
+                      className="icon-header-card-detailSelesai"
+                      style={{ background: "#FFC6C6" }}
+                    >
+                      <Icon
+                        icon="material-symbols:check"
+                        width={40}
+                        style={{ color: "#FF3F3F" }}
+                      />
+                    </div>
+                  )}
+                  {detailSelesai.status === "selesai_dalam_deadline" && (
+                    <div
+                      className="icon-header-card-detailSelesai"
+                      style={{ background: "#D5FFC6" }}
+                    >
+                      <Icon
+                        icon="material-symbols:check"
+                        width={40}
+                        style={{ color: "#84E063" }}
+                      />
+                    </div>
+                  )}
                   <div className="text-header-card-detailSelesai">
                     <h1 className="title-header-card-detailSelesai">
                       {detailSelesai.nama_tugas}
@@ -350,18 +384,20 @@ function DetailSelesai() {
                   </div>
                 </div>
                 <div className="right-header-card-detailSelesai">
-                  <p className="date-header-card-detailSelesai">{detailSelesai.date}</p>
+                  <p className="date-header-card-detailSelesai">
+                    {detailSelesai.date}
+                  </p>
                   {/* <div className="icon-options" style={{ cursor: "pointer" }}>
                     <Icon icon="mi:options-vertical" width={40} />
                   </div> */}
                 </div>
               </div>
 
-              <p className="desc-card-detailSelesai">
-                {detailSelesai.soal}
-              </p>
+              <p className="desc-card-detailSelesai">{detailSelesai.soal}</p>
 
-              <p className="infoDeadline">Deatline : {detailSelesai.deadline}</p>
+              <p className="infoDeadline">
+                Deatline : {detailSelesai.deadline}
+              </p>
 
               <div>{fileLinkElements}</div>
 
@@ -374,7 +410,7 @@ function DetailSelesai() {
                   <div>
                     <h1 className="title-value-file">29_Muhammad_Zum...</h1>
                     <p className="file-detailSelesai">
-                       DOCX <span>Klik</span>
+                      DOCX <span>Klik</span>
                     </p>
                   </div>
                 </div>
@@ -403,7 +439,7 @@ function DetailSelesai() {
             <button type="button" className="btn-batal">
               Batal
             </button>
-            <button type="button" className="btn-keluar">
+            <button type="button" className="btn-keluar" onClick={logout}>
               Keluar
             </button>
           </div>

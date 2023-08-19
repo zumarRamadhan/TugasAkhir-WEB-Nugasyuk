@@ -18,9 +18,14 @@ import ImgDelete from "../assets/imgDelete.svg";
 function DetailMateriKbm() {
   // const navText = "KBM 11 PPLG 1";
   const navigate = useNavigate();
+  const saveToken = sessionStorage.getItem("token");
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const { id } = useParams();
-  const saveToken = sessionStorage.getItem("token");
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [detailMateri, setDetailMateri] = useState([]);
@@ -495,7 +500,7 @@ function DetailMateriKbm() {
             <button type="button" className="btn-batal">
               Batal
             </button>
-            <button type="button" className="btn-keluar">
+            <button type="button" className="btn-keluar" onClick={logout}>
               Keluar
             </button>
           </div>

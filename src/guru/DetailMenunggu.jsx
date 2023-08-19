@@ -17,6 +17,12 @@ import apiurl from "../api/api";
 function DetailMenunggu() {
   const navText = "Pengumpulan";
   const navigate = useNavigate();
+  const saveToken = sessionStorage.getItem("token");
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -124,7 +130,6 @@ function DetailMenunggu() {
   }
 
   const { id } = useParams();
-  const saveToken = sessionStorage.getItem("token");
   const [detailMenunggu, setDetailMenunggu] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -423,9 +428,30 @@ function DetailMenunggu() {
             <div className="con-card-detailMenunggu">
               <div className="header-card-detailMenunggu">
                 <div className="left-header-card-detailMenunggu">
-                  <div className="icon-header-card-detailMenunggu">
-                    <Icon icon="uiw:time-o" width={40} />
-                  </div>
+                {detailMenunggu.status === "menunggu_lebih_deadline" && (
+                    <div
+                      className="icon-header-card-detailMenunggu"
+                      style={{ background: "#FFC6C6" }}
+                    >
+                      <Icon
+                        icon="uiw:time-o"
+                        width={40}
+                        style={{ color: "#FF3F3F" }}
+                      />
+                    </div>
+                  )}
+                  {detailMenunggu.status === "menunggu_dalam_deadline" && (
+                    <div
+                      className="icon-header-card-detailMenunggu"
+                      style={{ background: "#D5FFC6" }}
+                    >
+                      <Icon
+                        icon="uiw:time-o"
+                        width={40}
+                        style={{ color: "#84E063" }}
+                      />
+                    </div>
+                  )}
                   <div className="text-header-card-detailMenunggu">
                     <h1 className="title-header-card-detailMenunggu">
                       {detailMenunggu.nama_tugas}
@@ -491,7 +517,7 @@ function DetailMenunggu() {
             <button type="button" className="btn-batal">
               Batal
             </button>
-            <button type="button" className="btn-keluar">
+            <button type="button" className="btn-keluar" onClick={logout}>
               Keluar
             </button>
           </div>

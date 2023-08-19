@@ -23,6 +23,12 @@ function EditFormMateriKBM() {
   const navText = "Tambah Materi";
   const navigate = useNavigate();
   const id = useIdFromParams();
+  const saveToken = sessionStorage.getItem("token");
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -144,9 +150,7 @@ function EditFormMateriKBM() {
     setPasswordTypeConfirm(
       passwordTypeConfirm === "password" ? "text" : "password"
     );
-  }
-
-  const saveToken = sessionStorage.getItem("token");
+  }  
 
   const [formData, setFormData] = useState({
     // Inisialisasi nilai awal untuk setiap field formulir
@@ -431,7 +435,7 @@ function EditFormMateriKBM() {
             <button type="button" className="btn-batal">
               Batal
             </button>
-            <button type="button" className="btn-keluar">
+            <button type="button" className="btn-keluar" onClick={logout}>
               Keluar
             </button>
           </div>

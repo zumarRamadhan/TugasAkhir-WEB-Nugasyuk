@@ -18,6 +18,12 @@ import apiurl from "../api/api";
 function EditFormAddJadwal() {
   const navText = "Jadwal KBM";
   const navigate = useNavigate();
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   const [detailHariJadwal, setDetailHariJadwal] = useState([]);
   const [detailJadwal, setDetailJadwal] = useState([]);
   const [deleteJadwal, setDeleteJadwal] = useState([]);
@@ -596,7 +602,7 @@ function EditFormAddJadwal() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>

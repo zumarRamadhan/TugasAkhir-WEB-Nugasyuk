@@ -14,6 +14,12 @@ import apiurl from "../api/api";
 function PageJadwalKbm() {
   const navText = "Jadwal KBM";
   const navigate = useNavigate();
+  const saveToken = sessionStorage.getItem("token");
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -72,7 +78,6 @@ function PageJadwalKbm() {
     );
   }
 
-  const saveToken = sessionStorage.getItem("token");
   const [selectedDay, setSelectedDay] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -237,7 +242,7 @@ function PageJadwalKbm() {
             <button type="button" className="btn-batal">
               Batal
             </button>
-            <button type="button" className="btn-keluar">
+            <button type="button" className="btn-keluar" onClick={logout}>
               Keluar
             </button>
           </div>

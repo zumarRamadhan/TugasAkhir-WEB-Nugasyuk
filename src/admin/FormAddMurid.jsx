@@ -19,6 +19,11 @@ function FormAddMurid() {
   const navigate = useNavigate();
   const [formType, setFormType] = useState("manual");
 
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   const handleFormTypeChange = (event) => {
     setFormType(event.target.value);
   };
@@ -826,7 +831,7 @@ function FormAddMurid() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>

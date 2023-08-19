@@ -10,6 +10,7 @@
 .header-pageKbm-Guru {
     display: flex;
     gap: 15px;
+    margin-bottom: 30px;
 }
 
 .content-pageKbm-Guru {

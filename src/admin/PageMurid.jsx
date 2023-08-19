@@ -23,6 +23,11 @@ function DataMurid() {
   const [detailMurid, setDetailMurid] = useState([]);
   const [dataExport, setDataExport] = useState([]);
 
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   const showDetailPopup = () => {
     const background = document.querySelector(".popup-detailMurid");
     background.style.display = "flex";
@@ -660,7 +665,7 @@ function DataMurid() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>
