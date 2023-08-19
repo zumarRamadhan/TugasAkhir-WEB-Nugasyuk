@@ -93,6 +93,7 @@ function DetailWaliMurid() {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
         },
       })
       .then((result) => {
@@ -103,7 +104,7 @@ function DetailWaliMurid() {
         setisLoading(false);
       })
       .catch((error) => {
-        console.error("Terjadi kesalahan saat mengambil data", error);
+        console.error("Terjadi kesalahan saat mengambil data profile wali", error);
         setisLoading(false);
         setisError(true);
       });

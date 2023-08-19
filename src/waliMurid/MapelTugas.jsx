@@ -1,4 +1,4 @@
-import '../cssAll/walimurid/DetailMateri.css';
+import "../cssAll/walimurid/JadwalKbm.css";
 import { useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { useState } from "react";
@@ -144,12 +144,12 @@ function MatapelajaranTugas(){
                             <option value="tugas">Tugas belum selesai lewat deadline</option>
                         </select>
 
-                        <form className='search-box'>
+                        {/* <form className='search-box'>
                             <input type='text' placeholder='Cari...'/>
                             <button type='submit'>
                                 <Icon icon="material-symbols:search-rounded" width="20"></Icon>
                             </button>
-                        </form>
+                        </form> */}
                     </div>
 
                     <div className="con-material">

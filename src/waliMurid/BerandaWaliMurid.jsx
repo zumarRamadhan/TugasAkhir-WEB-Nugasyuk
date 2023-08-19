@@ -227,9 +227,9 @@ function BerandaWaliMurid() {
                   <div className="indiecator-left">
                     <div
                       className="icon-indie-information"
-                      style={{ color: "#797979" }}
+                      style={{ background: "#DDDDDD" }}
                     >
-                      <Icon icon="uiw:time-o" width="30" />
+                      <Icon icon="ic:round-pending-actions" width="30" style={{ color: "#797979" }}/>
                     </div>
                     <div className="desc-indie">
                       <p className="title-indie-information">
@@ -240,7 +240,151 @@ function BerandaWaliMurid() {
                         Tugas
                       </p>
                       <p className="value-indie-information">
-                        Dari <span>1</span> Tugas
+                        Dari <span>{dataBerandaWaliMurid.jumlah_tugas}</span> Tugas
+                      </p>
+                    </div>
+                  </div>
+                  <div className="icon-navigate">
+                    <Icon icon="ic:round-navigate-next" width="30" />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="content-status-task">
+              {isLoading ? (
+                <Skeleton
+                  width={250}
+                  height={25}
+                  style={{ marginBottom: "20px" }}
+                />
+              ) : (
+                <div>
+                  <p className="text-status-task">
+                    Belum Selesai Lebih Dari Deadline
+                  </p>
+                </div>
+              )}
+              {isLoading ? (
+                <CardSkeletonInfoTask />
+              ) : (
+                <div
+                  className="content-indiecator-information"
+                  style={{ background: "#fff", cursor: "pointer" }}
+                >
+                  <div className="indiecator-left">
+                    <div
+                      className="icon-indie-information"
+                      style={{ color: "#FF3F3F", background: "#FFC6C6" }}
+                    >
+                      <Icon icon="ic:round-pending-actions" width="30" />
+                    </div>
+                    <div className="desc-indie">
+                      <p className="title-indie-information">
+                        {" "}
+                        <span>
+                          {dataBerandaWaliMurid.belum_lebihdeadline}
+                        </span>{" "}
+                        Tugas
+                      </p>
+                      <p className="value-indie-information">
+                        Dari <span>{dataBerandaWaliMurid.jumlah_tugas}</span> Tugas
+                      </p>
+                    </div>
+                  </div>
+                  <div className="icon-navigate">
+                    <Icon icon="ic:round-navigate-next" width="30" />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="content-status-task">
+              {isLoading ? (
+                <Skeleton
+                  width={250}
+                  height={25}
+                  style={{ marginBottom: "20px" }}
+                />
+              ) : (
+                <div>
+                  <p className="text-status-task">
+                    Menunggu Konfirmasi Dalam Deadline
+                  </p>
+                </div>
+              )}
+              {isLoading ? (
+                <CardSkeletonInfoTask />
+              ) : (
+                <div
+                  className="content-indiecator-information"
+                  style={{ background: "#fff", cursor: "pointer" }}
+                >
+                  <div className="indiecator-left">
+                    <div
+                      className="icon-indie-information"
+                      style={{ color: "#CBC41A", background: "#FFFA87" }}
+                    >
+                      <Icon icon="uiw:time-o" width="30" />
+                    </div>
+                    <div className="desc-indie">
+                      <p className="title-indie-information">
+                        {" "}
+                        <span>
+                          {dataBerandaWaliMurid.menunggu_dalamdeadline}
+                        </span>{" "}
+                        Tugas
+                      </p>
+                      <p className="value-indie-information">
+                        Dari <span>{dataBerandaWaliMurid.jumlah_tugas}</span> Tugas
+                      </p>
+                    </div>
+                  </div>
+                  <div className="icon-navigate">
+                    <Icon icon="ic:round-navigate-next" width="30" />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="content-status-task">
+              {isLoading ? (
+                <Skeleton
+                  width={250}
+                  height={25}
+                  style={{ marginBottom: "20px" }}
+                />
+              ) : (
+                <div>
+                  <p className="text-status-task">
+                  Menunggu Konfirmasi Lebih Dari Deadline
+                  </p>
+                </div>
+              )}
+              {isLoading ? (
+                <CardSkeletonInfoTask />
+              ) : (
+                <div
+                  className="content-indiecator-information"
+                  style={{ background: "#fff", cursor: "pointer" }}
+                >
+                  <div className="indiecator-left">
+                    <div
+                      className="icon-indie-information"
+                      style={{ color: "#FF3F3F", background: "#FFC6C6" }}
+                    >
+                      <Icon icon="uiw:time-o" width="30" />
+                    </div>
+                    <div className="desc-indie">
+                      <p className="title-indie-information">
+                        {" "}
+                        <span>
+                          {dataBerandaWaliMurid.menunggu_lebihdeadline}
+                        </span>{" "}
+                        Tugas
+                      </p>
+                      <p className="value-indie-information">
+                        Dari <span>{dataBerandaWaliMurid.jumlah_tugas}</span> Tugas
                       </p>
                     </div>
                   </div>
@@ -285,7 +429,7 @@ function BerandaWaliMurid() {
                         Tugas
                       </p>
                       <p className="value-indie-information">
-                        Dari <span>1</span> Tugas
+                        Dari <span>{dataBerandaWaliMurid.jumlah_tugas}</span> Tugas
                       </p>
                     </div>
                   </div>
@@ -295,54 +439,6 @@ function BerandaWaliMurid() {
                 </div>
               ) : (
                 <CardSkeletonInfoTask />
-              )}
-            </div>
-
-            <div className="content-status-task">
-              {isLoading ? (
-                <Skeleton
-                  width={250}
-                  height={25}
-                  style={{ marginBottom: "20px" }}
-                />
-              ) : (
-                <div>
-                  <p className="text-status-task">
-                    Belum Selesai Lebih Dari Deadline
-                  </p>
-                </div>
-              )}
-              {isLoading ? (
-                <CardSkeletonInfoTask />
-              ) : (
-                <div
-                  className="content-indiecator-information"
-                  style={{ background: "#fff", cursor: "pointer" }}
-                >
-                  <div className="indiecator-left">
-                    <div
-                      className="icon-indie-information"
-                      style={{ color: "#FF3F3F", background: "#FFC6C6" }}
-                    >
-                      <Icon icon="uiw:time-o" width="30" />
-                    </div>
-                    <div className="desc-indie">
-                      <p className="title-indie-information">
-                        {" "}
-                        <span>
-                          {dataBerandaWaliMurid.belum_lebihdeadline}
-                        </span>{" "}
-                        Tugas
-                      </p>
-                      <p className="value-indie-information">
-                        Dari <span>1</span> Tugas
-                      </p>
-                    </div>
-                  </div>
-                  <div className="icon-navigate">
-                    <Icon icon="ic:round-navigate-next" width="30" />
-                  </div>
-                </div>
               )}
             </div>
 
@@ -383,7 +479,7 @@ function BerandaWaliMurid() {
                         Tugas
                       </p>
                       <p className="value-indie-information">
-                        Dari <span>1</span> Tugas
+                        Dari <span>{dataBerandaWaliMurid.jumlah_tugas}</span> Tugas
                       </p>
                     </div>
                   </div>
