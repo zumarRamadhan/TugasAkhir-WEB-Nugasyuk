@@ -74,7 +74,6 @@ function PagePengumpulan() {
   const [dataKelas, setDataKelas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [selected, setSelected] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [filterValue, setFilterValue] = useState("all");
@@ -118,7 +117,7 @@ function PagePengumpulan() {
       });
 
     axios
-      .get(`${apiurl}guru/pengumpulan/kelas`, {
+      .get(`${apiurl}guru/kelas`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${saveToken}`,
@@ -144,24 +143,24 @@ function PagePengumpulan() {
   }, [searchQuery, filterValue]);
 
   const handleSearch = () => {
+    const searchKeywords = searchQuery.toLowerCase().split(" ");
     const filteredData = dataTabelMurid.filter((value) => {
-      const lowerCaseStatusMapel = value.nama_jurusan
-        ? value.nama_jurusan.toLowerCase()
+      const lowerCaseStatusMapel = value.kelas_id
+        ? value.kelas_id.toString() // Ensure kelas_id is a string
         : "";
+
+      const propValues = Object.values(value);
 
       return (
         (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
-        ((value &&
-          value.nama_siswa &&
-          value.nama_siswa.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (value &&
-            value.email &&
-            value.email.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (value &&
-            value.nama_jurusan &&
-            value.nama_jurusan
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase())))
+        searchKeywords.every((keyword) =>
+          propValues.some((propValue) => {
+            if (typeof propValue === "string" && propValue !== "") {
+              return propValue.toLowerCase().includes(keyword);
+            }
+            return false;
+          })
+        )
       );
     });
 
@@ -251,6 +250,7 @@ function PagePengumpulan() {
               {isLoading ? <p>Loading...</p> : <p>{renderData.length} MURID</p>}
             </div>
           </div>
+
           {isLoading ? (
             <div className="content-Pengumpulan-Guru">
               <div className="skeleton-card-DetailPengumpulan"></div>
@@ -288,6 +288,9 @@ function PagePengumpulan() {
                       <p className="email-card-Pengumpulan-Guru">
                         {data.email}
                       </p>
+                      {/* <p className="email-card-Pengumpulan-Guru">
+                            {data.kelas_id}
+                          </p> */}
                     </div>
                   </div>
                   <div className="detaiKelas-Pengumpulan-Guru">

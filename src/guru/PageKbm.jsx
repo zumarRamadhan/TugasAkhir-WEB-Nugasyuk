@@ -155,11 +155,6 @@ function PageKbm() {
   };
 
   const renderData = filteredData.length > 0 ? filteredData : dataCardKelas;
-  const dataNotFound =
-    searchQuery !== "" &&
-    filteredData.length === 0 &&
-    !isLoading &&
-    (filterValue !== "all" || searchQuery !== "");
 
   if(dataCardKelas && !isError)
   return (
