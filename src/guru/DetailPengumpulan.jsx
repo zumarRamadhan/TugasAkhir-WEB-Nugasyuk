@@ -376,7 +376,10 @@ function DetailPengumpulan() {
                       <img
                         src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailPengumpulan.foto_profile}`}
                         // src={detailPengumpulan.foto_profile}
-                        alt=""
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = vektorProfile;
+                        }}
                         className="image-DetailPengumpulan-Guru"
                       />
                     ) : (

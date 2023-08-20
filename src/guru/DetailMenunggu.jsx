@@ -11,6 +11,7 @@ import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
+import vektorProfile from "../assets/vektorProfile.svg";
 import axios from "axios";
 import apiurl from "../api/api";
 
@@ -268,16 +269,22 @@ function DetailMenunggu() {
   }
 
   // start funsi generate file link elements
-  function generateFileLinkElements(detailMenunggu) {
-    const item = detailMenunggu;
+  function generateFileLinkElements(detailTugas) {
+    const item = detailTugas;
 
-    if (item.soal_link && item.soal_file) {
-      let linkElement = [];
-      if (item.soal_link.includes("youtube.com")) {
+    // Ubah string "null" menjadi null pada properti link
+    if (item.soal_link === "null") {
+      item.soal_link = null;
+    }
+
+    if (item.soal_link !== null && item.soal_file) {
+      let linkElement = null;
+
+      if (item.soal_link && item.soal_link.includes("youtube.com")) {
         let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         linkElement = (
           <a href={youtubeLink} className="value-link" id="value-link">
-            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
+            <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
               <p className="link-detailMenunggu">
@@ -286,13 +293,13 @@ function DetailMenunggu() {
             </div>
           </a>
         );
-      } else if (item.soal_link.includes("youtu.be")) {
+      } else if (item.soal_link && item.soal_link.includes("youtu.be")) {
         let youtubeLink = `https://www.youtube.com/embed/${item.soal_link
           .split("/")
           .pop()}`;
         linkElement = (
           <a href={youtubeLink} className="value-link" id="value-link">
-            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
+            <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
               <p className="link-detailMenunggu">
@@ -329,7 +336,7 @@ function DetailMenunggu() {
             <a href={youtubeLink} className="value-link" id="value-link">
               <iframe
                 src={youtubeLink}
-                frameborder="0"
+                frameBorder="0"
                 allowFullScreen
               ></iframe>
               <div>
@@ -350,7 +357,7 @@ function DetailMenunggu() {
             <a href={youtubeLink} className="value-link" id="value-link">
               <iframe
                 src={youtubeLink}
-                frameborder="0"
+                frameBorder="0"
                 allowFullScreen
               ></iframe>
               <div>
@@ -375,7 +382,7 @@ function DetailMenunggu() {
       return (
         <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
           <a
-            href={`https://www.nugasyuk.my.id/public/${item.soal_file}`}
+            href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.soal_file}`}
             className="value-file"
             id="value-file"
           >
@@ -522,23 +529,48 @@ function DetailMenunggu() {
               <div className="card-DetailMenunggu-Guru">
                 <div className="card-DetailMenunggu-Guru-left">
                   <div className="img-DetailMenunggu-Guru">
-                    <img
-                      src={damiImgMurid}
-                      alt=""
-                      className="image-DetailMenunggu-Guru"
-                    />
+                    {detailMenunggu && detailMenunggu.foto_profile ? (
+                      <img
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailMenunggu.foto_profile}`}
+                        // src={detailMenunggu.foto_profile}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = vektorProfile;
+                        }}
+                        className="image-DetailMenunggu-Guru"
+                      />
+                    ) : (
+                      <img
+                        src={vektorProfile}
+                        alt="foto profile ${detailMenunggu.foto_profile}"
+                        className="image-DetailMenunggu-Guru"
+                      />
+                    )}
                   </div>
                   <div className="desc-card-DetailMenunggu-Guru">
                     <p className="name-card-DetailMenunggu-Guru">
-                      Ahmad Aziz Wira Widodo
+                      {detailMenunggu.nama_siswa}
                     </p>
                     <p className="email-card-DetailMenunggu-Guru">
-                      ahmadaziz@smkrus.sch.id
+                      {detailMenunggu.email}
                     </p>
                   </div>
                 </div>
                 <div className="detaiKelas-DetailMenunggu-Guru">
-                  <p>11 PPLG 1</p>
+                  {detailMenunggu &&
+                  detailMenunggu.tingkat_ke &&
+                  detailMenunggu.nama_jurusan &&
+                  detailMenunggu.nama_kelas ? (
+                    <p>
+                      {detailMenunggu.tingkat_ke +
+                        " " +
+                        detailMenunggu.nama_jurusan +
+                        " " +
+                        detailMenunggu.nama_kelas}
+                    </p>
+                  ) : (
+                    <p>Loading...</p>
+                  )}
                 </div>
               </div>
             </div>

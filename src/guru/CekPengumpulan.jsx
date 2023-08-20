@@ -227,6 +227,180 @@ function CekPengumpulan() {
 
   // end message popup
 
+  function generateFileIcons(item) {
+    let fileIcon;
+    let fileExtension = "";
+
+    if (item.file_tugas) {
+      fileExtension = item.file_tugas.substring(
+        item.file_tugas.lastIndexOf(".") + 1
+      );
+      switch (fileExtension) {
+        case "pdf":
+          fileIcon = "mdi:file-pdf-box";
+          break;
+        case "docx":
+          fileIcon = "mdi:file-word-box";
+          break;
+        case "xlsx":
+          fileIcon = "file-icons:microsoft-excel";
+          break;
+        default:
+          fileIcon = "";
+          break;
+      }
+    }
+
+    return (
+      <>
+        {fileExtension && (
+          <>
+            <div className="icon-value-file">
+              <Icon icon={fileIcon} width={45} />
+            </div>
+            <div>
+              <h1 className="title-value-file">{item.nama_tugas}</h1>
+              <p className="file-detailMenunggu">
+                {fileExtension.toUpperCase()} <span>Klik</span>
+              </p>
+            </div>
+          </>
+        )}
+      </>
+    );
+  }
+
+  // start funsi generate file link elements
+  function generateFileLinkElements(listPengumpulan) {
+    const item = listPengumpulan;
+
+    // Ubah string "null" menjadi null pada properti link
+    if (item.link_tugas === "null") {
+      item.link_tugas = null;
+    }
+
+    if (item.link_tugas !== null && item.file_tugas) {
+      let linkElement = null;
+
+      if (item.link_tugas && item.link_tugas.includes("youtube.com")) {
+        let youtubeLink = item.link_tugas.replace("watch?v=", "embed/");
+        linkElement = (
+          <a href={youtubeLink} className="value-link" id="value-link">
+            <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
+            <div>
+              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+              <p className="link-detailMenunggu">
+                YouTube <span>Klik</span>
+              </p>
+            </div>
+          </a>
+        );
+      } else if (item.link_tugas && item.link_tugas.includes("youtu.be")) {
+        let youtubeLink = `https://www.youtube.com/embed/${item.link_tugas
+          .split("/")
+          .pop()}`;
+        linkElement = (
+          <a href={youtubeLink} className="value-link" id="value-link">
+            <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
+            <div>
+              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+              <p className="link-detailMenunggu">
+                YouTube <span>Klik</span>
+              </p>
+            </div>
+          </a>
+        );
+      } else {
+        linkElement = (
+          <a href={item.link_tugas} className="btn-openSitus">
+            Buka Situs
+          </a>
+        );
+      }
+
+      return (
+        <div className="con-value-fileOrlink" key={item.id}>
+          {linkElement}
+          <a
+            href={`https://www.nugasyuk.my.id/public/${item.file_tugas}`}
+            className="value-file"
+            id="value-file"
+          >
+            {generateFileIcons(item)}
+          </a>
+        </div>
+      );
+    } else if (item.link_tugas) {
+      if (item.link_tugas.includes("youtube.com")) {
+        let youtubeLink = item.link_tugas.replace("watch?v=", "embed/");
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">{item.nama_materi}</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          </div>
+        );
+      } else if (item.link_tugas.includes("youtu.be")) {
+        let youtubeLink = `https://www.youtube.com/embed/${item.link_tugas
+          .split("/")
+          .pop()}`;
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            <a href={youtubeLink} className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          </div>
+        );
+      } else {
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            <a href={item.link_tugas} className="btn-openSitus">
+              Buka Situs
+            </a>
+          </div>
+        );
+      }
+    } else if (item.file_tugas) {
+      return (
+        <div className="con-value-fileOrlink" key={item.id}>
+          <a
+            href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file_tugas}`}
+            className="value-file"
+            id="value-file"
+          >
+            {generateFileIcons(item)}
+          </a>
+        </div>
+      );
+    }
+
+    return null;
+  }
+  // end funsi generate file link elements
+
+  // Panggil fungsi generateFileLinkElements untuk menghasilkan elemen-elemen yang sesuai
+  const fileLinkElements = generateFileLinkElements(listPengumpulan);
+
   // function changes password
   const [formPass, setformPass] = useState({
     password_lama: "",
@@ -378,6 +552,8 @@ function CekPengumpulan() {
               <p className="infoDeadline">
                 Deatline : {listPengumpulan.deadline}
               </p>
+
+              <div>{fileLinkElements}</div>
             </div>
 
             <div className="switch-container">

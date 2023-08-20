@@ -9,6 +9,7 @@ import mataIcon from "../assets/icon-mata.svg";
 import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
+import vektorImg from "../assets/vektorProfile.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
@@ -426,8 +427,12 @@ function PagePengumpulan() {
                     <div className="img-Pengumpulan-Guru">
                       <img
                         src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
-                        alt={data.foto_profile}
+                        // alt={`${damiImgMurid}`}
                         className="image-Pengumpulan-Guru"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = vektorImg;
+                        }}
                       />
                     </div>
                     <div className="desc-card-Pengumpulan-Guru">

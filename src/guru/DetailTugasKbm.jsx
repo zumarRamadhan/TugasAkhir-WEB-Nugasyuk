@@ -358,7 +358,7 @@ function DetailTugasKbm() {
                 allowFullScreen
               ></iframe>
               <div>
-                <h1 className="title-fileOrlink">{item.nama_materi}</h1>
+                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
                 <p className="link-detailMenunggu">
                   YouTube <span>Klik</span>
                 </p>
@@ -379,7 +379,7 @@ function DetailTugasKbm() {
                 allowFullScreen
               ></iframe>
               <div>
-                <h1 className="title-fileOrlink">{item.nama_materi}</h1>
+                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
                 <p className="link-detailMenunggu">
                   YouTube <span>Klik</span>
                 </p>
@@ -609,7 +609,7 @@ function DetailTugasKbm() {
               <img src={ImgDelete} alt="" className="img-Delete" />
             </div>
             <p className="desc-Delete">
-              Anda yakin ingin menghapus materi ini?
+              Anda yakin ingin menghapus Tugas ini?
             </p>
             <div className="con-btn-Delete">
               <button

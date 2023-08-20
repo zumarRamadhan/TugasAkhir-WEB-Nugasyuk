@@ -8,7 +8,7 @@ import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
 import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
-import damiImgMurid from "../assets/damiImgMurid.png";
+import vektorProfile from "../assets/vektorProfile.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
 import axios from "axios";
@@ -216,16 +216,22 @@ function DetailSelesai() {
   }
 
   // start funsi generate file link elements
-  function generateFileLinkElements(detailSelesai) {
-    const item = detailSelesai;
+  function generateFileLinkElements(detailTugas) {
+    const item = detailTugas;
 
-    if (item.soal_link && item.soal_file) {
-      let linkElement = [];
-      if (item.soal_link.includes("youtube.com")) {
+    // Ubah string "null" menjadi null pada properti link
+    if (item.soal_link === "null") {
+      item.soal_link = null;
+    }
+
+    if (item.soal_link !== null && item.soal_file) {
+      let linkElement = null;
+
+      if (item.soal_link && item.soal_link.includes("youtube.com")) {
         let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         linkElement = (
           <a href={youtubeLink} className="value-link" id="value-link">
-            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
+            <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
               <p className="link-detailMenunggu">
@@ -234,13 +240,13 @@ function DetailSelesai() {
             </div>
           </a>
         );
-      } else if (item.soal_link.includes("youtu.be")) {
+      } else if (item.soal_link && item.soal_link.includes("youtu.be")) {
         let youtubeLink = `https://www.youtube.com/embed/${item.soal_link
           .split("/")
           .pop()}`;
         linkElement = (
           <a href={youtubeLink} className="value-link" id="value-link">
-            <iframe src={youtubeLink} frameborder="0" allowFullScreen></iframe>
+            <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
               <p className="link-detailMenunggu">
@@ -277,7 +283,7 @@ function DetailSelesai() {
             <a href={youtubeLink} className="value-link" id="value-link">
               <iframe
                 src={youtubeLink}
-                frameborder="0"
+                frameBorder="0"
                 allowFullScreen
               ></iframe>
               <div>
@@ -298,7 +304,7 @@ function DetailSelesai() {
             <a href={youtubeLink} className="value-link" id="value-link">
               <iframe
                 src={youtubeLink}
-                frameborder="0"
+                frameBorder="0"
                 allowFullScreen
               ></iframe>
               <div>
@@ -323,7 +329,7 @@ function DetailSelesai() {
       return (
         <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
           <a
-            href={`https://www.nugasyuk.my.id/public/${item.soal_file}`}
+            href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.soal_file}`}
             className="value-file"
             id="value-file"
           >
@@ -470,23 +476,48 @@ function DetailSelesai() {
               <div className="card-detailSelesai-Guru">
                 <div className="card-detailSelesai-Guru-left">
                   <div className="img-detailSelesai-Guru">
-                    <img
-                      src={damiImgMurid}
-                      alt=""
-                      className="image-detailSelesai-Guru"
-                    />
+                  {detailSelesai && detailSelesai.foto_profile ? (
+                      <img
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailSelesai.foto_profile}`}
+                        // src={detailSelesai.foto_profile}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = vektorProfile;
+                        }}
+                        className="image-detailSelesai-Guru"
+                      />
+                    ) : (
+                      <img
+                        src={vektorProfile}
+                        alt="foto profile ${detailSelesai.foto_profile}"
+                        className="image-detailSelesai-Guru"
+                      />
+                    )}
                   </div>
                   <div className="desc-card-detailSelesai-Guru">
                     <p className="name-card-detailSelesai-Guru">
-                      Ahmad Aziz Wira Widodo
+                      {detailSelesai.nama_siswa}
                     </p>
                     <p className="email-card-detailSelesai-Guru">
-                      ahmadaziz@smkrus.sch.id
+                      {detailSelesai.email}
                     </p>
                   </div>
                 </div>
                 <div className="detaiKelas-detailSelesai-Guru">
-                  <p>11 PPLG 1</p>
+                  {detailSelesai &&
+                  detailSelesai.tingkat_ke &&
+                  detailSelesai.nama_jurusan &&
+                  detailSelesai.nama_kelas ? (
+                    <p>
+                      {detailSelesai.tingkat_ke +
+                        " " +
+                        detailSelesai.nama_jurusan +
+                        " " +
+                        detailSelesai.nama_kelas}
+                    </p>
+                  ) : (
+                    <p>Loading...</p>
+                  )}
                 </div>
               </div>
             </div>

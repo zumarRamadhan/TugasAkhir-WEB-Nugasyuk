@@ -220,7 +220,10 @@ function EditFormMateriKBM() {
           deskripsi: response.data.materi.isi,
           file: response.data.materi.file,
           link: response.data.materi.link,
-          link: response.data.materi.link === "null" ? null : response.data.materi.link,
+          link:
+            response.data.materi.link === "null"
+              ? null
+              : response.data.materi.link,
         });
         setIsLoading(false);
         closePopupLoadingDetail();
