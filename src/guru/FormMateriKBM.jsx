@@ -25,6 +25,10 @@ function FormMateriKBM() {
   const id = useIdFromParams();
   const saveToken = sessionStorage.getItem("token");
 
+  if (!saveToken) {
+    navigate("/login");
+  }
+
   const logout = () => {
     sessionStorage.removeItem("token");
     window.location.href = "/login";
@@ -273,7 +277,7 @@ function FormMateriKBM() {
     return errors;
   };
 
-    // function changes password
+  // function changes password
   const [formPass, setformPass] = useState({
     password_lama: "",
     password_baru: "",

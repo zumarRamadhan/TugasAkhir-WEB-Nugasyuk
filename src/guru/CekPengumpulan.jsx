@@ -18,6 +18,10 @@ function CekPengumpulan() {
   const navigate = useNavigate();
   const saveToken = sessionStorage.getItem("token");
 
+  if (!saveToken) {
+    navigate("/login");
+  }
+
   const logout = () => {
     sessionStorage.removeItem("token");
     window.location.href = "/login";
@@ -314,238 +318,240 @@ function CekPengumpulan() {
   }, [isSubmitting, formPass]);
 
   // end function changes password
-
-  return (
-    <div>
-      <aside>
-        <h1
-          className="title-form-login"
-          onClick={() => navigate("/guru/berandaguru")}
-        >
-          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-          nugasyuk
-        </h1>
-        <ul>
-          <li onClick={() => navigate("/guru/berandaguru")}>
-            <Icon icon="iconoir:home-simple" width="20" />
-            Beranda
-          </li>
-          <li className="active" onClick={() => navigate("/guru/pagekbm")}>
-            <Icon icon="ph:chalkboard-teacher" width="20" />
-            KBM
-          </li>
-          <li onClick={() => navigate("/guru/pagepengumpulan")}>
-            <Icon icon="uiw:date" width="18" />
-            Pengumpulan
-          </li>
-          <li onClick={() => navigate("/guru/pageJadwalKbm")}>
-            <Icon icon="fluent-mdl2:education" width="18" />
-            Jadwal KBM
-          </li>
-        </ul>
-      </aside>
-      <div className="container-content">
-        <NavbarGuru text={navText} />
-        <div className="main">
-          <div className="con-card-detailTugas">
-            <div className="header-card-detailTugas">
-              <div className="left-header-card-detailTugas">
-                <div className="icon-header-card-detailTugas">
-                  <Icon icon="tabler:clipboard-text" width={40} />
+  if (listPengumpulan && detailSelesai && detailMenunggu && !isError)
+    return (
+      <div>
+        <aside>
+          <h1
+            className="title-form-login"
+            onClick={() => navigate("/guru/berandaguru")}
+          >
+            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+            nugasyuk
+          </h1>
+          <ul>
+            <li onClick={() => navigate("/guru/berandaguru")}>
+              <Icon icon="iconoir:home-simple" width="20" />
+              Beranda
+            </li>
+            <li className="active" onClick={() => navigate("/guru/pagekbm")}>
+              <Icon icon="ph:chalkboard-teacher" width="20" />
+              KBM
+            </li>
+            <li onClick={() => navigate("/guru/pagepengumpulan")}>
+              <Icon icon="uiw:date" width="18" />
+              Pengumpulan
+            </li>
+            <li onClick={() => navigate("/guru/pageJadwalKbm")}>
+              <Icon icon="fluent-mdl2:education" width="18" />
+              Jadwal KBM
+            </li>
+          </ul>
+        </aside>
+        <div className="container-content">
+          <NavbarGuru text={navText} />
+          <div className="main">
+            <div className="con-card-detailTugas">
+              <div className="header-card-detailTugas">
+                <div className="left-header-card-detailTugas">
+                  <div className="icon-header-card-detailTugas">
+                    <Icon icon="tabler:clipboard-text" width={40} />
+                  </div>
+                  <div className="text-header-card-detailTugas">
+                    <h1 className="title-header-card-detailTugas">
+                      {listPengumpulan.nama_tugas}
+                    </h1>
+                    <p className="guru-header-card-detailTugas">
+                      {listPengumpulan.nama_guru}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-header-card-detailTugas">
-                  <h1 className="title-header-card-detailTugas">
-                    {listPengumpulan.nama_tugas}
-                  </h1>
-                  <p className="guru-header-card-detailTugas">
-                    {listPengumpulan.nama_guru}
+                <div className="right-header-card-detailTugas">
+                  <p className="date-header-card-detailTugas">
+                    {listPengumpulan.date}
                   </p>
                 </div>
               </div>
-              <div className="right-header-card-detailTugas">
-                <p className="date-header-card-detailTugas">
-                  {listPengumpulan.date}
-                </p>
+
+              <p className="desc-card-detailTugas">{listPengumpulan.soal}</p>
+
+              <p className="infoDeadline">
+                Deatline : {listPengumpulan.deadline}
+              </p>
+            </div>
+
+            <div className="switch-container">
+              <button
+                id="btn-MenungguPengumpulan"
+                className={
+                  activeContent === "detailMenungguPengumpulan"
+                    ? "activeDetailPengumpulan"
+                    : ""
+                }
+                onClick={showMenunggu}
+              >
+                Menunggu
+              </button>
+              <button
+                id="btn-SelesaiPengumpulan"
+                className={
+                  activeContent === "detailSelesaiPengumpulan"
+                    ? "activeDetailPengumpulan"
+                    : ""
+                }
+                onClick={showSelesai}
+              >
+                Selesai
+              </button>
+            </div>
+
+            <div
+              className="con-DetailPengumpulan"
+              style={{
+                display:
+                  activeContent === "detailMenungguPengumpulan"
+                    ? "block"
+                    : "none",
+              }}
+            >
+              <div className="con-DetailPengumpulan-Menunggu">
+                {isLoading ? (
+                  <div className="con-DetailPengumpulan-Menunggu">
+                    <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                    <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                    <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                    <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                  </div>
+                ) : detailMenunggu.length === 0 ? (
+                  <div className="card-DetailPengumpulan-Menunggu-noData">
+                    <p>Tidak ada data menunggu konfirmasi</p>
+                  </div>
+                ) : (
+                  detailMenunggu.map((data) => (
+                    <div
+                      className="card-Pengumpulan-Guru"
+                      style={{ cursor: "pointer" }}
+                      key={data.id} // Tambahkan key prop untuk mencegah pesan warning
+                    >
+                      <div className="card-Pengumpulan-Guru-left">
+                        <div className="img-Pengumpulan-Guru">
+                          <img
+                            src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
+                            alt={data.foto_profile}
+                            className="image-Pengumpulan-Guru"
+                          />
+                        </div>
+                        <div className="desc-card-Pengumpulan-Guru">
+                          <p className="name-card-Pengumpulan-Guru">
+                            {data.nama_siswa}
+                          </p>
+                          <p className="email-card-Pengumpulan-Guru">
+                            {data.email}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="detaiKelas-Pengumpulan-Guru">
+                        <p>
+                          {data.tingkat_ke +
+                            " " +
+                            data.nama_jurusan +
+                            " " +
+                            data.nama_kelas}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 
-            <p className="desc-card-detailTugas">{listPengumpulan.soal}</p>
-
-            <p className="infoDeadline">
-              Deatline : {listPengumpulan.deadline}
-            </p>
-          </div>
-
-          <div className="switch-container">
-            <button
-              id="btn-MenungguPengumpulan"
-              className={
-                activeContent === "detailMenungguPengumpulan"
-                  ? "activeDetailPengumpulan"
-                  : ""
-              }
-              onClick={showMenunggu}
+            <div
+              className="con-DetailPengumpulan"
+              style={{
+                display:
+                  activeContent === "detailSelesaiPengumpulan"
+                    ? "block"
+                    : "none",
+              }}
             >
-              Menunggu
-            </button>
-            <button
-              id="btn-SelesaiPengumpulan"
-              className={
-                activeContent === "detailSelesaiPengumpulan"
-                  ? "activeDetailPengumpulan"
-                  : ""
-              }
-              onClick={showSelesai}
-            >
-              Selesai
-            </button>
-          </div>
-
-          <div
-            className="con-DetailPengumpulan"
-            style={{
-              display:
-                activeContent === "detailMenungguPengumpulan"
-                  ? "block"
-                  : "none",
-            }}
-          >
-            <div className="con-DetailPengumpulan-Menunggu">
-              {isLoading ? (
-                <div className="con-DetailPengumpulan-Menunggu">
-                  <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
-                  <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
-                  <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
-                  <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
-                </div>
-              ) : detailMenunggu.length === 0 ? (
-                <div className="card-DetailPengumpulan-Menunggu-noData">
-                  <p>Tidak ada data menunggu konfirmasi</p>
-                </div>
-              ) : (
-                detailMenunggu.map((data) => (
-                  <div
-                    className="card-Pengumpulan-Guru"
-                    style={{ cursor: "pointer" }}
-                    key={data.id} // Tambahkan key prop untuk mencegah pesan warning
-                  >
-                    <div className="card-Pengumpulan-Guru-left">
-                      <div className="img-Pengumpulan-Guru">
-                        <img
-                          src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
-                          alt={data.foto_profile}
-                          className="image-Pengumpulan-Guru"
-                        />
-                      </div>
-                      <div className="desc-card-Pengumpulan-Guru">
-                        <p className="name-card-Pengumpulan-Guru">
-                          {data.nama_siswa}
-                        </p>
-                        <p className="email-card-Pengumpulan-Guru">
-                          {data.email}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="detaiKelas-Pengumpulan-Guru">
-                      <p>
-                        {data.tingkat_ke +
-                          " " +
-                          data.nama_jurusan +
-                          " " +
-                          data.nama_kelas}
-                      </p>
-                    </div>
+              <div className="con-DetailPengumpulan-Selesai">
+                {isLoading ? (
+                  <div className="con-DetailPengumpulan-Selesai">
+                    <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                    <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                    <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                    <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                   </div>
-                ))
-              )}
-            </div>
-          </div>
-
-          <div
-            className="con-DetailPengumpulan"
-            style={{
-              display:
-                activeContent === "detailSelesaiPengumpulan" ? "block" : "none",
-            }}
-          >
-            <div className="con-DetailPengumpulan-Selesai">
-              {isLoading ? (
-                <div className="con-DetailPengumpulan-Selesai">
-                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
-                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
-                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
-                  <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
-                </div>
-              ) : detailSelesai.length === 0 ? (
-                <div className="card-DetailPengumpulan-Selesai-noData">
-                  <p>Tidak ada data tugas selesai</p>
-                </div>
-              ) : (
-                detailSelesai.map((data) => (
-                  <div
-                    className="card-Pengumpulan-Guru"
-                    style={{ cursor: "pointer" }}
-                    key={data.id} // Tambahkan key prop untuk mencegah pesan warning
-                  >
-                    <div className="card-Pengumpulan-Guru-left">
-                      <div className="img-Pengumpulan-Guru">
-                        <img
-                          src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
-                          alt={data.foto_profile}
-                          className="image-Pengumpulan-Guru"
-                        />
-                      </div>
-                      <div className="desc-card-Pengumpulan-Guru">
-                        <p className="name-card-Pengumpulan-Guru">
-                          {data.nama_siswa}
-                        </p>
-                        <p className="email-card-Pengumpulan-Guru">
-                          {data.email}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="detaiKelas-Pengumpulan-Guru">
-                      <p>
-                        {data.tingkat_ke +
-                          " " +
-                          data.nama_jurusan +
-                          " " +
-                          data.nama_kelas}
-                      </p>
-                    </div>
+                ) : detailSelesai.length === 0 ? (
+                  <div className="card-DetailPengumpulan-Selesai-noData">
+                    <p>Tidak ada data tugas selesai</p>
                   </div>
-                ))
-              )}
+                ) : (
+                  detailSelesai.map((data) => (
+                    <div
+                      className="card-Pengumpulan-Guru"
+                      style={{ cursor: "pointer" }}
+                      key={data.id} // Tambahkan key prop untuk mencegah pesan warning
+                    >
+                      <div className="card-Pengumpulan-Guru-left">
+                        <div className="img-Pengumpulan-Guru">
+                          <img
+                            src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
+                            alt={data.foto_profile}
+                            className="image-Pengumpulan-Guru"
+                          />
+                        </div>
+                        <div className="desc-card-Pengumpulan-Guru">
+                          <p className="name-card-Pengumpulan-Guru">
+                            {data.nama_siswa}
+                          </p>
+                          <p className="email-card-Pengumpulan-Guru">
+                            {data.email}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="detaiKelas-Pengumpulan-Guru">
+                        <p>
+                          {data.tingkat_ke +
+                            " " +
+                            data.nama_jurusan +
+                            " " +
+                            data.nama_kelas}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* end body */}
+        {/* end body */}
 
-      <div className="popup-logout" id="popup-logout">
-        <div className="detail-logout">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeLogoutPopup}
-          />
-          <div className="image-logout">
-            <img src={ImgLogout} alt="" className="img-logout" />
-          </div>
-          <p className="desc-logout">Anda yakin ingin keluar?</p>
-          <div className="con-btn-logout">
-            <button type="button" className="btn-batal">
-              Batal
-            </button>
-            <button type="button" className="btn-keluar" onClick={logout}>
-              Keluar
-            </button>
+        <div className="popup-logout" id="popup-logout">
+          <div className="detail-logout">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeLogoutPopup}
+            />
+            <div className="image-logout">
+              <img src={ImgLogout} alt="" className="img-logout" />
+            </div>
+            <p className="desc-logout">Anda yakin ingin keluar?</p>
+            <div className="con-btn-logout">
+              <button type="button" className="btn-batal">
+                Batal
+              </button>
+              <button type="button" className="btn-keluar" onClick={logout}>
+                Keluar
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="popup-forget" id="popup-forget">
+        <div className="popup-forget" id="popup-forget">
           <form
             onSubmit={handleSubmitChangesPass}
             className="detail-forget-password"
@@ -638,42 +644,46 @@ function CekPengumpulan() {
           </form>
         </div>
 
-      <div className="detail-profile">
-        <div className="content-detail">
-          <div className="navbar-detail">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeDetail}
-            />
-            <h2>Profil</h2>
+        <div className="detail-profile">
+          <div className="content-detail">
+            <div className="navbar-detail">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeDetail}
+              />
+              <h2>Profil</h2>
+            </div>
+            <div className="detail-image-profile">
+              <img src={ImgProfil} alt="" className="detail-img-profile" />
+            </div>
+            <p className="judul-detail">Email</p>
+            <p className="value-detail">budiono@smkrus.sch.id</p>
+            <p className="judul-detail">Nama</p>
+            <p className="value-detail">Budiono, S.Pd</p>
+            <p className="judul-detail">Pengampu</p>
+            <p className="value-detail">Bahasa Inggris</p>
           </div>
-          <div className="detail-image-profile">
-            <img src={ImgProfil} alt="" className="detail-img-profile" />
+          <div className="con-btn-detail-profile">
+            <button
+              className="forget-password"
+              id="btn-forget-pass"
+              onClick={showForgetPopup}
+            >
+              <Icon icon="material-symbols:key-outline-rounded" width="30" />
+              <p>Ganti Password</p>
+            </button>
+            <button
+              className="logout"
+              id="btn-logout"
+              onClick={showLogoutPopup}
+            >
+              <Icon icon="material-symbols:logout-rounded" width="30" />
+              <p>Logout</p>
+            </button>
           </div>
-          <p className="judul-detail">Email</p>
-          <p className="value-detail">budiono@smkrus.sch.id</p>
-          <p className="judul-detail">Nama</p>
-          <p className="value-detail">Budiono, S.Pd</p>
-          <p className="judul-detail">Pengampu</p>
-          <p className="value-detail">Bahasa Inggris</p>
         </div>
-        <div className="con-btn-detail-profile">
-          <button
-            className="forget-password"
-            id="btn-forget-pass"
-            onClick={showForgetPopup}
-          >
-            <Icon icon="material-symbols:key-outline-rounded" width="30" />
-            <p>Ganti Password</p>
-          </button>
-          <button className="logout" id="btn-logout" onClick={showLogoutPopup}>
-            <Icon icon="material-symbols:logout-rounded" width="30" />
-            <p>Logout</p>
-          </button>
-        </div>
-      </div>
 
         {/* message Changes Pass */}
 
@@ -710,7 +720,9 @@ function CekPengumpulan() {
             <div className="image-Failed">
               <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
-            <p className="desc-Failed">Masukan Password Lama Anda Dengan Benar!!</p>
+            <p className="desc-Failed">
+              Masukan Password Lama Anda Dengan Benar!!
+            </p>
             <button className="btn-Failed" onClick={closeFailedChangesPass}>
               Kembali
             </button>
@@ -768,9 +780,8 @@ function CekPengumpulan() {
         </div>
 
         {/* end page loading */}
-
-    </div>
-  );
+      </div>
+    );
 }
 
 export default CekPengumpulan;

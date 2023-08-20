@@ -25,6 +25,10 @@ function EditFormTugasKBM() {
   const id = useIdFromParams();
   const saveToken = sessionStorage.getItem("token");
 
+  if (!saveToken) {
+    navigate("/login");
+  }
+
   const logout = () => {
     sessionStorage.removeItem("token");
     window.location.href = "/login";
@@ -182,8 +186,8 @@ function EditFormTugasKBM() {
     judul_tugas: "",
     desc_tugas: "",
     deadline: "",
-    link: "",
-    file: "",
+    soal_link: "",
+    soal_file: "",
     input_jawaban: "",
   });
 
@@ -191,6 +195,7 @@ function EditFormTugasKBM() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState([]);
   const [kelasId, setKelasId] = useState([]);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (isLoading) {
@@ -216,18 +221,20 @@ function EditFormTugasKBM() {
           judul_tugas: response.data.tugas[0].nama_tugas,
           desc_tugas: response.data.tugas[0].soal,
           deadline: response.data.tugas[0].deadline,
-          link: response.data.tugas[0].link,
-          file: response.data.tugas.file,
+          // soal_link: response.data.tugas[0].soal_link,
+          soal_link: response.data.tugas[0].soal_link === "null" ? null : response.data.tugas[0].soal_link,
+          soal_file: response.data.tugas[0].soal_file,
           input_jawaban: response.data.tugas[0].input_jawaban,
         });
-        console.log(response.data.tugas.file);
+        console.log(response.data.tugas.soal_file);
         setIsLoading(false);
         closePopupLoadingDetail();
         setKelasId(response.data.kelas_id);
       })
       .catch((error) => {
-        console.error("Terjadi kesalahan saat mengambil data murid:", error);
+        console.error("Terjadi kesalahan saat mengambil data Tugas:", error);
         setIsLoading(false);
+        setIsError(true);
       });
   }, [id, saveToken]);
 
@@ -239,8 +246,8 @@ function EditFormTugasKBM() {
       form.append("judul_tugas", formData.judul_tugas);
       form.append("tugas", formData.desc_tugas);
       form.append("deadline", formData.deadline);
-      form.append("link", formData.link);
-      form.append("file", formData.file);
+      form.append("link", formData.soal_link);
+      form.append("file", formData.soal_file);
       form.append("input_jawaban", formData.input_jawaban);
 
       axios
@@ -262,8 +269,8 @@ function EditFormTugasKBM() {
             judul_tugas: "",
             desc_tugas: "",
             deadline: "",
-            link: "",
-            file: "",
+            soal_link: "",
+            soal_file: "",
             input_jawaban: "",
           });
 
@@ -315,8 +322,8 @@ function EditFormTugasKBM() {
       errors.desc_tugas = "Deskripsi Tugas Harus Diisi";
     }
     // Validasi link
-    if (data.link && !/^https?:\/\//.test(data.link)) {
-      errors.link = "Link harus dimulai dengan https:// atau http://";
+    if (data.soal_link && !/^https?:\/\//.test(data.soal_link)) {
+      errors.soal_link = "Link harus dimulai dengan https:// atau http://";
     }
 
     if (!data.input_jawaban) {
@@ -417,7 +424,7 @@ function EditFormTugasKBM() {
   }, [isSubmittingPass, formPass]);
 
   // end function changes password
-
+  if (formData && !isError)
   return (
     <div>
       <aside>
@@ -503,18 +510,18 @@ function EditFormTugasKBM() {
                   type="text"
                   className="input-formKbm"
                   placeholder="link tugas"
-                  name="link"
-                  value={formData.link}
+                  name="soal_link"
+                  value={formData.soal_link}
                   onChange={handleChange}
                 />
-                {errors.link && <span className="error">{errors.link}</span>}
+                {errors.soal_link && <span className="error">{errors.soal_link}</span>}
               </div>
 
               <div className="con-formKbm">
                 <div className="title-formKbm">File Tugas</div>
                 <input
                   type="file"
-                  name="file"
+                  name="soal_file"
                   id="file"
                   className="input-formKbm"
                   accept=".pdf , .docx , .xlsx"

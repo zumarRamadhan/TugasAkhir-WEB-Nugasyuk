@@ -18,6 +18,10 @@ function PageJadwalKbm() {
   const navigate = useNavigate();
   const saveToken = sessionStorage.getItem("token");
 
+  if (!saveToken) {
+    navigate("/login");
+  }
+
   const logout = () => {
     sessionStorage.removeItem("token");
     window.location.href = "/login";
@@ -261,7 +265,7 @@ function PageJadwalKbm() {
   }, [isSubmitting, formPass]);
 
   // end function changes password
-  
+  if (dataJadwal && !isError)
   return (
     <div>
       <aside>

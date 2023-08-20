@@ -18,6 +18,10 @@ function PageKbm() {
   const navigate = useNavigate();
   const saveToken = sessionStorage.getItem("token");
 
+  if (!saveToken) {
+    navigate("/login");
+  }
+
   const logout = () => {
     sessionStorage.removeItem("token");
     window.location.href = "/login";

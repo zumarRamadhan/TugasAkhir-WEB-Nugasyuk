@@ -18,6 +18,10 @@ function BerandaGuru() {
   const navigate = useNavigate();
   const saveToken = sessionStorage.getItem("token");
 
+  // if (!saveToken) {
+  //   navigate("/login");
+  // }
+
   const logout = () => {
     sessionStorage.removeItem("token");
     window.location.href = "/login";
@@ -551,7 +555,9 @@ function BerandaGuru() {
             <div className="image-Failed">
               <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
-            <p className="desc-Failed">Masukan Password Lama Anda Dengan Benar!!</p>
+            <p className="desc-Failed">
+              Masukan Password Lama Anda Dengan Benar!!
+            </p>
             <button className="btn-Failed" onClick={closeFailedChangesPass}>
               Kembali
             </button>

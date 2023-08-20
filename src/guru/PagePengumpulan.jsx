@@ -19,6 +19,10 @@ function PagePengumpulan() {
   const navigate = useNavigate();
   const saveToken = sessionStorage.getItem("token");
 
+  if (!saveToken) {
+    navigate("/login");
+  }
+
   const logout = () => {
     sessionStorage.removeItem("token");
     window.location.href = "/login";
@@ -325,7 +329,7 @@ function PagePengumpulan() {
   }, [isSubmitting, formPass]);
 
   // end function changes password
-
+  if (dataKelas && dataTabelMurid && !isError)
   return (
     <div>
       <aside>
