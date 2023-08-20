@@ -627,7 +627,7 @@ function BerandaGuru() {
                     ></Icon>
                   </button>
                 </form>
-                <ExportExcelButton data={dataExport} filename="exported_data" />
+                <ExportExcelButton data={dataExport} filename="data_guru" />
                 {/* <ImportExcelComponent onDataImport={handleDataImport} /> */}
               </div>
 

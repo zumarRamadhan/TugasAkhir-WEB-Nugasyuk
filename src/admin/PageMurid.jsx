@@ -363,28 +363,28 @@ function DataMurid() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-    // useEffect(() => {
-    //   axios
-    //     .get(`${apiurl}admin/export-murid`, {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${saveToken}`,
-    //         "ngrok-skip-browser-warning": "any",
-    //       },
-    //     })
-    //     .then((result) => {
-    //       console.log("data API", result.data);
-    //       const responseAPI = result.data;
+    useEffect(() => {
+      axios
+        .get(`${apiurl}admin/export-murid`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
+        .then((result) => {
+          console.log("data API", result.data);
+          const responseAPI = result.data;
   
-    //       setDataExport(responseAPI.data);
-    //       setIsLoading(false);
-    //     })
-    //     .catch((err) => {
-    //       console.log("terjadi kesalahan: ", err);
-    //       setIsError(true);
-    //       setIsLoading(false);
-    //     });
-    // }, []);
+          setDataExport(responseAPI.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log("terjadi kesalahan: ", err);
+          setIsError(true);
+          setIsLoading(false);
+        });
+    }, []);
     
   if (dataTabelMurid && !isError)
     return (
@@ -469,7 +469,7 @@ function DataMurid() {
                     ></Icon>
                   </button>
                 </form>
-                {/* <ExportExcelButton data={dataExport} filename="exported_data" /> */}
+                <ExportExcelButton data={dataExport} filename="data_murid" />
               </div>
               <div className="header-murid-right">
                 <p className="detail-jumlah-murid">

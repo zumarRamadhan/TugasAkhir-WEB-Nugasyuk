@@ -359,9 +359,11 @@ nav .navbar img {
     display: none;
     justify-content: center;
     align-items: center;
+    background-color: rgba(0, 0, 0, 0.25);
 }
 
 .detail-forget-password {
+    display: none;
     width: 547px;
     background: #ffffff;
     padding: 30px;
