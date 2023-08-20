@@ -173,7 +173,7 @@ a {
     padding: 10px 0px 10px 10px;
     gap: 20px;
     cursor: pointer;
-    width: 350px;
+    width: 370px;
   }
   
   #value-link,
@@ -243,7 +243,6 @@ a {
     cursor: pointer;
     align-items: center;
     padding-right: -100px;
-    padding-top: 25px;
     padding-right: 20px;
     color: #4b4b4b;
     z-index: 99;

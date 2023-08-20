@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import vektorProfile from '../assets/vektorProfile.svg'
 import 'react-loading-skeleton/dist/skeleton.css'
 import apiurl from "../api/api";
 
@@ -55,7 +56,12 @@ function NavbarMurid(props) {
               {dataNavbar.map((navData) =>
               <div className="img-profile" style={{ cursor: "pointer" }}>
                 <img
-                  src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${navData.foto_profile || <Skeleton circle/>}`}
+                  src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${navData.foto_profile}`} 
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = vektorProfile;
+                  }}
+
                   alt={dataNavbar.foto_profile}
                   onClick={showDetail}
                   style={{objectFit: "cover", objectPosition: "25% 25%"}}

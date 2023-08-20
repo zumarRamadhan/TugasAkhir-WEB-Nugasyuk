@@ -127,10 +127,10 @@ function BerandaMurid() {
               </p>
             </div>
             <div className="head-right-home-student">
-              <div className="reactangle-1">
+              {/* <div className="reactangle-1">
                 <img src={AssetsHead} alt="" />
-                {/* <img className="gif-head" src={GifHead} alt="" /> */}
-              </div>
+                <img className="gif-head" src={GifHead} alt="" />
+              </div> */}
             </div>
           </div>
           ) : (

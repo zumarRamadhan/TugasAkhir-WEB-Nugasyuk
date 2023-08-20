@@ -188,7 +188,7 @@ function PageTugas() {
                 </select>
               )}
 
-              {isLoading ? (
+              {/* {isLoading ? (
                 <SkeletonFilter />
               ) : (
                 <select
@@ -203,7 +203,7 @@ function PageTugas() {
                   <option value="produktif">Produktif</option>
                   <option value="normadaf">Normadaf</option>
                 </select>
-              )}
+              )} */}
 
               {isLoading ? (
                 <SkeletonFilter />
@@ -355,6 +355,9 @@ function PageTugas() {
                       </div>
                     </Link>
                   ))}
+                  <br />
+                  <br />
+                  <br />
                 </div>
               )}
             </div>

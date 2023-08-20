@@ -203,6 +203,7 @@ function DetailTask() {
   const submitTask = () => {
     setIsLoadingSubmit(true);
     setIsErrorSubmit(false);
+    showPopupLoading();
 
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -221,6 +222,7 @@ function DetailTask() {
         showSuccessAdd();
         // Tambahkan logika atau pesan yang ingin ditampilkan jika pengiriman berhasil
         setIsLoadingSubmit(false);
+        closePopupLoading();
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengirim data", error);
@@ -228,6 +230,7 @@ function DetailTask() {
         setIsErrorSubmit(true);
         setIsLoadingSubmit(false);
         showFailedAdd();
+        closePopupLoading();
       });
   };
 
@@ -302,114 +305,10 @@ function DetailTask() {
   // start funsi generate file or link materi
   function generateFileLinkElements() {
     return dataDetailTugas.map((item) => {
-      if (item.link && item.file) {
-        let linkElement = null;
-        if (item.link.includes("youtube.com")) {
-          let youtubeLink = item.link.replace("watch?v=", "embed/");
-          linkElement = (
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">Application Letter</h1>
-                <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          );
-        } else if (item.link.includes("youtu.be")) {
-          let youtubeLink = `https://www.youtube.com/embed/${item.link
-            .split("/")
-            .pop()}`;
-          linkElement = (
-            <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-              <div>
-                <h1 className="title-fileOrlink">Application Letter</h1>
-                <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
-                </p>
-              </div>
-            </a>
-          );
-        } else {
-          linkElement = (
-            <a href={item.link} className="btn-openSitus">
-              Buka Situs
-            </a>
-          );
-        }
-
+      if (item.file) {
         return (
           <div className="con-value-fileOrlink" key={item.id}>
-            {linkElement}
             <a href={item.file} className="value-file" id="value-file">
-              {generateFileIcons(item)}
-            </a>
-          </div>
-        );
-      } else if (item.link) {
-        if (item.link.includes("youtube.com")) {
-          let youtubeLink = item.link.replace("watch?v=", "embed/");
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={youtubeLink} className="value-link" id="value-link">
-                <iframe
-                  src={youtubeLink}
-                  frameborder="0"
-                  allowfullscreen
-                ></iframe>
-                <div>
-                  <h1 className="title-fileOrlink">Application Letter</h1>
-                  <p className="link-detailMenunggu">
-                    YouTube <span>Klik</span>
-                  </p>
-                </div>
-              </a>
-            </div>
-          );
-        } else if (item.link.includes("youtu.be")) {
-          let youtubeLink = `https://www.youtube.com/embed/${item.link
-            .split("/")
-            .pop()}`;
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={youtubeLink} className="value-link" id="value-link">
-                <iframe
-                  src={youtubeLink}
-                  frameborder="0"
-                  allowfullscreen
-                ></iframe>
-                <div>
-                  <h1 className="title-fileOrlink">Application Letter</h1>
-                  <p className="link-detailMenunggu">
-                    YouTube <span>Klik</span>
-                  </p>
-                </div>
-              </a>
-            </div>
-          );
-        } else {
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              <a href={item.link} className="btn-openSitus">
-                Buka Situs
-              </a>
-            </div>
-          );
-        }
-      } else if (item.file) {
-        return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a className="value-file" id="value-file">
               {generateFileIcons(item)}
             </a>
           </div>
@@ -418,6 +317,8 @@ function DetailTask() {
       return null;
     });
   }
+  
+  
 
   // start funsi input file generate file or link materi
   const generateFileInputs = () => {
@@ -469,6 +370,151 @@ function DetailTask() {
     });
   };
 
+
+  function generateFileIcons(item) {
+    let fileIcon;
+    let fileExtension = "";
+
+    if (item.file) {
+      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
+      switch (fileExtension) {
+        case "pdf":
+          fileIcon = "mdi:file-pdf-box";
+          break;
+        case "docx":
+          fileIcon = "mdi:file-word-box";
+          break;
+        case "xlsx":
+          fileIcon = "file-icons:microsoft-excel";
+          break;
+        default:
+          fileIcon = "";
+          break;
+      }
+    }
+
+    return (
+      <>
+        {fileExtension && (
+          <div className="file-generate">
+            <div className="value-file-icon">
+              <Icon className="icon-file-generate" icon={fileIcon} width={45} />
+            </div>
+            <div className="file-button-delete">
+              <div className="name-delete">
+                <div>
+                  <h1 className="title-value-file">{item.nama_tugas}</h1>
+                  <p className="format-file">{fileExtension.toUpperCase()}</p>
+                </div>
+                <button className="button-delete" onClick={handleDelete}>
+                  <Icon
+                    className="icon-delete-file"
+                    icon="basil:cross-solid"
+                    width={30}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
+
+
+
+  // start funsi generate file or link materi
+  function generateFileLinkElements() {
+    return dataDetailTugas.map((item) => {
+      if (item.file) {
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            <a href={item.file} className="value-file" id="value-file">
+              {generateFileIcons(item)}
+            </a>
+          </div>
+        );
+      }
+      return null;
+    });
+  }
+
+
+
+
+   // start funsi generate file link elements
+   function generateFilSoal() {
+    return dataDetailTugas.map((item) => {
+      // Ubah string "null" menjadi null pada properti link
+      if (item.link_tugas === "null") {
+        item.link_tugas = null;
+      }
+  
+      if (item.link_tugas !== null || item.file_tugas) {
+        let linkElement = null;
+  
+        if (item.link_tugas && (item.link_tugas.includes("youtube.com") || item.link_tugas.includes("youtu.be"))) {
+          let youtubeLink = item.link_tugas.replace("watch?v=", "embed/");
+          if (item.link_tugas.includes("youtu.be")) {
+            youtubeLink = `https://www.youtube.com/embed/${item.link_tugas.split("/").pop()}`;
+          }
+  
+          linkElement = (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a href={youtubeLink} className="value-link" id="value-link">
+                <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
+                <div>
+                  <h1 className="title-fileOrlink">{item.file_tugas}</h1>
+                  <p className="link-detailMenunggu">
+                    YouTube <span>Klik</span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          );
+        } else if (item.link_tugas) {
+          linkElement = (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a href={item.link_tugas} className="btn-openSitus">
+                Buka Situs
+              </a>
+            </div>
+          );
+        }
+  
+        if (item.file_tugas) {
+          return (
+            <div className="con-value-fileOrlink" key={item.id}>
+              {linkElement}
+              <a href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file_tugas}`} className="value-file" id="value-file">
+                {generateFileIcons(item)}
+              </a>
+            </div>
+          );
+        }
+  
+        return linkElement;
+      } else if (item.file_tugas) {
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            <a href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file_tugas}`} className="value-file" id="value-file">
+              {generateFileIcons(item)}
+            </a>
+          </div>
+        );
+      }
+  
+      return null;
+    });
+  }
+  
+
+  // end funsi generate file link elements
+
+  // Panggil fungsi generateFileLinkElements untuk menghasilkan elemen-elemen yang sesuai
+  const fileSoal = generateFilSoal(dataDetailTugas);
+
+
   const handleDeleteFile = (index) => {
     const newFileList = fileList.filter((_, i) => i !== index);
     setFileList(newFileList);
@@ -476,6 +522,7 @@ function DetailTask() {
 
   const fileLinkElements = generateFileLinkElements();
   const fileGenerate = generateFileInputs();
+  // const fileSoal = generateFileSoal();
 
   // if (isLoading)
   //   return (
@@ -635,10 +682,11 @@ function DetailTask() {
                       <p className="task-deadline-time">
                         Deadline : <span>{detailTugas.deadline}</span>
                       </p>
+                      {generateFilSoal()}
                       <div className="submition-task">
                         <p className="title-submition">Pengumpulan Tugas</p>
                         <div>
-                          {generateFileLinkElements()}
+                          {fileLinkElements}
                           {fileList.map((file, index) => (
                             <div key={index}>
                               <a href={URL.createObjectURL(file)}>
@@ -663,7 +711,7 @@ function DetailTask() {
                                   "selesai_dalam_deadline" ||
                                 detailTugas.status === "selesai_lebih_deadline"
                                   ? "none"
-                                  : "block",
+                                  : "flex",
                             }}
                           >
                             <Icon icon="ic:round-plus" width="20" />
@@ -806,12 +854,56 @@ function DetailTask() {
           </div>
         </div>
 
-        <div className="popup-loading" id="popup-loadingDetail">
-          <div className="body-loadingDetail" id="body-loadingDetail">
-            <h2 class="animate-loadingDetail">Loading</h2>
-            <p>Data Sedang Di Proses...</p>
+        {/* page laoding */}
+
+        <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
           </div>
         </div>
+
+        {/* end page loading */}
 
         <ProfileSiswa />
 

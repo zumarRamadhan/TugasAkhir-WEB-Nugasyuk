@@ -166,8 +166,16 @@ a {
   color: var(--color-primer);
 }
 
-.value-link,
 .value-file {
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  padding: 10px 0px 10px 10px;
+  gap: 20px;
+  cursor: pointer;
+  width: 370;
+}
+
+.value-link{
   border: 1px solid #c4c4c4;
   border-radius: 10px;
   padding: 10px 0px 10px 10px;

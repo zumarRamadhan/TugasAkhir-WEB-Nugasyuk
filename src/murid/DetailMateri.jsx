@@ -45,43 +45,6 @@ function DetailMateri() {
       });
   }, []);
 
-  function generateFileIcons(item) {
-    let fileIcon;
-    let fileExtension = "";
-
-    if (item.file) {
-      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
-      switch (fileExtension) {
-        case "pdf":
-          fileIcon = "mdi:file-pdf-box";
-          break;
-        case "docx":
-          fileIcon = "mdi:file-word-box";
-          break;
-        default:
-          fileIcon = "";
-          break;
-      }
-    }
-
-    return (
-      <>
-        {fileExtension && (
-          <>
-            <div className="icon-value-file">
-              <Icon icon={fileIcon} width={45} />
-            </div>
-            <div>
-              <h1 className="title-value-file">{item.file}</h1>
-              <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()} <span>Klik</span>
-              </p>
-            </div>
-          </>
-        )}
-      </>
-    );
-  }
 
   function generateFileIcons(item) {
     let fileIcon;
@@ -105,17 +68,17 @@ function DetailMateri() {
     return (
       <>
         {fileExtension && (
-          <>
-            <div className="icon-value-file">
+          <div className="file-generate">
+            <div className="value-file-icon">
               <Icon icon={fileIcon} width={45} />
             </div>
             <div>
               <h1 className="title-value-file">{item.file}</h1>
-              <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()} <span>Klik</span>
+              <p className="format-file">
+                {fileExtension.toUpperCase()}
               </p>
             </div>
-          </>
+          </div>
         )}
       </>
     );
@@ -124,38 +87,35 @@ function DetailMateri() {
   // start funsi generate file or link materi
   function generateFileLinkElements() {
     return dataDetailMateri.map((item) => {
-      if (item.link && item.file) {
+      if (item.link === "null") {
+        item.link = null;
+      }
+  
+      if (item.link !== null && item.file) {
         let linkElement = null;
-        if (item.link.includes("youtube.com")) {
+  
+        if (item.link && item.link.includes("youtube.com")) {
           let youtubeLink = item.link.replace("watch?v=", "embed/");
           linkElement = (
             <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
+              <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
               <div>
-                <h1 className="title-fileOrlink">Application Letter</h1>
+                <h1 className="title-fileOrlink">{item.nama_materi}</h1>
                 <p className="link-detailMenunggu">
                   YouTube <span>Klik</span>
                 </p>
               </div>
             </a>
           );
-        } else if (item.link.includes("youtu.be")) {
+        } else if (item.link && item.link.includes("youtu.be")) {
           let youtubeLink = `https://www.youtube.com/embed/${item.link
             .split("/")
             .pop()}`;
           linkElement = (
             <a href={youtubeLink} className="value-link" id="value-link">
-              <iframe
-                src={youtubeLink}
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
+              <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
               <div>
-                <h1 className="title-fileOrlink">Application Letter</h1>
+                <h1 className="title-fileOrlink">{item.nama_materi}</h1>
                 <p className="link-detailMenunggu">
                   YouTube <span>Klik</span>
                 </p>
@@ -169,11 +129,15 @@ function DetailMateri() {
             </a>
           );
         }
-
+  
         return (
           <div className="con-value-fileOrlink" key={item.id}>
             {linkElement}
-            <a href={item.file} className="value-file" id="value-file">
+            <a
+              href={`https://www.nugasyuk.my.id/public/${item.file}`}
+              className="value-file"
+              id="value-file"
+            >
               {generateFileIcons(item)}
             </a>
           </div>
@@ -186,11 +150,11 @@ function DetailMateri() {
               <a href={youtubeLink} className="value-link" id="value-link">
                 <iframe
                   src={youtubeLink}
-                  frameborder="0"
-                  allowfullscreen
+                  frameBorder="0"
+                  allowFullScreen
                 ></iframe>
                 <div>
-                  <h1 className="title-fileOrlink">Application Letter</h1>
+                  <h1 className="title-fileOrlink">{item.nama_materi}</h1>
                   <p className="link-detailMenunggu">
                     YouTube <span>Klik</span>
                   </p>
@@ -207,11 +171,11 @@ function DetailMateri() {
               <a href={youtubeLink} className="value-link" id="value-link">
                 <iframe
                   src={youtubeLink}
-                  frameborder="0"
-                  allowfullscreen
+                  frameBorder="0"
+                  allowFullScreen
                 ></iframe>
                 <div>
-                  <h1 className="title-fileOrlink">Application Letter</h1>
+                  <h1 className="title-fileOrlink">{item.nama_materi}</h1>
                   <p className="link-detailMenunggu">
                     YouTube <span>Klik</span>
                   </p>
@@ -232,7 +196,7 @@ function DetailMateri() {
         return (
           <div className="con-value-fileOrlink" key={item.id}>
             <a
-              href={`https://www.nugasyuk.my.id/public/${item.file}`}
+              href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file}`}
               className="value-file"
               id="value-file"
             >

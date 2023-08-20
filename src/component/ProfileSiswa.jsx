@@ -57,6 +57,15 @@ function DetailProfileSiswa() {
   const [passwordType, setPasswordType] = useState("password");
   const [passwordTypeNew, setPasswordTypeNew] = useState("password");
   const [passwordTypeConfirm, setPasswordTypeConfirm] = useState("password");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+
+   // function changes password
+   const [formPass, setformPass] = useState({
+    password_lama: "",
+    password_baru: "",
+    konfirmasi_password_baru: "",
+  });
 
   function togglePasswordVisibility() {
     setPasswordType(passwordType === "password" ? "text" : "password");
@@ -71,6 +80,131 @@ function DetailProfileSiswa() {
       passwordTypeConfirm === "password" ? "text" : "password"
     );
   }
+
+  const showSuccessChangesPass = () => {
+    const background = document.querySelector("#popup-success-ChangesPass");
+    background.style.display = "flex";
+    const SuccessChangePass = document.querySelector("");
+    SuccessChangePass.style.display = "grid";
+    SuccessChangePass.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const showFailedChangesPass = () => {
+    const popupLogout = document.querySelector("#popup-Failed-ChangesPass");
+    popupLogout.style.display = "flex";
+    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccessChangesPass = () => {
+    const messageCode = document.querySelector("#popup-success-ChangesPass");
+    setTimeout(() => (messageCode.style.display = "none"), 250);
+    messageCode.style.animation = "slide-up 0.3s ease-in-out";
+    // window.location.reload();
+  };
+
+  const closeFailedChangesPass = () => {
+    const messageCode = document.querySelector("#popup-Failed-ChangesPass");
+    setTimeout(() => (messageCode.style.display = "none"), 250);
+    messageCode.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const handleChanges = (e) => {
+    const { name, value } = e.target;
+    setformPass((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitChangesPass = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formPass);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+      // showPopupLoading();
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    if (!data.password_lama) {
+      errors.password_lama = "Silahkan password lama anda";
+    }
+
+    if (data.password_baru.trim().length < 8) {
+      errors.password_baru = "Password harus lebih dari 8 karakter";
+    }
+
+    if (!data.password_baru) {
+      errors.password_baru = "Silahkan masukkan password baru anda";
+    }
+
+    if (data.password_baru !== data.konfirmasi_password_baru) {
+      errors.konfirmasi_password_baru = "Pastikan password sama";
+    }
+
+    return errors;
+  };
+
+  useEffect(() => {
+    if (isSubmitting) {
+      const formData = new FormData();
+      formData.append("password_lama", formPass.password_lama);
+      formData.append("password_baru", formPass.password_baru);
+      showPopupLoading();
+
+      axios
+        .post(`${apiurl}murid/ubahpassword`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
+        .then((result) => {
+          console.log("Password berhasil diperbarui");
+
+          showSuccessChangesPass();
+          closeForgetPopupAndClearInput();
+          closePopupLoading();
+
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setformPass({
+            password_lama: "",
+            password_baru: "",
+            konfirmasi_password_baru: "",
+          });
+
+          setIsSubmitting(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat memperbarui password:", error);
+          setErrors({ submit: "Terjadi kesalahan saat memperbarui password" });
+          setIsSubmitting(false);
+          showFailedChangesPass();
+          closePopupLoading();
+        });
+    }
+  }, [isSubmitting, formPass]);
 
   // messege
   const showSuccessAdd = () => {
@@ -157,6 +291,7 @@ function DetailProfileSiswa() {
     // Create FormData to send the file to the API
     const formData = new FormData();
     formData.append("foto_profile", file);
+    showPopupLoading();
 
     axios
       .post(`${apiurl}murid/edit/foto`, formData, {
@@ -169,11 +304,13 @@ function DetailProfileSiswa() {
       .then((response) => {
         console.log("Data berhasil dikirim", response.data);
         showSuccessAdd();
+        closePopupLoading();
         // Optionally, you can update the dataProfileSiswa state with the new image URL
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengirim data", error);
         showFailedAdd();
+        closePopupLoading();
       });
   };
 
@@ -202,7 +339,7 @@ function DetailProfileSiswa() {
             </div>
             <p className="desc-logout">Anda yakin ingin keluar?</p>
             <div className="con-btn-logout">
-              <button type="button" className="btn-batal">
+              <button type="button" className="btn-batal" onClick={closeLogoutPopup}>
                 Batal
               </button>
               <button type="button" className="btn-keluar" onClick={logout}>
@@ -213,7 +350,10 @@ function DetailProfileSiswa() {
         </div>
 
         <div className="popup-forget" id="popup-forget">
-          <form action="" className="detail-forget-password">
+          <form
+            onSubmit={handleSubmitChangesPass}
+            className="detail-forget-password"
+          >
             <div className="navbar-detail-forget">
               <Icon
                 icon="radix-icons:cross-circled"
@@ -223,6 +363,7 @@ function DetailProfileSiswa() {
               />
               <h2>Ganti Password</h2>
             </div>
+
             <p className="judul-form">Sandi lama</p>
             <div className="con-form-password">
               <img src={passIcon} alt="" />
@@ -231,6 +372,9 @@ function DetailProfileSiswa() {
                 id="password"
                 placeholder="*********"
                 className="input-password"
+                name="password_lama"
+                value={formPass.password_lama}
+                onChange={handleChanges}
               />
               <button
                 type="button"
@@ -240,6 +384,10 @@ function DetailProfileSiswa() {
                 <img src={mataIcon} alt="" />
               </button>
             </div>
+            {errors.password_lama && (
+              <span className="error">{errors.password_lama}</span>
+            )}
+
             <p className="judul-form">Sandi baru</p>
             <div className="con-form-password">
               <img src={passIcon} alt="" />
@@ -248,6 +396,9 @@ function DetailProfileSiswa() {
                 id="newPassword"
                 placeholder="*********"
                 className="input-password"
+                name="password_baru"
+                value={formPass.password_baru}
+                onChange={handleChanges}
               />
               <button
                 type="button"
@@ -257,6 +408,10 @@ function DetailProfileSiswa() {
                 <img src={mataIcon} alt="" />
               </button>
             </div>
+            {errors.password_baru && (
+              <span className="error">{errors.password_baru}</span>
+            )}
+
             <p className="judul-form">Konfirmasi sandi baru</p>
             <div className="con-form-password">
               <img src={passIcon} alt="" />
@@ -265,6 +420,9 @@ function DetailProfileSiswa() {
                 id="confirmPassword"
                 placeholder="*********"
                 className="input-password"
+                name="konfirmasi_password_baru"
+                value={formPass.konfirmasi_password_baru}
+                onChange={handleChanges}
               />
               <button
                 type="button"
@@ -274,6 +432,9 @@ function DetailProfileSiswa() {
                 <img src={mataIcon} alt="" />
               </button>
             </div>
+            {errors.konfirmasi_password_baru && (
+              <span className="error">{errors.konfirmasi_password_baru}</span>
+            )}
 
             <button type="submit" className="btn-simpan">
               Simpan sandi baru
@@ -399,7 +560,7 @@ function DetailProfileSiswa() {
             <div className="image-Failed">
               <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
             </div>
-            <p className="desc-Failed">Tugas Gagal Dikirim!</p>
+            <p className="desc-Failed">Maaf Terjadi Kesalahan</p>
             <button className="btn-Failed" onClick={closeFailed}>
               Kembali
             </button>
@@ -448,12 +609,99 @@ function DetailProfileSiswa() {
           </div>
         </div>
 
-        <div className="popup-loading" id="popup-loadingDetail">
-          <div className="body-loadingDetail" id="body-loadingDetail">
-            <h2 class="animate-loadingDetail">Loading</h2>
-            <p>Data Sedang Di Proses...</p>
+         <div id="popup-success-ChangesPass">
+          <div className="detail-success">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccessChangesPass}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Password Berhasil Di Perbarui</p>
+            <button className="btn-success" onClick={closeSuccessChangesPass}>
+              Kembali
+            </button>
           </div>
         </div>
+
+        <div id="popup-Failed-ChangesPass">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailedChangesPass}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Masukan Password Lama Anda Dengan Benar!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailedChangesPass}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        {/* end message Changes Pass*/}
+        {/* page laoding */}
+
+        <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* end page loading */}
       </div>
     );
 }
