@@ -21,25 +21,34 @@ function DetailProfileSiswa() {
   };
 
   const showLogoutPopup = () => {
-    const popupLogout = document.querySelector("#popup-logout");
+    const background = document.querySelector("#popup-logout");
+    background.style.display = "flex";
+    const popupLogout = document.querySelector(".detail-logout");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeLogoutPopup = () => {
-    const popupLogout = document.querySelector("#popup-logout");
+    const background = document.querySelector("#popup-logout");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupLogout = document.querySelector(".detail-logout");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+
   };
 
   const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
+    const background = document.querySelector("#popup-forget");
+    background.style.display = "flex";
+    const popupForget = document.querySelector(".detail-forget-password");
+    popupForget.style.display = "grid";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeForgetPopupAndClearInput = () => {
-    const popupForget = document.querySelector("#popup-forget");
+    const background = document.querySelector("#popup-forget");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupForget = document.querySelector(".detail-forget-password");
     setTimeout(() => (popupForget.style.display = "none"), 250);
     popupForget.style.animation = "slide-up 0.3s ease-in-out";
     const clearpassword = document.querySelector(
@@ -84,9 +93,18 @@ function DetailProfileSiswa() {
   const showSuccessChangesPass = () => {
     const background = document.querySelector("#popup-success-ChangesPass");
     background.style.display = "flex";
-    const SuccessChangePass = document.querySelector("");
-    SuccessChangePass.style.display = "grid";
-    SuccessChangePass.style.animation = "slide-down 0.3s ease-in-out";
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    popupSuccess.style.display = "grid";
+    popupSuccess.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccessChangesPass = () => {
+    const background = document.querySelector("#popup-success-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    setTimeout(() => (popupSuccess.style.display = "none"), 250);
+    popupSuccess.style.animation = "slide-up 0.3s ease-in-out";
+    // window.location.reload();
   };
 
   const showPopupLoading = () => {
@@ -107,22 +125,20 @@ function DetailProfileSiswa() {
   };
 
   const showFailedChangesPass = () => {
-    const popupLogout = document.querySelector("#popup-Failed-ChangesPass");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    background.style.display = "flex";
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    popupFailed.style.display = "flex";
+    popupFailed.style.animation = "slide-down 0.3s ease-in-out";
   };
 
-  const closeSuccessChangesPass = () => {
-    const messageCode = document.querySelector("#popup-success-ChangesPass");
-    setTimeout(() => (messageCode.style.display = "none"), 250);
-    messageCode.style.animation = "slide-up 0.3s ease-in-out";
-    // window.location.reload();
-  };
 
   const closeFailedChangesPass = () => {
-    const messageCode = document.querySelector("#popup-Failed-ChangesPass");
-    setTimeout(() => (messageCode.style.display = "none"), 250);
-    messageCode.style.animation = "slide-up 0.3s ease-in-out";
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    setTimeout(() => (popupFailed.style.display = "none"), 250);
+    popupFailed.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const handleChanges = (e) => {
@@ -310,7 +326,6 @@ function DetailProfileSiswa() {
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengirim data", error);
         showFailedAdd();
-        closePopupLoading();
       });
   };
 
@@ -610,7 +625,7 @@ function DetailProfileSiswa() {
         </div>
 
          <div id="popup-success-ChangesPass">
-          <div className="detail-success">
+          <div className="detail-success-ChangePass" id="detail-success-ChangesPass">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"

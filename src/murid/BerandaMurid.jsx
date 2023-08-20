@@ -250,9 +250,9 @@ function BerandaMurid() {
                       </p>
                     </div>
                   </div>
-                  <div className="icon-navigate">
+                  {/* <div className="icon-navigate">
                     <Icon icon="ic:round-navigate-next" width="30" />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
@@ -298,9 +298,9 @@ function BerandaMurid() {
                       </p>
                     </div>
                   </div>
-                  <div className="icon-navigate">
+                  {/* <div className="icon-navigate">
                     <Icon icon="ic:round-navigate-next" width="30" />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
@@ -346,9 +346,9 @@ function BerandaMurid() {
                       </p>
                     </div>
                   </div>
-                  <div className="icon-navigate">
+                  {/* <div className="icon-navigate">
                     <Icon icon="ic:round-navigate-next" width="30" />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
@@ -394,9 +394,9 @@ function BerandaMurid() {
                       </p>
                     </div>
                   </div>
-                  <div className="icon-navigate">
+                  {/* <div className="icon-navigate">
                     <Icon icon="ic:round-navigate-next" width="30" />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
@@ -439,9 +439,9 @@ function BerandaMurid() {
                       </p>
                     </div>
                   </div>
-                  <div className="icon-navigate">
+                  {/* <div className="icon-navigate">
                     <Icon icon="ic:round-navigate-next" width="30" />
-                  </div>
+                  </div> */}
                 </div>
               ) : (
                 <CardSkeletonInfoTask />
@@ -489,9 +489,9 @@ function BerandaMurid() {
                       </p>
                     </div>
                   </div>
-                  <div className="icon-navigate">
+                  {/* <div className="icon-navigate">
                     <Icon icon="ic:round-navigate-next" width="30" />
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>

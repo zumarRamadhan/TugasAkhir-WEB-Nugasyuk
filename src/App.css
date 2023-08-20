@@ -364,7 +364,7 @@ nav .navbar img {
 
 /* detail-forget */
 
-#popup-forget {
+#popup-Failed, #popup-Failed-addCode, #popup-Failed-Import, #popup-Failed-NoData, #popup-Failed-ChangesPass {
     top: 0;
     position: fixed;
     width: 100%;
@@ -373,9 +373,9 @@ nav .navbar img {
     display: none;
     justify-content: center;
     align-items: center;
+    animation-fill-mode: forwards;
     background: rgba(0, 0, 0, 0.25);
 }
-
 .detail-forget-password {
     width: 547px;
     background: #ffffff;
@@ -483,7 +483,7 @@ nav .navbar img {
 /* end detail forget */
 
 /* popup logout */
-#popup-logout {
+/* #popup-logout {
     top: 0;
     position: fixed;
     width: 100%;
@@ -495,7 +495,7 @@ nav .navbar img {
     animation-fill-mode: forwards;
     background: rgba(0, 0, 0, 0.25);
 	place-items: center;
-}
+} */
 
 .img-logout{
     max-width: 230px;
@@ -660,6 +660,16 @@ nav .navbar img {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 
+#detail-success-ChangesPass {
+    background: #FFFFFF;
+    border-radius: 20px;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
 .image-success {
     display: flex;
     justify-content: center;
@@ -701,7 +711,20 @@ nav .navbar img {
 
 /* popup Failed */
 
-#popup-Failed , #popup-Failed-addCode, #popup-Failed-ChangesPass {
+#popup-Failed , #popup-Failed-addCode, #popup-Failed-ChangesPass, #popup-logout {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 200;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation-fill-mode: forwards;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+#popup-forget {
     top: 0;
     position: fixed;
     width: 100%;
@@ -1014,7 +1037,7 @@ nav .navbar img {
 
 .body-loading {
 	/* background: var(--bg); */
-	color: var(--fg);
+	/* color: var(--fg); */
 	font: 1em/1.5 sans-serif;
 	/* height: 20vh; */
 	display: none;
@@ -1036,8 +1059,8 @@ nav .navbar img {
 /* Dark theme  */
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg: hsl(var(--hue),10%,10%);
-		--fg: hsl(var(--hue),10%,90%);
+		color: #1D77AF;
+		color: #1D77AF;
 	}
 }
 

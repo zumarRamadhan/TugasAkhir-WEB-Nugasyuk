@@ -19,27 +19,35 @@ function DetailTask() {
 
   // messege
   const showSuccessAdd = () => {
-    const popupLogout = document.querySelector("#popup-success");
+    const background = document.querySelector("#popup-success");
+    background.style.display = "flex";
+    const popupLogout = document.querySelector(".detail-success");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeSuccess = () => {
-    const popupLogout = document.querySelector("#popup-success");
+    // navigate(`/murid/detailtugas/{$id}`);
+    const background = document.querySelector("#popup-success");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupLogout = document.querySelector(".detail-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    // navigate(`/murid/detailtugas/{$id}`);
     window.location.reload();
   };
 
   const showFailedAdd = () => {
-    const popupLogout = document.querySelector("#popup-Failed");
+    const background = document.querySelector("#popup-failed");
+    background.style.display = "flex";
+    const popupLogout = document.querySelector(".detail-failed");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeFailed = () => {
-    const popupLogout = document.querySelector("#popup-Failed");
+    const background = document.querySelector("#popup-failed");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupLogout = document.querySelector(".detail-failed");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };

@@ -26,20 +26,26 @@ function DetailWaliMurid() {
   };
 
   const showLogoutPopup = () => {
-    const popupLogout = document.querySelector("#popup-logout");
+    const background = document.querySelector("#popup-logout");
+    background.style.display = "flex";
+    const popupLogout = document.querySelector(".detail-logout");
     popupLogout.style.display = "flex";
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeLogoutPopup = () => {
-    const popupLogout = document.querySelector("#popup-logout");
+    const background = document.querySelector("#popup-logout");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupLogout = document.querySelector(".detail-logout");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
+    const background = document.querySelector("#popup-forget");
+    background.style.display = "flex";
+    const popupForget = document.querySelector(".detail-forget-password");
+    popupForget.style.display = "grid";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
 
@@ -102,9 +108,11 @@ function DetailWaliMurid() {
   };
 
   const closeSuccessChangesPass = () => {
-    const messageCode = document.querySelector("#popup-success-ChangesPass");
-    setTimeout(() => (messageCode.style.display = "none"), 250);
-    messageCode.style.animation = "slide-up 0.3s ease-in-out";
+    const background = document.querySelector("#popup-success-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    setTimeout(() => (popupSuccess.style.display = "none"), 250);
+    popupSuccess.style.animation = "slide-up 0.3s ease-in-out";
     // window.location.reload();
   };
 
@@ -115,7 +123,9 @@ function DetailWaliMurid() {
   };
 
   const closeForgetPopupAndClearInput = () => {
-    const popupForget = document.querySelector("#popup-forget");
+    const background = document.querySelector("#popup-forget");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupForget = document.querySelector(".detail-forget-password");
     setTimeout(() => (popupForget.style.display = "none"), 250);
     popupForget.style.animation = "slide-up 0.3s ease-in-out";
     const clearpassword = document.querySelector(
@@ -499,7 +509,7 @@ function DetailWaliMurid() {
         </div>
 
         <div id="popup-success">
-          <div className="detail-success">
+          <div className="detail-success" id="detail-success-ChangesPass">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"
