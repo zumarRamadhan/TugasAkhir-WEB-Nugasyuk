@@ -671,6 +671,100 @@ function FormAddJadwalKbm() {
             </button>
           </div>
         </div>
+        {/* changes pass */}
+        <div className="popup-forget" id="popup-forget">
+          <form
+            onSubmit={handleSubmitChangesPass}
+            className="detail-forget-password"
+          >
+            <div className="navbar-detail-forget">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeForgetPopupAndClearInput}
+              />
+              <h2>Ganti Password</h2>
+            </div>
+
+            <p className="judul-form">Sandi lama</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordType}
+                id="password"
+                placeholder="*********"
+                className="input-password"
+                name="password_lama"
+                value={formPass.password_lama}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibility}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_lama && (
+              <span className="error">{errors.password_lama}</span>
+            )}
+
+            <p className="judul-form">Sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeNew}
+                id="newPassword"
+                placeholder="*********"
+                className="input-password"
+                name="password_baru"
+                value={formPass.password_baru}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityNew}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_baru && (
+              <span className="error">{errors.password_baru}</span>
+            )}
+
+            <p className="judul-form">Konfirmasi sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeConfirm}
+                id="confirmPassword"
+                placeholder="*********"
+                className="input-password"
+                name="konfirmasi_password_baru"
+                value={formPass.konfirmasi_password_baru}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityConfirm}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.konfirmasi_password_baru && (
+              <span className="error">{errors.konfirmasi_password_baru}</span>
+            )}
+
+            <button type="submit" className="btn-simpan">
+              Simpan sandi baru
+            </button>
+          </form>
+        </div>
+        {/* message Changes Pass */}
       </div>
     );
 }
