@@ -124,7 +124,7 @@ function EditFormMateriKBM() {
     const popupLogout = document.querySelector("#popup-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    navigate(`/guru/pagekbm/detail/${id}`);
+    navigate(`/guru/pagekbm/detail/detailmateri/${id}`);
   };
 
   const showFailedAdd = () => {
@@ -227,7 +227,7 @@ function EditFormMateriKBM() {
         });
         setIsLoading(false);
         closePopupLoadingDetail();
-        setKelasId(response.data.kelas_id);
+        setKelasId(response.data.materi);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengambil data Materi:", error);
@@ -578,7 +578,7 @@ function EditFormMateriKBM() {
               icon="radix-icons:cross-circled"
               width="30"
               style={{ cursor: "pointer" }}
-              onClick={() => closeSuccess(kelasId)}
+              onClick={() => closeSuccess(kelasId.id)}
             />
             <div className="image-success">
               <img
@@ -590,7 +590,7 @@ function EditFormMateriKBM() {
             <p className="desc-success">Anda berhasil menambahkan materi</p>
             <button
               className="btn-success"
-              onClick={() => closeSuccess(kelasId)}
+              onClick={() => closeSuccess(kelasId.id)}
             >
               Kembali
             </button>

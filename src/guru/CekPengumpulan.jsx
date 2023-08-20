@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import ImgSuccess from "../assets/success.gif";
 import ImgFailed from "../assets/failed.gif";
+import vektorProfile from "../assets/vektorProfile.svg";
 import apiurl from "../api/api";
 import axios from "axios";
 
@@ -613,7 +614,10 @@ function CekPengumpulan() {
                         <div className="img-Pengumpulan-Guru">
                           <img
                             src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
-                            alt={data.foto_profile}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = vektorProfile;
+                            }}
                             className="image-Pengumpulan-Guru"
                           />
                         </div>
@@ -673,7 +677,10 @@ function CekPengumpulan() {
                         <div className="img-Pengumpulan-Guru">
                           <img
                             src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
-                            alt={data.foto_profile}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = vektorProfile;
+                            }}
                             className="image-Pengumpulan-Guru"
                           />
                         </div>

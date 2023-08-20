@@ -501,8 +501,12 @@ function DataMurid() {
                         <td className="tdImg">
                           <div className="img-td">
                             <img
-                              src={`https://www.nugasyuk.my.id/public/${item.foto_profile}`}
+                              src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${item.foto_profile}`}
                               alt={item.foto_profile}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = vektorProfile;
+                              }}
                             />
                           </div>
                         </td>

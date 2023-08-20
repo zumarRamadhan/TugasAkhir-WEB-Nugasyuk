@@ -124,7 +124,7 @@ function EditFormTugasKBM() {
     const popupLogout = document.querySelector("#popup-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    navigate(`/guru/pagekbm/detail/${id}`);
+    navigate(`/guru/pagekbm/detail/detailtugas/${id}`);
   };
 
   const showFailedAdd = () => {
@@ -229,7 +229,7 @@ function EditFormTugasKBM() {
         console.log(response.data.tugas.soal_file);
         setIsLoading(false);
         closePopupLoadingDetail();
-        setKelasId(response.data.kelas_id);
+        setKelasId(response.data.tugas[0]);
       })
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengambil data Tugas:", error);
@@ -605,7 +605,7 @@ function EditFormTugasKBM() {
             icon="radix-icons:cross-circled"
             width="30"
             style={{ cursor: "pointer" }}
-            onClick={() => closeSuccess(kelasId)}
+            onClick={() => closeSuccess(kelasId.id)}
           />
           <div className="image-success">
             <img
@@ -614,8 +614,8 @@ function EditFormTugasKBM() {
               className="img-success"
             />
           </div>
-          <p className="desc-success">Anda berhasil menambahkan tugas</p>
-          <button className="btn-success" onClick={() => closeSuccess(kelasId)}>
+          <p className="desc-success">Anda berhasil Mengubah tugas</p>
+          <button className="btn-success" onClick={() => closeSuccess(kelasId.id)}>
             Kembali
           </button>
         </div>

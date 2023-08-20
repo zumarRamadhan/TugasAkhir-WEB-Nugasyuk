@@ -739,13 +739,15 @@ function BerandaGuru() {
                 {detailGuru && detailGuru.foto_profile ? (
                   <img
                     src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailGuru.foto_profile}`}
-                    alt="foto profile ${detailGuru.foto_profile}"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = vektorProfile;
+                    }}
                     className="image-detailGuru"
                   />
                 ) : (
                   <img
                     src={vektorProfile}
-                    alt="foto profile ${detailGuru.foto_profile}"
                     className="image-detailGuru"
                   />
                 )}
