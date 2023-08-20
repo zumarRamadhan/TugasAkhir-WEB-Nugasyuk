@@ -205,28 +205,35 @@ function DetailKbm() {
   // end loading popup
 
   const showSuccessChangesPass = () => {
-    const popupLogout = document.querySelector("#popup-success-ChangesPass");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    const background = document.querySelector("#popup-success-ChangesPass");
+    background.style.display = "flex";
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    popupSuccess.style.display = "flex";
+    popupSuccess.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const showFailedChangesPass = () => {
-    const popupLogout = document.querySelector("#popup-Failed-ChangesPass");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    background.style.display = "flex";
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    popupFailed.style.display = "flex";
+    popupFailed.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeSuccessChangesPass = () => {
-    const messageCode = document.querySelector("#popup-success-ChangesPass");
-    setTimeout(() => (messageCode.style.display = "none"), 250);
-    messageCode.style.animation = "slide-up 0.3s ease-in-out";
-    // window.location.reload();
+    const background = document.querySelector("#popup-success-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    setTimeout(() => (popupSuccess.style.display = "none"), 250);
+    popupSuccess.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const closeFailedChangesPass = () => {
-    const messageCode = document.querySelector("#popup-Failed-ChangesPass");
-    setTimeout(() => (messageCode.style.display = "none"), 250);
-    messageCode.style.animation = "slide-up 0.3s ease-in-out";
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    setTimeout(() => (popupFailed.style.display = "none"), 250);
+    popupFailed.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   // end message popup
@@ -691,7 +698,7 @@ function DetailKbm() {
         {/* message Changes Pass */}
 
         <div id="popup-success-ChangesPass">
-          <div className="detail-success">
+          <div className="detail-success" id="detail-success-ChangesPass">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"
@@ -713,7 +720,7 @@ function DetailKbm() {
         </div>
 
         <div id="popup-Failed-ChangesPass">
-          <div className="detail-Failed">
+          <div className="detail-Failed" id="detail-Failed-ChangesPass">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"

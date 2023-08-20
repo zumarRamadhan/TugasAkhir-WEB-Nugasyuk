@@ -66,31 +66,38 @@ function PagePengumpulan() {
   // end popup card loading
 
   const showSuccessChangesPass = () => {
-    const popupLogout = document.querySelector("#popup-success-ChangesPass");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    const background = document.querySelector("#popup-success-ChangesPass");
+    background.style.display = "flex";
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    popupSuccess.style.display = "flex";
+    popupSuccess.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const showFailedChangesPass = () => {
-    const popupLogout = document.querySelector("#popup-Failed-ChangesPass");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    background.style.display = "flex";
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    popupFailed.style.display = "flex";
+    popupFailed.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeSuccessChangesPass = () => {
-    const messageCode = document.querySelector("#popup-success-ChangesPass");
-    setTimeout(() => (messageCode.style.display = "none"), 250);
-    messageCode.style.animation = "slide-up 0.3s ease-in-out";
-    // window.location.reload();
+    const background = document.querySelector("#popup-success-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    setTimeout(() => (popupSuccess.style.display = "none"), 250);
+    popupSuccess.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   const closeFailedChangesPass = () => {
-    const messageCode = document.querySelector("#popup-Failed-ChangesPass");
-    setTimeout(() => (messageCode.style.display = "none"), 250);
-    messageCode.style.animation = "slide-up 0.3s ease-in-out";
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    setTimeout(() => (popupFailed.style.display = "none"), 250);
+    popupFailed.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  // 
+  //
 
   const showForgetPopup = () => {
     const popupForget = document.querySelector("#popup-forget");
@@ -331,387 +338,395 @@ function PagePengumpulan() {
 
   // end function changes password
   if (dataKelas && dataTabelMurid && !isError)
-  return (
-    <div>
-      <aside>
-        <h1
-          className="title-form-login"
-          onClick={() => navigate("/guru/berandaguru")}
-        >
-          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-          nugasyuk
-        </h1>
-        <ul>
-          <li onClick={() => navigate("/guru/berandaguru")}>
-            <Icon icon="iconoir:home-simple" width="20" />
-            Beranda
-          </li>
-          <li onClick={() => navigate("/guru/pagekbm")}>
-            <Icon icon="ph:chalkboard-teacher" width="20" />
-            KBM
-          </li>
-          <li
-            className="active"
-            onClick={() => navigate("/guru/pagepengumpulan")}
+    return (
+      <div>
+        <aside>
+          <h1
+            className="title-form-login"
+            onClick={() => navigate("/guru/berandaguru")}
           >
-            <Icon icon="uiw:date" width="18" />
-            Pengumpulan
-          </li>
-          <li onClick={() => navigate("/guru/pageJadwalKbm")}>
-            <Icon icon="fluent-mdl2:education" width="18" />
-            Jadwal KBM
-          </li>
-        </ul>
-      </aside>
-      <div className="container-content">
-        <NavbarGuru text={navText} />
-        <div className="main">
-          <div className="header-Pengumpulan-Guru">
-            <div className="header-Pengumpulan-left">
-              <div className="header-pageKbm-left">
-                <select
-                  name="pageKbm"
-                  id="filter"
-                  value={filterValue}
-                  onChange={handleFilterChange}
-                >
-                  <option value="all">-- Semua Kelas --</option>
-                  {dataKelas.map((data) => (
-                    <option value={data.id} key={data.id}>
-                      -- {data.tingkat_ke} {data.nama_jurusan} {data.nama_kelas}{" "}
-                      --
-                    </option>
-                  ))}
-                </select>
+            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+            nugasyuk
+          </h1>
+          <ul>
+            <li onClick={() => navigate("/guru/berandaguru")}>
+              <Icon icon="iconoir:home-simple" width="20" />
+              Beranda
+            </li>
+            <li onClick={() => navigate("/guru/pagekbm")}>
+              <Icon icon="ph:chalkboard-teacher" width="20" />
+              KBM
+            </li>
+            <li
+              className="active"
+              onClick={() => navigate("/guru/pagepengumpulan")}
+            >
+              <Icon icon="uiw:date" width="18" />
+              Pengumpulan
+            </li>
+            <li onClick={() => navigate("/guru/pageJadwalKbm")}>
+              <Icon icon="fluent-mdl2:education" width="18" />
+              Jadwal KBM
+            </li>
+          </ul>
+        </aside>
+        <div className="container-content">
+          <NavbarGuru text={navText} />
+          <div className="main">
+            <div className="header-Pengumpulan-Guru">
+              <div className="header-Pengumpulan-left">
+                <div className="header-pageKbm-left">
+                  <select
+                    name="pageKbm"
+                    id="filter"
+                    value={filterValue}
+                    onChange={handleFilterChange}
+                  >
+                    <option value="all">-- Semua Kelas --</option>
+                    {dataKelas.map((data) => (
+                      <option value={data.id} key={data.id}>
+                        -- {data.tingkat_ke} {data.nama_jurusan}{" "}
+                        {data.nama_kelas} --
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <form className="search-box">
+                  <input
+                    type="text"
+                    placeholder="Cari..."
+                    value={searchQuery}
+                    onChange={handleChange}
+                  />
+                  <button disabled>
+                    <Icon icon="material-symbols:search-rounded" width="20" />
+                  </button>
+                </form>
               </div>
-              <form className="search-box">
-                <input
-                  type="text"
-                  placeholder="Cari..."
-                  value={searchQuery}
-                  onChange={handleChange}
-                />
-                <button disabled>
-                  <Icon icon="material-symbols:search-rounded" width="20" />
-                </button>
-              </form>
+              <div className="header-Pengumpulan-right">
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <p>{renderData.length} MURID</p>
+                )}
+              </div>
             </div>
-            <div className="header-Pengumpulan-right">
-              {isLoading ? <p>Loading...</p> : <p>{renderData.length} MURID</p>}
-            </div>
-          </div>
 
-          {isLoading ? (
-            <div className="content-Pengumpulan-Guru">
-              <div className="skeleton-card-DetailPengumpulan"></div>
-              <div className="skeleton-card-DetailPengumpulan"></div>
-              <div className="skeleton-card-DetailPengumpulan"></div>
-              <div className="skeleton-card-DetailPengumpulan"></div>
-              <div className="skeleton-card-DetailPengumpulan"></div>
-              <div className="skeleton-card-DetailPengumpulan"></div>
-            </div>
-          ) : dataNotFound ? (
-            <div className="card-DetailPengumpulan-Menunggu-noData">
-              <p>Murid tidak di temukan</p>
-            </div>
-          ) : (
-            <div className="content-Pengumpulan-Guru">
-              {renderData.map((data) => (
-                <div
-                  className="card-Pengumpulan-Guru"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleDetail(data.id)}
-                  key={data.id} // Tambahkan key prop untuk mencegah pesan warning
-                >
-                  <div className="card-Pengumpulan-Guru-left">
-                    <div className="img-Pengumpulan-Guru">
-                      <img
-                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
-                        // alt={`${damiImgMurid}`}
-                        className="image-Pengumpulan-Guru"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = vektorImg;
-                        }}
-                      />
-                    </div>
-                    <div className="desc-card-Pengumpulan-Guru">
-                      <p className="name-card-Pengumpulan-Guru">
-                        {data.nama_siswa}
-                      </p>
-                      <p className="email-card-Pengumpulan-Guru">
-                        {data.email}
-                      </p>
-                      {/* <p className="email-card-Pengumpulan-Guru">
+            {isLoading ? (
+              <div className="content-Pengumpulan-Guru">
+                <div className="skeleton-card-DetailPengumpulan"></div>
+                <div className="skeleton-card-DetailPengumpulan"></div>
+                <div className="skeleton-card-DetailPengumpulan"></div>
+                <div className="skeleton-card-DetailPengumpulan"></div>
+                <div className="skeleton-card-DetailPengumpulan"></div>
+                <div className="skeleton-card-DetailPengumpulan"></div>
+              </div>
+            ) : dataNotFound ? (
+              <div className="card-DetailPengumpulan-Menunggu-noData">
+                <p>Murid tidak di temukan</p>
+              </div>
+            ) : (
+              <div className="content-Pengumpulan-Guru">
+                {renderData.map((data) => (
+                  <div
+                    className="card-Pengumpulan-Guru"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleDetail(data.id)}
+                    key={data.id} // Tambahkan key prop untuk mencegah pesan warning
+                  >
+                    <div className="card-Pengumpulan-Guru-left">
+                      <div className="img-Pengumpulan-Guru">
+                        <img
+                          src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.foto_profile}`} // Anda bisa gunakan data.foto_profile jika data tersebut tersedia
+                          // alt={`${damiImgMurid}`}
+                          className="image-Pengumpulan-Guru"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = vektorImg;
+                          }}
+                        />
+                      </div>
+                      <div className="desc-card-Pengumpulan-Guru">
+                        <p className="name-card-Pengumpulan-Guru">
+                          {data.nama_siswa}
+                        </p>
+                        <p className="email-card-Pengumpulan-Guru">
+                          {data.email}
+                        </p>
+                        {/* <p className="email-card-Pengumpulan-Guru">
                             {data.kelas_id}
                           </p> */}
+                      </div>
+                    </div>
+                    <div className="detaiKelas-Pengumpulan-Guru">
+                      <p>
+                        {data.tingkat_ke +
+                          " " +
+                          data.nama_jurusan +
+                          " " +
+                          data.nama_kelas}
+                      </p>
                     </div>
                   </div>
-                  <div className="detaiKelas-Pengumpulan-Guru">
-                    <p>
-                      {data.tingkat_ke +
-                        " " +
-                        data.nama_jurusan +
-                        " " +
-                        data.nama_kelas}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="popup-logout" id="popup-logout">
+          <div className="detail-logout">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeLogoutPopup}
+            />
+            <div className="image-logout">
+              <img src={ImgLogout} alt="" className="img-logout" />
             </div>
-          )}
-        </div>
-      </div>
-
-      <div className="popup-logout" id="popup-logout">
-        <div className="detail-logout">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeLogoutPopup}
-          />
-          <div className="image-logout">
-            <img src={ImgLogout} alt="" className="img-logout" />
-          </div>
-          <p className="desc-logout">Anda yakin ingin keluar?</p>
-          <div className="con-btn-logout">
-            <button type="button" className="btn-batal">
-              Batal
-            </button>
-            <button type="button" className="btn-keluar" onClick={logout}>
-              Keluar
-            </button>
+            <p className="desc-logout">Anda yakin ingin keluar?</p>
+            <div className="con-btn-logout">
+              <button type="button" className="btn-batal">
+                Batal
+              </button>
+              <button type="button" className="btn-keluar" onClick={logout}>
+                Keluar
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="popup-forget" id="popup-forget">
-        <form
-          onSubmit={handleSubmitChangesPass}
-          className="detail-forget-password"
-        >
-          <div className="navbar-detail-forget">
+        <div className="popup-forget" id="popup-forget">
+          <form
+            onSubmit={handleSubmitChangesPass}
+            className="detail-forget-password"
+          >
+            <div className="navbar-detail-forget">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeForgetPopupAndClearInput}
+              />
+              <h2>Ganti Password</h2>
+            </div>
+
+            <p className="judul-form">Sandi lama</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordType}
+                id="password"
+                placeholder="*********"
+                className="input-password"
+                name="password_lama"
+                value={formPass.password_lama}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibility}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_lama && (
+              <span className="error">{errors.password_lama}</span>
+            )}
+
+            <p className="judul-form">Sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeNew}
+                id="newPassword"
+                placeholder="*********"
+                className="input-password"
+                name="password_baru"
+                value={formPass.password_baru}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityNew}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_baru && (
+              <span className="error">{errors.password_baru}</span>
+            )}
+
+            <p className="judul-form">Konfirmasi sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeConfirm}
+                id="confirmPassword"
+                placeholder="*********"
+                className="input-password"
+                name="konfirmasi_password_baru"
+                value={formPass.konfirmasi_password_baru}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityConfirm}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.konfirmasi_password_baru && (
+              <span className="error">{errors.konfirmasi_password_baru}</span>
+            )}
+
+            <button type="submit" className="btn-simpan">
+              Simpan sandi baru
+            </button>
+          </form>
+        </div>
+
+        <div className="detail-profile">
+          <div className="content-detail">
+            <div className="navbar-detail">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeDetail}
+              />
+              <h2>Profil</h2>
+            </div>
+            <div className="detail-image-profile">
+              <img src={ImgProfil} alt="" className="detail-img-profile" />
+            </div>
+            <p className="judul-detail">Email</p>
+            <p className="value-detail">budiono@smkrus.sch.id</p>
+            <p className="judul-detail">Nama</p>
+            <p className="value-detail">Budiono, S.Pd</p>
+            <p className="judul-detail">Pengampu</p>
+            <p className="value-detail">Bahasa Inggris</p>
+          </div>
+          <div className="con-btn-detail-profile">
+            <button
+              className="forget-password"
+              id="btn-forget-pass"
+              onClick={showForgetPopup}
+            >
+              <Icon icon="material-symbols:key-outline-rounded" width="30" />
+              <p>Ganti Password</p>
+            </button>
+            <button
+              className="logout"
+              id="btn-logout"
+              onClick={showLogoutPopup}
+            >
+              <Icon icon="material-symbols:logout-rounded" width="30" />
+              <p>Logout</p>
+            </button>
+          </div>
+        </div>
+
+        {/* message Changes Pass */}
+
+        <div id="popup-success-ChangesPass">
+          <div className="detail-success" id="detail-success-ChangesPass">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"
               style={{ cursor: "pointer" }}
-              onClick={closeForgetPopupAndClearInput}
+              onClick={closeSuccessChangesPass}
             />
-            <h2>Ganti Password</h2>
-          </div>
-
-          <p className="judul-form">Sandi lama</p>
-          <div className="con-form-password">
-            <img src={passIcon} alt="" />
-            <input
-              type={passwordType}
-              id="password"
-              placeholder="*********"
-              className="input-password"
-              name="password_lama"
-              value={formPass.password_lama}
-              onChange={handleChanges}
-            />
-            <button
-              type="button"
-              className="btn-mata"
-              onClick={togglePasswordVisibility}
-            >
-              <img src={mataIcon} alt="" />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Password Berhasil Di Perbarui</p>
+            <button className="btn-success" onClick={closeSuccessChangesPass}>
+              Kembali
             </button>
           </div>
-          {errors.password_lama && (
-            <span className="error">{errors.password_lama}</span>
-          )}
+        </div>
 
-          <p className="judul-form">Sandi baru</p>
-          <div className="con-form-password">
-            <img src={passIcon} alt="" />
-            <input
-              type={passwordTypeNew}
-              id="newPassword"
-              placeholder="*********"
-              className="input-password"
-              name="password_baru"
-              value={formPass.password_baru}
-              onChange={handleChanges}
-            />
-            <button
-              type="button"
-              className="btn-mata"
-              onClick={togglePasswordVisibilityNew}
-            >
-              <img src={mataIcon} alt="" />
-            </button>
-          </div>
-          {errors.password_baru && (
-            <span className="error">{errors.password_baru}</span>
-          )}
-
-          <p className="judul-form">Konfirmasi sandi baru</p>
-          <div className="con-form-password">
-            <img src={passIcon} alt="" />
-            <input
-              type={passwordTypeConfirm}
-              id="confirmPassword"
-              placeholder="*********"
-              className="input-password"
-              name="konfirmasi_password_baru"
-              value={formPass.konfirmasi_password_baru}
-              onChange={handleChanges}
-            />
-            <button
-              type="button"
-              className="btn-mata"
-              onClick={togglePasswordVisibilityConfirm}
-            >
-              <img src={mataIcon} alt="" />
-            </button>
-          </div>
-          {errors.konfirmasi_password_baru && (
-            <span className="error">{errors.konfirmasi_password_baru}</span>
-          )}
-
-          <button type="submit" className="btn-simpan">
-            Simpan sandi baru
-          </button>
-        </form>
-      </div>
-
-      <div className="detail-profile">
-        <div className="content-detail">
-          <div className="navbar-detail">
+        <div id="popup-Failed-ChangesPass">
+          <div className="detail-Failed" id="detail-Failed-ChangesPass">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"
               style={{ cursor: "pointer" }}
-              onClick={closeDetail}
+              onClick={closeFailedChangesPass}
             />
-            <h2>Profil</h2>
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Masukan Password Lama Anda Dengan Benar!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailedChangesPass}>
+              Kembali
+            </button>
           </div>
-          <div className="detail-image-profile">
-            <img src={ImgProfil} alt="" className="detail-img-profile" />
+        </div>
+
+        {/* end message Changes Pass*/}
+
+        {/* card loading */}
+        <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
           </div>
-          <p className="judul-detail">Email</p>
-          <p className="value-detail">budiono@smkrus.sch.id</p>
-          <p className="judul-detail">Nama</p>
-          <p className="value-detail">Budiono, S.Pd</p>
-          <p className="judul-detail">Pengampu</p>
-          <p className="value-detail">Bahasa Inggris</p>
         </div>
-        <div className="con-btn-detail-profile">
-          <button
-            className="forget-password"
-            id="btn-forget-pass"
-            onClick={showForgetPopup}
-          >
-            <Icon icon="material-symbols:key-outline-rounded" width="30" />
-            <p>Ganti Password</p>
-          </button>
-          <button className="logout" id="btn-logout" onClick={showLogoutPopup}>
-            <Icon icon="material-symbols:logout-rounded" width="30" />
-            <p>Logout</p>
-          </button>
-        </div>
+        {/* end loading */}
       </div>
-
-      {/* message Changes Pass */}
-
-      <div id="popup-success-ChangesPass">
-        <div className="detail-success">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeSuccessChangesPass}
-          />
-          <div className="image-success">
-            <img
-              src={ImgSuccess}
-              alt="Delete Success"
-              className="img-success"
-            />
-          </div>
-          <p className="desc-success">Password Berhasil Di Perbarui</p>
-          <button className="btn-success" onClick={closeSuccessChangesPass}>
-            Kembali
-          </button>
-        </div>
-      </div>
-
-      <div id="popup-Failed-ChangesPass">
-        <div className="detail-Failed">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeFailedChangesPass}
-          />
-          <div className="image-Failed">
-            <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
-          </div>
-          <p className="desc-Failed">
-            Masukan Password Lama Anda Dengan Benar!!
-          </p>
-          <button className="btn-Failed" onClick={closeFailedChangesPass}>
-            Kembali
-          </button>
-        </div>
-      </div>
-
-      {/* end message Changes Pass*/}
-
-      {/* card loading */}
-      <div className="popup-loading">
-        <div className="body-loading" id="body-loading">
-          <svg
-            class="pl"
-            viewBox="0 0 200 200"
-            width="200"
-            height="200"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
-                <stop offset="0%" stop-color="hsl(313,90%,55%)" />
-                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
-              </linearGradient>
-              <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="hsl(313,90%,55%)" />
-                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
-              </linearGradient>
-            </defs>
-            <circle
-              class="pl__ring"
-              cx="100"
-              cy="100"
-              r="82"
-              fill="none"
-              stroke="url(#pl-grad1)"
-              stroke-width="36"
-              stroke-dasharray="0 257 1 257"
-              stroke-dashoffset="0.01"
-              stroke-linecap="round"
-              transform="rotate(-90,100,100)"
-            />
-            <line
-              class="pl__ball"
-              stroke="url(#pl-grad2)"
-              x1="100"
-              y1="18"
-              x2="100.01"
-              y2="182"
-              stroke-width="36"
-              stroke-dasharray="1 165"
-              stroke-linecap="round"
-            />
-          </svg>
-        </div>
-      </div>
-      {/* end loading */}
-    </div>
-  );
+    );
 }
 
 export default PagePengumpulan;
