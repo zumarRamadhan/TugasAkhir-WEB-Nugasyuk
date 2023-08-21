@@ -41,7 +41,7 @@ function DetailProfileSiswa() {
     const background = document.querySelector("#popup-forget");
     background.style.display = "flex";
     const popupForget = document.querySelector(".detail-forget-password");
-    popupForget.style.display = "grid";
+    popupForget.style.display = "block";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
 
@@ -224,17 +224,21 @@ function DetailProfileSiswa() {
 
   // messege
   const showSuccessAdd = () => {
-    const popupLogout = document.querySelector("#popup-success");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+    const background = document.querySelector("#popup-success");
+    background.style.display = "flex";
+    const popupSuccess = document.querySelector(".detail-success");
+    popupSuccess.style.display = "grid";
+    popupSuccess.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeSuccess = () => {
-    const popupLogout = document.querySelector("#popup-success");
-    setTimeout(() => (popupLogout.style.display = "none"), 250);
-    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    const background = document.querySelector("#popup-success");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupSuccess = document.querySelector(".detail-success");
+    setTimeout(() => (popupSuccess.style.display = "none"), 250);
+    popupSuccess.style.animation = "slide-up 0.3s ease-in-out";
     // navigate(`/murid/detailtugas/{$id}`);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const showFailedAdd = () => {

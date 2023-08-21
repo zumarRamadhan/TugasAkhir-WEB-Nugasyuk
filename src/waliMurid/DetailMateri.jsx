@@ -1,4 +1,5 @@
-// import '../cssAll/walimurid/DetailMateri.css';
+import '../cssAll/walimurid/DetailTugas.css';
+// import '../App.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { useState, useEffect } from "react";
@@ -16,6 +17,8 @@ import axios from "axios";
 import SkeletonDetailMateri from "../componentSkeleton/SkeletonDetailMaterial";
 import SkeletonNavbarWali from "../componentSkeleton/SkeletonNavbarWalimurid";
 import apiurl from "../api/api";
+
+
 
 function DetaillMaterial() {
   const navigate = useNavigate();
@@ -78,9 +81,9 @@ function DetaillMaterial() {
               <Icon icon={fileIcon} width={45} />
             </div>
             <div>
-              <h1 className="title-value-file">{item.file}</h1>
-              <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()} <span>Klik</span>
+              <h1 className="title-file-value">{item.file}</h1>
+              <p className="format-file">
+                {fileExtension.toUpperCase()}
               </p>
             </div>
           </>
@@ -116,9 +119,9 @@ function DetaillMaterial() {
               <Icon icon={fileIcon} width={45} />
             </div>
             <div>
-              <h1 className="title-value-file">{item.file}</h1>
-              <p className="file-detailMenunggu">
-                {fileExtension.toUpperCase()} <span>Klik</span>
+              <h1 className="title-file-value">{item.file}</h1>
+              <p className="format-file">
+                {fileExtension.toUpperCase()}
               </p>
             </div>
           </>
@@ -144,7 +147,7 @@ function DetaillMaterial() {
               <div>
                 <h1 className="title-fileOrlink">Application Letter</h1>
                 <p className="link-detailMenunggu">
-                  YouTube <span>Klik</span>
+                  YouTube
                 </p>
               </div>
             </a>
@@ -198,7 +201,7 @@ function DetaillMaterial() {
                 <div>
                   <h1 className="title-fileOrlink">Application Letter</h1>
                   <p className="link-detailMenunggu">
-                    YouTube <span>Klik</span>
+                    YouTube
                   </p>
                 </div>
               </a>
@@ -219,7 +222,7 @@ function DetaillMaterial() {
                 <div>
                   <h1 className="title-fileOrlink">Application Letter</h1>
                   <p className="link-detailMenunggu">
-                    YouTube <span>Klik</span>
+                    YouTube
                   </p>
                 </div>
               </a>

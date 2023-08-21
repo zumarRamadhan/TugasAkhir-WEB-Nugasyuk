@@ -364,16 +364,80 @@ function MapelMateri() {
                     }
                   >
                     <div className="indiecator-left">
-                      <div
-                        className="icon-indie"
-                        style={{ background: "#FFFA87" }}
-                      >
-                        <Icon
-                          icon="uiw:time-o"
-                          width="30"
-                          style={{ color: "#CBC41A" }}
-                        />
-                      </div>
+                    {apiTugas.status ===
+                            "belum_selesai_dalam_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#DDDDDD" }}
+                            >
+                              <Icon
+                                icon="ic:round-pending-actions"
+                                width="35"
+                                style={{ color: "#797979" }}
+                              />
+                            </div>
+                          )}
+                          {apiTugas.status ===
+                            "belum_selesai_luar_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="ic:round-pending-actions"
+                                width="30"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
+                          {apiTugas.status === "menunggu_dalam_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#FFFA87" }}
+                            >
+                              <Icon
+                                icon="uiw:time-o"
+                                width="30"
+                                style={{ color: "#CBC41A" }}
+                              />
+                            </div>
+                          )}
+                          {apiTugas.status === "menunggu_lebih_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="uiw:time-o"
+                                width="30"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
+                          {apiTugas.status === "selesai_dalam_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#D5FFC6" }}
+                            >
+                              <Icon
+                                icon="material-symbols:check-small-rounded"
+                                width="50"
+                                style={{ color: "#84E063" }}
+                              />
+                            </div>
+                          )}
+                          {apiTugas.status === "selesai_lebih_deadline" && (
+                            <div
+                              className="icon-indie-information"
+                              style={{ background: "#FFC6C6" }}
+                            >
+                              <Icon
+                                icon="material-symbols:check-small-rounded"
+                                width="50"
+                                style={{ color: "#FF3F3F" }}
+                              />
+                            </div>
+                          )}
                       <div className="desc-indie">
                         <p className="material-name">{apiTugas.nama_tugas}</p>
                         <p className="teacher-name">{apiTugas.nama_guru}</p>
