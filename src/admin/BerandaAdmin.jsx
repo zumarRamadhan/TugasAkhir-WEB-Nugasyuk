@@ -14,7 +14,6 @@ import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import apiurl from "../api/api";
-import { is } from "@babel/types";
 
 function BerandaAdmin() {
   const navText = "Beranda Admin";
@@ -43,13 +42,17 @@ function BerandaAdmin() {
   };
 
   const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
+    const background = document.querySelector("#popup-forget");
+    background.style.display = "flex";
+    const popupForget = document.querySelector(".detail-forget-password");
+    popupForget.style.display = "block";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeForgetPopupAndClearInput = () => {
-    const popupForget = document.querySelector("#popup-forget");
+    const background = document.querySelector("#popup-forget");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupForget = document.querySelector(".detail-forget-password");
     setTimeout(() => (popupForget.style.display = "none"), 250);
     popupForget.style.animation = "slide-up 0.3s ease-in-out";
     const clearpassword = document.querySelector(
@@ -184,7 +187,7 @@ function BerandaAdmin() {
 
   const handleSubmitChangesPass = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm(formPass);
+    const validationErrors = validateFormPass(formPass);
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmittingPass(true);
@@ -192,7 +195,7 @@ function BerandaAdmin() {
     }
   };
 
-  const validateForm = (data) => {
+  const validateFormPass = (data) => {
     let errors = {};
 
     if (!data.password_lama) {
@@ -420,7 +423,6 @@ function BerandaAdmin() {
             </div>
           </div>
         </div>
-
         <div className="detail-profile">
           <div className="content-detail">
             <div className="navbar-detail">
@@ -461,7 +463,6 @@ function BerandaAdmin() {
             </button>
           </div>
         </div>
-
         {/* changes pass */}
         <div className="popup-forget" id="popup-forget">
           <form
@@ -598,7 +599,6 @@ function BerandaAdmin() {
         </div>
         {/* end message Changes Pass*/}
         {/* end changes pass */}
-
         <div className="popup-loading">
           <div className="body-loading" id="body-loading">
             <svg
@@ -645,6 +645,100 @@ function BerandaAdmin() {
             </svg>
           </div>
         </div>
+        {/* changes pass */}
+        <div className="popup-forget" id="popup-forget">
+          <form
+            onSubmit={handleSubmitChangesPass}
+            className="detail-forget-password"
+          >
+            <div className="navbar-detail-forget">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeForgetPopupAndClearInput}
+              />
+              <h2>Ganti Password</h2>
+            </div>
+
+            <p className="judul-form">Sandi lama</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordType}
+                id="password"
+                placeholder="*********"
+                className="input-password"
+                name="password_lama"
+                value={formPass.password_lama}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibility}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_lama && (
+              <span className="error">{errors.password_lama}</span>
+            )}
+
+            <p className="judul-form">Sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeNew}
+                id="newPassword"
+                placeholder="*********"
+                className="input-password"
+                name="password_baru"
+                value={formPass.password_baru}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityNew}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_baru && (
+              <span className="error">{errors.password_baru}</span>
+            )}
+
+            <p className="judul-form">Konfirmasi sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeConfirm}
+                id="confirmPassword"
+                placeholder="*********"
+                className="input-password"
+                name="konfirmasi_password_baru"
+                value={formPass.konfirmasi_password_baru}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityConfirm}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.konfirmasi_password_baru && (
+              <span className="error">{errors.konfirmasi_password_baru}</span>
+            )}
+
+            <button type="submit" className="btn-simpan">
+              Simpan sandi baru
+            </button>
+          </form>
+        </div>
+        {/* message Changes Pass */}
       </div> /*body*/
     );
 }

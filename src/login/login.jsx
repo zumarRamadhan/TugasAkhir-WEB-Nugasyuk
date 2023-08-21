@@ -26,16 +26,20 @@ function Login() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showFailedChanges = () => {
-    const popupLogout = document.querySelector("#popup-Failed");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  const showFailed = () => {
+    const background = document.querySelector("#popup-Failed");
+    background.style.display = "flex";
+    const popUpLogin = document.querySelector(".detail-Failed");
+    popUpLogin.style.display = "grid";
+    popUpLogin.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeFailed = () => {
-    const popupLogout = document.querySelector("#popup-Failed");
-    setTimeout(() => (popupLogout.style.display = "none"), 250);
-    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    const background = document.querySelector("#popup-Failed");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popUpLogin = document.querySelector(".detail-Failed");
+    setTimeout(() => (popUpLogin.style.display = "none"), 250);
+    popUpLogin.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   // end messege
@@ -81,7 +85,7 @@ function Login() {
       })
       .catch((err) => {
         console.log("terjadi kesalahan : ", err);
-        showFailedChanges();
+        showFailed();
         console.log(err.response);
         setisLoading(false);
       });
@@ -154,46 +158,46 @@ function Login() {
         </div>
       </div>
       <div id="popup-success">
-          <div className="detail-success">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeSuccess}
+        <div className="detail-success">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeSuccess}
+          />
+          <div className="image-success">
+            <img
+              src={ImgSuccess}
+              alt="Delete Success"
+              className="img-success"
             />
-            <div className="image-success">
-              <img
-                src={ImgSuccess}
-                alt="Delete Success"
-                className="img-success"
-              />
-            </div>
-            <p className="desc-success">SELAMAT DATANG DI NUGASYUK!!!</p>
-            <button className="btn-success" onClick={closeSuccess}>
-              Kembali
-            </button>
           </div>
+          <p className="desc-success">SELAMAT DATANG DI NUGASYUK!!!</p>
+          <button className="btn-success" onClick={closeSuccess}>
+            Kembali
+          </button>
         </div>
+      </div>
 
-        <div id="popup-Failed">
-          <div className="detail-Failed">
-            <Icon
-              icon="radix-icons:cross-circled"
-              width="30"
-              style={{ cursor: "pointer" }}
-              onClick={closeFailed}
-            />
-            <div className="image-Failed">
-              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
-            </div>
-            <p className="desc-Failed">
-              Email atau Password yang anda masukkan salah!!!
-            </p>
-            <button className="btn-Failed" onClick={closeFailed}>
-              Kembali
-            </button>
+      <div id="popup-Failed" className="popup-failed-login">
+        <div className="detail-Failed" id="detail-failed-login">
+          <Icon
+            icon="radix-icons:cross-circled"
+            width="30"
+            style={{ cursor: "pointer" }}
+            onClick={closeFailed}
+          />
+          <div className="image-Failed">
+            <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
           </div>
+          <p className="desc-Failed">
+            Email atau Password yang anda masukkan salah!!!
+          </p>
+          <button className="btn-Failed" onClick={closeFailed}>
+            Kembali
+          </button>
         </div>
+      </div>
     </div>
   );
 }
