@@ -19,8 +19,8 @@ function useIdFromParams() {
   return id;
 }
 
-function FormTugasKBM() {
-  const navText = "Tambah Tugas";
+function EditFormTugasKBM() {
+  const navText = "Edit Tugas";
   const navigate = useNavigate();
   const id = useIdFromParams();
   const saveToken = sessionStorage.getItem("token");
@@ -127,11 +127,11 @@ function FormTugasKBM() {
     popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
-  const closeSuccess = () => {
+  const closeSuccess = (id) => {
     const popupLogout = document.querySelector("#popup-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    navigate(`/guru/pagekbm/detail/${id}`);
+    navigate(`/guru/pagekbm/detail/detailtugas/${id}`);
   };
 
   const showFailedAdd = () => {
@@ -197,13 +197,57 @@ function FormTugasKBM() {
     judul_tugas: "",
     desc_tugas: "",
     deadline: "",
-    link: "",
-    file: "",
+    soal_link: "",
+    soal_file: "",
     input_jawaban: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState([]);
+  const [kelasId, setKelasId] = useState([]);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (isLoading) {
+      showPopupLoadingDetail();
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    // console.log(formData.email_wali_murid);
+    setIsLoading(true);
+    showPopupLoadingDetail();
+    axios
+      .get(`${apiurl}guru/tugas/${id}`, {
+        headers: {
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((response) => {
+        // setMuridData(response.data.data);
+        setFormData({
+          // file: response.data.data.foto_profile,
+          judul_tugas: response.data.tugas[0].nama_tugas,
+          desc_tugas: response.data.tugas[0].soal,
+          deadline: response.data.tugas[0].deadline,
+          // soal_link: response.data.tugas[0].soal_link,
+          soal_link: response.data.tugas[0].soal_link === "null" ? null : response.data.tugas[0].soal_link,
+          soal_file: response.data.tugas[0].soal_file,
+          input_jawaban: response.data.tugas[0].input_jawaban,
+        });
+        console.log(response.data.tugas.soal_file);
+        setIsLoading(false);
+        closePopupLoadingDetail();
+        setKelasId(response.data.tugas[0]);
+      })
+      .catch((error) => {
+        console.error("Terjadi kesalahan saat mengambil data Tugas:", error);
+        setIsLoading(false);
+        setIsError(true);
+      });
+  }, [id, saveToken]);
 
   useEffect(() => {
     if (isSubmitting) {
@@ -213,12 +257,12 @@ function FormTugasKBM() {
       form.append("judul_tugas", formData.judul_tugas);
       form.append("tugas", formData.desc_tugas);
       form.append("deadline", formData.deadline);
-      form.append("link", formData.link);
-      form.append("file", formData.file);
+      form.append("link", formData.soal_link);
+      form.append("file", formData.soal_file);
       form.append("input_jawaban", formData.input_jawaban);
 
       axios
-        .post(`${apiurl}guru/tugas/${id}`, form, {
+        .post(`${apiurl}guru/tugas/edit/${id}`, form, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${saveToken}`,
@@ -236,8 +280,8 @@ function FormTugasKBM() {
             judul_tugas: "",
             desc_tugas: "",
             deadline: "",
-            link: "",
-            file: "",
+            soal_link: "",
+            soal_file: "",
             input_jawaban: "",
           });
 
@@ -289,8 +333,8 @@ function FormTugasKBM() {
       errors.desc_tugas = "Deskripsi Tugas Harus Diisi";
     }
     // Validasi link
-    if (data.link && !/^https?:\/\//.test(data.link)) {
-      errors.link = "Link harus dimulai dengan https:// atau http://";
+    if (data.soal_link && !/^https?:\/\//.test(data.soal_link)) {
+      errors.soal_link = "Link harus dimulai dengan https:// atau http://";
     }
 
     if (!data.input_jawaban) {
@@ -391,7 +435,7 @@ function FormTugasKBM() {
   }, [isSubmittingPass, formPass]);
 
   // end function changes password
-
+  if (formData && !isError)
   return (
     <div>
       <aside>
@@ -477,18 +521,18 @@ function FormTugasKBM() {
                   type="text"
                   className="input-formKbm"
                   placeholder="link tugas"
-                  name="link"
-                  value={formData.link}
+                  name="soal_link"
+                  value={formData.soal_link}
                   onChange={handleChange}
                 />
-                {errors.link && <span className="error">{errors.link}</span>}
+                {errors.soal_link && <span className="error">{errors.soal_link}</span>}
               </div>
 
               <div className="con-formKbm">
                 <div className="title-formKbm">File Tugas</div>
                 <input
                   type="file"
-                  name="file"
+                  name="soal_file"
                   id="file"
                   className="input-formKbm"
                   accept=".pdf , .docx , .xlsx"
@@ -572,7 +616,7 @@ function FormTugasKBM() {
             icon="radix-icons:cross-circled"
             width="30"
             style={{ cursor: "pointer" }}
-            onClick={closeSuccess}
+            onClick={() => closeSuccess(kelasId.id)}
           />
           <div className="image-success">
             <img
@@ -581,8 +625,8 @@ function FormTugasKBM() {
               className="img-success"
             />
           </div>
-          <p className="desc-success">Anda berhasil menambahkan tugas</p>
-          <button className="btn-success" onClick={closeSuccess}>
+          <p className="desc-success">Anda berhasil Mengubah tugas</p>
+          <button className="btn-success" onClick={() => closeSuccess(kelasId.id)}>
             Kembali
           </button>
         </div>
@@ -739,48 +783,48 @@ function FormTugasKBM() {
       {/* message Changes Pass */}
 
       <div id="popup-success-ChangesPass">
-        <div className="detail-success" id="detail-success-ChangesPass">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeSuccessChangesPass}
-          />
-          <div className="image-success">
-            <img
-              src={ImgSuccess}
-              alt="Delete Success"
-              className="img-success"
+          <div className="detail-success" id="detail-success-ChangesPass">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccessChangesPass}
             />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Password Berhasil Di Perbarui</p>
+            <button className="btn-success" onClick={closeSuccessChangesPass}>
+              Kembali
+            </button>
           </div>
-          <p className="desc-success">Password Berhasil Di Perbarui</p>
-          <button className="btn-success" onClick={closeSuccessChangesPass}>
-            Kembali
-          </button>
         </div>
-      </div>
 
-      <div id="popup-Failed-ChangesPass">
-        <div className="detail-Failed" id="detail-Failed-ChangesPass">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeFailedChangesPass}
-          />
-          <div className="image-Failed">
-            <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+        <div id="popup-Failed-ChangesPass">
+          <div className="detail-Failed" id="detail-Failed-ChangesPass">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailedChangesPass}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Masukan Password Lama Anda Dengan Benar!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailedChangesPass}>
+              Kembali
+            </button>
           </div>
-          <p className="desc-Failed">
-            Masukan Password Lama Anda Dengan Benar!!
-          </p>
-          <button className="btn-Failed" onClick={closeFailedChangesPass}>
-            Kembali
-          </button>
         </div>
-      </div>
 
-      {/* end message Changes Pass*/}
+        {/* end message Changes Pass*/}
 
       {/* card loading */}
       <div className="popup-loading">
@@ -841,4 +885,4 @@ function FormTugasKBM() {
   );
 }
 
-export default FormTugasKBM;
+export default EditFormTugasKBM;

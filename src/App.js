@@ -47,7 +47,7 @@ import FormMateriKBM from './guru/FormMateriKBM';
 import EditFormMateriKBM from './guru/EditFormMateriKBM';
 import DetailTugasKbm from './guru/DetailTugasKbm';
 import FormTugasKBM from './guru/FormTugasKBM';
-// import EditFormTugasKBM from './guru/EditFormTugasKBM';
+import EditFormTugasKBM from './guru/EditFormTugasKBM';
 
 import CekPengumpulan from './guru/CekPengumpulan';
 
@@ -126,21 +126,39 @@ function App() {
         <Route path='/guru/berandaguru' element={<BerandaGuru/>}/>
 
         <Route path='/guru/pagekbm' element={<KBM/>}/>
+
         <Route path='/guru/pagekbm/detail/:id' element={<DetailKbm/>}/>
 
+        <Route path='/guru/pagekbm/detail/detailmateri' element={<Notfound/>}/>
         <Route path='/guru/pagekbm/detail/detailmateri/:id' element={<DetailMateriKbm/>}/>
-        <Route path='/guru/pagekbm/detail/formmateri/:id' element={<FormMateriKBM/>}/>
-        <Route path='/guru/pagekbm/detail/editformmateri/:id' element={<EditFormMateriKBM/>}/>
-        <Route path='/guru/pagekbm/detail/detailtugas/:id' element={<DetailTugasKbm/>}/>
-        <Route path='/guru/pagekbm/detail/formtugas/:id' element={<FormTugasKBM/>}/>
-        {/* <Route path='/guru/pagekbm/detail/editformtugas/:id' element={<EditFormTugasKBM/>}/> */}
 
+        <Route path='/guru/pagekbm/detail/formmateri' element={<Notfound/>}/>
+        <Route path='/guru/pagekbm/detail/formmateri/:id' element={<FormMateriKBM/>}/>
+
+        <Route path='/guru/pagekbm/detail/editformmateri' element={<Notfound/>}/>
+        <Route path='/guru/pagekbm/detail/editformmateri/:id' element={<EditFormMateriKBM/>}/>
+
+        <Route path='/guru/pagekbm/detail/detailtugas' element={<Notfound/>}/>
+        <Route path='/guru/pagekbm/detail/detailtugas/:id' element={<DetailTugasKbm/>}/>
+
+        <Route path='/guru/pagekbm/detail/formtugas' element={<Notfound/>}/>
+        <Route path='/guru/pagekbm/detail/formtugas/:id' element={<FormTugasKBM/>}/>
+
+        <Route path='/guru/pagekbm/detail/editformtugas' element={<Notfound/>}/>
+        <Route path='/guru/pagekbm/detail/editformtugas/:id' element={<EditFormTugasKBM/>}/>
+
+        <Route path='/guru/pagekbm/detail/detailtugas/listtugas' element={<Notfound/>}/>
         <Route path='/guru/pagekbm/detail/detailtugas/listtugas/:id' element={<CekPengumpulan/>}/>
 
         <Route path='/guru/pagepengumpulan' element={<PagePengumpulan/>}/>
         <Route path='/guru/pagepengumpulan/detail/:id' element={<DetailPengumpulan/>}/>
+
+        <Route path='/guru/pagepengumpulan/detail/detailmenunggu' element={<Notfound/>}/>
         <Route path='/guru/pagepengumpulan/detail/detailmenunggu/:id' element={<DetailMenunggu/>}/>
+
+        <Route path='/guru/pagepengumpulan/detail/detailselesai' element={<Notfound/>}/>
         <Route path='/guru/pagepengumpulan/detail/detailselesai/:id' element={<DetailSelesai/>}/>
+
         <Route path='/guru/pagejadwalkbm' element={<Jadwal/>}/>
         {/* end role guru */}
 

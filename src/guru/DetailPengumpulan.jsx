@@ -10,15 +10,77 @@ import { useState, useEffect } from "react";
 import ImgProfil from "../assets/profil-guru.svg";
 import damiImgMurid from "../assets/damiImgMurid.png";
 import vektorProfile from "../assets/vektorProfile.svg";
+import ImgSuccess from "../assets/success.gif";
+import ImgFailed from "../assets/failed.gif";
 import apiurl from "../api/api";
 import axios from "axios";
 
 function DetailPengumpulan() {
   const navText = "Pengumpulan";
   const navigate = useNavigate();
+  const saveToken = sessionStorage.getItem("token");
+
+  if (!saveToken) {
+    navigate("/login");
+  }
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
+  // popup card loading
+  const showPopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    background.style.display = "flex";
+    const PopupLoading = document.querySelector(".body-loading");
+    PopupLoading.style.display = "grid";
+    PopupLoading.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closePopupLoading = () => {
+    const background = document.querySelector(".popup-loading");
+    setTimeout(() => (background.style.display = "none"), 300);
+    // background.style.display = "none";
+    const PopupLoading = document.querySelector(".body-loading");
+    setTimeout(() => (PopupLoading.style.display = "none"), 250);
+    PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
+  };
+  // end popup card loading
+
+  const showSuccessChangesPass = () => {
+    const background = document.querySelector("#popup-success-ChangesPass");
+    background.style.display = "flex";
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    popupSuccess.style.display = "flex";
+    popupSuccess.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showFailedChangesPass = () => {
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    background.style.display = "flex";
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    popupFailed.style.display = "flex";
+    popupFailed.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccessChangesPass = () => {
+    const background = document.querySelector("#popup-success-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    setTimeout(() => (popupSuccess.style.display = "none"), 250);
+    popupSuccess.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const closeFailedChangesPass = () => {
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    setTimeout(() => (popupFailed.style.display = "none"), 250);
+    popupFailed.style.animation = "slide-up 0.3s ease-in-out";
+  };
 
   const { id } = useParams();
-  const saveToken = sessionStorage.getItem("token");
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [detailPengumpulan, setDetailPengumpulan] = useState([]);
@@ -51,7 +113,7 @@ function DetailPengumpulan() {
           const responseData = response.data;
 
           setDetailPengumpulan(responseData.pengumpulan);
-          setIsLoading(false);
+          // setIsLoading(false);
         } catch (error) {
           console.log("terjadi kesalahan detail profile: ", error);
           setIsError(true);
@@ -68,7 +130,7 @@ function DetailPengumpulan() {
     const fetchData = async () => {
       if (id) {
         try {
-          setIsLoading(true);
+          // setIsLoading(true);
 
           // Pemanggilan API guru/pengumpulan/menunggu/${id}
           const responseMenunggu = await axios.get(
@@ -134,13 +196,17 @@ function DetailPengumpulan() {
   };
 
   const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
+    const background = document.querySelector("#popup-forget");
+    background.style.display = "flex";
+    const popupForget = document.querySelector(".detail-forget-password");
+    popupForget.style.display = "block";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeForgetPopupAndClearInput = () => {
-    const popupForget = document.querySelector("#popup-forget");
+    const background = document.querySelector("#popup-forget");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupForget = document.querySelector(".detail-forget-password");
     setTimeout(() => (popupForget.style.display = "none"), 250);
     popupForget.style.animation = "slide-up 0.3s ease-in-out";
     const clearpassword = document.querySelector(
@@ -185,6 +251,98 @@ function DetailPengumpulan() {
     setActiveContent("detailSelesaiPengumpulan");
   };
 
+  // function changes password
+  const [formPass, setformPass] = useState({
+    password_lama: "",
+    password_baru: "",
+    konfirmasi_password_baru: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const handleChanges = (e) => {
+    const { name, value } = e.target;
+    setformPass((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitChangesPass = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formPass);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitting(true);
+      showPopupLoading();
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+
+    if (!data.password_lama) {
+      errors.password_lama = "Silahkan password lama anda";
+    }
+
+    if (data.password_baru.trim().length < 8) {
+      errors.password_baru = "Password harus lebih dari 8 karakter";
+    }
+
+    if (!data.password_baru) {
+      errors.password_baru = "Silahkan masukkan password baru anda";
+    }
+
+    if (data.password_baru !== data.konfirmasi_password_baru) {
+      errors.konfirmasi_password_baru = "Pastikan password sama";
+    }
+
+    return errors;
+  };
+
+  useEffect(() => {
+    if (isSubmitting) {
+      const formData = new FormData();
+      formData.append("password_lama", formPass.password_lama);
+      formData.append("password_baru", formPass.password_baru);
+
+      axios
+        .post(`${apiurl}guru/ubahpassword`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
+        .then((result) => {
+          console.log("Password berhasil diperbarui");
+
+          showSuccessChangesPass();
+          closeForgetPopupAndClearInput();
+          closePopupLoading();
+
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setformPass({
+            password_lama: "",
+            password_baru: "",
+            konfirmasi_password_baru: "",
+          });
+
+          setIsSubmitting(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat memperbarui password:", error);
+          setErrors({ submit: "Terjadi kesalahan saat memperbarui password" });
+          setIsSubmitting(false);
+          showFailedChangesPass();
+          closePopupLoading();
+        });
+    }
+  }, [isSubmitting, formPass]);
+
+  // end function changes password
+
   if (detailPengumpulan && detailMenunggu && detailSelesai && !isError)
     return (
       <div>
@@ -227,9 +385,12 @@ function DetailPengumpulan() {
                   <div className="img-DetailPengumpulan-Guru">
                     {detailPengumpulan && detailPengumpulan.foto_profile ? (
                       <img
-                        src={damiImgMurid}
+                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailPengumpulan.foto_profile}`}
                         // src={detailPengumpulan.foto_profile}
-                        alt=""
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = vektorProfile;
+                        }}
                         className="image-DetailPengumpulan-Guru"
                       />
                     ) : (
@@ -310,6 +471,8 @@ function DetailPengumpulan() {
                       <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
                       <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
                       <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Menunggu"></div>
                     </div>
                   ) : detailMenunggu.length === 0 ? (
                     <div className="card-DetailPengumpulan-Menunggu-noData">
@@ -323,10 +486,26 @@ function DetailPengumpulan() {
                         style={{ cursor: "pointer" }}
                         onClick={() => handleDetailMenunggu(data.id)}
                       >
-                        {/* Rendering data tugas yang menunggu */}
                         <div className="card-DetailPengumpulan-Menunggu-left">
-                          <div className="img-DetailPengumpulan-Menunggu">
-                            <Icon icon="uiw:time-o" width={40} />
+                          <div
+                            className="img-DetailPengumpulan-Menunggu"
+                            style={{
+                              background:
+                                data.status === "menunggu_dalam_deadline"
+                                  ? "#FFFA87"
+                                  : "#FFC6C6",
+                            }}
+                          >
+                            <Icon
+                              icon="uiw:time-o"
+                              width="40"
+                              style={{
+                                color:
+                                  data.status === "menunggu_dalam_deadline"
+                                    ? "#CBC41A"
+                                    : "#FF3F3F",
+                              }}
+                            />
                           </div>
                           <div className="desc-DetailPengumpulan-Menunggu">
                             <p className="judul-DetailPengumpulan-Menunggu">
@@ -370,6 +549,8 @@ function DetailPengumpulan() {
                       <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                       <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                       <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
+                      <div className="skeleton-card-DetailPengumpulan-Selesai"></div>
                     </div>
                   ) : detailSelesai.length === 0 ? (
                     <div className="card-DetailPengumpulan-Selesai-noData">
@@ -385,8 +566,25 @@ function DetailPengumpulan() {
                       >
                         {/* Rendering data tugas yang selesai */}
                         <div className="card-DetailPengumpulan-Selesai-left">
-                          <div className="img-DetailPengumpulan-Selesai">
-                            <Icon icon="material-symbols:check" width={40} />
+                          <div
+                            className="img-DetailPengumpulan-Selesai"
+                            style={{
+                              background:
+                                data.status === "selesai_dalam_deadline"
+                                  ? "#D5FFC6"
+                                  : "#FFC6C6",
+                            }}
+                          >
+                            <Icon
+                              icon="material-symbols:check-small-rounded"
+                              width="40"
+                              style={{
+                                color:
+                                  data.status === "selesai_dalam_deadline"
+                                    ? "#84E063"
+                                    : "#FF3F3F",
+                              }}
+                            />
                           </div>
                           <div className="desc-DetailPengumpulan-Selesai">
                             <p className="judul-DetailPengumpulan-Selesai">
@@ -433,7 +631,7 @@ function DetailPengumpulan() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>
@@ -441,7 +639,10 @@ function DetailPengumpulan() {
         </div>
 
         <div className="popup-forget" id="popup-forget">
-          <form action="" className="detail-forget-password">
+          <form
+            onSubmit={handleSubmitChangesPass}
+            className="detail-forget-password"
+          >
             <div className="navbar-detail-forget">
               <Icon
                 icon="radix-icons:cross-circled"
@@ -451,6 +652,7 @@ function DetailPengumpulan() {
               />
               <h2>Ganti Password</h2>
             </div>
+
             <p className="judul-form">Sandi lama</p>
             <div className="con-form-password">
               <img src={passIcon} alt="" />
@@ -459,6 +661,9 @@ function DetailPengumpulan() {
                 id="password"
                 placeholder="*********"
                 className="input-password"
+                name="password_lama"
+                value={formPass.password_lama}
+                onChange={handleChanges}
               />
               <button
                 type="button"
@@ -468,6 +673,10 @@ function DetailPengumpulan() {
                 <img src={mataIcon} alt="" />
               </button>
             </div>
+            {errors.password_lama && (
+              <span className="error">{errors.password_lama}</span>
+            )}
+
             <p className="judul-form">Sandi baru</p>
             <div className="con-form-password">
               <img src={passIcon} alt="" />
@@ -476,6 +685,9 @@ function DetailPengumpulan() {
                 id="newPassword"
                 placeholder="*********"
                 className="input-password"
+                name="password_baru"
+                value={formPass.password_baru}
+                onChange={handleChanges}
               />
               <button
                 type="button"
@@ -485,6 +697,10 @@ function DetailPengumpulan() {
                 <img src={mataIcon} alt="" />
               </button>
             </div>
+            {errors.password_baru && (
+              <span className="error">{errors.password_baru}</span>
+            )}
+
             <p className="judul-form">Konfirmasi sandi baru</p>
             <div className="con-form-password">
               <img src={passIcon} alt="" />
@@ -493,6 +709,9 @@ function DetailPengumpulan() {
                 id="confirmPassword"
                 placeholder="*********"
                 className="input-password"
+                name="konfirmasi_password_baru"
+                value={formPass.konfirmasi_password_baru}
+                onChange={handleChanges}
               />
               <button
                 type="button"
@@ -502,6 +721,9 @@ function DetailPengumpulan() {
                 <img src={mataIcon} alt="" />
               </button>
             </div>
+            {errors.konfirmasi_password_baru && (
+              <span className="error">{errors.konfirmasi_password_baru}</span>
+            )}
 
             <button type="submit" className="btn-simpan">
               Simpan sandi baru
@@ -549,6 +771,101 @@ function DetailPengumpulan() {
             </button>
           </div>
         </div>
+
+        {/* message Changes Pass */}
+
+        <div id="popup-success-ChangesPass">
+          <div className="detail-success" id="detail-success-ChangesPass">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccessChangesPass}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Password Berhasil Di Perbarui</p>
+            <button className="btn-success" onClick={closeSuccessChangesPass}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed-ChangesPass">
+          <div className="detail-Failed" id="detail-Failed-ChangesPass">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailedChangesPass}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Masukan Password Lama Anda Dengan Benar!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailedChangesPass}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        {/* end message Changes Pass*/}
+
+        {/* card loading */}
+        <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+        {/* end loading */}
       </div>
     );
 }

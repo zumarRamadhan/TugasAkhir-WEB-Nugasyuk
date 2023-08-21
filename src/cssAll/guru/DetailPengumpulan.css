@@ -57,6 +57,7 @@
     width: 100%;
     height: auto;
     border-radius: 100%;
+    aspect-ratio: 1;
 }
 
 .name-card-DetailPengumpulan-Guru {
@@ -180,12 +181,12 @@
 }
 
 .img-DetailPengumpulan-Menunggu {
-    color: #CBC41A;
+    /* color: #CBC41A; */
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #FFFA87;
+    /* background: #FFFA87; */
     border-radius: 10px;
 }
 

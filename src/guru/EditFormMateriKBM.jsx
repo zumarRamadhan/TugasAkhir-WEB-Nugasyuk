@@ -20,9 +20,19 @@ function useIdFromParams() {
 }
 
 function EditFormMateriKBM() {
-  const navText = "Tambah Materi";
+  const navText = "Edit Materi";
   const navigate = useNavigate();
   const id = useIdFromParams();
+  const saveToken = sessionStorage.getItem("token");
+
+  if (!saveToken) {
+    navigate("/login");
+  }
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
@@ -79,6 +89,38 @@ function EditFormMateriKBM() {
   };
   // end popup card loading
 
+  const showSuccessChangesPass = () => {
+    const background = document.querySelector("#popup-success-ChangesPass");
+    background.style.display = "flex";
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    popupSuccess.style.display = "flex";
+    popupSuccess.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showFailedChangesPass = () => {
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    background.style.display = "flex";
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    popupFailed.style.display = "flex";
+    popupFailed.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccessChangesPass = () => {
+    const background = document.querySelector("#popup-success-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    setTimeout(() => (popupSuccess.style.display = "none"), 250);
+    popupSuccess.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const closeFailedChangesPass = () => {
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    setTimeout(() => (popupFailed.style.display = "none"), 250);
+    popupFailed.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
   const showSuccessAdd = () => {
     const popupLogout = document.querySelector("#popup-success");
     popupLogout.style.display = "flex";
@@ -89,7 +131,7 @@ function EditFormMateriKBM() {
     const popupLogout = document.querySelector("#popup-success");
     setTimeout(() => (popupLogout.style.display = "none"), 250);
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
-    navigate(`/guru/pagekbm/detail/${id}`);
+    navigate(`/guru/pagekbm/detail/detailmateri/${id}`);
   };
 
   const showFailedAdd = () => {
@@ -107,13 +149,17 @@ function EditFormMateriKBM() {
   // end messege
 
   const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
+    const background = document.querySelector("#popup-forget");
+    background.style.display = "flex";
+    const popupForget = document.querySelector(".detail-forget-password");
+    popupForget.style.display = "block";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeForgetPopupAndClearInput = () => {
-    const popupForget = document.querySelector("#popup-forget");
+    const background = document.querySelector("#popup-forget");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupForget = document.querySelector(".detail-forget-password");
     setTimeout(() => (popupForget.style.display = "none"), 250);
     popupForget.style.animation = "slide-up 0.3s ease-in-out";
     const clearpassword = document.querySelector(
@@ -146,8 +192,7 @@ function EditFormMateriKBM() {
     );
   }
 
-  const saveToken = sessionStorage.getItem("token");
-
+  const [isError, setIsError] = useState(false);
   const [formData, setFormData] = useState({
     // Inisialisasi nilai awal untuk setiap field formulir
     judul: "",
@@ -166,6 +211,7 @@ function EditFormMateriKBM() {
       showPopupLoadingDetail();
     }
   }, [isLoading]);
+
   useEffect(() => {
     // console.log(formData.email_wali_murid);
     setIsLoading(true);
@@ -185,14 +231,19 @@ function EditFormMateriKBM() {
           deskripsi: response.data.materi.isi,
           file: response.data.materi.file,
           link: response.data.materi.link,
+          link:
+            response.data.materi.link === "null"
+              ? null
+              : response.data.materi.link,
         });
         setIsLoading(false);
         closePopupLoadingDetail();
-        setKelasId(response.data.kelas_id);
+        setKelasId(response.data.materi);
       })
       .catch((error) => {
-        console.error("Terjadi kesalahan saat mengambil data murid:", error);
+        console.error("Terjadi kesalahan saat mengambil data Materi:", error);
         setIsLoading(false);
+        setIsError(true);
       });
   }, [id, saveToken]);
 
@@ -281,43 +332,135 @@ function EditFormMateriKBM() {
     return errors;
   };
 
-  return (
-    <div>
-      <aside>
-        <h1
-          className="title-form-login"
-          onClick={() => navigate("/guru/berandaguru")}
-        >
-          <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
-          nugasyuk
-        </h1>
-        <ul>
-          <li onClick={() => navigate("/guru/berandaguru")}>
-            <Icon icon="iconoir:home-simple" width="20" />
-            Beranda
-          </li>
-          <li className="active" onClick={() => navigate("/guru/pagekbm")}>
-            <Icon icon="ph:chalkboard-teacher" width="20" />
-            KBM
-          </li>
-          <li onClick={() => navigate("/guru/pagepengumpulan")}>
-            <Icon icon="uiw:date" width="18" />
-            Pengumpulan
-          </li>
-          <li onClick={() => navigate("/guru/pageJadwalKbm")}>
-            <Icon icon="fluent-mdl2:education" width="18" />
-            Jadwal KBM
-          </li>
-        </ul>
-      </aside>
-      <div className="container-content">
-        <NavbarGuru text={navText} />
-        <div className="main">
-          <div className="content-formKbm">
-            <form onSubmit={handleSubmit} className="container-formKbm">
-              <div className="con-formKbm">
-                <div className="title-formKbm">Judul Materi</div>
-                {formData && formData.judul ? (
+  // function changes password
+  const [formPass, setformPass] = useState({
+    password_lama: "",
+    password_baru: "",
+    konfirmasi_password_baru: "",
+  });
+
+  const [isSubmittingPass, setIsSubmittingPass] = useState(false);
+
+  const handleChanges = (e) => {
+    const { name, value } = e.target;
+    setformPass((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitChangesPass = (e) => {
+    e.preventDefault();
+    const validationErrors = validateFormPass(formPass);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmittingPass(true);
+      showPopupLoading();
+    }
+  };
+
+  const validateFormPass = (data) => {
+    let errors = {};
+
+    if (!data.password_lama) {
+      errors.password_lama = "Silahkan password lama anda";
+    }
+
+    if (data.password_baru.trim().length < 8) {
+      errors.password_baru = "Password harus lebih dari 8 karakter";
+    }
+
+    if (!data.password_baru) {
+      errors.password_baru = "Silahkan masukkan password baru anda";
+    }
+
+    if (data.password_baru !== data.konfirmasi_password_baru) {
+      errors.konfirmasi_password_baru = "Pastikan password sama";
+    }
+
+    return errors;
+  };
+
+  useEffect(() => {
+    if (isSubmittingPass) {
+      const formData = new FormData();
+      formData.append("password_lama", formPass.password_lama);
+      formData.append("password_baru", formPass.password_baru);
+
+      axios
+        .post(`${apiurl}guru/ubahpassword`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
+        .then((result) => {
+          console.log("Password berhasil diperbarui");
+
+          showSuccessChangesPass();
+          closeForgetPopupAndClearInput();
+          closePopupLoading();
+
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setformPass({
+            password_lama: "",
+            password_baru: "",
+            konfirmasi_password_baru: "",
+          });
+
+          setIsSubmittingPass(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat memperbarui password:", error);
+          setErrors({ submit: "Terjadi kesalahan saat memperbarui password" });
+          setIsSubmittingPass(false);
+          showFailedChangesPass();
+          closePopupLoading();
+        });
+    }
+  }, [isSubmittingPass, formPass]);
+
+  // end function changes password
+
+  if (formData && !isError)
+    return (
+      <div>
+        <aside>
+          <h1
+            className="title-form-login"
+            onClick={() => navigate("/guru/berandaguru")}
+          >
+            <img src={IconNugasyuk} alt="" className="icon-nugasyuk" />
+            nugasyuk
+          </h1>
+          <ul>
+            <li onClick={() => navigate("/guru/berandaguru")}>
+              <Icon icon="iconoir:home-simple" width="20" />
+              Beranda
+            </li>
+            <li className="active" onClick={() => navigate("/guru/pagekbm")}>
+              <Icon icon="ph:chalkboard-teacher" width="20" />
+              KBM
+            </li>
+            <li onClick={() => navigate("/guru/pagepengumpulan")}>
+              <Icon icon="uiw:date" width="18" />
+              Pengumpulan
+            </li>
+            <li onClick={() => navigate("/guru/pageJadwalKbm")}>
+              <Icon icon="fluent-mdl2:education" width="18" />
+              Jadwal KBM
+            </li>
+          </ul>
+        </aside>
+        <div className="container-content">
+          <NavbarGuru text={navText} />
+          <div className="main">
+            <div className="content-formKbm">
+              <form onSubmit={handleSubmit} className="container-formKbm">
+                <div className="con-formKbm">
+                  <div className="title-formKbm">Judul Materi</div>
+                  {/* {formData && formData.judul ? ( */}
                   <input
                     type="text"
                     className="input-formKbm"
@@ -326,19 +469,21 @@ function EditFormMateriKBM() {
                     value={formData.judul}
                     onChange={handleChange}
                   />
-                ) : (
+                  {/* ) : (
                   <input
                     value="Data Sedang Dalam Proses..."
                     disabled
                     className="input-formKbm"
                   />
-                )}
-                {errors.judul && <span className="error">{errors.judul}</span>}
-              </div>
+                )} */}
+                  {errors.judul && (
+                    <span className="error">{errors.judul}</span>
+                  )}
+                </div>
 
-              <div className="con-formKbm">
-                <div className="title-formKbm">Deskrips Materi</div>
-                {formData && formData.deskripsi ? (
+                <div className="con-formKbm">
+                  <div className="title-formKbm">Deskrips Materi</div>
+                  {/* {formData && formData.deskripsi ? ( */}
                   <textarea
                     name="deskripsi"
                     value={formData.deskripsi}
@@ -347,21 +492,21 @@ function EditFormMateriKBM() {
                     className="input-formKbm"
                     placeholder="deskripsi materi"
                   ></textarea>
-                ) : (
+                  {/* ) : (
                   <input
                     value="Data Sedang Dalam Proses..."
                     disabled
                     className="input-formKbm"
                   />
-                )}
-                {errors.deskripsi && (
-                  <span className="error">{errors.deskripsi}</span>
-                )}
-              </div>
+                )} */}
+                  {errors.deskripsi && (
+                    <span className="error">{errors.deskripsi}</span>
+                  )}
+                </div>
 
-              <div className="con-formKbm">
-                <div className="title-formKbm">Link Materi</div>
-                {formData && formData.link ? (
+                <div className="con-formKbm">
+                  <div className="title-formKbm">Link Materi</div>
+                  {/* {formData && formData.link ? ( */}
                   <input
                     type="text"
                     className="input-formKbm"
@@ -370,19 +515,19 @@ function EditFormMateriKBM() {
                     value={formData.link}
                     onChange={handleChange}
                   />
-                ) : (
+                  {/* ) : (
                   <input
                     value="Data Sedang Dalam Proses..."
                     disabled
                     className="input-formKbm"
                   />
-                )}
-                {errors.link && <span className="error">{errors.link}</span>}
-              </div>
+                )} */}
+                  {errors.link && <span className="error">{errors.link}</span>}
+                </div>
 
-              <div className="con-formKbm">
-                <div className="title-formKbm">File Materi</div>
-                {formData && formData.file ? (
+                <div className="con-formKbm">
+                  <div className="title-formKbm">File Materi</div>
+                  {/* {formData && formData.file ? ( */}
                   <input
                     type="file"
                     name="file"
@@ -392,254 +537,332 @@ function EditFormMateriKBM() {
                     // value={formData.file}
                     onChange={handleChange} // The file data will be updated when the user selects a file
                   />
-                ) : (
+                  {/* ) : (
                   <input
                     value="Data Sedang Dalam Proses..."
                     disabled
                     className="input-formKbm"
                   />
-                )}
-              </div>
-              <div className="con-btn-form">
-                <button
-                  type="submit"
-                  className="btn-form"
-                  style={{ cursor: "pointer" }}
-                >
-                  Simpan perubahan
-                </button>
-              </div>
-            </form>
+                )} */}
+                </div>
+                <div className="con-btn-form">
+                  <button
+                    type="submit"
+                    className="btn-form"
+                    style={{ cursor: "pointer" }}
+                  >
+                    Simpan perubahan
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-      {/* end body */}
+        {/* end body */}
 
-      <div className="popup-logout" id="popup-logout">
-        <div className="detail-logout">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeLogoutPopup}
-          />
-          <div className="image-logout">
-            <img src={ImgLogout} alt="" className="img-logout" />
-          </div>
-          <p className="desc-logout">Anda yakin ingin keluar?</p>
-          <div className="con-btn-logout">
-            <button type="button" className="btn-batal">
-              Batal
-            </button>
-            <button type="button" className="btn-keluar">
-              Keluar
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div id="popup-success">
-        <div className="detail-success">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={() => closeSuccess(kelasId)}
-          />
-          <div className="image-success">
-            <img
-              src={ImgSuccess}
-              alt="Delete Success"
-              className="img-success"
-            />
-          </div>
-          <p className="desc-success">Anda berhasil menambahkan materi</p>
-          <button className="btn-success" onClick={() => closeSuccess(kelasId)}>
-            Kembali
-          </button>
-        </div>
-      </div>
-
-      <div id="popup-Failed">
-        <div className="detail-Failed">
-          <Icon
-            icon="radix-icons:cross-circled"
-            width="30"
-            style={{ cursor: "pointer" }}
-            onClick={closeFailed}
-          />
-          <div className="image-Failed">
-            <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
-          </div>
-          <p className="desc-Failed">Anda gagal menambahkan materi</p>
-          <button className="btn-Failed" onClick={closeFailed}>
-            Kembali
-          </button>
-        </div>
-      </div>
-
-      <div className="popup-forget" id="popup-forget">
-        <form action="" className="detail-forget-password">
-          <div className="navbar-detail-forget">
+        <div className="popup-logout" id="popup-logout">
+          <div className="detail-logout">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"
               style={{ cursor: "pointer" }}
-              onClick={closeForgetPopupAndClearInput}
+              onClick={closeLogoutPopup}
             />
-            <h2>Ganti Password</h2>
+            <div className="image-logout">
+              <img src={ImgLogout} alt="" className="img-logout" />
+            </div>
+            <p className="desc-logout">Anda yakin ingin keluar?</p>
+            <div className="con-btn-logout">
+              <button type="button" className="btn-batal">
+                Batal
+              </button>
+              <button type="button" className="btn-keluar" onClick={logout}>
+                Keluar
+              </button>
+            </div>
           </div>
-          <p className="judul-form">Sandi lama</p>
-          <div className="con-form-password">
-            <img src={passIcon} alt="" />
-            <input
-              type={passwordType}
-              id="password"
-              placeholder="*********"
-              className="input-password"
-            />
-            <button
-              type="button"
-              className="btn-mata"
-              onClick={togglePasswordVisibility}
-            >
-              <img src={mataIcon} alt="" />
-            </button>
-          </div>
-          <p className="judul-form">Sandi baru</p>
-          <div className="con-form-password">
-            <img src={passIcon} alt="" />
-            <input
-              type={passwordTypeNew}
-              id="newPassword"
-              placeholder="*********"
-              className="input-password"
-            />
-            <button
-              type="button"
-              className="btn-mata"
-              onClick={togglePasswordVisibilityNew}
-            >
-              <img src={mataIcon} alt="" />
-            </button>
-          </div>
-          <p className="judul-form">Konfirmasi sandi baru</p>
-          <div className="con-form-password">
-            <img src={passIcon} alt="" />
-            <input
-              type={passwordTypeConfirm}
-              id="confirmPassword"
-              placeholder="*********"
-              className="input-password"
-            />
-            <button
-              type="button"
-              className="btn-mata"
-              onClick={togglePasswordVisibilityConfirm}
-            >
-              <img src={mataIcon} alt="" />
-            </button>
-          </div>
+        </div>
 
-          <button type="submit" className="btn-simpan">
-            Simpan sandi baru
-          </button>
-        </form>
-      </div>
-
-      <div className="detail-profile">
-        <div className="content-detail">
-          <div className="navbar-detail">
+        <div id="popup-success">
+          <div className="detail-success">
             <Icon
               icon="radix-icons:cross-circled"
               width="30"
               style={{ cursor: "pointer" }}
-              onClick={closeDetail}
+              onClick={() => closeSuccess(kelasId.id)}
             />
-            <h2>Profil</h2>
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Anda berhasil menambahkan materi</p>
+            <button
+              className="btn-success"
+              onClick={() => closeSuccess(kelasId.id)}
+            >
+              Kembali
+            </button>
           </div>
-          <div className="detail-image-profile">
-            <img src={ImgProfil} alt="" className="detail-img-profile" />
-          </div>
-          <p className="judul-detail">Email</p>
-          <p className="value-detail">budiono@smkrus.sch.id</p>
-          <p className="judul-detail">Nama</p>
-          <p className="value-detail">Budiono, S.Pd</p>
-          <p className="judul-detail">Pengampu</p>
-          <p className="value-detail">Bahasa Inggris</p>
         </div>
-        <div className="con-btn-detail-profile">
-          <button
-            className="forget-password"
-            id="btn-forget-pass"
-            onClick={showForgetPopup}
-          >
-            <Icon icon="material-symbols:key-outline-rounded" width="30" />
-            <p>Ganti Password</p>
-          </button>
-          <button className="logout" id="btn-logout" onClick={showLogoutPopup}>
-            <Icon icon="material-symbols:logout-rounded" width="30" />
-            <p>Logout</p>
-          </button>
-        </div>
-      </div>
-      {/* card loading */}
-      <div className="popup-loading">
-        <div className="body-loading" id="body-loading">
-          <svg
-            class="pl"
-            viewBox="0 0 200 200"
-            width="200"
-            height="200"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
-                <stop offset="0%" stop-color="hsl(313,90%,55%)" />
-                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
-              </linearGradient>
-              <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="hsl(313,90%,55%)" />
-                <stop offset="100%" stop-color="hsl(223,90%,55%)" />
-              </linearGradient>
-            </defs>
-            <circle
-              class="pl__ring"
-              cx="100"
-              cy="100"
-              r="82"
-              fill="none"
-              stroke="url(#pl-grad1)"
-              stroke-width="36"
-              stroke-dasharray="0 257 1 257"
-              stroke-dashoffset="0.01"
-              stroke-linecap="round"
-              transform="rotate(-90,100,100)"
-            />
-            <line
-              class="pl__ball"
-              stroke="url(#pl-grad2)"
-              x1="100"
-              y1="18"
-              x2="100.01"
-              y2="182"
-              stroke-width="36"
-              stroke-dasharray="1 165"
-              stroke-linecap="round"
-            />
-          </svg>
-        </div>
-      </div>
 
-      <div className="popup-loading" id="popup-loadingDetail">
-        <div className="body-loadingDetail" id="body-loadingDetail">
-          <h2 class="animate-loadingDetail">Loading</h2>
-          <p>Data Sedang Di Proses...</p>
+        <div id="popup-Failed">
+          <div className="detail-Failed">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailed}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">Anda gagal menambahkan materi</p>
+            <button className="btn-Failed" onClick={closeFailed}>
+              Kembali
+            </button>
+          </div>
         </div>
+
+        <div className="popup-forget" id="popup-forget">
+          <form
+            onSubmit={handleSubmitChangesPass}
+            className="detail-forget-password"
+          >
+            <div className="navbar-detail-forget">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeForgetPopupAndClearInput}
+              />
+              <h2>Ganti Password</h2>
+            </div>
+
+            <p className="judul-form">Sandi lama</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordType}
+                id="password"
+                placeholder="*********"
+                className="input-password"
+                name="password_lama"
+                value={formPass.password_lama}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibility}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_lama && (
+              <span className="error">{errors.password_lama}</span>
+            )}
+
+            <p className="judul-form">Sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeNew}
+                id="newPassword"
+                placeholder="*********"
+                className="input-password"
+                name="password_baru"
+                value={formPass.password_baru}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityNew}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_baru && (
+              <span className="error">{errors.password_baru}</span>
+            )}
+
+            <p className="judul-form">Konfirmasi sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeConfirm}
+                id="confirmPassword"
+                placeholder="*********"
+                className="input-password"
+                name="konfirmasi_password_baru"
+                value={formPass.konfirmasi_password_baru}
+                onChange={handleChanges}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityConfirm}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.konfirmasi_password_baru && (
+              <span className="error">{errors.konfirmasi_password_baru}</span>
+            )}
+
+            <button type="submit" className="btn-simpan">
+              Simpan sandi baru
+            </button>
+          </form>
+        </div>
+
+        <div className="detail-profile">
+          <div className="content-detail">
+            <div className="navbar-detail">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeDetail}
+              />
+              <h2>Profil</h2>
+            </div>
+            <div className="detail-image-profile">
+              <img src={ImgProfil} alt="" className="detail-img-profile" />
+            </div>
+            <p className="judul-detail">Email</p>
+            <p className="value-detail">budiono@smkrus.sch.id</p>
+            <p className="judul-detail">Nama</p>
+            <p className="value-detail">Budiono, S.Pd</p>
+            <p className="judul-detail">Pengampu</p>
+            <p className="value-detail">Bahasa Inggris</p>
+          </div>
+          <div className="con-btn-detail-profile">
+            <button
+              className="forget-password"
+              id="btn-forget-pass"
+              onClick={showForgetPopup}
+            >
+              <Icon icon="material-symbols:key-outline-rounded" width="30" />
+              <p>Ganti Password</p>
+            </button>
+            <button
+              className="logout"
+              id="btn-logout"
+              onClick={showLogoutPopup}
+            >
+              <Icon icon="material-symbols:logout-rounded" width="30" />
+              <p>Logout</p>
+            </button>
+          </div>
+        </div>
+
+        {/* message Changes Pass */}
+
+        <div id="popup-success-ChangesPass">
+          <div className="detail-success" id="detail-success-ChangesPass">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccessChangesPass}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Password Berhasil Di Perbarui</p>
+            <button className="btn-success" onClick={closeSuccessChangesPass}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-Failed-ChangesPass">
+          <div className="detail-Failed" id="detail-Failed-ChangesPass">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailedChangesPass}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Masukan Password Lama Anda Dengan Benar!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailedChangesPass}>
+              Kembali
+            </button>
+          </div>
+        </div>
+
+        {/* end message Changes Pass*/}
+
+        {/* card loading */}
+        <div className="popup-loading">
+          <div className="body-loading" id="body-loading">
+            <svg
+              class="pl"
+              viewBox="0 0 200 200"
+              width="200"
+              height="200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+                <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle
+                class="pl__ring"
+                cx="100"
+                cy="100"
+                r="82"
+                fill="none"
+                stroke="url(#pl-grad1)"
+                stroke-width="36"
+                stroke-dasharray="0 257 1 257"
+                stroke-dashoffset="0.01"
+                stroke-linecap="round"
+                transform="rotate(-90,100,100)"
+              />
+              <line
+                class="pl__ball"
+                stroke="url(#pl-grad2)"
+                x1="100"
+                y1="18"
+                x2="100.01"
+                y2="182"
+                stroke-width="36"
+                stroke-dasharray="1 165"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div className="popup-loading" id="popup-loadingDetail">
+          <div className="body-loadingDetail" id="body-loadingDetail">
+            <h2 class="animate-loadingDetail">Loading</h2>
+            <p>Data Sedang Di Proses...</p>
+          </div>
+        </div>
+        {/* end loading */}
       </div>
-      {/* end loading */}
-    </div>
-  );
+    );
 }
 
 export default EditFormMateriKBM;

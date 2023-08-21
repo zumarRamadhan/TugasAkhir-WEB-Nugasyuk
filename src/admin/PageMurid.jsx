@@ -23,6 +23,11 @@ function DataMurid() {
   const [detailMurid, setDetailMurid] = useState([]);
   const [dataExport, setDataExport] = useState([]);
 
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   const showDetailPopup = () => {
     const background = document.querySelector(".popup-detailMurid");
     background.style.display = "flex";
@@ -213,13 +218,17 @@ function DataMurid() {
   };
 
   const showForgetPopup = () => {
-    const popupForget = document.querySelector("#popup-forget");
-    popupForget.style.display = "flex";
+    const background = document.querySelector("#popup-forget");
+    background.style.display = "flex";
+    const popupForget = document.querySelector(".detail-forget-password");
+    popupForget.style.display = "block";
     popupForget.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeForgetPopupAndClearInput = () => {
-    const popupForget = document.querySelector("#popup-forget");
+    const background = document.querySelector("#popup-forget");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupForget = document.querySelector(".detail-forget-password");
     setTimeout(() => (popupForget.style.display = "none"), 250);
     popupForget.style.animation = "slide-up 0.3s ease-in-out";
     const clearpassword = document.querySelector(
@@ -358,29 +367,154 @@ function DataMurid() {
   const dataNotFound =
     searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
-    // useEffect(() => {
-    //   axios
-    //     .get(`${apiurl}admin/export-murid`, {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${saveToken}`,
-    //         "ngrok-skip-browser-warning": "any",
-    //       },
-    //     })
-    //     .then((result) => {
-    //       console.log("data API", result.data);
-    //       const responseAPI = result.data;
-  
-    //       setDataExport(responseAPI.data);
-    //       setIsLoading(false);
-    //     })
-    //     .catch((err) => {
-    //       console.log("terjadi kesalahan: ", err);
-    //       setIsError(true);
-    //       setIsLoading(false);
-    //     });
-    // }, []);
-    
+  useEffect(() => {
+    axios
+      .get(`${apiurl}admin/export-murid`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${saveToken}`,
+          "ngrok-skip-browser-warning": "any",
+        },
+      })
+      .then((result) => {
+        console.log("data API", result.data);
+        const responseAPI = result.data;
+
+        setDataExport(responseAPI.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("terjadi kesalahan: ", err);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  }, []);
+
+  // changes pass
+
+  const showSuccessChangesPass = () => {
+    const background = document.querySelector("#popup-success-ChangesPass");
+    background.style.display = "flex";
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    popupSuccess.style.display = "flex";
+    popupSuccess.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const showFailedChangesPass = () => {
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    background.style.display = "flex";
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    popupFailed.style.display = "flex";
+    popupFailed.style.animation = "slide-down 0.3s ease-in-out";
+  };
+
+  const closeSuccessChangesPass = () => {
+    const background = document.querySelector("#popup-success-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupSuccess = document.querySelector("#detail-success-ChangesPass");
+    setTimeout(() => (popupSuccess.style.display = "none"), 250);
+    popupSuccess.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  const closeFailedChangesPass = () => {
+    const background = document.querySelector("#popup-Failed-ChangesPass");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popupFailed = document.querySelector("#detail-Failed-ChangesPass");
+    setTimeout(() => (popupFailed.style.display = "none"), 250);
+    popupFailed.style.animation = "slide-up 0.3s ease-in-out";
+  };
+
+  // end message popup
+
+  // function changes password
+  const [formPass, setformPass] = useState({
+    password_lama: "",
+    password_baru: "",
+    konfirmasi_password_baru: "",
+  });
+
+  const [IsSubmittingPass, setIsSubmittingPass] = useState(false);
+
+  const handleChangesPass = (e) => {
+    const { name, value } = e.target;
+    setformPass((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitChangesPass = (e) => {
+    e.preventDefault();
+    const validationErrors = validateFormPass(formPass);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmittingPass(true);
+      showPopupLoading();
+    }
+  };
+
+  const validateFormPass = (data) => {
+    let errors = {};
+
+    if (!data.password_lama) {
+      errors.password_lama = "Silahkan password lama anda";
+    }
+
+    if (data.password_baru.trim().length < 8) {
+      errors.password_baru = "Password harus lebih dari 8 karakter";
+    }
+
+    if (!data.password_baru) {
+      errors.password_baru = "Silahkan masukkan password baru anda";
+    }
+
+    if (data.password_baru !== data.konfirmasi_password_baru) {
+      errors.konfirmasi_password_baru = "Pastikan password sama";
+    }
+
+    return errors;
+  };
+
+  useEffect(() => {
+    if (IsSubmittingPass) {
+      const formData = new FormData();
+      formData.append("password_lama", formPass.password_lama);
+      formData.append("password_baru", formPass.password_baru);
+
+      axios
+        .post(`${apiurl}admin/ubahpassword`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${saveToken}`,
+            "ngrok-skip-browser-warning": "any",
+          },
+        })
+        .then((result) => {
+          console.log("Password berhasil diperbarui");
+
+          showSuccessChangesPass();
+          closeForgetPopupAndClearInput();
+          closePopupLoading();
+
+          // Kosongkan formulir atau perbarui variabel state jika diperlukan
+          setformPass({
+            password_lama: "",
+            password_baru: "",
+            konfirmasi_password_baru: "",
+          });
+
+          setIsSubmittingPass(false);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan saat memperbarui password:", error);
+          setErrors({ submit: "Terjadi kesalahan saat memperbarui password" });
+          setIsSubmittingPass(false);
+          showFailedChangesPass();
+          closePopupLoading();
+        });
+    }
+  }, [IsSubmittingPass, formPass]);
+
   if (dataTabelMurid && !isError)
     return (
       <div>
@@ -464,7 +598,7 @@ function DataMurid() {
                     ></Icon>
                   </button>
                 </form>
-                {/* <ExportExcelButton data={dataExport} filename="exported_data" /> */}
+                <ExportExcelButton data={dataExport} filename="data_murid" />
               </div>
               <div className="header-murid-right">
                 <p className="detail-jumlah-murid">
@@ -496,8 +630,12 @@ function DataMurid() {
                         <td className="tdImg">
                           <div className="img-td">
                             <img
-                              src={`https://www.nugasyuk.my.id/public/${item.foto_profile}`}
+                              src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${item.foto_profile}`}
                               alt={item.foto_profile}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = vektorProfile;
+                              }}
                             />
                           </div>
                         </td>
@@ -566,7 +704,7 @@ function DataMurid() {
               <div className="img-detailMurid">
                 {detailMurid && detailMurid.foto_profile ? (
                   <img
-                    src={`https://www.nugasyuk.my.id/public/${detailMurid.foto_profile}`}
+                    src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailMurid.foto_profile}`}
                     alt="foto profile ${detailMurid.foto_profile}"
                     className="image-detailMurid"
                   />
@@ -660,7 +798,7 @@ function DataMurid() {
               <button type="button" className="btn-batal">
                 Batal
               </button>
-              <button type="button" className="btn-keluar">
+              <button type="button" className="btn-keluar" onClick={logout}>
                 Keluar
               </button>
             </div>
@@ -742,75 +880,6 @@ function DataMurid() {
               Kembali
             </button>
           </div>
-        </div>
-
-        <div className="popup-forget" id="popup-forget">
-          <form action="" className="detail-forget-password">
-            <div className="navbar-detail-forget">
-              <Icon
-                icon="radix-icons:cross-circled"
-                width="30"
-                style={{ cursor: "pointer" }}
-                onClick={closeForgetPopupAndClearInput}
-              />
-              <h2>Ganti Password</h2>
-            </div>
-            <p className="judul-form">Sandi lama</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordType}
-                id="password"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibility}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-            <p className="judul-form">Sandi baru</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordTypeNew}
-                id="newPassword"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibilityNew}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-            <p className="judul-form">Konfirmasi sandi baru</p>
-            <div className="con-form-password">
-              <img src={passIcon} alt="" />
-              <input
-                type={passwordTypeConfirm}
-                id="confirmPassword"
-                placeholder="*********"
-                className="input-password"
-              />
-              <button
-                type="button"
-                className="btn-mata"
-                onClick={togglePasswordVisibilityConfirm}
-              >
-                <img src={mataIcon} alt="" />
-              </button>
-            </div>
-
-            <button type="submit" className="btn-simpan">
-              Simpan sandi baru
-            </button>
-          </form>
         </div>
 
         <div className="detail-profile">
@@ -909,6 +978,142 @@ function DataMurid() {
           </div>
         </div>
         {/* end loading */}
+        {/* changes pass */}
+        <div className="popup-forget" id="popup-forget">
+          <form
+            onSubmit={handleSubmitChangesPass}
+            className="detail-forget-password"
+          >
+            <div className="navbar-detail-forget">
+              <Icon
+                icon="radix-icons:cross-circled"
+                width="30"
+                style={{ cursor: "pointer" }}
+                onClick={closeForgetPopupAndClearInput}
+              />
+              <h2>Ganti Password</h2>
+            </div>
+
+            <p className="judul-form">Sandi lama</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordType}
+                id="password"
+                placeholder="*********"
+                className="input-password"
+                name="password_lama"
+                value={formPass.password_lama}
+                onChange={handleChangesPass}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibility}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_lama && (
+              <span className="error">{errors.password_lama}</span>
+            )}
+
+            <p className="judul-form">Sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeNew}
+                id="newPassword"
+                placeholder="*********"
+                className="input-password"
+                name="password_baru"
+                value={formPass.password_baru}
+                onChange={handleChangesPass}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityNew}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.password_baru && (
+              <span className="error">{errors.password_baru}</span>
+            )}
+
+            <p className="judul-form">Konfirmasi sandi baru</p>
+            <div className="con-form-password">
+              <img src={passIcon} alt="" />
+              <input
+                type={passwordTypeConfirm}
+                id="confirmPassword"
+                placeholder="*********"
+                className="input-password"
+                name="konfirmasi_password_baru"
+                value={formPass.konfirmasi_password_baru}
+                onChange={handleChangesPass}
+              />
+              <button
+                type="button"
+                className="btn-mata"
+                onClick={togglePasswordVisibilityConfirm}
+              >
+                <img src={mataIcon} alt="" />
+              </button>
+            </div>
+            {errors.konfirmasi_password_baru && (
+              <span className="error">{errors.konfirmasi_password_baru}</span>
+            )}
+
+            <button type="submit" className="btn-simpan">
+              Simpan sandi baru
+            </button>
+          </form>
+        </div>
+        {/* message Changes Pass */}
+        <div id="popup-success-ChangesPass">
+          <div className="detail-success" id="detail-success-ChangesPass">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeSuccessChangesPass}
+            />
+            <div className="image-success">
+              <img
+                src={ImgSuccess}
+                alt="Delete Success"
+                className="img-success"
+              />
+            </div>
+            <p className="desc-success">Password Berhasil Di Perbarui</p>
+            <button className="btn-success" onClick={closeSuccessChangesPass}>
+              Kembali
+            </button>
+          </div>
+        </div>
+        <div id="popup-Failed-ChangesPass">
+          <div className="detail-Failed" id="detail-Failed-ChangesPass">
+            <Icon
+              icon="radix-icons:cross-circled"
+              width="30"
+              style={{ cursor: "pointer" }}
+              onClick={closeFailedChangesPass}
+            />
+            <div className="image-Failed">
+              <img src={ImgFailed} alt="Delete Failed" className="img-Failed" />
+            </div>
+            <p className="desc-Failed">
+              Masukan Password Lama Anda Dengan Benar!!
+            </p>
+            <button className="btn-Failed" onClick={closeFailedChangesPass}>
+              Kembali
+            </button>
+          </div>
+        </div>
+        {/* end message Changes Pass*/}
+        {/* end changes pass */}
       </div>
     );
 }

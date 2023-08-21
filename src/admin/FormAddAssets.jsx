@@ -17,6 +17,11 @@ function FormAddAssets() {
   const navText = "Tambah Data Assets";
   const navigate = useNavigate();
 
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   const closeDetail = () => {
     const detailProfile = document.querySelector(".detail-profile");
     detailProfile.style.transform = "translateX(350px)";
@@ -411,7 +416,7 @@ function FormAddAssets() {
             <button type="button" className="btn-batal">
               Batal
             </button>
-            <button type="button" className="btn-keluar">
+            <button type="button" className="btn-keluar" onClick={logout}>
               Keluar
             </button>
           </div>
