@@ -195,6 +195,18 @@ a {
     font-size: 18px;
     color: #4b4b4b;
   }
+
+  .title-link-yt {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #4b4b4b;
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
   .con-soal-jawaban {
     display: flex;
@@ -244,29 +256,6 @@ a {
     border-radius: 5px;
     background: var(--color-aksen);
     color: var(--color-primer);
-  }
-  
-  .button-delete{
-    border: none;
-    background-color: var(--color-primer);
-    cursor: pointer;
-    align-items: center;
-    padding-right: -100px;
-    padding-right: 20px;
-    color: #4b4b4b;
-    z-index: 99;
-  }
-  
-  .name-delete{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    color: #4b4b4b;
-  
-  }
-  
-  .file-button-delete{
-    width: 100%;
   }
   
   .title-value-file {

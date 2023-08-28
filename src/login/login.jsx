@@ -32,16 +32,20 @@ function Login() {
     popupLogout.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const showFailedChanges = () => {
-    const popupLogout = document.querySelector("#popup-Failed");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
+  const showFailed = () => {
+    const background = document.querySelector("#popup-Failed");
+    background.style.display = "flex";
+    const popUpLogin = document.querySelector(".detail-Failed");
+    popUpLogin.style.display = "grid";
+    popUpLogin.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const closeFailed = () => {
-    const popupLogout = document.querySelector("#popup-Failed");
-    setTimeout(() => (popupLogout.style.display = "none"), 250);
-    popupLogout.style.animation = "slide-up 0.3s ease-in-out";
+    const background = document.querySelector("#popup-Failed");
+    setTimeout(() => (background.style.display = "none"), 300);
+    const popUpLogin = document.querySelector(".detail-Failed");
+    setTimeout(() => (popUpLogin.style.display = "none"), 250);
+    popUpLogin.style.animation = "slide-up 0.3s ease-in-out";
   };
 
   function togglePassword() {
@@ -95,11 +99,8 @@ function Login() {
       })
       .then((response) => {
         console.log(response.data);
-        // props.userAuthentication()
-        // showSuccessChanges();
         console.log(response.data);
         sessionStorage.setItem("token", response.data.token);
-        // alert('login Berhasil')
         setisLoading(true);
         closePopupLoading();
         if (response.data.kelas_id !== undefined)
@@ -109,17 +110,13 @@ function Login() {
         else if (response.data.siswa_id !== undefined)
           return window.location.replace("waliMurid/berandawalimurid");
         else return window.location.replace("admin/berandaadmin");
-
-        // props.history.push('murid/berandamurid')
       })
       .catch((err) => {
         console.log("terjadi kesalahan : ", err);
-        // alert("login gagal");
         console.log(err.response);
         setisLoading(false);
-        showFailedChanges();
+        showFailed();
         closePopupLoading();
-        // alert(err.response.data.error.message)
       });
   };
 

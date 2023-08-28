@@ -33,6 +33,10 @@ function PageTugas() {
     handleSearch();
   }, [searchQuery, filterValue]);
 
+  useEffect(() => {
+    setFilteredData(dataTugas);
+  }, [dataTugas]);
+
   const handleSearch = () => {
     const filteredData = dataTugas.filter((value) => {
       // const lowerCaseSearchQuery = searchQuery.toLowerCase();
@@ -42,9 +46,10 @@ function PageTugas() {
 
       return (
         (filterValue === "all" || filterValue === lowerCaseStatusMapel) &&
-        ((value &&
-          value.soal &&
-          value.soal.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (
+          (value && 
+            value.nama_tugas && 
+            value.nama_tugas.toLowerCase().includes(searchQuery.toLowerCase())) ||
           (value &&
             value.nama_guru &&
             value.nama_guru
@@ -63,15 +68,14 @@ function PageTugas() {
   };
 
   const handleFilterChange = (e) => {
-    // setFilterValue(e.target.value);
     // jika filter value nya tidak ada maka akan menampilkan data not found
     setFilterValue(e.target.value);
   };
   console.log("filter value", dataTugas);
 
   const renderData = filteredData.length > 0 ? filteredData : dataTugas;
-  const dataNotFound =
-    searchQuery !== "" && filteredData.length === 0 && !isLoading;
+  // const dataNotFound =
+  //   searchQuery !== "" && filteredData.length === 0 && !isLoading;
 
   useEffect(() => {
     setisLoading(true);
@@ -164,6 +168,7 @@ function PageTugas() {
                   value={filterValue}
                   onChange={handleFilterChange}
                 >
+
                   <option value="all" selected>
                     -- Semua Tugas --
                   </option>
@@ -235,17 +240,13 @@ function PageTugas() {
             </div>
           ) : (
             <div>
-              {dataNotFound ? (
-                <div className="dataNotFound">
-                  <p className="text-notfound">Data Tidak Ditemukan</p>
-                </div>
-              ) : (
+              {filteredData.length > 0 ? (
                 <div className="content-task">
                   {renderData.map((listTugas) => (
                     <Link
                       className="link-navigate"
                       to={"/murid/detailtugas/" + listTugas.id}
-                    >
+                    > 
                       <div
                         className="card-task"
                         style={{ cursor: "pointer" }}
@@ -359,6 +360,12 @@ function PageTugas() {
                   <br />
                   <br />
                 </div>
+              ) : (
+                <div className="dataNotFound">
+                <p className="text-notfound">
+                  Maaf, Tugas Yang Kamu Cari Tidak Ada
+                </p>
+              </div>
               )}
             </div>
           )}

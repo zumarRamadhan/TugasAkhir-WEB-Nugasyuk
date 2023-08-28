@@ -54,6 +54,10 @@ function DetailTask() {
 
   // end messege
 
+  const openInNewTab = (url) => {
+    window.open(url, "_blank", "noreferrer");
+  };
+
   const saveToken = sessionStorage.getItem("token");
 
   const [fileList, setFileList] = useState([]);
@@ -80,12 +84,6 @@ function DetailTask() {
     // submitTask();
   }, [id]);
 
-  const [fileTask, setFileTask] = useState({
-    file: "",
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   function getDetail() {
     setisLoading(true);
     axios
@@ -106,8 +104,6 @@ function DetailTask() {
       });
   }
 
-  const [selected, setSelected] = useState(null);
-
   // popup card loading
   const showPopupLoading = () => {
     const background = document.querySelector(".popup-loading");
@@ -124,45 +120,6 @@ function DetailTask() {
     const PopupLoading = document.querySelector(".body-loading");
     setTimeout(() => (PopupLoading.style.display = "none"), 250);
     PopupLoading.style.animation = "slide-up 0.3s ease-in-out";
-  };
-
-  const showPopupLoadingDetail = () => {
-    const background = document.querySelector("#popup-loadingDetail");
-    background.style.display = "flex";
-    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
-    PopupLoadingDetail.style.display = "grid";
-    PopupLoadingDetail.style.animation = "slide-down 0.3s ease-in-out";
-  };
-
-  const closePopupLoadingDetail = () => {
-    const background = document.querySelector("#popup-loadingDetail");
-    setTimeout(() => (background.style.display = "none"), 300);
-    // background.style.display = "none";
-    const PopupLoadingDetail = document.querySelector(".body-loadingDetail");
-    setTimeout(() => (PopupLoadingDetail.style.display = "none"), 250);
-    PopupLoadingDetail.style.animation = "slide-up 0.3s ease-in-out";
-  };
-  // end popup card loading
-
-  const showSuccessDelete = () => {
-    const popupLogout = document.querySelector("#popup-success");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
-  };
-
-  const showDeletePopup = () => {
-    const background = document.querySelector("#popup-Delete");
-    background.style.display = "flex";
-    const popupDelete = document.querySelector(".detail-Delete");
-    popupDelete.style.display = "block";
-    popupDelete.style.animation = "slide-down 0.3s ease-in-out";
-    showPopupLoadingDetail();
-  };
-
-  const showFailedDelete = () => {
-    const popupLogout = document.querySelector("#popup-Failed");
-    popupLogout.style.display = "flex";
-    popupLogout.style.animation = "slide-down 0.3s ease-in-out";
   };
 
   const handleDelete = () => {
@@ -195,18 +152,8 @@ function DetailTask() {
     popupDelete.style.animation = "slide-up 0.3s ease-in-out";
   };
 
-  const [file, setFile] = useState({
-    file: "",
-  });
-
-  const [errors, setErrors] = useState({});
-
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
   const [isErrorSubmit, setIsErrorSubmit] = useState(false);
-
-  const handleFileInput = (event) => {
-    const file = event.target.files[0];
-  };
 
   const submitTask = () => {
     setIsLoadingSubmit(true);
@@ -241,92 +188,6 @@ function DetailTask() {
         closePopupLoading();
       });
   };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFile((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const validateForm = (data) => {
-    let errors = {};
-
-    if (!data.file) {
-      errors.file = "File harus diisi";
-    }
-
-    return errors;
-  };
-
-  function generateFileIcons(item) {
-    let fileIcon;
-    let fileExtension = "";
-
-    if (item.file) {
-      fileExtension = item.file.substring(item.file.lastIndexOf(".") + 1);
-      switch (fileExtension) {
-        case "pdf":
-          fileIcon = "mdi:file-pdf-box";
-          break;
-        case "docx":
-          fileIcon = "mdi:file-word-box";
-          break;
-        case "xlsx":
-          fileIcon = "file-icons:microsoft-excel";
-          break;
-        default:
-          fileIcon = "";
-          break;
-      }
-    }
-
-    return (
-      <>
-        {fileExtension && (
-          <div className="file-generate">
-            <div className="value-file-icon">
-              <Icon className="icon-file-generate" icon={fileIcon} width={45} />
-            </div>
-            <div className="file-button-delete">
-              <div className="name-delete">
-                <div>
-                  <h1 className="title-value-file">{item.nama_tugas}</h1>
-                  <p className="format-file">{fileExtension.toUpperCase()}</p>
-                </div>
-                <button className="button-delete" onClick={handleDelete}>
-                  <Icon
-                    className="icon-delete-file"
-                    icon="basil:cross-solid"
-                    width={30}
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  }
-
-  // start funsi generate file or link materi
-  function generateFileLinkElements() {
-    return dataDetailTugas.map((item) => {
-      if (item.file) {
-        return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={item.file} className="value-file" id="value-file">
-              {generateFileIcons(item)}
-            </a>
-          </div>
-        );
-      }
-      return null;
-    });
-  }
-  
-  
 
   // start funsi input file generate file or link materi
   const generateFileInputs = () => {
@@ -364,7 +225,10 @@ function DetailTask() {
                 <h1 className="title-value-file">{file.name}</h1>
                 <p className="format-file">{fileExtension.toUpperCase()}</p>
               </div>
-              <button className="button-delete" onClick={handleDelete}>
+              <button
+                className="button-delete"
+                onClick={() => handleDeleteFile(index)}
+              >
                 <Icon
                   className="icon-delete-file"
                   icon="basil:cross-solid"
@@ -377,9 +241,10 @@ function DetailTask() {
       );
     });
   };
+  // end fungsi generate input file
 
-
-  function generateFileIcons(item) {
+  // start funsi generate file jawaban
+  function generateFileJawaban(item) {
     let fileIcon;
     let fileExtension = "";
 
@@ -414,13 +279,6 @@ function DetailTask() {
                   <h1 className="title-value-file">{item.nama_tugas}</h1>
                   <p className="format-file">{fileExtension.toUpperCase()}</p>
                 </div>
-                <button className="button-delete" onClick={handleDelete}>
-                  <Icon
-                    className="icon-delete-file"
-                    icon="basil:cross-solid"
-                    width={30}
-                  />
-                </button>
               </div>
             </div>
           </div>
@@ -429,50 +287,181 @@ function DetailTask() {
     );
   }
 
-
-
-  // start funsi generate file or link materi
   function generateFileLinkElements() {
     return dataDetailTugas.map((item) => {
       if (item.file) {
         return (
-          <div className="con-value-fileOrlink" key={item.id}>
-            <a href={item.file} className="value-file" id="value-file">
-              {generateFileIcons(item)}
+          <div className="con-value-file-jawaban" key={item.id}>
+            <a
+              href={`https://wondrous-squirrel-blatantly.ngrok-free.app/${item.file}`}
+              className="value-file"
+              id="value-file"
+              target="_blank"
+            >
+              {generateFileJawaban(item)}
             </a>
+
+            <button
+              className="button-delete"
+              onClick={handleDelete}
+              style={{
+                display:
+                  item.status === "selesai_dalam_deadline" ||
+                  item.status === "selesai_lebih_deadline"
+                    ? "none"
+                    : "flex",
+              }}
+            >
+              <Icon
+                className="icon-delete-file"
+                icon="basil:cross-solid"
+                width={30}
+              />
+            </button>
           </div>
         );
       }
       return null;
     });
   }
+  // end generate file jawaban
 
+  // start funsi generate file soal
+  function generateFileSoal(item) {
+    let fileIcon;
+    let fileExtension = "";
 
+    if (item.file_tugas) {
+      fileExtension = item.file_tugas.substring(
+        item.file_tugas.lastIndexOf(".") + 1
+      );
+      switch (fileExtension) {
+        case "pdf":
+          fileIcon = "mdi:file-pdf-box";
+          break;
+        case "docx":
+          fileIcon = "mdi:file-word-box";
+          break;
+        default:
+          fileIcon = "";
+          break;
+      }
+    }
 
+    return (
+      <>
+        {fileExtension && (
+          <div className="file-generate">
+            <div className="value-file-icon">
+              <Icon icon={fileIcon} width={45} />
+            </div>
+            <div>
+              <h1 className="title-value-file">{item.file_tugas}</h1>
+              <p className="format-file">{fileExtension.toUpperCase()}</p>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
 
-   // start funsi generate file link elements
-   function generateFilSoal() {
+  // start funsi generate file or link materi
+  function generateFileLinkElementsSoal() {
     return dataDetailTugas.map((item) => {
-      // Ubah string "null" menjadi null pada properti link
       if (item.link_tugas === "null") {
         item.link_tugas = null;
       }
-  
-      if (item.link_tugas !== null || item.file_tugas) {
+
+      if (item.link_tugas !== null && item.file_tugas) {
         let linkElement = null;
-  
-        if (item.link_tugas && (item.link_tugas.includes("youtube.com") || item.link_tugas.includes("youtu.be"))) {
-          let youtubeLink = item.link_tugas.replace("watch?v=", "embed/");
-          if (item.link_tugas.includes("youtu.be")) {
-            youtubeLink = `https://www.youtube.com/embed/${item.link_tugas.split("/").pop()}`;
-          }
-  
+
+        if (item.link_tugas && item.link_tugas.includes("youtube.com")) {
+          let youtubeLink = item.link.replace("watch?v=", "embed/");
           linkElement = (
+            <a
+              href={youtubeLink}
+              className="value-link"
+              id="value-link"
+              target="_blank"
+            >
+              <iframe
+                src={youtubeLink}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+              <div>
+                <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+                <p className="link-detailMenunggu">
+                  YouTube <span>Klik</span>
+                </p>
+              </div>
+            </a>
+          );
+        } else if (item.link_tugas && item.link_tugas.includes("youtu.be")) {
+          let youtubeLink = `https://www.youtube.com/embed/${item.link_tugas
+            .split("/")
+            .pop()}`;
+          linkElement = (
+            <div className="value-link" id="value-link">
+              <iframe
+                src={youtubeLink}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+              <div>
+                <h1 className="title-link-yt">{item.nama_tugas}</h1>
+                <p className="link-detailMenunggu">
+                  <a
+                    href={youtubeLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    YouTube <span>Klik</span>
+                  </a>
+                </p>
+              </div>
+            </div>
+          );
+        } else {
+          linkElement = (
+            <a
+              href={item.link_tugas}
+              className="btn-openSitus"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Buka Situs
+            </a>
+          );
+        }
+
+        return (
+          <div className="con-value-fileOrlink" key={item.id}>
+            {linkElement}
+            <a
+              href={`https://www.nugasyuk.my.id/public/${item.file_tugas}`}
+              className="value-file"
+              id="value-file"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {generateFileSoal(item)}
+            </a>
+          </div>
+        );
+      } else if (item.link_tugas) {
+        if (item.link_tugas.includes("youtube.com")) {
+          let youtubeLink = item.link_tugas.replace("watch?v=", "embed/");
+          return (
             <div className="con-value-fileOrlink" key={item.id}>
               <a href={youtubeLink} className="value-link" id="value-link">
-                <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
+                <iframe
+                  src={youtubeLink}
+                  frameBorder="0"
+                  allowFullScreen
+                ></iframe>
                 <div>
-                  <h1 className="title-fileOrlink">{item.file_tugas}</h1>
+                  <h1 className="title-fileOrlink">{item.link_tugas}</h1>
                   <p className="link-detailMenunggu">
                     YouTube <span>Klik</span>
                   </p>
@@ -480,48 +469,62 @@ function DetailTask() {
               </a>
             </div>
           );
-        } else if (item.link_tugas) {
-          linkElement = (
+        } else if (item.link_tugas.includes("youtu.be")) {
+          let youtubeLink = `https://www.youtube.com/embed/${item.link_tugas
+            .split("/")
+            .pop()}`;
+          return (
             <div className="con-value-fileOrlink" key={item.id}>
-              <a href={item.link_tugas} className="btn-openSitus">
+              <a href={youtubeLink} className="value-link" id="value-link">
+                <iframe
+                  src={youtubeLink}
+                  frameBorder="0"
+                  allowFullScreen
+                ></iframe>
+                <div>
+                  <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+                  <p className="link-detailMenunggu">
+                    YouTube <span>Klik</span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          );
+        } else {
+          return (
+            <div className="con-value-fileOrlink" key={item.id}>
+              <a
+                href={item.link_tugas}
+                className="btn-openSitus"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Buka Situs
               </a>
             </div>
           );
         }
-  
-        if (item.file_tugas) {
-          return (
-            <div className="con-value-fileOrlink" key={item.id}>
-              {linkElement}
-              <a href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file_tugas}`} className="value-file" id="value-file">
-                {generateFileIcons(item)}
-              </a>
-            </div>
-          );
-        }
-  
-        return linkElement;
       } else if (item.file_tugas) {
         return (
           <div className="con-value-fileOrlink" key={item.id}>
-            <a href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file_tugas}`} className="value-file" id="value-file">
-              {generateFileIcons(item)}
+            <a
+              href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file_tugas}`}
+              className="value-file"
+              id="value-file"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {generateFileSoal(item)}
             </a>
           </div>
         );
       }
-  
+
       return null;
     });
   }
+  // end generate file soal
   
-
-  // end funsi generate file link elements
-
-  // Panggil fungsi generateFileLinkElements untuk menghasilkan elemen-elemen yang sesuai
-  const fileSoal = generateFilSoal(dataDetailTugas);
-
 
   const handleDeleteFile = (index) => {
     const newFileList = fileList.filter((_, i) => i !== index);
@@ -529,8 +532,8 @@ function DetailTask() {
   };
 
   const fileLinkElements = generateFileLinkElements();
-  const fileGenerate = generateFileInputs();
-  // const fileSoal = generateFileSoal();
+  const fileGenerateInput = generateFileInputs();
+  const fileLinkElementsSoal = generateFileLinkElementsSoal();
 
   // if (isLoading)
   //   return (
@@ -690,18 +693,12 @@ function DetailTask() {
                       <p className="task-deadline-time">
                         Deadline : <span>{detailTugas.deadline}</span>
                       </p>
-                      {generateFilSoal()}
+                      {fileLinkElementsSoal}
                       <div className="submition-task">
                         <p className="title-submition">Pengumpulan Tugas</p>
                         <div>
                           {fileLinkElements}
-                          {fileList.map((file, index) => (
-                            <div key={index}>
-                              <a href={URL.createObjectURL(file)}>
-                                {generateFileInputs()}
-                              </a>
-                            </div>
-                          ))}
+                          {fileGenerateInput}
                         </div>
                         <div>
                           <input

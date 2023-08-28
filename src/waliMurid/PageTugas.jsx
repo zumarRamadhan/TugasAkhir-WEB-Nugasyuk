@@ -34,6 +34,10 @@ function PageTugas() {
   useEffect(() => {
     handleSearch();
   }, [searchQuery, filterValue]);
+  
+  useEffect(() => {
+    setFilteredData(dataTugas);
+  }, [dataTugas]);
 
   const handleSearch = () => {
     const filteredData = dataTugas.filter((value) => {
@@ -65,7 +69,6 @@ function PageTugas() {
   };
 
   const handleFilterChange = (e) => {
-    // setFilterValue(e.target.value);
     // jika filter value nya tidak ada maka akan menampilkan data not found
     setFilterValue(e.target.value);
   };
@@ -240,17 +243,19 @@ function PageTugas() {
                   <p className="text-notfound">Data Tidak Ditemukan</p>
                 </div>
               ) : (
+                <div>
+              {filteredData.length > 0 ? (
                 <div className="content-task">
                   {renderData.map((listTugas) => (
                     <Link
                       className="link-navigate"
-                      to={"/walimurid/detailtugas/" + listTugas.id}
-                    >
+                      to={"/murid/detailtugas/" + listTugas.id}
+                    > 
                       <div
                         className="card-task"
                         style={{ cursor: "pointer" }}
                         key={listTugas.id}
-                        onClick={() => navigate("/walimurid/detailtugas/${id}")}
+                        onClick={() => navigate("/murid/detailtugas/${id}")}
                         id="123"
                       >
                         <div className="indiecator-left">
@@ -359,6 +364,14 @@ function PageTugas() {
                   <br />
                   <br />
                 </div>
+              ) : (
+                <div className="dataNotFound">
+                <p className="text-notfound">
+                  Maaf, Tugas Yang Kamu Cari Tidak Ada
+                </p>
+              </div>
+              )}
+            </div>
               )}
             </div>
           )}

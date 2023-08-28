@@ -76,13 +76,12 @@ function DetailWaliMurid() {
   };
 
   const showSuccessChangesPass = () => {
-  const background = document.querySelector("#popup-success-ChangesPass");
-  background.style.display = "flex";
-  const SuccessChangePass = document.querySelector(".detail-success"); // Ganti dengan selektor yang sesuai
-  SuccessChangePass.style.display = "grid";
-  SuccessChangePass.style.animation = "slide-down 0.3s ease-in-out";
-};
-
+    const background = document.querySelector("#popup-success-ChangesPass");
+    background.style.display = "flex";
+    const SuccessChangePass = document.querySelector(".detail-success"); // Ganti dengan selektor yang sesuai
+    SuccessChangePass.style.display = "grid";
+    SuccessChangePass.style.animation = "slide-down 0.3s ease-in-out";
+  };
 
   const showPopupLoading = () => {
     const background = document.querySelector(".popup-loading");
@@ -189,14 +188,17 @@ function DetailWaliMurid() {
         setisLoading(false);
       })
       .catch((error) => {
-        console.error("Terjadi kesalahan saat mengambil data profile wali", error);
+        console.error(
+          "Terjadi kesalahan saat mengambil data profile wali",
+          error
+        );
         setisLoading(false);
         setisError(true);
       });
   }, []);
 
-   // function changes password
-   const [formPass, setformPass] = useState({
+  // function changes password
+  const [formPass, setformPass] = useState({
     password_lama: "",
     password_baru: "",
     konfirmasi_password_baru: "",
@@ -208,6 +210,23 @@ function DetailWaliMurid() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (
+        name === "konfirmasi_password_baru" &&
+        value !== formPass.password_baru
+      ) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -283,7 +302,6 @@ function DetailWaliMurid() {
     }
   }, [isSubmitting, formPass]);
 
-
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -328,7 +346,6 @@ function DetailWaliMurid() {
         closePopupLoading();
       });
   };
-
 
   if (dataProfileOrtu && !isError)
     return (
@@ -590,7 +607,7 @@ function DetailWaliMurid() {
           </div>
         </div>
 
-         <div id="popup-success-ChangesPass">
+        <div id="popup-success-ChangesPass">
           <div className="detail-success">
             <Icon
               icon="radix-icons:cross-circled"

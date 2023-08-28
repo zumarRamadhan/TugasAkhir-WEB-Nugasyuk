@@ -11,6 +11,7 @@ import ImgLogout from "../assets/68582-log-out.gif";
 import ImgSuccess from "../assets/88860-success-animation.gif";
 import ImgFailed from "../assets/94303-failed.gif";
 import passIcon from "../assets/pass-icon.svg";
+import vektorProfile from '../assets/vektorProfile.svg'
 import mataIcon from "../assets/icon-mata.svg";
 import apiurl from "../api/api";
 
@@ -147,7 +148,21 @@ function DetailProfileSiswa() {
       ...prevState,
       [name]: value,
     }));
-  };
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (name === "konfirmasi_password_baru" && value !== formPass.password_baru) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
+  };
 
   const handleSubmitChangesPass = (e) => {
     e.preventDefault();
@@ -290,7 +305,7 @@ function DetailProfileSiswa() {
   }, []);
 
   const [selectedFile, setSelectedFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewProfile, setPreviewProfile] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -299,7 +314,7 @@ function DetailProfileSiswa() {
     // Generate a preview of the selected image
     const reader = new FileReader();
     reader.onload = (e) => {
-      setPreviewImage(e.target.result);
+      setPreviewProfile(e.target.result);
     };
     reader.readAsDataURL(file);
 
@@ -312,6 +327,7 @@ function DetailProfileSiswa() {
     const formData = new FormData();
     formData.append("foto_profile", file);
     showPopupLoading();
+    console.log("memperbarui foto profile")
 
     axios
       .post(`${apiurl}murid/edit/foto`, formData, {
@@ -330,6 +346,7 @@ function DetailProfileSiswa() {
       .catch((error) => {
         console.error("Terjadi kesalahan saat mengirim data", error);
         showFailedAdd();
+        closePopupLoading();
       });
   };
 
@@ -476,10 +493,13 @@ function DetailProfileSiswa() {
               <div className="image-profile-detail">
                 <img
                   src={
-                    previewImage ||
+                    previewProfile ||
                     `https://wondrous-squirrel-blatantly.ngrok-free.app/${profileSiswa.foto_profile}`
                   }
-                  alt=""
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = vektorProfile;
+                  }}
                   className="img-detail-profile"
                 />
                 <div className="overlay"></div>
