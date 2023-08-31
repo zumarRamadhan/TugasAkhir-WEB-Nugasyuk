@@ -301,6 +301,20 @@ function FormMateriKBM() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (name === "konfirmasi_password_baru" && value !== formPass.password_baru) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const [isSubmittingPass, setIsSubmittingPass] = useState(false);
@@ -414,7 +428,7 @@ function FormMateriKBM() {
           <div className="content-formKbm">
             <form onSubmit={handleSubmit} className="container-formKbm">
               <div className="con-formKbm">
-                <div className="title-formKbm">Judul Materi</div>
+                <div className="title-formKbm">Judul Materi<span className="required">*</span></div>
                 <input
                   type="text"
                   className="input-formKbm"
@@ -427,7 +441,7 @@ function FormMateriKBM() {
               </div>
 
               <div className="con-formKbm">
-                <div className="title-formKbm">Deskrips Materi</div>
+                <div className="title-formKbm">Deskrips Materi<span className="required">*</span></div>
                 <textarea
                   name="deskripsi"
                   value={formData.deskripsi}

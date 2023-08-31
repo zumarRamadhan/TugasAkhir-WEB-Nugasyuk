@@ -294,7 +294,13 @@ function DetailMenunggu() {
       if (item.soal_link && item.soal_link.includes("youtube.com")) {
         let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
+          <a
+            href={youtubeLink}
+            className="value-link"
+            id="value-link"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
+          >
             <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
@@ -309,7 +315,13 @@ function DetailMenunggu() {
           .split("/")
           .pop()}`;
         linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
+          <a
+            href={youtubeLink}
+            className="value-link"
+            id="value-link"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
+          >
             <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
@@ -321,7 +333,12 @@ function DetailMenunggu() {
         );
       } else {
         linkElement = (
-          <a href={item.soal_link} className="btn-openSitus">
+          <a
+            href={item.soal_link}
+            className="btn-openSitus"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
+          >
             Buka Situs
           </a>
         );
@@ -334,6 +351,8 @@ function DetailMenunggu() {
             href={`https://www.nugasyuk.my.id/public/${item.soal_file}`}
             className="value-file"
             id="value-file"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
           >
             {generateFileIcons(item)}
           </a>
@@ -344,7 +363,13 @@ function DetailMenunggu() {
         let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         return (
           <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
+            <a
+              href={youtubeLink}
+              className="value-link"
+              id="value-link"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               <iframe
                 src={youtubeLink}
                 frameBorder="0"
@@ -365,7 +390,13 @@ function DetailMenunggu() {
           .pop()}`;
         return (
           <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
+            <a
+              href={youtubeLink}
+              className="value-link"
+              id="value-link"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               <iframe
                 src={youtubeLink}
                 frameBorder="0"
@@ -383,7 +414,12 @@ function DetailMenunggu() {
       } else {
         return (
           <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
-            <a href={item.soal_link} className="btn-openSitus">
+            <a
+              href={item.soal_link}
+              className="btn-openSitus"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               Buka Situs
             </a>
           </div>
@@ -396,6 +432,8 @@ function DetailMenunggu() {
             href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.soal_file}`}
             className="value-file"
             id="value-file"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
           >
             {generateFileIcons(item)}
           </a>
@@ -426,6 +464,23 @@ function DetailMenunggu() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (
+        name === "konfirmasi_password_baru" &&
+        value !== formPass.password_baru
+      ) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -436,6 +491,29 @@ function DetailMenunggu() {
       setIsSubmitting(true);
       showPopupLoading();
     }
+  };
+
+  const formatDate = (dateString) => {
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
   };
 
   const validateForm = (data) => {
@@ -625,7 +703,7 @@ function DetailMenunggu() {
                   </div>
                   <div className="right-header-card-detailMenunggu">
                     <p className="date-header-card-detailMenunggu">
-                      {detailMenunggu.date}
+                      {formatDate(detailMenunggu.date)}
                     </p>
                     {/* <div className="icon-options" style={{ cursor: "pointer" }}>
                     <Icon icon="mi:options-vertical" width={40} />
@@ -638,7 +716,7 @@ function DetailMenunggu() {
                 </p>
 
                 <p className="infoDeadline">
-                  Deatline : {detailMenunggu.deadline}
+                  Deatline : {formatDate(detailMenunggu.deadline)}
                 </p>
 
                 <div>{fileLinkElements}</div>

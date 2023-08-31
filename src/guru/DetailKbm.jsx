@@ -53,11 +53,26 @@ function DetailKbm() {
   };
 
   const formatDate = (dateString) => {
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const month = months[date.getMonth()];
     const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
+    return `${day} ${month} ${year}`;
   };
 
   //   API menunggu dan selesai
@@ -258,6 +273,23 @@ function DetailKbm() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (
+        name === "konfirmasi_password_baru" &&
+        value !== formPass.password_baru
+      ) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {

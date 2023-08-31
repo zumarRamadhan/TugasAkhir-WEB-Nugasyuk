@@ -267,6 +267,23 @@ function DetailPengumpulan() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (
+        name === "konfirmasi_password_baru" &&
+        value !== formPass.password_baru
+      ) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -277,6 +294,29 @@ function DetailPengumpulan() {
       setIsSubmitting(true);
       showPopupLoading();
     }
+  };
+
+  const formatDate = (dateString) => {
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
   };
 
   const validateForm = (data) => {
@@ -517,9 +557,9 @@ function DetailPengumpulan() {
                           </div>
                         </div>
                         <div className="card-DetailPengumpulan-Menunggu-right">
-                          <div className="dateDetailDesc">{data.date}</div>
+                          <div className="dateDetailDesc">{formatDate(data.date)}</div>
                           <div className="deadline-timePengumpulan">
-                            Deadline : {data.deadline}
+                            Deadline : {formatDate(data.deadline)}
                           </div>
                           <Icon
                             icon="ic:round-navigate-next"
@@ -596,9 +636,9 @@ function DetailPengumpulan() {
                           </div>
                         </div>
                         <div className="card-DetailPengumpulan-Selesai-right">
-                          <div className="dateDetailDesc">{data.date}</div>
+                          <div className="dateDetailDesc">{formatDate(data.date)}</div>
                           <div className="deadline-timePengumpulan">
-                            Deadline : {data.deadline}
+                            Deadline : {formatDate(data.deadline)}
                           </div>
                           <Icon
                             icon="ic:round-navigate-next"

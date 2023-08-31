@@ -347,6 +347,20 @@ function EditFormMateriKBM() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (name === "konfirmasi_password_baru" && value !== formPass.password_baru) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -459,7 +473,7 @@ function EditFormMateriKBM() {
             <div className="content-formKbm">
               <form onSubmit={handleSubmit} className="container-formKbm">
                 <div className="con-formKbm">
-                  <div className="title-formKbm">Judul Materi</div>
+                  <div className="title-formKbm">Judul Materi<span className="required">*</span></div>
                   {/* {formData && formData.judul ? ( */}
                   <input
                     type="text"
@@ -482,7 +496,7 @@ function EditFormMateriKBM() {
                 </div>
 
                 <div className="con-formKbm">
-                  <div className="title-formKbm">Deskrips Materi</div>
+                  <div className="title-formKbm">Deskrips Materi<span className="required">*</span></div>
                   {/* {formData && formData.deskripsi ? ( */}
                   <textarea
                     name="deskripsi"
@@ -500,7 +514,7 @@ function EditFormMateriKBM() {
                   />
                 )} */}
                   {errors.deskripsi && (
-                    <span className="error">{errors.deskripsi}</span>
+                    <span className="error">{errors.deskripsi}<span className="required">*</span></span>
                   )}
                 </div>
 

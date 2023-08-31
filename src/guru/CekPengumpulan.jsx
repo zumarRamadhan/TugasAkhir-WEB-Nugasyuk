@@ -28,6 +28,14 @@ function CekPengumpulan() {
     window.location.href = "/login";
   };
 
+  const directToPengumpulanSelesai = (id) => {
+    navigate(`/guru/pagepengumpulan/detail/detailselesai/${id}`);
+  };
+
+  const directToPengumpulanMenunggu = (id) => {
+    navigate(`/guru/pagepengumpulan/detail/detailmenunggu/${id}`);
+  };
+
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -414,7 +422,7 @@ function CekPengumpulan() {
   const fileLinkElements = generateFileLinkElements(listPengumpulan);
 
   // function changes password
-  const [formPass, setformPass] = useState({
+  const [formPass, setFormPass] = useState({
     password_lama: "",
     password_baru: "",
     konfirmasi_password_baru: "",
@@ -425,10 +433,27 @@ function CekPengumpulan() {
 
   const handleChanges = (e) => {
     const { name, value } = e.target;
-    setformPass((prevState) => ({
+    setFormPass((prevState) => ({
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (
+        name === "konfirmasi_password_baru" &&
+        value !== formPass.password_baru
+      ) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -437,15 +462,38 @@ function CekPengumpulan() {
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
-      showPopupLoading();
+      // ... your submission logic here ...
     }
+  };
+
+  const formatDate = (dateString) => {
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
   };
 
   const validateForm = (data) => {
     let errors = {};
 
     if (!data.password_lama) {
-      errors.password_lama = "Silahkan password lama anda";
+      errors.password_lama = "Silahkan masukkan password lama anda";
     }
 
     if (data.password_baru.trim().length < 8) {
@@ -485,7 +533,7 @@ function CekPengumpulan() {
           closePopupLoading();
 
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
-          setformPass({
+          setFormPass({
             password_lama: "",
             password_baru: "",
             konfirmasi_password_baru: "",
@@ -554,7 +602,7 @@ function CekPengumpulan() {
                 </div>
                 <div className="right-header-card-detailTugas">
                   <p className="date-header-card-detailTugas">
-                    {listPengumpulan.date}
+                    {formatDate(listPengumpulan.date)}
                   </p>
                 </div>
               </div>
@@ -562,7 +610,7 @@ function CekPengumpulan() {
               <p className="desc-card-detailTugas">{listPengumpulan.soal}</p>
 
               <p className="infoDeadline">
-                Deatline : {listPengumpulan.deadline}
+                Deatline : {formatDate(listPengumpulan.deadline)}
               </p>
 
               <div>{fileLinkElements}</div>
@@ -620,6 +668,9 @@ function CekPengumpulan() {
                       className="card-Pengumpulan-Guru"
                       style={{ cursor: "pointer" }}
                       key={data.id} // Tambahkan key prop untuk mencegah pesan warning
+                      onClick={() =>
+                        directToPengumpulanMenunggu(data.pengumpulan_id)
+                      }
                     >
                       <div className="card-Pengumpulan-Guru-left">
                         <div className="img-Pengumpulan-Guru">
@@ -683,6 +734,9 @@ function CekPengumpulan() {
                       className="card-Pengumpulan-Guru"
                       style={{ cursor: "pointer" }}
                       key={data.id} // Tambahkan key prop untuk mencegah pesan warning
+                      onClick={() =>
+                        directToPengumpulanSelesai(data.pengumpulan_id)
+                      }
                     >
                       <div className="card-Pengumpulan-Guru-left">
                         <div className="img-Pengumpulan-Guru">
@@ -924,7 +978,7 @@ function CekPengumpulan() {
         </div>
 
         {/* end message Changes Pass*/}
-        
+
         {/* page laoding */}
 
         <div className="popup-loading">

@@ -304,7 +304,13 @@ function DetailMateriKbm() {
       if (item.link && item.link.includes("youtube.com")) {
         let youtubeLink = item.link.replace("watch?v=", "embed/");
         linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
+          <a
+            href={youtubeLink}
+            className="value-link"
+            id="value-link"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
+          >
             <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
@@ -319,10 +325,16 @@ function DetailMateriKbm() {
           .split("/")
           .pop()}`;
         linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
+          <a
+            href={youtubeLink}
+            className="value-link"
+            id="value-link"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
+          >
             <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
-              <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
+              <h1 className="title-fileOrlink">{item.nama_materi}</h1>
               <p className="link-detailMenunggu">
                 YouTube <span>Klik</span>
               </p>
@@ -331,7 +343,12 @@ function DetailMateriKbm() {
         );
       } else {
         linkElement = (
-          <a href={item.link} className="btn-openSitus">
+          <a
+            href={item.link}
+            className="btn-openSitus"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
+          >
             Buka Situs
           </a>
         );
@@ -344,6 +361,8 @@ function DetailMateriKbm() {
             href={`https://www.nugasyuk.my.id/public/${item.file}`}
             className="value-file"
             id="value-file"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
           >
             {generateFileIcons(item)}
           </a>
@@ -354,7 +373,13 @@ function DetailMateriKbm() {
         let youtubeLink = item.link.replace("watch?v=", "embed/");
         return (
           <div className="con-value-fileOrlink" key={item.id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
+            <a
+              href={youtubeLink}
+              className="value-link"
+              id="value-link"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               <iframe
                 src={youtubeLink}
                 frameBorder="0"
@@ -375,7 +400,13 @@ function DetailMateriKbm() {
           .pop()}`;
         return (
           <div className="con-value-fileOrlink" key={item.id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
+            <a
+              href={youtubeLink}
+              className="value-link"
+              id="value-link"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               <iframe
                 src={youtubeLink}
                 frameBorder="0"
@@ -393,7 +424,12 @@ function DetailMateriKbm() {
       } else {
         return (
           <div className="con-value-fileOrlink" key={item.id}>
-            <a href={item.link} className="btn-openSitus">
+            <a
+              href={item.link}
+              className="btn-openSitus"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               Buka Situs
             </a>
           </div>
@@ -406,6 +442,8 @@ function DetailMateriKbm() {
             href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.file}`}
             className="value-file"
             id="value-file"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
           >
             {generateFileIcons(item)}
           </a>
@@ -437,6 +475,23 @@ function DetailMateriKbm() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (
+        name === "konfirmasi_password_baru" &&
+        value !== formPass.password_baru
+      ) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -447,6 +502,29 @@ function DetailMateriKbm() {
       setIsSubmitting(true);
       showPopupLoading();
     }
+  };
+
+  const formatDate = (dateString) => {
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
   };
 
   const validateForm = (data) => {
@@ -563,7 +641,7 @@ function DetailMateriKbm() {
                 </div>
                 <div className="right-header-card-detailMateri">
                   <p className="date-header-card-detailMateri">
-                    {detailMateri.tanggal_dibuat}
+                    {formatDate(detailMateri.tanggal_dibuat)}
                   </p>
                   <div className="con-btn-card-kbm">
                     <div

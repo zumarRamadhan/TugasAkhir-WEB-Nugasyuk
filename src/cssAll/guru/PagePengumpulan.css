@@ -80,6 +80,23 @@
     color: #4B4B4B;
 }
 
+.detail-card-Pengumpulan-Guru{
+    display: flex;
+    gap: 10px;
+}
+
+.detail-card-Pengumpulan-Guru p:nth-child(1) {
+    color: #2A93D5;
+}
+
+.detail-card-Pengumpulan-Guru p:nth-child(2) {
+    color: #2A93D5;
+}
+
+.detail-card-Pengumpulan-Guru p:nth-child(3) {
+    color: #2A93D5;
+}
+
 .detaiKelas-Pengumpulan-Guru {
     font-family: 'Poppins';
     font-style: normal;

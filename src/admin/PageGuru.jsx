@@ -315,8 +315,8 @@ function BerandaGuru() {
     setTimeout(() => (popupKode.style.display = "none"), 250);
     popupKode.style.animation = "slide-up 0.3s ease-in-out";
     // jika di close maka #inpurKode dan #inputMapel akan di clear
-    const clearKode = document.querySelector("#inputKode");
-    clearKode.value = "";
+    // const clearKode = document.querySelector("#inputKode");
+    // clearKode.value = "";
     const clearMapel = document.querySelector("#inputMapel");
     clearMapel.value = "";
   };
@@ -387,7 +387,7 @@ function BerandaGuru() {
   // start kodeGuru
 
   const [formKode, setFormKode] = useState({
-    kode_guru: "",
+    // kode_guru: "",
     nama_mapel: "",
     status_mapel: "",
   });
@@ -416,9 +416,9 @@ function BerandaGuru() {
   const validateForm = (data) => {
     let errors = {};
 
-    if (!data.kode_guru) {
-      errors.kode_guru = "Kode Guru harus diisi";
-    }
+    // if (!data.kode_guru) {
+    //   errors.kode_guru = "Kode Guru harus diisi";
+    // }
 
     if (!data.nama_mapel) {
       errors.nama_mapel = "Nama Mapel harus diisi";
@@ -457,7 +457,7 @@ function BerandaGuru() {
 
           // Kosongkan formulir atau perbarui variabel state jika diperlukan
           setFormKode({
-            kode_guru: "",
+            // kode_guru: "",
             nama_mapel: "",
             status_mapel: "",
           });
@@ -1072,7 +1072,7 @@ function BerandaGuru() {
               />
             )}
 
-            <p className="judul-form">Kode Guru</p>
+            {/* <p className="judul-form">Kode Guru</p>
             <input
               type="text"
               id="inputKode"
@@ -1083,7 +1083,7 @@ function BerandaGuru() {
             />
             {errors.kode_guru && (
               <span className="error">{errors.kode_guru}</span>
-            )}
+            )} */}
 
             <p className="judul-form">Mata Pelajaran</p>
             <input

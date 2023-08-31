@@ -316,6 +316,20 @@ function FormTugasKBM() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (name === "konfirmasi_password_baru" && value !== formPass.password_baru) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -427,7 +441,7 @@ function FormTugasKBM() {
           <div className="content-formKbm">
             <form onSubmit={handleSubmit} className="container-formKbm">
               <div className="con-formKbm">
-                <div className="title-formKbm">Judul Tugas</div>
+                <div className="title-formKbm">Judul Tugas<span className="required">*</span></div>
                 <input
                   type="text"
                   className="input-formKbm"
@@ -442,7 +456,7 @@ function FormTugasKBM() {
               </div>
 
               <div className="con-formKbm">
-                <div className="title-formKbm">Deskrips Tugas</div>
+                <div className="title-formKbm">Deskrips Tugas<span className="required">*</span></div>
                 <textarea
                   rows="7"
                   className="input-formKbm"
@@ -457,7 +471,7 @@ function FormTugasKBM() {
               </div>
 
               <div className="con-formKbm">
-                <div className="title-formKbm">Deadline</div>
+                <div className="title-formKbm">Deadline<span className="required">*</span></div>
                 <input
                   type="date"
                   className="input-formKbm"
@@ -499,7 +513,7 @@ function FormTugasKBM() {
 
               <div className="switch-inputTugas">
                 <h2 className="title-formKbm">
-                  Apakah murid dapat menginput jawaban?
+                  Apakah murid dapat menginput jawaban?<span className="required">*</span>
                 </h2>
                 <div className="con-radio">
                   <label>

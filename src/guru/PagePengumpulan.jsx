@@ -270,6 +270,20 @@ function PagePengumpulan() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (name === "konfirmasi_password_baru" && value !== formPass.password_baru) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -461,9 +475,11 @@ function PagePengumpulan() {
                         <p className="email-card-Pengumpulan-Guru">
                           {data.email}
                         </p>
-                        {/* <p className="email-card-Pengumpulan-Guru">
-                            {data.kelas_id}
-                          </p> */}
+                        <div className="detail-card-Pengumpulan-Guru">
+                          <p>Menunggu : {data.tugas_menunggu}</p>
+                          <p>Selesai : {data.tugas_selesai}</p>
+                          <p>Dari : {data.jumlah_tugas} tugas</p>
+                        </div>
                       </div>
                     </div>
                     <div className="detaiKelas-Pengumpulan-Guru">

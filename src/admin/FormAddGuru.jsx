@@ -188,7 +188,7 @@ function FormAddGuru() {
     email: "",
     nomorTlp: "",
     alamat: "",
-    password: "",
+    // password: "",
     role: "",
   });
 
@@ -231,8 +231,8 @@ function FormAddGuru() {
             email: "",
             nomorTlp: "",
             alamat: "",
-            password: "",
-            konfirmasiPassword: "",
+            // password: "",
+            // konfirmasiPassword: "",
             role: "",
           });
 
@@ -308,17 +308,17 @@ function FormAddGuru() {
       errors.role = "Harus memilih role";
     }
 
-    if (data.password.trim().length < 8) {
-      errors.password = "Password harus lebih dari 8 karakter";
-    }
+    // if (data.password.trim().length < 8) {
+    //   errors.password = "Password harus lebih dari 8 karakter";
+    // }
 
-    if (!data.password.trim()) {
-      errors.password = "Password harus diisi";
-    }
+    // if (!data.password.trim()) {
+    //   errors.password = "Password harus diisi";
+    // }
 
-    if (data.password !== data.konfirmasiPassword) {
-      errors.konfirmasiPassword = "Password tidak cocok";
-    }
+    // if (data.password !== data.konfirmasiPassword) {
+    //   errors.konfirmasiPassword = "Password tidak cocok";
+    // }
 
     return errors;
   };
@@ -740,7 +740,7 @@ function FormAddGuru() {
                   {errors.role && <span className="error">{errors.role}</span>}
                 </div>
 
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Password Guru </div>
                   <input
                     type="password"
@@ -754,9 +754,9 @@ function FormAddGuru() {
                   {errors.password && (
                     <span className="error">{errors.password}</span>
                   )}
-                </div>
+                </div> */}
 
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Konfirmasi Password Guru </div>
                   <input
                     type="password"
@@ -770,7 +770,7 @@ function FormAddGuru() {
                   {errors.konfirmasiPassword && (
                     <span className="error">{errors.konfirmasiPassword}</span>
                   )}
-                </div>
+                </div> */}
 
                 <div className="con-btn-form">
                   <button

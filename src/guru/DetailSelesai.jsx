@@ -241,7 +241,13 @@ function DetailSelesai() {
       if (item.soal_link && item.soal_link.includes("youtube.com")) {
         let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
+          <a
+            href={youtubeLink}
+            className="value-link"
+            id="value-link"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
+          >
             <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
@@ -256,7 +262,13 @@ function DetailSelesai() {
           .split("/")
           .pop()}`;
         linkElement = (
-          <a href={youtubeLink} className="value-link" id="value-link">
+          <a
+            href={youtubeLink}
+            className="value-link"
+            id="value-link"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
+          >
             <iframe src={youtubeLink} frameBorder="0" allowFullScreen></iframe>
             <div>
               <h1 className="title-fileOrlink">{item.nama_tugas}</h1>
@@ -281,6 +293,8 @@ function DetailSelesai() {
             href={`https://www.nugasyuk.my.id/public/${item.soal_file}`}
             className="value-file"
             id="value-file"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
           >
             {generateFileIcons(item)}
           </a>
@@ -291,7 +305,13 @@ function DetailSelesai() {
         let youtubeLink = item.soal_link.replace("watch?v=", "embed/");
         return (
           <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
+            <a
+              href={youtubeLink}
+              className="value-link"
+              id="value-link"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               <iframe
                 src={youtubeLink}
                 frameBorder="0"
@@ -312,7 +332,13 @@ function DetailSelesai() {
           .pop()}`;
         return (
           <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
-            <a href={youtubeLink} className="value-link" id="value-link">
+            <a
+              href={youtubeLink}
+              className="value-link"
+              id="value-link"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               <iframe
                 src={youtubeLink}
                 frameBorder="0"
@@ -330,7 +356,12 @@ function DetailSelesai() {
       } else {
         return (
           <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
-            <a href={item.soal_link} className="btn-openSitus">
+            <a
+              href={item.soal_link}
+              className="btn-openSitus"
+              target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+              rel="noopener noreferrer" // Disarankan untuk keamanan
+            >
               Buka Situs
             </a>
           </div>
@@ -340,9 +371,11 @@ function DetailSelesai() {
       return (
         <div className="con-value-fileOrlink" key={item.pengumpulan_id}>
           <a
-            href={`https://wondrous-squirrel-blatantly.ngrok-free.app/file/${item.soal_file}`}
+            href={`https://wondrous-squirrel-blatantly.ngrok-free.app/${item.soal_file}`}
             className="value-file"
             id="value-file"
+            target="_blank" // Menambahkan atribut target untuk membuka di tab baru
+            rel="noopener noreferrer" // Disarankan untuk keamanan
           >
             {generateFileIcons(item)}
           </a>
@@ -373,6 +406,23 @@ function DetailSelesai() {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "password_baru" || name === "konfirmasi_password_baru") {
+      if (
+        name === "konfirmasi_password_baru" &&
+        value !== formPass.password_baru
+      ) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "Pastikan password sama",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          konfirmasi_password_baru: "",
+        }));
+      }
+    }
   };
 
   const handleSubmitChangesPass = (e) => {
@@ -383,6 +433,29 @@ function DetailSelesai() {
       setIsSubmitting(true);
       showPopupLoading();
     }
+  };
+
+  const formatDate = (dateString) => {
+    const months = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
   };
 
   const validateForm = (data) => {
@@ -487,7 +560,7 @@ function DetailSelesai() {
               <div className="card-detailSelesai-Guru">
                 <div className="card-detailSelesai-Guru-left">
                   <div className="img-detailSelesai-Guru">
-                  {detailSelesai && detailSelesai.foto_profile ? (
+                    {detailSelesai && detailSelesai.foto_profile ? (
                       <img
                         src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${detailSelesai.foto_profile}`}
                         // src={detailSelesai.foto_profile}
@@ -572,7 +645,7 @@ function DetailSelesai() {
                   </div>
                   <div className="right-header-card-detailSelesai">
                     <p className="date-header-card-detailSelesai">
-                      {detailSelesai.date}
+                      {formatDate(detailSelesai.date)}
                     </p>
                     {/* <div className="icon-options" style={{ cursor: "pointer" }}>
                     <Icon icon="mi:options-vertical" width={40} />
@@ -583,7 +656,7 @@ function DetailSelesai() {
                 <p className="desc-card-detailSelesai">{detailSelesai.soal}</p>
 
                 <p className="infoDeadline">
-                  Deatline : {detailSelesai.deadline}
+                  Deatline : {formatDate(detailSelesai.deadline)}
                 </p>
 
                 <div>{fileLinkElements}</div>
@@ -812,7 +885,7 @@ function DetailSelesai() {
         </div>
 
         {/* end message Changes Pass*/}
-        
+
         {/* card loading */}
         <div className="popup-loading">
           <div className="body-loading" id="body-loading">

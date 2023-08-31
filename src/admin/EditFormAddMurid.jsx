@@ -161,10 +161,10 @@ function EditFormAddMurid() {
     email: "",
     email_wali_murid: "",
     // nomorTlp: "",
-    password: "",
-    konfirmasiPassword: "",
-    password_wali_murid: "",
-    konfirmasiPassword_wali_murid: "",
+    // password: "",
+    // konfirmasiPassword: "",
+    // password_wali_murid: "",
+    // konfirmasiPassword_wali_murid: "",
     kelas: "",
   });
 
@@ -193,10 +193,10 @@ function EditFormAddMurid() {
           email: response.data.data.email,
           email_wali_murid: response.data.data.email_wali_murid,
           alamat: response.data.data.alamat,
-          password: "",
-          konfirmasiPassword: "",
-          password_wali_murid: "",
-          konfirmasiPassword_wali_murid: "",
+          // password: "",
+          // konfirmasiPassword: "",
+          // password_wali_murid: "",
+          // konfirmasiPassword_wali_murid: "",
           kelas: response.data.data.kelas_id,
         });
         setIsLoading(false);
@@ -248,31 +248,31 @@ function EditFormAddMurid() {
       errors.kelas = "Silahkan pilih kelas";
     }
 
-    if (data.password.trim().length < 8) {
-      errors.password = "Password harus lebih dari 8 karakter";
-    }
+    // if (data.password.trim().length < 8) {
+    //   errors.password = "Password harus lebih dari 8 karakter";
+    // }
 
-    if (!data.password.trim()) {
-      errors.password =
-        "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
-    }
+    // if (!data.password.trim()) {
+    //   errors.password =
+    //     "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
+    // }
 
-    if (data.password !== data.konfirmasiPassword) {
-      errors.konfirmasiPassword = "Password tidak cocok";
-    }
+    // if (data.password !== data.konfirmasiPassword) {
+    //   errors.konfirmasiPassword = "Password tidak cocok";
+    // }
 
-    if (data.password_wali_murid.trim().length < 8) {
-      errors.password_wali_murid = "Password harus lebih dari 8 karakter";
-    }
+    // if (data.password_wali_murid.trim().length < 8) {
+    //   errors.password_wali_murid = "Password harus lebih dari 8 karakter";
+    // }
 
-    if (!data.password_wali_murid.trim()) {
-      errors.password_wali_murid =
-        "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
-    }
+    // if (!data.password_wali_murid.trim()) {
+    //   errors.password_wali_murid =
+    //     "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
+    // }
 
-    if (data.password_wali_murid !== data.konfirmasiPassword_wali_murid) {
-      errors.konfirmasiPassword_wali_murid = "Password tidak cocok";
-    }
+    // if (data.password_wali_murid !== data.konfirmasiPassword_wali_murid) {
+    //   errors.konfirmasiPassword_wali_murid = "Password tidak cocok";
+    // }
 
     return errors;
   };
@@ -290,14 +290,13 @@ function EditFormAddMurid() {
       form.append("alamat", formData.alamat);
       form.append("email", formData.email);
       form.append("email_wali", formData.email_wali_murid);
-      form.append("password", formData.password || "");
-      form.append("konfirmasiPassword", formData.konfirmasiPassword || "");
-      form.append("password_wali", formData.password_wali_murid);
-      form.append(
-        "konfirmasiPassword_wali",
-        formData.konfirmasiPassword_wali_murid || ""
-      );
-      //   form.append("nomor_tlp", formData.nomorTlp);
+      // form.append("password", formData.password || "");
+      // form.append("konfirmasiPassword", formData.konfirmasiPassword || "");
+      // form.append("password_wali", formData.password_wali_murid);
+      // form.append(
+      //   "konfirmasiPassword_wali",
+      //   formData.konfirmasiPassword_wali_murid || ""
+      // );
       form.append("kelas_id", formData.kelas || "");
 
       axios
@@ -792,7 +791,7 @@ function EditFormAddMurid() {
                   )}
                 </div>
 
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Password Siswa</div>
                   <input
                     type="password"
@@ -806,9 +805,9 @@ function EditFormAddMurid() {
                   {errors.password && (
                     <span className="error">{errors.password}</span>
                   )}
-                </div>
+                </div> */}
 
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Konfirmasi Password Siswa</div>
                   <input
                     type="password"
@@ -822,9 +821,9 @@ function EditFormAddMurid() {
                   {errors.konfirmasiPassword && (
                     <span className="error">{errors.konfirmasiPassword}</span>
                   )}
-                </div>
+                </div> */}
 
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Password Walimurid</div>
                   <input
                     type="password"
@@ -838,9 +837,9 @@ function EditFormAddMurid() {
                   {errors.password_wali_murid && (
                     <span className="error">{errors.password_wali_murid}</span>
                   )}
-                </div>
+                </div> */}
 
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">
                     Konfirmasi Password Walimurid
                   </div>
@@ -858,7 +857,7 @@ function EditFormAddMurid() {
                       {errors.konfirmasiPassword_wali_murid}
                     </span>
                   )}
-                </div>
+                </div> */}
 
                 <div className="con-btn-form">
                   <button
@@ -1036,8 +1035,8 @@ function EditFormAddMurid() {
           </div>
         </div>
         {/* end loading */}
-{/* changes pass */}
-<div className="popup-forget" id="popup-forget">
+        {/* changes pass */}
+        <div className="popup-forget" id="popup-forget">
           <form
             onSubmit={handleSubmitChangesPass}
             className="detail-forget-password"

@@ -162,8 +162,8 @@ function EditFormAddGuru() {
     email: "",
     nomorTlp: "",
     alamat: "",
-    password: "",
-    konfirmasiPassword: "",
+    // password: "",
+    // konfirmasiPassword: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -187,8 +187,8 @@ function EditFormAddGuru() {
           email: response.data.data.email,
           nomorTlp: response.data.data.nomor_tlp,
           alamat: response.data.data.alamat,
-          password: "",
-          konfirmasiPassword: "",
+          // password: "",
+          // konfirmasiPassword: "",
         });
         setIsError(false);
         closePopupLoadingDetail();
@@ -247,18 +247,18 @@ function EditFormAddGuru() {
     }
     // password harus lebih dari 8 karakter
 
-    if (data.password.trim().length < 8) {
-      errors.password = "Password harus lebih dari 8 karakter";
-    }
+    // if (data.password.trim().length < 8) {
+    //   errors.password = "Password harus lebih dari 8 karakter";
+    // }
 
-    if (!data.password.trim()) {
-      errors.password =
-        "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
-    }
+    // if (!data.password.trim()) {
+    //   errors.password =
+    //     "Password harus diisi, pengubahan password tidak akan menghapus data yang sudah ada";
+    // }
 
-    if (data.password !== data.konfirmasiPassword) {
-      errors.konfirmasiPassword = "Password tidak cocok";
-    }
+    // if (data.password !== data.konfirmasiPassword) {
+    //   errors.konfirmasiPassword = "Password tidak cocok";
+    // }
 
     return errors;
   };
@@ -272,8 +272,8 @@ function EditFormAddGuru() {
       form.append("alamat", formData.alamat);
       form.append("nomor_tlp", formData.nomorTlp);
       // form.append("foto_profile", formData.file);
-      form.append("password", formData.password || "");
-      form.append("konfirmasi_password", formData.konfirmasiPassword || "");
+      // form.append("password", formData.password || "");
+      // form.append("konfirmasi_password", formData.konfirmasiPassword || "");
 
       axios
         .post(`${apiurl}admin/guru/${id}`, form, {
@@ -617,7 +617,7 @@ function EditFormAddGuru() {
                   )}
                 </div>
 
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Password Guru </div>
                   <input
                     type="password"
@@ -631,9 +631,9 @@ function EditFormAddGuru() {
                   {errors.password && (
                     <span className="error">{errors.password}</span>
                   )}
-                </div>
+                </div> */}
 
-                <div className="con-formKbm">
+                {/* <div className="con-formKbm">
                   <div className="title-formKbm">Konfirmasi Password Guru </div>
                   <input
                     type="password"
@@ -647,7 +647,7 @@ function EditFormAddGuru() {
                   {errors.konfirmasiPassword && (
                     <span className="error">{errors.konfirmasiPassword}</span>
                   )}
-                </div>
+                </div> */}
 
                 <div className="con-btn-form">
                   <button
