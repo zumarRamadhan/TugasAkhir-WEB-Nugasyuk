@@ -561,7 +561,7 @@ function EditFormAddJadwal() {
                           {cardKbm.detail.map((data) => (
                             <div className="imgGuru-Kbm">
                               <img
-                                src={`https://www.nugasyuk.my.id/public/${data.foto_profile}`}
+                                src={`https://worldinyourhand.my.id/${data.foto_profile}`}
                                 alt=""
                                 className="imageGuru-Kbm"
                               />

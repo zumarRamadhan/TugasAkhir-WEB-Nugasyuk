@@ -1,5 +1,5 @@
 import '../cssAll/murid/BerandaMurid.css';
-import ImgProfil from '../assets/profil-murid.svg';
+import vektorProfile from "../assets/vektorProfile.svg";
 import { Icon } from '@iconify/react';
 import React, { useState, useEffect } from 'react';
 
@@ -38,7 +38,7 @@ function NavbarMurid(props){
                     <h1>{textNavigasi}</h1>
                     <div className="nav-right">
                         <div className="img-profile" style={{ cursor: "pointer" }}>
-                            <img src={ImgProfil} alt="img-profile" onClick={showDetail} />
+                            <img src={vektorProfile} alt="img-profile" onClick={showDetail} />
                         </div>
                         <div className="btn-notification" style={{ cursor: "pointer" }} onClick={showNotif}>
                             <Icon icon="mdi:bell-notification-outline" width="24"/>

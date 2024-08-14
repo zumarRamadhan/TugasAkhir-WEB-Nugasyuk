@@ -568,7 +568,7 @@ function MataPelajaran() {
                       onMouseLeave={() => setCurrentHover(null)}
                     >
                       <img
-                        src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${data.file_asset}`}
+                        src={`https://worldinyourhand.my.id/${data.file_asset}`}
                         alt=""
                         className="image-card-matapelajaran"
                       />

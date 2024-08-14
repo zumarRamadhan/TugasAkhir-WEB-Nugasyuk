@@ -794,7 +794,7 @@ function BerandaGuru() {
                         <td className="tdImg">
                           <div className="img-td">
                             <img
-                              src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${item.foto_profile}`}
+                              src={`https://worldinyourhand.my.id/${item.foto_profile}`}
                               alt={item.foto_profile}
                             />
                           </div>

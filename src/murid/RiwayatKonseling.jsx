@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 import '../cssAll/murid/RiwayatKonseling.css';
 import IconNugasyuk from '../assets/IconNugasyuk.svg';
 import NavbarMurid from '../component/NavbarMurid';
-import ImgProfil from '../assets/profil-murid.svg';
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from '../assets/pass-icon.svg';
 import mataIcon from '../assets/icon-mata.svg';

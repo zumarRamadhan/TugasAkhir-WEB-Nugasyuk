@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import "../cssAll/murid/JadwalKbm.css";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
 import NavbarMurid from "../component/NavbarMurid";
-import ImgProfil from "../assets/profil-murid.svg";
+import vektorProfile from "../assets/vektorProfile.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
@@ -369,7 +369,7 @@ function JadwalKBM() {
             <div className="con-popup-kbm">
               <div className="popup-card-kbm">
                 <div className="test1">
-                  <img src={ImgProfil} alt="" className="image-card-kbm" />
+                  <img src={vektorProfile} alt="" className="image-card-kbm" />
                   <div className="mapel-card-kbm">
                     <p>okeh</p>
                     <p className="guruPengampu">Joko Arianto</p>
@@ -490,7 +490,7 @@ function JadwalKBM() {
               <h2>Profil</h2>
             </div>
             <div className="detail-image-profile">
-              <img src={ImgProfil} alt="" className="detail-img-profile" />
+              <img src={vektorProfile} alt="" className="detail-img-profile" />
             </div>
             <p className="judul-detail">Email</p>
             <p className="value-detail">zumarramadhan@smkrus.sch.id</p>

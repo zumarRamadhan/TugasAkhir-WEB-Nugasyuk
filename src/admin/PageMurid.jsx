@@ -630,7 +630,7 @@ function DataMurid() {
                         <td className="tdImg">
                           <div className="img-td">
                             <img
-                              src={`https://wondrous-squirrel-blatantly.ngrok-free.app/${item.foto_profile}`}
+                              src={`https://worldinyourhand.my.id/${item.foto_profile}`}
                               alt={item.foto_profile}
                               onError={(e) => {
                                 e.target.onerror = null;

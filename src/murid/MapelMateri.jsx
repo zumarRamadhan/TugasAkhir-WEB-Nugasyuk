@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { useState, useEffect } from "react";
 import IconNugasyuk from "../assets/IconNugasyuk.svg";
-import ImgProfil from "../assets/profil-murid.svg";
+import vektorProfile from "../assets/vektorProfile.svg";
 import ImgLogout from "../assets/68582-log-out.gif";
 import passIcon from "../assets/pass-icon.svg";
 import mataIcon from "../assets/icon-mata.svg";
@@ -439,7 +439,7 @@ function MapelMateri() {
               <h2>Profil</h2>
             </div>
             <div className="detail-image-profile">
-              <img src={ImgProfil} alt="" className="detail-img-profile" />
+              <img src={vektorProfile} alt="" className="detail-img-profile" />
             </div>
             <p className="judul-detail">Email</p>
             <p className="value-detail">zumarramadhan@smkrus.sch.id</p>
